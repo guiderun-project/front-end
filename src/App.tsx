@@ -1,5 +1,5 @@
-const App:React.FC = () => {
-    return <>Link up initial setting</>
-}
+const App: React.FC = () => {
+  return <>Link up initial setting</>;
+};
 
-export default App
+export default App;
