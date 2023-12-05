@@ -20,5 +20,6 @@ jobs:
         run: |
           yarn install
           yarn lint
+          yarn build
         env:
           CI: true
