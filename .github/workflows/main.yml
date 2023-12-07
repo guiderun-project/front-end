@@ -3,7 +3,7 @@ name: PR lint test
 on: [push]
 
 jobs:
-  build:
+  test-job:
     runs-on: ubuntu-latest
 
     strategy:
@@ -16,10 +16,21 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: yarn install, build, and test
-        run: |
-          yarn install
-          yarn lint
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: lint test
+        run: yarn lint
           yarn build
         env:
           CI: true
