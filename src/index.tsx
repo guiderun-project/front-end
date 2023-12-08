@@ -2,7 +2,7 @@ import React from 'react';
 
 import ReactDOM from 'react-dom/client';
 
-import App from './App';
+import Route from './Route';
 
 const rootNode = document.getElementById('root');
 
@@ -12,6 +12,6 @@ if (!rootNode) {
 
 ReactDOM.createRoot(rootNode).render(
   <React.StrictMode>
-    <App />
+    <Route />
   </React.StrictMode>,
 );
