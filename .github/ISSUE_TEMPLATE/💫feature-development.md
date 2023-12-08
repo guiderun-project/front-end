@@ -1,5 +1,5 @@
 ---
-name: Feature development
+name: "\U0001F4ABFeature development"
 about: Template to organize the list of developments to be done on the issue
 title: Development List
 labels: "\U0001F496feature"
