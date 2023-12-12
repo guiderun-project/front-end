@@ -42,5 +42,8 @@
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0",
     "webpackbar": "^5.0.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
