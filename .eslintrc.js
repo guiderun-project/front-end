@@ -13,6 +13,7 @@ module.exports = {
   ],
 
   rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
     semi: 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     'import/order': [
