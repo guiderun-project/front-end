@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom/client';
 
 import Route from './Route';
 
+import './index.css';
+
 const rootNode = document.getElementById('root');
 
 if (!rootNode) {

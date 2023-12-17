@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { PageLayout } from './components/shared';
 import Admin from './pages/Admin';
 import Intro from './pages/Intro';
 import Main from './pages/Main';
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
 ]);
 
 const Route: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <PageLayout>
+      <RouterProvider router={router} />
+    </PageLayout>
+  );
 };
 
 export default Route;
