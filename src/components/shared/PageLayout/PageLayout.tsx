@@ -23,7 +23,7 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
       <Paper
         sx={{
           width: '100%',
-          maxWidth: '23.5rem',
+          maxWidth: '48rem',
           minHeight: '100vh',
           height: '100%',
         }}
