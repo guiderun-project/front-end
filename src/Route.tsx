@@ -5,11 +5,16 @@ import Admin from './pages/Admin';
 import Intro from './pages/Intro';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
+import Oauth from './pages/Oauth';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Intro />,
+  },
+  {
+    path: '/oauth',
+    element: <Oauth />,
   },
   {
     path: '/main',
