@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 const path = require('path');
 
 module.exports = {
   entry: path.join(__dirname, '../src/index.tsx'),
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
       '@': path.resolve(__dirname, '../src'),
     },
@@ -49,5 +50,8 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html'),
     }),
     new CleanWebpackPlugin(),
+    new DefinePlugin({
+      'process.env.KAKAO_APP_KEY': JSON.stringify(process.env.KAKAO_APP_KEY),
+    }),
   ],
 };
