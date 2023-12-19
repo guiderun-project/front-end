@@ -3,6 +3,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const path = require('path');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 module.exports = {
   entry: path.join(__dirname, '../src/index.tsx'),
   resolve: {
@@ -51,7 +54,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new DefinePlugin({
-      'process.env.KAKAO_APP_KEY': JSON.stringify(process.env.KAKAO_APP_KEY),
+      'process.env': JSON.stringify(process.env),
     }),
   ],
 };
