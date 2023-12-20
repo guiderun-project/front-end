@@ -20,6 +20,7 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
         height: '100%',
         minWidth: '100vw',
         minHeight: '100vh',
+        padding: 0,
       }}
     >
       <Stack
