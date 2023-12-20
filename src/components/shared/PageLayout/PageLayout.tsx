@@ -1,4 +1,4 @@
-import { Stack, Paper } from '@mui/material';
+import { Stack, Container } from '@mui/material';
 
 interface PagelayoutProps {
   children?: React.ReactNode;
@@ -10,9 +10,11 @@ interface PagelayoutProps {
 
 const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
   return (
-    <Stack
-      alignItems="center"
+    <Container
+      component="div"
       sx={{
+        display: 'flex',
+        justifyContent: 'center',
         backgroundColor: 'lightgray',
         width: '100%',
         height: '100%',
@@ -20,17 +22,20 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
         minHeight: '100vh',
       }}
     >
-      <Paper
+      <Stack
+        position="relative"
+        width="100%"
+        maxWidth="48rem"
+        minHeight="100vh"
+        height="100%"
+        padding="0 1.875rem"
         sx={{
-          width: '100%',
-          maxWidth: '48rem',
-          minHeight: '100vh',
-          height: '100%',
+          backgroundColor: '#FFF',
         }}
       >
         {children}
-      </Paper>
-    </Stack>
+      </Stack>
+    </Container>
   );
 };
 
