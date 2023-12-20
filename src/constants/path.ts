@@ -3,6 +3,7 @@ export const BROWSER_PATH = {
   INTRO: '/',
   MAIN: '/main',
   OAUTH: '/oauth',
+  SIGNUP: '/signup',
 };
 
 // const API_PATH = {
