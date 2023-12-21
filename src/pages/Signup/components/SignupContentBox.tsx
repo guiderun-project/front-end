@@ -9,7 +9,7 @@ interface SignupFormBoxProps {
 //
 //
 
-const SignupFormBox: React.FC<SignupFormBoxProps> = ({ title, content }) => {
+const SignupContentBox: React.FC<SignupFormBoxProps> = ({ title, content }) => {
   return (
     <Stack width="100%" alignItems="flex-start" gap="2.5rem">
       <Typography variant="h5">{title}</Typography>
@@ -18,4 +18,4 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({ title, content }) => {
   );
 };
 
-export default SignupFormBox;
+export default SignupContentBox;
