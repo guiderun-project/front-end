@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, InputLabel, Typography } from '@mui/material';
+import { InputLabel, Typography } from '@mui/material';
 
 interface SignupFormBoxProps {
   title: string;
@@ -13,15 +13,17 @@ interface SignupFormBoxProps {
 //
 
 const StyledInputLabel = styled(InputLabel)<{ isOneLine: boolean }>`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   gap: 1rem;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
 
   ${({ isOneLine }) => {
     if (!isOneLine) {
       return css`
+        display: flex;
         flex-direction: column;
+        align-items: flex-start;
         gap: 0.75rem;
       `;
     }
@@ -39,10 +41,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
 }) => {
   return (
     <StyledInputLabel isOneLine={isOneLine}>
-      <Typography flexGrow={1} fontWeight={700}>
-        {title}
-      </Typography>
-      <Box flexGrow={3}>{form}</Box>
+      <Typography fontWeight={700}>{title}</Typography>
+      {form}
     </StyledInputLabel>
   );
 };
