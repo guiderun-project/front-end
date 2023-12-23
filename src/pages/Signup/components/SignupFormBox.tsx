@@ -5,7 +5,7 @@ import { Badge, InputLabel, Typography } from '@mui/material';
 interface SignupFormBoxProps {
   title: string;
   form: React.ReactNode;
-  isOneLine?: boolean;
+  multiLine?: boolean;
   required?: boolean;
 }
 
@@ -13,15 +13,14 @@ interface SignupFormBoxProps {
 //
 //
 
-const StyledInputLabel = styled(InputLabel)<{ isOneLine: boolean }>`
+const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 1rem;
   align-items: center;
-  padding: 0 0.25rem;
 
-  ${({ isOneLine }) => {
-    if (!isOneLine) {
+  ${({ multiLine }) => {
+    if (multiLine) {
       return css`
         display: flex;
         flex-direction: column;
@@ -39,22 +38,16 @@ const StyledInputLabel = styled(InputLabel)<{ isOneLine: boolean }>`
 const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   title,
   form,
-  isOneLine = true,
+  multiLine = false,
   required = false,
 }) => {
   return (
-    <StyledInputLabel required={required} isOneLine={isOneLine}>
-      <Badge
-        color="secondary"
-        variant="dot"
-        invisible={!required}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-      >
-        <Typography fontWeight={700}>{title}</Typography>
-      </Badge>
+    <StyledInputLabel multiLine={multiLine}>
+      <Typography fontWeight={700}>
+        <Badge color="error" variant="dot" invisible={!required}>
+          {title}
+        </Badge>
+      </Typography>
       {form}
     </StyledInputLabel>
   );
