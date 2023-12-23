@@ -1,4 +1,4 @@
-import { Stack, Container } from '@mui/material';
+import styled from '@emotion/styled';
 
 interface PagelayoutProps {
   children?: React.ReactNode;
@@ -8,35 +8,35 @@ interface PagelayoutProps {
 //
 //
 
+const StyledContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: lightgray;
+  width: 100%;
+  height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+`;
+
+const StyledContentContainer = styled.div`
+  position: relative;
+  max-width: 48rem;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.875rem;
+  background-color: #fff;
+`;
+
+//
+//
+//
+
 const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
   return (
-    <Container
-      component="div"
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'lightgray',
-        width: '100%',
-        height: '100%',
-        minWidth: '100vw',
-        minHeight: '100vh',
-        padding: 0,
-      }}
-    >
-      <Stack
-        position="relative"
-        width="100%"
-        maxWidth="48rem"
-        minHeight="100vh"
-        height="100%"
-        padding="0 1.875rem"
-        sx={{
-          backgroundColor: '#FFF',
-        }}
-      >
-        {children}
-      </Stack>
-    </Container>
+    <StyledContainer>
+      <StyledContentContainer>{children}</StyledContentContainer>
+    </StyledContainer>
   );
 };
 
