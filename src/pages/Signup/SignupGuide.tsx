@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import {
   Box,
+  Button,
   Card,
   CardContent,
   FormControl,
@@ -437,15 +438,27 @@ const SignupGuide: React.FC = () => {
     );
   };
 
+  /**
+   *
+   */
+  const renderButton = () => {
+    return (
+      <Button fullWidth variant="contained" size="large" color="secondary">
+        팀 편성 신청서 제출하기
+      </Button>
+    );
+  };
+
   //
   //
   //
 
   return (
-    <Stack padding={0} paddingTop="5rem" gap="5rem">
+    <Stack padding="5rem 0" gap="5rem">
       {renderUserInfo()}
       {renderTerms()}
       {renderTeamingCriteria()}
+      {renderButton()}
     </Stack>
   );
 };
