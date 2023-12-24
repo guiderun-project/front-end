@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import {
   Box,
   Card,
@@ -15,6 +16,20 @@ import {
 
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox from './components/SignupFormBox';
+
+//
+//
+//
+
+const StyledRunGroupBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+//
+//
+//
 
 const SignupGuide: React.FC = () => {
   const renderUserInfo = () => {
@@ -355,6 +370,67 @@ const SignupGuide: React.FC = () => {
                 - 시각장애러너와 가이드러너의 팀 편성기준은 아래와 같습니다.
               </li>
             </Box>
+            <Card>
+              <CardContent
+                sx={{
+                  padding: '1.5rem 2rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '2.5rem',
+                }}
+              >
+                <Stack gap="1.5rem">
+                  <Typography fontWeight={800}>시각장애러너</Typography>
+                  <Stack>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>A</Typography>
+                      <Typography>~50분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>B</Typography>
+                      <Typography>51~56분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>C</Typography>
+                      <Typography>57~65분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>D</Typography>
+                      <Typography>66분~</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>E</Typography>
+                      <Typography>기록 없음</Typography>
+                    </StyledRunGroupBox>
+                  </Stack>
+                </Stack>
+                <Stack gap="1.5rem">
+                  <Typography fontWeight={800}>가이드</Typography>
+                  <Stack>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>A</Typography>
+                      <Typography>~45분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>B</Typography>
+                      <Typography>46~52분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>C</Typography>
+                      <Typography>53~59분</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>D</Typography>
+                      <Typography>60분~</Typography>
+                    </StyledRunGroupBox>
+                    <StyledRunGroupBox>
+                      <Typography fontWeight={700}>E</Typography>
+                      <Typography>기록 없음</Typography>
+                    </StyledRunGroupBox>
+                  </Stack>
+                </Stack>
+              </CardContent>
+            </Card>
           </Stack>
         }
       />
