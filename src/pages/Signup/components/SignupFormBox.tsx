@@ -1,23 +1,34 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Badge, InputLabel, Typography } from '@mui/material';
+import {
+  Badge,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+
+import { FormType } from '@/types/form';
+
+interface FormValueType {
+  value: string | number | boolean;
+  label: string;
+}
 
 interface SignupFormBoxProps {
   title: string;
-  /**
-   * @param form input이나 change가 발생하는 부분
-   */
-  form: React.ReactNode;
-
-  /**
-   * @param content 약관 동의 설명 부분과 같은 change가 발생하지 않는 부분
-   */
+  form: FormType;
+  formValue?: FormValueType[];
   content?: React.ReactNode | string;
-
-  /**
-   * @param multiLine 해당 입력 폼이 한 줄 이상인지 나타냄
-   */
+  disabled?: boolean;
   multiLine?: boolean;
+  label?: string;
   required?: boolean;
 }
 
@@ -51,9 +62,93 @@ const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
 const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   title,
   form,
+  content,
+  formValue,
+  label = '',
   multiLine = false,
   required = false,
+  disabled = false,
 }) => {
+  const renderForm = () => {
+    switch (form) {
+      case FormType.Input:
+        return (
+          <TextField
+            fullWidth
+            size="small"
+            disabled={disabled}
+            placeholder={label}
+          />
+        );
+
+      case FormType.Textarea:
+        return (
+          <TextField
+            multiline
+            fullWidth
+            disabled={disabled}
+            placeholder={label}
+          />
+        );
+
+      case FormType.Select:
+        return (
+          <FormControl fullWidth>
+            <InputLabel id={label}>{label}</InputLabel>
+            <Select
+              fullWidth
+              disabled={disabled}
+              labelId={label}
+              label={label}
+              size="small"
+            >
+              {formValue
+                ? formValue.map((el) => (
+                    <MenuItem value={el.value as string | number}>
+                      {el.label}
+                    </MenuItem>
+                  ))
+                : null}
+            </Select>
+          </FormControl>
+        );
+
+      case FormType.Radio:
+        return (
+          <FormControl fullWidth disabled={disabled}>
+            <RadioGroup
+              row
+              sx={{
+                width: '100%',
+                padding: '1rem',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                alignItems: 'space-between',
+              }}
+            >
+              {formValue
+                ? formValue.map((el) => (
+                    <FormControlLabel
+                      value={el.value}
+                      control={<Radio />}
+                      label={el.label}
+                    />
+                  ))
+                : null}
+            </RadioGroup>
+          </FormControl>
+        );
+
+      case FormType.None:
+      default:
+        return null;
+    }
+  };
+
+  //
+  //
+  //
+
   return (
     <StyledInputLabel multiLine={multiLine}>
       <Typography fontWeight={700}>
@@ -61,7 +156,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           {title}
         </Badge>
       </Typography>
-      {form}
+      {content ? content : null}
+      <Stack width="100%">{renderForm()}</Stack>
     </StyledInputLabel>
   );
 };
