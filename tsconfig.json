@@ -32,7 +32,8 @@
       "@/pages/*": ["pages/*"],
       "@/constants/*": ["constants/*"],
       "@/utils/*": ["utils/*"],
-      "@/mocks/*": ["mocks/*"]
+      "@/mocks/*": ["mocks/*"],
+      "@/types/*": ["types/*"]
     }
   }
 }
