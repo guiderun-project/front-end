@@ -16,6 +16,10 @@ const SignupTerms = () => {
             required
             multiLine
             form={FormType.Radio}
+            formValue={[
+              { value: false, label: '비동의' },
+              { value: true, label: '동의' },
+            ]}
             content={
               <Card>
                 <CardContent
@@ -50,6 +54,10 @@ const SignupTerms = () => {
             required
             multiLine
             form={FormType.Radio}
+            formValue={[
+              { value: false, label: '비동의' },
+              { value: true, label: '동의' },
+            ]}
             content={
               <Card>
                 <CardContent
