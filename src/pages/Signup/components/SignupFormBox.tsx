@@ -4,7 +4,19 @@ import { Badge, InputLabel, Typography } from '@mui/material';
 
 interface SignupFormBoxProps {
   title: string;
+  /**
+   * @param form input이나 change가 발생하는 부분
+   */
   form: React.ReactNode;
+
+  /**
+   * @param content 약관 동의 설명 부분과 같은 change가 발생하지 않는 부분
+   */
+  content?: React.ReactNode | string;
+
+  /**
+   * @param multiLine 해당 입력 폼이 한 줄 이상인지 나타냄
+   */
   multiLine?: boolean;
   required?: boolean;
 }
