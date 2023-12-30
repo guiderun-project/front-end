@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ThemeProvider, createTheme } from '@mui/material';
 import ReactDOM from 'react-dom/client';
 
 import Route from './Route';
@@ -24,10 +25,18 @@ async function enableMocking() {
   return worker.start();
 }
 
+const theme = createTheme({
+  typography: {
+    fontFamily: 'pretendard',
+  },
+});
+
 enableMocking().then(() => {
   ReactDOM.createRoot(rootNode).render(
     <React.StrictMode>
-      <Route />
+      <ThemeProvider theme={theme}>
+        <Route />
+      </ThemeProvider>
     </React.StrictMode>,
   );
 });

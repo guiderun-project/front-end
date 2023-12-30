@@ -93,7 +93,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
 
       case FormType.Select:
         return (
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel id={label}>{label}</InputLabel>
             <Select
               fullWidth
