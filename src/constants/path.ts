@@ -1,7 +1,7 @@
 export const BROWSER_PATH = {
   ADMIN: '/admin',
-  INTRO: '/',
-  MAIN: '/main',
+  INTRO: '/intro',
+  MAIN: '/',
   OAUTH: '/oauth',
   SIGNUP: '/signup',
 };
