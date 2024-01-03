@@ -1,10 +1,12 @@
 import { Button, Stack } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
+import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
 
@@ -13,6 +15,12 @@ import { RunningGroup } from '@/types/group';
 //
 
 const SignupGuide: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchParams, setSearchparams] = useSearchParams();
+
+  /**
+   *
+   */
   const renderUserInfo = () => {
     return (
       <SignupContentBox
@@ -33,6 +41,12 @@ const SignupGuide: React.FC = () => {
                 { value: 'B', label: '남' },
                 { value: 'G', label: '여' },
               ]}
+            />
+            <SignupFormBox
+              required
+              title="이메일"
+              label="이메일을 입력해주세요"
+              formType={FormType.Input}
             />
             <SignupFormBox
               required
@@ -211,9 +225,31 @@ const SignupGuide: React.FC = () => {
    */
   const renderButton = () => {
     return (
-      <Button fullWidth variant="contained" size="large" color="secondary">
-        팀 편성 신청서 제출하기
-      </Button>
+      <Stack gap="1rem">
+        <Button
+          fullWidth
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={() =>
+            setSearchparams({
+              type: searchParams.get('type') ?? '',
+              isCompleted: 'true',
+            })
+          }
+        >
+          팀 편성 신청서 제출하기
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={() => navigate(BROWSER_PATH.SIGNUP)}
+        >
+          되돌아가기
+        </Button>
+      </Stack>
     );
   };
 
