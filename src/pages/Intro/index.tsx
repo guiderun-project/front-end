@@ -1,9 +1,8 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { KAKAO_REDIRECT_URL } from '../../constants/path';
-
 import kakaoImg from '@/assets/kakao_login.png';
+import { BROWSER_PATH, KAKAO_REDIRECT_URL } from '@/constants/path';
 import { getKakaoOauthUrl } from '@/utils/login';
 
 const Intro: React.FC = () => {
@@ -35,7 +34,7 @@ const Intro: React.FC = () => {
         variant="contained"
         color="warning"
         size="large"
-        onClick={() => navigate('/main')}
+        onClick={() => navigate(BROWSER_PATH.MAIN)}
       >
         메인으로
       </Button>
