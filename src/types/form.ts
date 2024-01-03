@@ -3,5 +3,6 @@ export enum FormType {
   Textarea,
   Radio,
   Select,
+  CheckBox,
   None,
 }
