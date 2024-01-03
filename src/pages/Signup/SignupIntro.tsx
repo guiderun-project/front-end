@@ -1,5 +1,7 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
+
+import Header from './components/Header';
 
 const SignupIntro: React.FC = () => {
   const [, setSearchparams] = useSearchParams();
@@ -22,18 +24,7 @@ const SignupIntro: React.FC = () => {
       alignItems="center"
       gap="2.5rem"
     >
-      <Box
-        component="header"
-        position="absolute"
-        top={0}
-        left={0}
-        right={0}
-        display="flex"
-        justifyContent="center"
-        padding="1.875rem"
-      >
-        가입하기
-      </Box>
+      <Header>가입하기</Header>
       <Typography variant="h3" fontWeight={700}>
         저는,
       </Typography>
