@@ -2,8 +2,10 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
   Badge,
+  Checkbox,
   FormControl,
   FormControlLabel,
+  FormGroup,
   InputLabel,
   MenuItem,
   Radio,
@@ -139,6 +141,18 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           </FormControl>
         );
 
+      case FormType.CheckBox:
+        return formValue ? (
+          <FormGroup>
+            {formValue.map((el) => (
+              <FormControlLabel
+                control={<Checkbox />}
+                value={el.value}
+                label={el.label}
+              />
+            ))}
+          </FormGroup>
+        ) : null;
       case FormType.None:
       default:
         return null;
