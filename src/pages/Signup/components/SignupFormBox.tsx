@@ -25,7 +25,7 @@ interface FormValueType {
 
 interface SignupFormBoxProps {
   title: string;
-  form: FormType;
+  formType: FormType;
   formValue?: FormValueType[];
   content?: React.ReactNode | string;
   disabled?: boolean;
@@ -63,7 +63,7 @@ const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
 
 const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   title,
-  form,
+  formType,
   content,
   formValue,
   label = '',
@@ -72,7 +72,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   disabled = false,
 }) => {
   const renderForm = () => {
-    switch (form) {
+    switch (formType) {
       case FormType.Input:
         return (
           <TextField
