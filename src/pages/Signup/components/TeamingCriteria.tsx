@@ -25,14 +25,20 @@ const TeamingCriteria: React.FC = () => {
         <Stack width="100%" gap="1.5rem">
           <Box component="ul" display="flex" flexDirection="column" gap="1rem">
             <li>
-              - 모든 참여 희망자들은 개인 기록에 따라 팀 편성이 이루어집니다.
+              <Typography>
+                - 모든 참여 희망자들은 개인 기록에 따라 팀 편성이 이루어집니다.
+              </Typography>
             </li>
             <li>
-              - 이후 이벤트 참여 시, 부여받으신 팀 안에서 참여 및 파트너가 편성
-              됩니다.
+              <Typography>
+                - 이후 이벤트 참여 시, 부여받으신 팀 안에서 참여 및 파트너가
+                편성 됩니다.
+              </Typography>
             </li>
             <li>
-              - 시각장애러너와 가이드러너의 팀 편성기준은 아래와 같습니다.
+              <Typography>
+                - 시각장애러너와 가이드러너의 팀 편성기준은 아래와 같습니다.
+              </Typography>
             </li>
           </Box>
           <Card>
