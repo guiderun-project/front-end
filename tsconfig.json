@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "ES5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "lib": [
       "dom",
@@ -13,7 +14,6 @@
     "jsx": "react-jsx",
     "module": "commonjs",
     "moduleResolution": "node",
-    "baseUrl": "./",
     "allowJs": true,
     "sourceMap": true,
     "outDir": "./dist",
@@ -21,6 +21,19 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "typeRoots": ["types", "node_modules/@types"],
+    "paths": {
+      "@/api/*": ["api/*"],
+      "@/assets/*": ["assets/*"],
+      "@/components/*": ["components/*"],
+      "@/fonts/*": ["fonts/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/pages/*": ["pages/*"],
+      "@/constants/*": ["constants/*"],
+      "@/utils/*": ["utils/*"],
+      "@/mocks/*": ["mocks/*"],
+      "@/types/*": ["types/*"]
+    }
   }
 }
