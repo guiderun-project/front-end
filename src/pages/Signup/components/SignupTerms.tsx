@@ -15,13 +15,17 @@ const SignupTerms = () => {
             title="개인정보 제공 및 활용 동의"
             required
             multiLine
-            form={FormType.Radio}
+            formType={FormType.Radio}
             formValue={[
               { value: false, label: '비동의' },
               { value: true, label: '동의' },
             ]}
             content={
-              <Card>
+              <Card
+                sx={{
+                  width: '100%',
+                }}
+              >
                 <CardContent
                   sx={{
                     display: 'flex',
@@ -36,10 +40,10 @@ const SignupTerms = () => {
                   <Typography whiteSpace="break-spaces">
                     2. 수집하려는 개인정보 항목: <br /> 인적사항(성함, 성별,
                     나이, 휴대폰 번호, 거주지, 기록, 가이드 러닝 경험 유무, SNS,
-                    카카오톡 아이디)
+                    카카오톡 아이디
                   </Typography>
                   <Typography whiteSpace="break-spaces">
-                    3. 개인 정보의 보유 및 이용 기간: <br /> 앱 가입 시 부터
+                    3. 개인 정보의 보유 및 이용 기간: <br /> 서비스 가입 시 부터
                     안내 시까지
                   </Typography>
                   <Typography whiteSpace="break-spaces">
@@ -53,13 +57,17 @@ const SignupTerms = () => {
             title="개인정보 제공 및 활용 동의"
             required
             multiLine
-            form={FormType.Radio}
+            formType={FormType.Radio}
             formValue={[
               { value: false, label: '비동의' },
               { value: true, label: '동의' },
             ]}
             content={
-              <Card>
+              <Card
+                sx={{
+                  width: '100%',
+                }}
+              >
                 <CardContent
                   sx={{
                     display: 'flex',
