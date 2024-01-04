@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 
 import Header from './components/Header';
 
@@ -10,17 +11,18 @@ const SignupComplete: React.FC = () => {
       alignItems="center"
       gap="2.5rem"
     >
-      <Header>가입 완료</Header>
+      <Header>
+        <FormattedMessage id="signup.complete.title" />
+      </Header>
       <Typography fontSize="2.5rem" fontWeight={400} textAlign="center">
-        팀편성이
-        <br /> 진행중입니다.
+        <FormattedMessage id="signup.complete.matching" />
       </Typography>
-      <Stack aria-label="시각장애유무 버튼 박스" gap="1rem" width="100%">
+      <Stack gap="1rem" width="100%">
         <Button variant="contained" size="large" fullWidth>
-          내가 제출한 정보 확인하기
+          <FormattedMessage id="signup.complete.checkInfo" />
         </Button>
         <Button variant="contained" size="large" fullWidth>
-          마이 페이지
+          <FormattedMessage id="common.mypage" />
         </Button>
       </Stack>
     </Stack>
