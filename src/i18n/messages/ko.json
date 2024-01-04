@@ -6,5 +6,19 @@
   "intro.signup.kakao.alt": "카카오 로그인 및 회원가입 이미지",
   "intro.main.button": "메인으로",
   "oauth.loading": "로딩중",
-  "oauth.loading.alt": "로딩 이미지"
+  "oauth.loading.alt": "로딩 이미지",
+  "signup.radio.agree": "동의",
+  "signup.radio.notagree": "비동의",
+  "signup.terms": "약관 동의",
+  "signup.terms.privacy.title": "개인정보 제공 및 활용 동의",
+  "signup.terms.privacy.1": "1. 개인정보 수집, 이용 목적: \n참가자를 대상으로 안내성 SMS 발송, 기타 행사를 위한 매칭 등 프로그램 진행을 위해 활용",
+  "signup.terms.privacy.2": "2. 수집하려는 개인정보 항목: \n인적사항(성함, 성별, 나이, 휴대폰 번호, 거주지, 기록, 가이드 러닝 경험 유무, SNS, 카카오톡 아이디",
+  "signup.terms.privacy.3": "3. 개인 정보의 보유 및 이용 기간: \n서비스 가입 시 부터 안내 시까지",
+  "signup.terms.privacy.4": "4. 동의 거부 시 프로그램 참여가 불가한 점 양해 부탁드립니다.",
+  "signup.terms.likeness.title": "초상권 활용 동의",
+  "signup.terms.likeness.1": "1. 수집 이용 및 제공의 목적 : \nSNS 업로드를 통한 홍보 및 기타 채널을 통한 홍보",
+  "signup.terms.likeness.2": "2. 초상권 보유 및 이용기간 : \n홍보한 게시물 삭제시까지",
+  "signup.terms.likeness.3": "3. 초상권 2차 사용 : \n 온라인 및 오프라인 홍보물 제작 및 게시",
+  "signup.terms.likeness.4": "4. 초상권 활용 동의에 거부할 권리가 있으며, 거부 시 교육 홍보물 제작에서 제외되거나 모자이크 처리됩니다.",
+  "signup.terms.likeness.5": "5. 인격을 침해하지 않는 범위 내에서 저작물에 대한 편집 및 후보정이 이루어질 예정입니다."
 }

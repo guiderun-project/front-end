@@ -6,5 +6,19 @@
   "intro.signup.kakao.alt": "Kakao login and signup image",
   "intro.main.button": "To main",
   "oauth.loading": "Loading",
-  "oauth.loading.alt": "Loading image"
+  "oauth.loading.alt": "Loading image",
+  "signup.radio.agree": "Agree",
+  "signup.radio.notagree": "Disagree",
+  "signup.terms": "Agree to terms",
+  "signup.terms.privacy.title": "Agreement to provide and utilize personal information",
+  "signup.terms.privacy.1": "1. Purpose of collecting and utilizing personal information: \nUsed to conduct the program, such as sending informational SMS to participants and matching for other events.",
+  "signup.terms.privacy.2": "2. Personal information items to be collected: \nPersonal information (name, gender, age, cell phone number, residence, history, guided running experience, SNS, KakaoTalk ID)",
+  "signup.terms.privacy.3": "3. Period of retention and use of personal information: \nFrom the time of service subscription to the time of guidance",
+  "signup.terms.privacy.4": "4. Please understand that you will not be able to participate in the program if you refuse to consent.",
+  "signup.terms.likeness.title": "Consent to utilize likeness rights",
+  "signup.terms.likeness.1": "1. Purpose of collection utilization and provision: \nPromotion through SNS upload and promotion through other channels",
+  "signup.terms.likeness.2": "2. Period of retention and use of portrait rights: \nUntil deletion of the promoted post",
+  "signup.terms.likeness.3": "3. Secondary use of portrait rights: \n Production and posting of online and offline promotional materials.",
+  "signup.terms.likeness.4": "4. You have the right to refuse to consent to the use of your likeness, and if you do, you will be excluded or mosaicked from the creation of educational promotional materials.",
+  "signup.terms.likeness.5": "5. Editing and nomination of your work will be done without infringing on your personality."
 }
