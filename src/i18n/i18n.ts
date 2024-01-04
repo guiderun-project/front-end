@@ -9,6 +9,7 @@ const cache = createIntlCache();
 
 const intl = createIntl(
   {
+    defaultLocale: 'ko',
     locale: 'ko',
     messages: koMessages,
   },
