@@ -1,1 +1,8 @@
-{}
+{
+  "intro.greeting": "Welcome!",
+  "intro.signup": "Sign up in 3 seconds",
+  "intro.signup.label": "Social login",
+  "intro.signup.kakao": "Kakao",
+  "intro.signup.kakao.alt": "Kakao login and signup image",
+  "intro.main.button": "To main"
+}

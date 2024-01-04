@@ -1,1 +1,8 @@
-{}
+{
+  "intro.greeting": "어서오세요!",
+  "intro.signup": "3초만에 가입하기",
+  "intro.signup.lable": "소셜 로그인",
+  "intro.signup.kakao": "카카오",
+  "intro.signup.kakao.alt": "카카오 로그인 및 회원가입 이미지",
+  "intro.main.button": "메인으로"
+}
