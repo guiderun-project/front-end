@@ -45,7 +45,10 @@ const SignupTerms = () => {
                   {Array(4)
                     .fill(0)
                     .map((_, idx) => (
-                      <Typography whiteSpace="break-spaces">
+                      <Typography
+                        key={`signup.terms.privacy.${idx + 1}`}
+                        whiteSpace="break-spaces"
+                      >
                         <FormattedMessage
                           id={`signup.terms.privacy.${idx + 1}`}
                         />
@@ -86,7 +89,10 @@ const SignupTerms = () => {
                   {Array(5)
                     .fill(0)
                     .map((_, idx) => (
-                      <Typography whiteSpace="break-spaces">
+                      <Typography
+                        key={`signup.terms.likeness.${idx + 1}`}
+                        whiteSpace="break-spaces"
+                      >
                         <FormattedMessage
                           id={`signup.terms.likeness.${idx + 1}`}
                         />

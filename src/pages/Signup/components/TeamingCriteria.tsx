@@ -30,7 +30,7 @@ const TeamingCriteria: React.FC = () => {
             {Array(3)
               .fill(0)
               .map((_, idx) => (
-                <Typography>
+                <Typography key={`teamingCriteria.content.${idx + 1}`}>
                   <FormattedMessage id={`teamingCriteria.content.${idx + 1}`} />
                 </Typography>
               ))}
