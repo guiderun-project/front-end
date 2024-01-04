@@ -26,7 +26,7 @@ const SignupTerms = () => {
               },
               {
                 value: true,
-                label: intl.formatMessage({ id: 'signup.radio.notagree' }),
+                label: intl.formatMessage({ id: 'signup.radio.disagree' }),
               },
             ]}
             content={
@@ -67,7 +67,7 @@ const SignupTerms = () => {
               },
               {
                 value: true,
-                label: intl.formatMessage({ id: 'signup.radio.notagree' }),
+                label: intl.formatMessage({ id: 'signup.radio.disagree' }),
               },
             ]}
             content={
