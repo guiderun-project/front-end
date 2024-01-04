@@ -4,5 +4,7 @@
   "intro.signup.label": "Social login",
   "intro.signup.kakao": "Kakao",
   "intro.signup.kakao.alt": "Kakao login and signup image",
-  "intro.main.button": "To main"
+  "intro.main.button": "To main",
+  "oauth.loading": "Loading",
+  "oauth.loading.alt": "Loading image"
 }
