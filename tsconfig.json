@@ -33,7 +33,8 @@
       "@/constants/*": ["constants/*"],
       "@/utils/*": ["utils/*"],
       "@/mocks/*": ["mocks/*"],
-      "@/types/*": ["types/*"]
+      "@/types/*": ["types/*"],
+      "@/store/*": ["store/*"]
     }
   }
 }
