@@ -106,7 +106,10 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             >
               {formValue
                 ? formValue.map((el) => (
-                    <MenuItem value={el.value as string | number}>
+                    <MenuItem
+                      key={el.label}
+                      value={el.value as string | number}
+                    >
                       {el.label}
                     </MenuItem>
                   ))
@@ -131,6 +134,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
               {formValue
                 ? formValue.map((el) => (
                     <FormControlLabel
+                      key={el.label}
                       value={el.value}
                       control={<Radio />}
                       label={el.label}
@@ -146,6 +150,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           <FormGroup>
             {formValue.map((el) => (
               <FormControlLabel
+                key={el.label}
                 control={<Checkbox />}
                 value={el.value}
                 label={el.label}

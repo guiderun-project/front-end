@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
 import kakaoImg from '@/assets/kakao_login.png';
@@ -6,7 +7,13 @@ import { BROWSER_PATH, KAKAO_REDIRECT_URL } from '@/constants/path';
 import { getKakaoOauthUrl } from '@/utils/login';
 
 const Intro: React.FC = () => {
+  const intl = useIntl();
   const navigate = useNavigate();
+
+  //
+  //
+  //
+
   return (
     <Stack
       minHeight="100vh"
@@ -16,17 +23,30 @@ const Intro: React.FC = () => {
       gap="4rem"
     >
       <Typography variant="h1" fontSize="2.5rem" fontWeight="500">
-        어서오세요!
+        <FormattedMessage id="intro.greeting" />
       </Typography>
-      <Stack aria-label="소셜 로그인" gap="1rem" alignItems="center">
+      <Stack
+        aria-label={intl.formatMessage({
+          id: 'intro.signup.label',
+        })}
+        gap="1rem"
+        alignItems="center"
+      >
         <Typography variant="subtitle1" fontWeight="700">
-          3초만에 가입하기
+          <FormattedMessage id="intro.signup" />
         </Typography>
-        <Link aria-label="카카오" to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}>
+        <Link
+          aria-label={intl.formatMessage({
+            id: 'intro.signup.kakao',
+          })}
+          to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
+        >
           <Box
             component="img"
             src={kakaoImg}
-            alt="카카오 로그인 및 회원가입 이미지"
+            alt={intl.formatMessage({
+              id: 'intro.signup.kakao.alt',
+            })}
           />
         </Link>
       </Stack>
@@ -36,7 +56,7 @@ const Intro: React.FC = () => {
         size="large"
         onClick={() => navigate(BROWSER_PATH.MAIN)}
       >
-        메인으로
+        <FormattedMessage id="intro.main.button" />
       </Button>
     </Stack>
   );

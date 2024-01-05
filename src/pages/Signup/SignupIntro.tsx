@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 
 import Header from './components/Header';
@@ -24,18 +25,20 @@ const SignupIntro: React.FC = () => {
       alignItems="center"
       gap="2.5rem"
     >
-      <Header>가입하기</Header>
+      <Header>
+        <FormattedMessage id="signup.intro.title" />
+      </Header>
       <Typography variant="h3" fontWeight={700}>
-        저는,
+        <FormattedMessage id="signup.intro.introduce" />
       </Typography>
-      <Stack aria-label="시각장애유무 버튼 박스" gap="1rem" width="100%">
+      <Stack gap="1rem" width="100%">
         <Button
           variant="contained"
           size="large"
           fullWidth
           onClick={handleTypeSelect('vi')}
         >
-          시각장애 러너입니다.
+          <FormattedMessage id="signup.intro.vi" />
         </Button>
         <Button
           variant="contained"
@@ -43,7 +46,7 @@ const SignupIntro: React.FC = () => {
           fullWidth
           onClick={handleTypeSelect('guide')}
         >
-          가이드 러너입니다.
+          <FormattedMessage id="signup.intro.guide" />
         </Button>
       </Stack>
     </Stack>

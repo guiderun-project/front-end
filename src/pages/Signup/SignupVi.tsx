@@ -1,4 +1,5 @@
 import { Button, Stack } from '@mui/material';
+import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
@@ -12,6 +13,7 @@ import { RunningGroup } from '@/types/group';
 
 const SignupVi: React.FC = () => {
   const navigate = useNavigate();
+  const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
 
   /**
@@ -20,60 +22,102 @@ const SignupVi: React.FC = () => {
   const renderUserInfo = () => {
     return (
       <SignupContentBox
-        title="기본 정보 입력하기"
+        title={intl.formatMessage({ id: 'signup.form.info.title' })}
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
             <SignupFormBox
-              title="장애여부"
-              label="시각장애러너"
+              title={intl.formatMessage({ id: 'signup.form.info.disability' })}
+              label={intl.formatMessage({ id: 'common.vi' })}
               disabled
               formType={FormType.Input}
             />
             <SignupFormBox
               required
-              title="성별"
+              title={intl.formatMessage({ id: 'signup.form.info.gender' })}
               formType={FormType.Radio}
               formValue={[
-                { value: 'B', label: '남' },
-                { value: 'G', label: '여' },
+                {
+                  value: 'B',
+                  label: intl.formatMessage({ id: 'common.gender.man' }),
+                },
+                {
+                  value: 'G',
+                  label: intl.formatMessage({ id: 'common.gender.woman' }),
+                },
               ]}
             />
             <SignupFormBox
               required
-              title="이메일"
-              label="이메일을 입력해주세요"
+              title={intl.formatMessage({ id: 'signup.form.info.email' })}
+              label={intl.formatMessage({ id: 'signup.form.info.email.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
-              title="이름"
-              label="이름을 입력해주세요"
+              title={intl.formatMessage({ id: 'signup.form.info.name' })}
+              label={intl.formatMessage({ id: 'signup.form.info.name.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
-              title="전화번호"
-              label="전화번호를 입력해주세요"
+              title={intl.formatMessage({ id: 'signup.form.info.tel' })}
+              label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
-              title="나이"
-              label="나이"
+              title={intl.formatMessage({ id: 'signup.form.info.age' })}
+              label={intl.formatMessage({ id: 'signup.form.info.age' })}
               formType={FormType.Select}
               formValue={[
-                { label: '10대', value: 10 },
-                { label: '20대', value: 20 },
-                { label: '30대', value: 30 },
-                { label: '40대', value: 40 },
-                { label: '50대', value: 50 },
-                { label: '60대 이상', value: 60 },
+                {
+                  label: intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 10 },
+                  ),
+                  value: 10,
+                },
+                {
+                  label: intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 20 },
+                  ),
+                  value: 20,
+                },
+                {
+                  label: intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 30 },
+                  ),
+                  value: 30,
+                },
+                {
+                  label: intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 40 },
+                  ),
+                  value: 40,
+                },
+                {
+                  label: intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 50 },
+                  ),
+                  value: 50,
+                },
+                {
+                  label: `${intl.formatMessage(
+                    { id: 'signup.form.info.age.class' },
+                    { age: 60 },
+                  )} ${intl.formatMessage({ id: 'common.up' })}`,
+                  value: 60,
+                },
               ]}
             />
             <SignupFormBox
               multiLine
-              title="SNS(인스타그램) 아이디"
-              label="@"
+              title={intl.formatMessage({ id: 'signup.form.info.sns' })}
+              label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
             />
           </Stack>
@@ -88,72 +132,125 @@ const SignupVi: React.FC = () => {
   const renderRunningSpec = () => {
     return (
       <SignupContentBox
-        title="러닝 스펙"
+        title={intl.formatMessage({ id: 'signup.form.running.title' })}
         content={
           <Stack gap="2rem" width="100%">
             <SignupFormBox
               required
-              title="러닝 경험"
+              title={intl.formatMessage({
+                id: 'signup.form.running.experience',
+              })}
               formType={FormType.Radio}
               formValue={[
-                { label: '유', value: true },
-                { label: '무', value: false },
+                {
+                  label: intl.formatMessage({ id: 'common.yes' }),
+                  value: true,
+                },
+                {
+                  label: intl.formatMessage({ id: 'common.no' }),
+                  value: false,
+                },
               ]}
             />
             <SignupFormBox
               required
-              title="개인 기록"
-              label="기록"
+              title={intl.formatMessage({ id: 'signup.form.running.record' })}
+              label={intl.formatMessage({
+                id: 'signup.form.running.record.label',
+              })}
               formType={FormType.Select}
               formValue={[
-                { label: 'A ~ 45분', value: RunningGroup.A },
-                { label: 'B 46 ~ 52분', value: RunningGroup.B },
-                { label: 'C 53 ~ 59분', value: RunningGroup.C },
-                { label: 'D 60분 ~', value: RunningGroup.D },
-                { label: 'E 기록 없음', value: RunningGroup.E },
+                {
+                  label: `A ${intl.formatMessage(
+                    { id: 'teamingCriteria.record.fast' },
+                    { minutes: 50 },
+                  )}`,
+                  value: RunningGroup.A,
+                },
+                {
+                  label: `B ${intl.formatMessage(
+                    { id: 'teamingCriteria.record.medium' },
+                    { minutes1: 51, minutes2: 56 },
+                  )}`,
+                  value: RunningGroup.B,
+                },
+                {
+                  label: `C ${intl.formatMessage(
+                    { id: 'teamingCriteria.record.medium' },
+                    { minutes1: 57, minutes2: 65 },
+                  )}`,
+                  value: RunningGroup.C,
+                },
+                {
+                  label: `D ${intl.formatMessage(
+                    { id: 'teamingCriteria.record.another' },
+                    { minutes: 66 },
+                  )}`,
+                  value: RunningGroup.D,
+                },
+                {
+                  label: `E ${intl.formatMessage({
+                    id: 'teamingCriteria.record.none',
+                  })}`,
+                  value: RunningGroup.E,
+                },
               ]}
             />
             <SignupFormBox
               multiLine
-              title="상세기록"
-              label="상세기록을 적어주세요."
+              title={intl.formatMessage({ id: 'signup.form.running.detail' })}
+              label={intl.formatMessage({
+                id: 'signup.form.running.detail.label',
+              })}
               formType={FormType.Input}
             />
             <SignupFormBox
               multiLine
-              title="주로 달리는 장소"
-              label="주로 달리는 장소를 적어주세요."
+              title={intl.formatMessage({ id: 'signup.form.running.location' })}
+              label={intl.formatMessage({
+                id: 'signup.form.running.location.label',
+              })}
               formType={FormType.Input}
             />
             <SignupFormBox
               multiLine
-              title="프로그램을 알게 된 경로"
+              title={intl.formatMessage({ id: 'signup.form.running.way' })}
               formType={FormType.CheckBox}
               formValue={[
                 {
-                  value: 'VMK 회원이어서',
-                  label: 'VMK 회원이어서',
+                  label: intl.formatMessage({
+                    id: `signup.form.running.way.vi.1`,
+                  }),
+                  value: `vi.1`,
                 },
                 {
-                  value: 'VMK가 아닌 동호회, 혹은 지인이 추천해서',
-                  label: 'VMK가 아닌 동호회, 혹은 지인이 추천해서',
+                  label: intl.formatMessage({
+                    id: `signup.form.running.way.vi.2`,
+                  }),
+                  value: `vi.2`,
                 },
                 {
-                  value: 'SNS 활동을 하다가',
-                  label: 'SNS 활동을 하다가',
+                  label: intl.formatMessage({
+                    id: `signup.form.running.way.vi.3`,
+                  }),
+                  value: `vi.3`,
                 },
               ]}
             />
             <SignupFormBox
               multiLine
-              title="참여 계기"
-              label="참여하시게 된 계기를 적어주세요."
+              title={intl.formatMessage({ id: 'signup.form.running.reason' })}
+              label={intl.formatMessage({
+                id: 'signup.form.running.reason.label',
+              })}
               formType={FormType.Textarea}
             />
             <SignupFormBox
               multiLine
-              title="이 외 희망사항"
-              label="프로그램 참여 시 운영진에게 알리고 싶은 내용이 있다면 자유롭게 알려주세요."
+              title={intl.formatMessage({ id: 'signup.form.running.request' })}
+              label={intl.formatMessage({
+                id: 'signup.form.running.request.label',
+              })}
               formType={FormType.Textarea}
             />
           </Stack>
@@ -180,7 +277,7 @@ const SignupVi: React.FC = () => {
             })
           }
         >
-          팀 편성 신청서 제출하기
+          <FormattedMessage id="signup.form.submit" />
         </Button>
         <Button
           fullWidth
@@ -189,7 +286,7 @@ const SignupVi: React.FC = () => {
           color="secondary"
           onClick={() => navigate(BROWSER_PATH.SIGNUP)}
         >
-          되돌아가기
+          <FormattedMessage id="signup.form.back" />
         </Button>
       </Stack>
     );

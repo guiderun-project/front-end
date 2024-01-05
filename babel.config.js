@@ -4,4 +4,13 @@ module.exports = {
     '@babel/preset-env', //(IE 지원을 위한 프리셋)
     '@babel/preset-typescript', //(타입스크립트를 변환하기 위한 프리셋)
   ],
+  plugins: [
+    [
+      'formatjs',
+      {
+        idInterpolationPattern: '[sha512:contenthash:base64:6]',
+        ast: true,
+      },
+    ],
+  ],
 };
