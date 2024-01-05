@@ -3,8 +3,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import LanguageIcon from '@mui/icons-material/Language';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { RootState } from '@/store/index';
+import { change } from '@/store/reducer/locale';
 import { Locale } from '@/types/locale';
 
 interface PagelayoutProps {
@@ -48,10 +50,10 @@ const StyledLocaleBox = styled.div`
 const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const queryClient = useQueryClient();
+  const locale = useSelector((state: RootState) => state.locale.locale);
+  const dispatch = useDispatch();
 
   const open = Boolean(anchorEl);
-  const locale = queryClient.getQueryData(['locale']);
 
   /**
    *
@@ -72,7 +74,7 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
    */
   const handleLocaleChange = (selectedLocale: Locale) => () => {
     if (locale !== selectedLocale) {
-      queryClient.setQueryData(['locale'], selectedLocale);
+      dispatch(change(selectedLocale));
     }
     handleClose();
   };

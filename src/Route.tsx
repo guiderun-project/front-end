@@ -1,19 +1,20 @@
 import React from 'react';
 
-import { useQuery } from '@tanstack/react-query';
 import { IntlProvider } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { PageLayout } from './components/shared';
 import { BROWSER_PATH } from './constants/path';
-import intl, { setLocale } from './i18n/i18n';
+import enMessages from './i18n/messages/en.json';
+import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
 import Intro from './pages/Intro';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
-import { Locale } from './types/locale';
+import { RootState } from './store';
 
 const router = createBrowserRouter([
   {
@@ -43,18 +44,9 @@ const router = createBrowserRouter([
 ]);
 
 const Route: React.FC = () => {
-  const { data: locale } = useQuery<Locale>({ queryKey: ['locale'] });
+  const locale = useSelector((state: RootState) => state.locale.locale);
 
-  //
-  //
-  //
-  React.useEffect(() => {
-    if (!locale) {
-      return;
-    }
-
-    setLocale(locale);
-  }, [locale]);
+  const messages = locale === 'ko' ? koMessages : enMessages;
 
   //
   //
@@ -62,7 +54,7 @@ const Route: React.FC = () => {
 
   return (
     <PageLayout>
-      <IntlProvider locale={intl.locale} messages={intl.messages}>
+      <IntlProvider locale={locale} messages={messages}>
         <RouterProvider router={router} />
       </IntlProvider>
     </PageLayout>
