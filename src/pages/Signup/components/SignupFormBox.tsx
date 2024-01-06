@@ -153,7 +153,9 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
                 key={el.label}
                 control={<Checkbox />}
                 value={el.value}
-                label={el.label}
+                label={
+                  <Typography whiteSpace="break-spaces">{el.label}</Typography>
+                }
               />
             ))}
           </FormGroup>
@@ -170,7 +172,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
 
   return (
     <StyledInputLabel multiLine={multiLine}>
-      <Typography fontWeight={700}>
+      <Typography whiteSpace="break-spaces" fontWeight={700}>
         <Badge color="error" variant="dot" invisible={!required}>
           {title}
         </Badge>
