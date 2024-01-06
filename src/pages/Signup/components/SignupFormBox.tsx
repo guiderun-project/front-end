@@ -15,6 +15,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useController, useFormContext } from 'react-hook-form';
 
 import { FormType } from '@/types/form';
 
@@ -25,6 +26,7 @@ interface FormValueType {
 
 interface SignupFormBoxProps {
   title: string;
+  name: string;
   formType: FormType;
   formValue?: FormValueType[];
   content?: React.ReactNode | string;
@@ -63,6 +65,7 @@ const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
 
 const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   title,
+  name,
   formType,
   content,
   formValue,
@@ -71,6 +74,32 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   required = false,
   disabled = false,
 }) => {
+  const { control } = useFormContext();
+  const { field } = useController({
+    name,
+    control,
+    defaultValue: formType === FormType.CheckBox ? [] : null,
+    rules: {},
+  });
+
+  /**
+   *
+   */
+  const handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedValue = e.target.value;
+    if ((field.value as string[]).includes(selectedValue)) {
+      field.onChange(
+        (field.value as string[]).filter((value) => value !== selectedValue),
+      );
+      return;
+    }
+
+    field.onChange([...field.value, selectedValue]);
+  };
+
+  /**
+   *
+   */
   const renderForm = () => {
     switch (formType) {
       case FormType.Input:
@@ -80,6 +109,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             size="small"
             disabled={disabled}
             placeholder={label}
+            value={field.value}
+            onChange={field.onChange}
           />
         );
 
@@ -90,6 +121,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             fullWidth
             disabled={disabled}
             placeholder={label}
+            value={field.value}
+            onChange={field.onChange}
           />
         );
 
@@ -103,6 +136,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
               labelId={label}
               label={label}
               size="small"
+              value={field.value}
+              onChange={field.onChange}
             >
               {formValue
                 ? formValue.map((el) => (
@@ -123,6 +158,8 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           <FormControl fullWidth disabled={disabled}>
             <RadioGroup
               row
+              value={field.value}
+              onChange={field.onChange}
               sx={{
                 width: '100%',
                 padding: '1rem',
@@ -151,7 +188,14 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             {formValue.map((el) => (
               <FormControlLabel
                 key={el.label}
-                control={<Checkbox />}
+                control={
+                  <Checkbox
+                    checked={(field.value as string[]).includes(
+                      el.value as string,
+                    )}
+                    onChange={handleCheckBoxClick}
+                  />
+                }
                 value={el.value}
                 label={
                   <Typography whiteSpace="break-spaces">{el.label}</Typography>
