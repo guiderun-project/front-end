@@ -93,5 +93,6 @@
   "signup.terms.likeness.2": "2. 초상권 보유 및 이용기간 : \n홍보한 게시물 삭제시까지",
   "signup.terms.likeness.3": "3. 초상권 2차 사용 : \n 온라인 및 오프라인 홍보물 제작 및 게시",
   "signup.terms.likeness.4": "4. 초상권 활용 동의에 거부할 권리가 있으며, 거부 시 교육 홍보물 제작에서 제외되거나 모자이크 처리됩니다.",
-  "signup.terms.likeness.5": "5. 인격을 침해하지 않는 범위 내에서 저작물에 대한 편집 및 후보정이 이루어질 예정입니다."
+  "signup.terms.likeness.5": "5. 인격을 침해하지 않는 범위 내에서 저작물에 대한 편집 및 후보정이 이루어질 예정입니다.",
+  "message.form.required.error": "{field} 항목은 필수 입력 항목입니다. "
 }

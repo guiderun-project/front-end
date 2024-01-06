@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useController, useFormContext } from 'react-hook-form';
+import { useIntl } from 'react-intl';
 
 import { FormType } from '@/types/form';
 
@@ -74,12 +75,16 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   required = false,
   disabled = false,
 }) => {
+  const intl = useIntl();
   const { control } = useFormContext();
-  const { field } = useController({
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     name,
     control,
     defaultValue: formType === FormType.CheckBox ? [] : null,
-    rules: {},
+    rules: { required },
   });
 
   /**
@@ -107,6 +112,15 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           <TextField
             fullWidth
             size="small"
+            error={error ? true : false}
+            helperText={
+              error
+                ? intl.formatMessage(
+                    { id: 'message.form.required.error' },
+                    { field: title },
+                  )
+                : null
+            }
             disabled={disabled}
             placeholder={label}
             value={field.value}
@@ -119,6 +133,15 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           <TextField
             multiline
             fullWidth
+            error={error ? true : false}
+            helperText={
+              error
+                ? intl.formatMessage(
+                    { id: 'message.form.required.error' },
+                    { field: title },
+                  )
+                : null
+            }
             disabled={disabled}
             placeholder={label}
             value={field.value}
@@ -132,6 +155,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             <InputLabel id={label}>{label}</InputLabel>
             <Select
               fullWidth
+              error={error ? true : false}
               disabled={disabled}
               labelId={label}
               label={label}
@@ -155,7 +179,11 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
 
       case FormType.Radio:
         return (
-          <FormControl fullWidth disabled={disabled}>
+          <FormControl
+            error={error ? true : false}
+            fullWidth
+            disabled={disabled}
+          >
             <RadioGroup
               row
               value={field.value}
@@ -184,7 +212,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
 
       case FormType.CheckBox:
         return formValue ? (
-          <FormGroup>
+          <FormGroup color={error ? 'error' : 'primary'}>
             {formValue.map((el) => (
               <FormControlLabel
                 key={el.label}
@@ -215,15 +243,29 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   //
 
   return (
-    <StyledInputLabel multiLine={multiLine}>
-      <Typography whiteSpace="break-spaces" fontWeight={700}>
-        <Badge color="error" variant="dot" invisible={!required}>
-          {title}
-        </Badge>
-      </Typography>
-      {content ? content : null}
-      <Stack width="100%">{renderForm()}</Stack>
-    </StyledInputLabel>
+    <>
+      {error ? (
+        <Typography whiteSpace="break-spaces" color="error">
+          {intl.formatMessage(
+            { id: 'message.form.required.error' },
+            { field: title },
+          )}
+        </Typography>
+      ) : null}
+      <StyledInputLabel multiLine={multiLine}>
+        <Typography
+          color={error ? 'error' : 'default'}
+          whiteSpace="break-spaces"
+          fontWeight={700}
+        >
+          <Badge color="error" variant="dot" invisible={!required}>
+            {title}
+          </Badge>
+        </Typography>
+        {content ? content : null}
+        <Stack width="100%">{renderForm()}</Stack>
+      </StyledInputLabel>
+    </>
   );
 };
 
