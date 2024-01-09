@@ -12,11 +12,37 @@ import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
 
+//
+//
+//
+
+export interface SignupViForm {
+  name: string;
+  gender: 'MAN' | 'WOMAN';
+  phone: string;
+  age: number;
+  snsAccount: string;
+  runningExperience: boolean;
+  personalRecord: RunningGroup;
+  detailRecord: string;
+  runnigPlace: string;
+  guideNameRanWith: string;
+  howToKnow: string[];
+  motive: string;
+  hopePrefs: string;
+  privacy: boolean;
+  portraitRights: boolean;
+}
+
+//
+//
+//
+
 const SignupVi: React.FC = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm();
+  const methods = useForm<SignupViForm>();
 
   /**
    *

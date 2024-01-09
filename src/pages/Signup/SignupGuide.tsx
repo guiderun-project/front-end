@@ -16,11 +16,36 @@ import { RunningGroup } from '@/types/group';
 //
 //
 
+export interface SignupGuideForm {
+  name: string;
+  gender: 'MAN' | 'WOMAN';
+  phone: string;
+  age: number;
+  snsAccount: string;
+  guideExperience: boolean;
+  personalRecord: RunningGroup;
+  detailRecord: string;
+  runningPlace: string;
+  viNameRanWith: string;
+  viRecordRanWith: string;
+  viCountRanWith: string;
+  howToKnow: string[];
+  motive: string;
+  possibleViPaceGroup: RunningGroup;
+  hopePrefs: string;
+  privacy: boolean;
+  portraitRights: boolean;
+}
+
+//
+//
+//
+
 const SignupGuide: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm();
+  const methods = useForm<SignupGuideForm>();
 
   /**
    *
@@ -32,10 +57,10 @@ const SignupGuide: React.FC = () => {
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
             <SignupFormBox
+              disabled
               name="disability"
               title={intl.formatMessage({ id: 'signup.form.info.disability' })}
               label={intl.formatMessage({ id: 'common.guide' })}
-              disabled
               formType={FormType.Input}
             />
             <SignupFormBox

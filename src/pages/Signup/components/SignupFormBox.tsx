@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
@@ -187,7 +189,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
             <RadioGroup
               row
               value={field.value}
-              onChange={field.onChange}
+              onChange={(e) => field.onChange(e.target.value)}
               sx={{
                 width: '100%',
                 padding: '1rem',
