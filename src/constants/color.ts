@@ -16,3 +16,8 @@ export const GENDER_COLOR = {
   WOMAN: '#D96A94',
   MAN: '#6885D1',
 } as const;
+
+export const EVENT_COLOR = {
+  EVENT: '#3D6CAB',
+  TRAINING: '#4C5056',
+} as const;

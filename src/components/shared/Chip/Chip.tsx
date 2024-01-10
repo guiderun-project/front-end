@@ -10,7 +10,14 @@ interface ChipProps {
 //
 //
 
-const StyledChip = styled.span<{ bgColor?: string; color?: string }>`
+const StyledChip = styled.div<{ bgColor?: string; color?: string }>`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
   height: 1.25rem;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
