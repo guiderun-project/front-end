@@ -4,4 +4,15 @@ export enum RunningGroup {
   C = 'C',
   D = 'D',
   E = 'E',
+  P = 'P',
+}
+
+export enum GenderEnum {
+  M = 'MAN',
+  W = 'WOMAN',
+}
+
+export enum DisabilityEnum {
+  VI = 'vi',
+  GUIDE = 'guide',
 }
