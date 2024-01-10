@@ -10,3 +10,8 @@ export enum GenderEnum {
   M = 'MAN',
   W = 'WOMAN',
 }
+
+export enum DisabilityEnum {
+  VI = 'vi',
+  GUIDE = 'guide',
+}

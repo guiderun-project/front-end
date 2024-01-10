@@ -7,9 +7,9 @@ export const TEAM_COLOR = {
   P: '#8E8E8E',
 } as const;
 
-export const TYPE_COLOR = {
-  VI: '#900782',
-  GUIDE: '#0C3B82',
+export const DISABILITY_COLOR = {
+  VI: { MAIN: '#900782', SUB: '#F2DAEF' },
+  GUIDE: { MAIN: '#0C3B82', SUB: '#DDE8F1' },
 } as const;
 
 export const GENDER_COLOR = {
