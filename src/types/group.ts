@@ -5,3 +5,8 @@ export enum RunningGroup {
   D = 'D',
   E = 'E',
 }
+
+export enum GenderEnum {
+  M = 'MAN',
+  W = 'WOMAN',
+}
