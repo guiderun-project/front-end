@@ -23,7 +23,7 @@ const GropuChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
         component="span"
         fontSize="1.125rem"
         fontWeight={700}
-        color={TEAM_COLOR?.[group] ?? TEAM_COLOR.P}
+        color={TEAM_COLOR?.[group]}
       >
         {group}
       </Typography>

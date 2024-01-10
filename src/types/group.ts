@@ -4,6 +4,7 @@ export enum RunningGroup {
   C = 'C',
   D = 'D',
   E = 'E',
+  P = 'P',
 }
 
 export enum GenderEnum {
