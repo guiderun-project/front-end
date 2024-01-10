@@ -11,3 +11,8 @@ export const TYPE_COLOR = {
   VI: '#900782',
   GUIDE: '#0C3B82',
 } as const;
+
+export const GENDER_COLOR = {
+  WOMAN: '#D96A94',
+  MAN: '#6885D1',
+} as const;
