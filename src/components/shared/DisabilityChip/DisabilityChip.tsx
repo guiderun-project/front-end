@@ -1,6 +1,7 @@
-import styled from '@emotion/styled';
 import { Avatar } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+
+import { Chip } from '../Chip';
 
 import { DISABILITY_COLOR } from '@/constants/color';
 import { DisabilityEnum } from '@/types/group';
@@ -10,21 +11,6 @@ interface DisabilityChipProps {
   type: DisabilityEnum;
   variant?: 'default' | 'reserve';
 }
-
-//
-//
-//
-
-const StyledChip = styled.span<{ bgColor?: string; color?: string }>`
-  height: 1.25rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-family: 'pretendard', sans-serif;
-  font-size: 0.625rem; //10px
-  font-weight: 700;
-  background-color: ${({ bgColor }) => bgColor ?? 'grey'};
-  color: ${({ color }) => color ?? '#000'};
-`;
 
 //
 //
@@ -89,7 +75,7 @@ const DisabilityChip: React.FC<DisabilityChipProps> = ({
   }
 
   return (
-    <StyledChip
+    <Chip
       bgColor={
         type === DisabilityEnum.GUIDE
           ? DISABILITY_COLOR.GUIDE.SUB
@@ -102,7 +88,7 @@ const DisabilityChip: React.FC<DisabilityChipProps> = ({
       }
     >
       <FormattedMessage id={`common.${type}`} />
-    </StyledChip>
+    </Chip>
   );
 };
 
