@@ -3,6 +3,7 @@ import { Stack } from '@mui/material';
 import {
   DisabilityChip,
   EventChip,
+  EventStatus,
   GenderChip,
   GroupChip,
 } from '@/components/shared';
@@ -53,6 +54,11 @@ const Main: React.FC = () => {
         <GroupChip type="text" group={RunningGroup.D} />
         <GroupChip type="text" group={RunningGroup.E} />
         <GroupChip type="text" group={RunningGroup.P} />
+      </Stack>
+      <Stack direction="row" gap="1rem">
+        <EventStatus status="recruiting" />
+        <EventStatus status="closed" />
+        <EventStatus status="end" />
       </Stack>
     </Stack>
   );
