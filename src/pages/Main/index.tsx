@@ -28,6 +28,10 @@ const StyledContainer = styled.div`
     color: #fff;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   @media screen and (max-width: 426px) {
     padding: 1.875rem;
     gap: 8rem;
@@ -293,7 +297,15 @@ const Main: React.FC = () => {
                   },
                 }}
               >
-                인스타그램 @guide_run_ko 계정을 통해 소통하고 있습니다.
+                인스타그램{' '}
+                <a
+                  href="https://www.instagram.com/guide_run_ko"
+                  target="_blank"
+                  aria-label="인스타그램으로 이동"
+                >
+                  @guide_run_ko
+                </a>{' '}
+                계정을 통해 소통하고 있습니다.
               </Typography>
               <Typography
                 component="p"
@@ -308,8 +320,15 @@ const Main: React.FC = () => {
                   },
                 }}
               >
-                Instagram account @guide_run_ko is our main communication tool
-                for our community.
+                Instagram account{' '}
+                <a
+                  href="https://www.instagram.com/guide_run_ko"
+                  target="_blank"
+                  aria-label="인스타그램으로 이동"
+                >
+                  @guide_run_ko
+                </a>{' '}
+                is our main communication tool for our community.
               </Typography>
             </Stack>
           </Stack>
