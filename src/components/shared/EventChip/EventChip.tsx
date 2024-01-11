@@ -34,7 +34,7 @@ const EventChip: React.FC<EventChipProps> = ({ variant, type }) => {
    */
   const getEventText = () => {
     if (variant === 'full') {
-      return <FormattedMessage id={`common.${type}`} />;
+      return <FormattedMessage id={`common.chip.${type}`} />;
     }
 
     return type[0].toUpperCase();
@@ -51,6 +51,8 @@ const EventChip: React.FC<EventChipProps> = ({ variant, type }) => {
         height: length,
         bgcolor: getBgColor(),
         fontSize: '0.625rem',
+        fontWeight: 700,
+        textAlign: 'center',
       }}
     >
       {getEventText()}
