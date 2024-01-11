@@ -19,11 +19,19 @@ import { RootState } from './store';
 const router = createBrowserRouter([
   {
     path: BROWSER_PATH.INTRO,
-    element: <Intro />,
+    element: (
+      <PageLayout>
+        <Intro />
+      </PageLayout>
+    ),
   },
   {
     path: BROWSER_PATH.OAUTH,
-    element: <Oauth />,
+    element: (
+      <PageLayout>
+        <Oauth />
+      </PageLayout>
+    ),
   },
   {
     path: BROWSER_PATH.MAIN,
@@ -31,15 +39,27 @@ const router = createBrowserRouter([
   },
   {
     path: BROWSER_PATH.ADMIN,
-    element: <Admin />,
+    element: (
+      <PageLayout>
+        <Admin />
+      </PageLayout>
+    ),
   },
   {
     path: BROWSER_PATH.SIGNUP,
-    element: <Signup />,
+    element: (
+      <PageLayout>
+        <Signup />
+      </PageLayout>
+    ),
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: (
+      <PageLayout>
+        <NotFound />
+      </PageLayout>
+    ),
   },
 ]);
 
@@ -53,11 +73,11 @@ const Route: React.FC = () => {
   //
 
   return (
-    <PageLayout>
+    <>
       <IntlProvider locale={locale} messages={messages}>
         <RouterProvider router={router} />
       </IntlProvider>
-    </PageLayout>
+    </>
   );
 };
 
