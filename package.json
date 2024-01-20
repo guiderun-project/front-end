@@ -1,7 +1,7 @@
 {
-  "name": "link-up-archive",
+  "name": "guide-run-propject",
   "version": "1.0.0",
-  "description": "VMK implements a professional running coaching program for the visually impaired running with the fund by lululemon Here to Be Social Impact center. This Service is made for this Link up Program.",
+  "description": "Guide run project for VI(Visual Impairment) runner",
   "main": "index.js",
   "author": "Jaeseok Jo(https://github.com/Pridesd)",
   "license": "MIT",
