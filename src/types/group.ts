@@ -7,6 +7,14 @@ export enum RunningGroup {
   P = 'P',
 }
 
+export enum RoleEnum {
+  New = 'NEW',
+  Wait = 'WAIT',
+  User = 'USER',
+  Coach = 'COACH',
+  Admin = 'ADMIN',
+}
+
 export enum GenderEnum {
   M = 'MAN',
   W = 'WOMAN',
