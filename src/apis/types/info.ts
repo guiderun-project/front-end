@@ -247,7 +247,7 @@ export type eventHistoryGetResponse = {
 
 export type eventHistoryCountGetRequest = {
   userId: string;
-  //sort 들어가야 되지 않나?
+  sort?: 'total' | 'upcoming' | 'end';
 };
 
 export type eventHistoryCountGetResponse = {
