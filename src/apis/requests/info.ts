@@ -1,4 +1,3 @@
-import { EventSort, PartnerSort } from '@/types/sort';
 import { axiosInstanceWithToken } from '../axios';
 import type {
   eventHistoryCountGetRequest,
@@ -30,6 +29,8 @@ import type {
   runningSpecViPatchResponse,
   userInfoGetResponse,
 } from '../types/info';
+
+import { EventSort, PartnerSort } from '@/types/sort';
 
 class AuthApi {
   /**
