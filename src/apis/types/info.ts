@@ -43,7 +43,7 @@ export type personalInfoGetResponse = {
   snsId: string;
 };
 
-export type userInfoPatchRequest = {
+export type personalInfoPatchRequest = {
   name: string;
   gender: GenderEnum;
   phoneNumber: string;
@@ -51,7 +51,7 @@ export type userInfoPatchRequest = {
   snsId: string;
 };
 
-export type userInfoPatchResponse = {
+export type personalInfoPatchResponse = {
   name: string;
   type: DisabilityEnum;
   role: RoleEnum;
@@ -194,9 +194,9 @@ export type profileGetResponse = {
 
 export type partnerListGetRequest = {
   userId: string;
-  sort: 'count' | 'name' | 'record';
-  limit: number;
-  start: number;
+  sort?: 'count' | 'name' | 'record';
+  limit?: number;
+  start?: number;
 };
 
 type partnerData = {
@@ -225,9 +225,9 @@ export type partnerListCountGetResponse = {
 
 export type eventHistoryGetRequest = {
   userId: string;
-  sort: 'total' | 'upcoming' | 'end';
-  limit: number;
-  start: number;
+  sort?: 'total' | 'upcoming' | 'end';
+  limit?: number;
+  start?: number;
 };
 
 type eventData = {
