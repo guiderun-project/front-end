@@ -1,9 +1,12 @@
 import {
   DisabilityEnum,
+  EventType,
   GenderEnum,
+  RecruitStatus,
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { EventSort, PartnerSort } from '@/types/sort';
 
 export type myPageGetResponse = {
   role: RoleEnum;
@@ -194,7 +197,7 @@ export type profileGetResponse = {
 
 export type partnerListGetRequest = {
   userId: string;
-  sort?: 'count' | 'name' | 'record';
+  sort?: PartnerSort;
   limit?: number;
   start?: number;
 };
@@ -225,17 +228,17 @@ export type partnerListCountGetResponse = {
 
 export type eventHistoryGetRequest = {
   userId: string;
-  sort?: 'total' | 'upcoming' | 'end';
+  sort?: EventSort;
   limit?: number;
   start?: number;
 };
 
 type eventData = {
   eventId: number;
-  eventType: 'Training' | 'Competition';
+  eventType: EventType;
   name: string;
   date: string;
-  recruitStatus: 'UPCOMING' | 'OPEN' | 'CLOSE';
+  recruitStatus: RecruitStatus;
 };
 
 export type eventHistoryGetResponse = {
@@ -247,7 +250,7 @@ export type eventHistoryGetResponse = {
 
 export type eventHistoryCountGetRequest = {
   userId: string;
-  sort?: 'total' | 'upcoming' | 'end';
+  sort?: EventSort;
 };
 
 export type eventHistoryCountGetResponse = {

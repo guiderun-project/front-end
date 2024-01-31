@@ -1,3 +1,4 @@
+import { EventSort, PartnerSort } from '@/types/sort';
 import { axiosInstanceWithToken } from '../axios';
 import type {
   eventHistoryCountGetRequest,
@@ -129,7 +130,7 @@ class AuthApi {
 
   partnerListGet = async ({
     userId,
-    sort = 'count',
+    sort = PartnerSort.Count,
     limit = 4,
     start = 0,
   }: partnerListGetRequest) => {
@@ -151,7 +152,7 @@ class AuthApi {
 
   eventHistoryGet = async ({
     userId,
-    sort = 'total',
+    sort = EventSort.Total,
     limit = 3,
     start = 0,
   }: eventHistoryGetRequest) => {
@@ -164,7 +165,7 @@ class AuthApi {
 
   eventHistoryCountGet = async ({
     userId,
-    sort = 'total',
+    sort = EventSort.Total,
   }: eventHistoryCountGetRequest) => {
     return axiosInstanceWithToken
       .get<eventHistoryCountGetResponse>(
