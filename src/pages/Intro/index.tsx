@@ -52,12 +52,23 @@ const Intro: React.FC = () => {
             />
           </Link>
         </Stack>
+        {/* <Link to="/intro"> */}
+        <Typography
+          onClick={() => alert('준비중입니다.')}
+          lineHeight="1.125rem"
+        >
+          이메일로 가입하기 {'>'}
+        </Typography>
+        {/* </Link> */}
       </Stack>
       <Button
         variant="contained"
         size="large"
-        color="guide"
+        fullWidth
         onClick={() => navigate(BROWSER_PATH.MAIN)}
+        sx={{
+          maxWidth: '19.6875rem',
+        }}
       >
         <FormattedMessage id="intro.main.button" />
       </Button>

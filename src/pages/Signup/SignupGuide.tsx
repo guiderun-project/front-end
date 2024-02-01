@@ -50,12 +50,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
-            <SignupFormBox
-              required
-              title={intl.formatMessage({ id: 'signup.form.info.email' })}
-              label={intl.formatMessage({ id: 'signup.form.info.email.label' })}
-              formType={FormType.Input}
-            />
+
             <SignupFormBox
               required
               title={intl.formatMessage({ id: 'signup.form.info.name' })}
