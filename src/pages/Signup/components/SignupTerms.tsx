@@ -15,17 +15,18 @@ const SignupTerms = () => {
       content={
         <Stack gap="2rem" width="100%">
           <SignupFormBox
+            name="privacy"
             title={intl.formatMessage({ id: 'signup.terms.privacy.title' })}
             required
             multiLine
             formType={FormType.Radio}
             formValue={[
               {
-                value: false,
+                value: true,
                 label: intl.formatMessage({ id: 'signup.radio.agree' }),
               },
               {
-                value: true,
+                value: false,
                 label: intl.formatMessage({ id: 'signup.radio.disagree' }),
               },
             ]}
@@ -59,17 +60,18 @@ const SignupTerms = () => {
             }
           />
           <SignupFormBox
+            name="portraitRights"
             title={intl.formatMessage({ id: 'signup.terms.likeness.title' })}
             required
             multiLine
             formType={FormType.Radio}
             formValue={[
               {
-                value: false,
+                value: true,
                 label: intl.formatMessage({ id: 'signup.radio.agree' }),
               },
               {
-                value: true,
+                value: false,
                 label: intl.formatMessage({ id: 'signup.radio.disagree' }),
               },
             ]}

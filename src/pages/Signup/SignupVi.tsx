@@ -1,4 +1,5 @@
 import { Button, Stack } from '@mui/material';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -11,10 +12,37 @@ import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
 
+//
+//
+//
+
+export interface SignupViForm {
+  name: string;
+  gender: 'MAN' | 'WOMAN';
+  phone: string;
+  age: number;
+  snsAccount: string;
+  runningExperience: boolean;
+  personalRecord: RunningGroup;
+  detailRecord: string;
+  runnigPlace: string;
+  guideNameRanWith: string;
+  howToKnow: string[];
+  motive: string;
+  hopePrefs: string;
+  privacy: boolean;
+  portraitRights: boolean;
+}
+
+//
+//
+//
+
 const SignupVi: React.FC = () => {
   const navigate = useNavigate();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
+  const methods = useForm<SignupViForm>();
 
   /**
    *
@@ -26,46 +54,45 @@ const SignupVi: React.FC = () => {
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
             <SignupFormBox
+              name="disability"
               title={intl.formatMessage({ id: 'signup.form.info.disability' })}
               label={intl.formatMessage({ id: 'common.vi' })}
               disabled
               formType={FormType.Input}
             />
             <SignupFormBox
+              name="gender"
               required
               title={intl.formatMessage({ id: 'signup.form.info.gender' })}
               formType={FormType.Radio}
               formValue={[
                 {
-                  value: 'B',
+                  value: 'MAN',
                   label: intl.formatMessage({ id: 'common.gender.man' }),
                 },
                 {
-                  value: 'G',
+                  value: 'WOMAN',
                   label: intl.formatMessage({ id: 'common.gender.woman' }),
                 },
               ]}
             />
             <SignupFormBox
               required
-              title={intl.formatMessage({ id: 'signup.form.info.email' })}
-              label={intl.formatMessage({ id: 'signup.form.info.email.label' })}
-              formType={FormType.Input}
-            />
-            <SignupFormBox
-              required
+              name="name"
               title={intl.formatMessage({ id: 'signup.form.info.name' })}
               label={intl.formatMessage({ id: 'signup.form.info.name.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
+              name="phone"
               title={intl.formatMessage({ id: 'signup.form.info.tel' })}
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
+              name="age"
               title={intl.formatMessage({ id: 'signup.form.info.age' })}
               label={intl.formatMessage({ id: 'signup.form.info.age' })}
               formType={FormType.Select}
@@ -116,6 +143,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="snsAccount"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
               label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
@@ -137,6 +165,7 @@ const SignupVi: React.FC = () => {
           <Stack gap="2rem" width="100%">
             <SignupFormBox
               required
+              name="runningExperience"
               title={intl.formatMessage({
                 id: 'signup.form.running.experience',
               })}
@@ -154,6 +183,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               required
+              name="personalRecord"
               title={intl.formatMessage({ id: 'signup.form.running.record' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.record.label',
@@ -198,6 +228,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="detailRecord"
               title={intl.formatMessage({ id: 'signup.form.running.detail' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.detail.label',
@@ -206,6 +237,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="runningPlace"
               title={intl.formatMessage({ id: 'signup.form.running.location' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.location.label',
@@ -214,6 +246,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="howToKnow"
               title={intl.formatMessage({ id: 'signup.form.running.way' })}
               formType={FormType.CheckBox}
               formValue={[
@@ -239,6 +272,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="motive"
               title={intl.formatMessage({ id: 'signup.form.running.reason' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.reason.label',
@@ -247,6 +281,7 @@ const SignupVi: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="hopePrefs"
               title={intl.formatMessage({ id: 'signup.form.running.request' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.request.label',
@@ -267,15 +302,10 @@ const SignupVi: React.FC = () => {
       <Stack gap="1rem">
         <Button
           fullWidth
+          type="submit"
           variant="contained"
           size="large"
           color="secondary"
-          onClick={() =>
-            setSearchparams({
-              type: searchParams.get('type') ?? '',
-              isCompleted: 'true',
-            })
-          }
         >
           <FormattedMessage id="signup.form.submit" />
         </Button>
@@ -297,13 +327,24 @@ const SignupVi: React.FC = () => {
   //
 
   return (
-    <Stack padding="5rem 0" gap="5rem">
-      {renderUserInfo()}
-      {renderRunningSpec()}
-      <SignupTerms />
-      <TeamingCriteria />
-      {renderButton()}
-    </Stack>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={() => {
+          setSearchparams({
+            type: searchParams.get('type') ?? '',
+            isCompleted: 'true',
+          });
+        }}
+      >
+        <Stack padding="5rem 0" gap="5rem">
+          {renderUserInfo()}
+          {renderRunningSpec()}
+          <SignupTerms />
+          <TeamingCriteria />
+          {renderButton()}
+        </Stack>
+      </form>
+    </FormProvider>
   );
 };
 

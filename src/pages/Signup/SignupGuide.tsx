@@ -1,4 +1,5 @@
 import { Button, Stack } from '@mui/material';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -15,10 +16,36 @@ import { RunningGroup } from '@/types/group';
 //
 //
 
+export interface SignupGuideForm {
+  name: string;
+  gender: 'MAN' | 'WOMAN';
+  phone: string;
+  age: number;
+  snsAccount: string;
+  guideExperience: boolean;
+  personalRecord: RunningGroup;
+  detailRecord: string;
+  runningPlace: string;
+  viNameRanWith: string;
+  viRecordRanWith: string;
+  viCountRanWith: string;
+  howToKnow: string[];
+  motive: string;
+  possibleViPaceGroup: RunningGroup;
+  hopePrefs: string;
+  privacy: boolean;
+  portraitRights: boolean;
+}
+
+//
+//
+//
+
 const SignupGuide: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
+  const methods = useForm<SignupGuideForm>();
 
   /**
    *
@@ -30,41 +57,45 @@ const SignupGuide: React.FC = () => {
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
             <SignupFormBox
+              disabled
+              name="disability"
               title={intl.formatMessage({ id: 'signup.form.info.disability' })}
               label={intl.formatMessage({ id: 'common.guide' })}
-              disabled
               formType={FormType.Input}
             />
             <SignupFormBox
               required
+              name="gender"
               title={intl.formatMessage({ id: 'signup.form.info.gender' })}
               formType={FormType.Radio}
               formValue={[
                 {
-                  value: 'B',
+                  value: 'MAN',
                   label: intl.formatMessage({ id: 'common.gender.man' }),
                 },
                 {
-                  value: 'G',
+                  value: 'WOMAN',
                   label: intl.formatMessage({ id: 'common.gender.woman' }),
                 },
               ]}
             />
-
             <SignupFormBox
               required
+              name="name"
               title={intl.formatMessage({ id: 'signup.form.info.name' })}
               label={intl.formatMessage({ id: 'signup.form.info.name.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
+              name="phone"
               title={intl.formatMessage({ id: 'signup.form.info.tel' })}
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
             />
             <SignupFormBox
               required
+              name="age"
               title={intl.formatMessage({ id: 'signup.form.info.age' })}
               label={intl.formatMessage({ id: 'signup.form.info.age' })}
               formType={FormType.Select}
@@ -115,6 +146,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="snsAccount"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
               label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
@@ -136,6 +168,7 @@ const SignupGuide: React.FC = () => {
           <Stack gap="2rem" width="100%">
             <SignupFormBox
               required
+              name="personalRecord"
               title={intl.formatMessage({ id: 'signup.form.running.record' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.record.label',
@@ -180,6 +213,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="detailRecord"
               title={intl.formatMessage({ id: 'signup.form.running.detail' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.detail.label',
@@ -188,6 +222,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="runningPlace"
               title={intl.formatMessage({ id: 'signup.form.running.location' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.location.label',
@@ -197,6 +232,7 @@ const SignupGuide: React.FC = () => {
             <SignupFormBox
               required
               multiLine
+              name="guideExperience"
               title={intl.formatMessage({
                 id: 'signup.form.running.guide.experience',
               })}
@@ -214,6 +250,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="viNameRanWith"
               title={intl.formatMessage({
                 id: 'signup.form.running.guide.experience.vi',
               })}
@@ -224,6 +261,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="viRecordRanWith"
               title={intl.formatMessage({
                 id: 'signup.form.running.guide.experience.pace',
               })}
@@ -234,6 +272,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="viCountRanWith"
               title={intl.formatMessage({
                 id: 'signup.form.running.guide.experience.count',
               })}
@@ -244,6 +283,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="howToKnow"
               title={intl.formatMessage({ id: 'signup.form.running.way' })}
               formType={FormType.CheckBox}
               formValue={[
@@ -275,6 +315,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="motive"
               title={intl.formatMessage({ id: 'signup.form.running.reason' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.reason.label',
@@ -284,6 +325,7 @@ const SignupGuide: React.FC = () => {
             <SignupFormBox
               required
               multiLine
+              name="possibleViPaceGroup"
               title={intl.formatMessage({ id: 'signup.form.running.group' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.group.label',
@@ -329,6 +371,7 @@ const SignupGuide: React.FC = () => {
             />
             <SignupFormBox
               multiLine
+              name="hopePrefs"
               title={intl.formatMessage({ id: 'signup.form.running.request' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.request.label',
@@ -349,15 +392,10 @@ const SignupGuide: React.FC = () => {
       <Stack gap="1rem">
         <Button
           fullWidth
+          type="submit"
           variant="contained"
           size="large"
           color="secondary"
-          onClick={() =>
-            setSearchparams({
-              type: searchParams.get('type') ?? '',
-              isCompleted: 'true',
-            })
-          }
         >
           <FormattedMessage id="signup.form.submit" />
         </Button>
@@ -379,13 +417,24 @@ const SignupGuide: React.FC = () => {
   //
 
   return (
-    <Stack padding="5rem 0" gap="5rem">
-      {renderUserInfo()}
-      {renderRunningSpec()}
-      <SignupTerms />
-      <TeamingCriteria />
-      {renderButton()}
-    </Stack>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(() => {
+          setSearchparams({
+            type: searchParams.get('type') ?? '',
+            isCompleted: 'true',
+          });
+        })}
+      >
+        <Stack padding="5rem 0" gap="5rem">
+          {renderUserInfo()}
+          {renderRunningSpec()}
+          <SignupTerms />
+          <TeamingCriteria />
+          {renderButton()}
+        </Stack>
+      </form>
+    </FormProvider>
   );
 };
 
