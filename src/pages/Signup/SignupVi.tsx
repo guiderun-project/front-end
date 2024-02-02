@@ -1,16 +1,29 @@
-import { Button, Stack } from '@mui/material';
-import { useForm, FormProvider } from 'react-hook-form';
+import React, { useEffect } from 'react';
+
+import {
+  Badge,
+  Box,
+  Button,
+  Checkbox,
+  Chip,
+  FormControlLabel,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
-import SignupFormBox from './components/SignupFormBox';
+import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
 import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
+import { viSignupPostRequest } from './SignupGuide';
 
 //
 //
@@ -39,10 +52,26 @@ export interface SignupViForm {
 //
 
 const SignupVi: React.FC = () => {
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
+
   const navigate = useNavigate();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<SignupViForm>();
+  const methods = useForm<viSignupPostRequest>();
+
+  const handleIdCheck = () => {
+    // TODO 중복 체크 API methods.getValues().accountId;
+    // alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
+    if (
+      window.confirm(
+        intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
+      )
+    ) {
+      setIsChecked(true);
+      methods.setValue('accountId', methods.getValues().accountId);
+    }
+  };
 
   /**
    *
@@ -53,16 +82,26 @@ const SignupVi: React.FC = () => {
         title={intl.formatMessage({ id: 'signup.form.info.title' })}
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
+            <Box
+              component="div"
+              display="grid"
+              gridTemplateColumns="1fr 3fr"
+              alignItems="center"
+              padding="0.25rem"
+              gap="1rem"
+            >
+              {/* 이름 */}
+              <Typography fontWeight={700} color="#666">
+                <FormattedMessage id="signup.form.info.disability" />
+              </Typography>
+              <Typography>
+                <FormattedMessage id="common.vi" />
+              </Typography>
+            </Box>
+            {/* 성별 */}
             <SignupFormBox
-              name="disability"
-              title={intl.formatMessage({ id: 'signup.form.info.disability' })}
-              label={intl.formatMessage({ id: 'common.vi' })}
-              disabled
-              formType={FormType.Input}
-            />
-            <SignupFormBox
-              name="gender"
               required
+              name="gender"
               title={intl.formatMessage({ id: 'signup.form.info.gender' })}
               formType={FormType.Radio}
               formValue={[
@@ -76,6 +115,160 @@ const SignupVi: React.FC = () => {
                 },
               ]}
             />
+            {/* 아이디 */}
+            <Controller
+              name="accountId"
+              control={methods.control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 1,
+                maxLength: 15,
+                pattern: /^[a-zA-Z0-9_]+$/,
+              }}
+              render={({ field, fieldState }) => (
+                <StyledInputLabel multiLine>
+                  <Typography
+                    color={fieldState.invalid ? 'error' : 'default'}
+                    whiteSpace="break-spaces"
+                    fontWeight={700}
+                  >
+                    <Badge color="error" variant="dot">
+                      <FormattedMessage id="signup.form.info.id" />
+                    </Badge>
+                  </Typography>
+                  <Box
+                    width="100%"
+                    component="div"
+                    display="flex"
+                    gap="1rem"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <TextField
+                      {...field}
+                      fullWidth
+                      size="small"
+                      type="id"
+                      disabled={isChecked}
+                      placeholder={intl.formatMessage({
+                        id: 'signup.form.info.id.label',
+                      })}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        methods.trigger('accountId');
+                      }}
+                    />
+                    <Chip
+                      clickable
+                      component="button"
+                      variant="outlined"
+                      disabled={
+                        isChecked ||
+                        fieldState.invalid ||
+                        field.value?.length === 0
+                      }
+                      label={intl.formatMessage({
+                        id: 'signup.form.info.id.check',
+                      })}
+                      onClick={handleIdCheck}
+                      sx={{
+                        border: '1px solid #333',
+                        padding: '0.625rem 1rem',
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                      }}
+                    />
+                  </Box>
+                  {fieldState.invalid && (
+                    <Typography color="error" fontSize="0.75rem">
+                      아이디는 15자 미만으로 영문 대소문자, 숫자, 밑줄(_)만
+                      가능합니다.
+                    </Typography>
+                  )}
+                </StyledInputLabel>
+              )}
+            />
+            {/* 비밀번호 */}
+            <Controller
+              name="password"
+              control={methods.control}
+              rules={{
+                required: true,
+                minLength: 8,
+                maxLength: 32,
+                pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+              }}
+              render={({ field, fieldState }) => (
+                <Stack gap="1rem">
+                  <StyledInputLabel multiLine={false}>
+                    <Typography
+                      color={fieldState.invalid ? 'error' : 'default'}
+                      whiteSpace="break-spaces"
+                      fontWeight={700}
+                    >
+                      <Badge color="error" variant="dot">
+                        <FormattedMessage id="signup.form.info.password" />
+                      </Badge>
+                    </Typography>
+                    <TextField
+                      {...field}
+                      fullWidth
+                      size="small"
+                      type="password"
+                      disabled={isChecked}
+                      placeholder={intl.formatMessage({
+                        id: 'signup.form.info.password.label',
+                      })}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        methods.trigger('password');
+                      }}
+                    />
+                  </StyledInputLabel>
+                  {fieldState.invalid && (
+                    <Typography color="error" fontSize="0.75rem">
+                      <FormattedMessage id="signup.form.info.password.error" />
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+            />
+            {/* 비밀번호 확인 */}
+            <Stack gap="0.5rem">
+              <StyledInputLabel multiLine={false}>
+                <Typography
+                  color={!isPasswordConfirm ? 'error' : 'default'}
+                  whiteSpace="break-spaces"
+                  fontWeight={700}
+                >
+                  <Badge color="error" variant="dot">
+                    <FormattedMessage id="signup.form.info.password.confirm" />
+                  </Badge>
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="password"
+                  disabled={isChecked}
+                  placeholder={intl.formatMessage({
+                    id: 'signup.form.info.password.label',
+                  })}
+                  onChange={(e) => {
+                    if (methods.getValues().password === e.target.value) {
+                      setIsPasswordConfirm(true);
+                      return;
+                    }
+                    setIsPasswordConfirm(false);
+                  }}
+                />
+              </StyledInputLabel>
+              {!isPasswordConfirm && (
+                <Typography color="error" fontSize="0.75rem">
+                  <FormattedMessage id="signup.form.info.password.confirm.error" />
+                </Typography>
+              )}
+            </Stack>
             <SignupFormBox
               required
               name="name"
@@ -83,13 +276,48 @@ const SignupVi: React.FC = () => {
               label={intl.formatMessage({ id: 'signup.form.info.name.label' })}
               formType={FormType.Input}
             />
+            {/* 전화번호 */}
             <SignupFormBox
               required
-              name="phone"
+              name="phoneNumber"
               title={intl.formatMessage({ id: 'signup.form.info.tel' })}
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
+              openBox={
+                <Controller
+                  name="isOpenNumber"
+                  control={methods.control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Box
+                      component="div"
+                      display="flex"
+                      width="100%"
+                      justifyContent="flex-end"
+                    >
+                      <FormControlLabel
+                        {...field}
+                        control={
+                          <Checkbox
+                            checked={field.value}
+                            size="small"
+                            defaultChecked
+                          />
+                        }
+                        label={intl.formatMessage({
+                          id: 'signup.form.info.private',
+                        })}
+                        sx={{
+                          color: '#42474E',
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  )}
+                />
+              }
             />
+            {/* 나이 */}
             <SignupFormBox
               required
               name="age"
@@ -141,12 +369,46 @@ const SignupVi: React.FC = () => {
                 },
               ]}
             />
+            {/* SNS */}
             <SignupFormBox
               multiLine
-              name="snsAccount"
+              name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
               label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
+              openBox={
+                <Controller
+                  name="isOpenSns"
+                  control={methods.control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Box
+                      component="div"
+                      display="flex"
+                      width="100%"
+                      justifyContent="flex-end"
+                    >
+                      <FormControlLabel
+                        {...field}
+                        control={
+                          <Checkbox
+                            checked={field.value}
+                            size="small"
+                            defaultChecked
+                          />
+                        }
+                        label={intl.formatMessage({
+                          id: 'signup.form.info.private',
+                        })}
+                        sx={{
+                          color: '#42474E',
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  )}
+                />
+              }
             />
           </Stack>
         }
@@ -301,6 +563,7 @@ const SignupVi: React.FC = () => {
     return (
       <Stack gap="1rem">
         <Button
+          disabled={!methods.formState.isValid}
           fullWidth
           type="submit"
           variant="contained"
