@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 
 import Route from './Route';
 import { store } from './store';
-
 import './index.css';
 import { theme } from './theme/theme';
 
