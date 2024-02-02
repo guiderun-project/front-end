@@ -31,6 +31,7 @@ interface SignupFormBoxProps {
   title: string;
   name: string;
   formType: FormType;
+  openBox?: React.ReactNode;
   formValue?: FormValueType[];
   content?: React.ReactNode | string;
   disabled?: boolean;
@@ -72,6 +73,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   formType,
   content,
   formValue,
+  openBox,
   label = '',
   multiLine = false,
   required = false,
@@ -245,7 +247,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   //
 
   return (
-    <Stack gap="1rem">
+    <Stack gap="0.5rem">
       <StyledInputLabel multiLine={multiLine}>
         <Typography
           color={error ? 'error' : 'default'}
@@ -274,6 +276,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           )}
         </Typography>
       )}
+      {openBox ?? null}
     </Stack>
   );
 };

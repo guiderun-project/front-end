@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Button,
@@ -8,6 +8,8 @@ import {
   Badge,
   TextField,
   Typography,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -92,11 +94,16 @@ export type guideSignupPostRequest = {
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
 
   const intl = useIntl();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
   const methods = useForm<guideSignupPostRequest>();
+
+  useEffect(() => {
+    console.log(isPasswordConfirm);
+  }, [isPasswordConfirm]);
 
   /**
    *
@@ -189,6 +196,8 @@ const SignupGuide: React.FC = () => {
                     <TextField
                       {...field}
                       fullWidth
+                      size="small"
+                      type="id"
                       disabled={isChecked}
                       placeholder={intl.formatMessage({
                         id: 'signup.form.info.id.label',
@@ -213,7 +222,7 @@ const SignupGuide: React.FC = () => {
                       onClick={handleIdCheck}
                       sx={{
                         border: '1px solid #333',
-                        padding: '0.625rem 1.5rem',
+                        padding: '0.625rem 1rem',
                         fontWeight: 600,
                         fontSize: '1rem',
                       }}
@@ -228,10 +237,86 @@ const SignupGuide: React.FC = () => {
                 </StyledInputLabel>
               )}
             />
-
             {/* 비밀번호 */}
-
+            <Controller
+              name="password"
+              control={methods.control}
+              rules={{
+                required: true,
+                minLength: 8,
+                maxLength: 32,
+                pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+              }}
+              render={({ field, fieldState }) => (
+                <Stack gap="1rem">
+                  <StyledInputLabel multiLine={false}>
+                    <Typography
+                      color={fieldState.invalid ? 'error' : 'default'}
+                      whiteSpace="break-spaces"
+                      fontWeight={700}
+                    >
+                      <Badge color="error" variant="dot">
+                        <FormattedMessage id="signup.form.info.password" />
+                      </Badge>
+                    </Typography>
+                    <TextField
+                      {...field}
+                      fullWidth
+                      size="small"
+                      type="password"
+                      disabled={isChecked}
+                      placeholder={intl.formatMessage({
+                        id: 'signup.form.info.password.label',
+                      })}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        methods.trigger('password');
+                      }}
+                    />
+                  </StyledInputLabel>
+                  {fieldState.invalid && (
+                    <Typography color="error" fontSize="0.75rem">
+                      <FormattedMessage id="signup.form.info.password.error" />
+                    </Typography>
+                  )}
+                </Stack>
+              )}
+            />
             {/* 비밀번호 확인 */}
+            <Stack gap="0.5rem">
+              <StyledInputLabel multiLine={false}>
+                <Typography
+                  color={!isPasswordConfirm ? 'error' : 'default'}
+                  whiteSpace="break-spaces"
+                  fontWeight={700}
+                >
+                  <Badge color="error" variant="dot">
+                    <FormattedMessage id="signup.form.info.password.confirm" />
+                  </Badge>
+                </Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="password"
+                  disabled={isChecked}
+                  placeholder={intl.formatMessage({
+                    id: 'signup.form.info.password.label',
+                  })}
+                  onChange={(e) => {
+                    if (methods.getValues().password === e.target.value) {
+                      setIsPasswordConfirm(true);
+                      return;
+                    }
+                    setIsPasswordConfirm(false);
+                  }}
+                />
+              </StyledInputLabel>
+              {!isPasswordConfirm && (
+                <Typography color="error" fontSize="0.75rem">
+                  <FormattedMessage id="signup.form.info.password.confirm.error" />
+                </Typography>
+              )}
+            </Stack>
             <SignupFormBox
               required
               name="name"
@@ -242,10 +327,43 @@ const SignupGuide: React.FC = () => {
             {/* 전화번호 */}
             <SignupFormBox
               required
-              name="phone"
+              name="phoneNumber"
               title={intl.formatMessage({ id: 'signup.form.info.tel' })}
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
+              openBox={
+                <Controller
+                  name="isOpenNumber"
+                  control={methods.control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Box
+                      component="div"
+                      display="flex"
+                      width="100%"
+                      justifyContent="flex-end"
+                    >
+                      <FormControlLabel
+                        {...field}
+                        control={
+                          <Checkbox
+                            checked={field.value}
+                            size="small"
+                            defaultChecked
+                          />
+                        }
+                        label={intl.formatMessage({
+                          id: 'signup.form.info.private',
+                        })}
+                        sx={{
+                          color: '#42474E',
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  )}
+                />
+              }
             />
             {/* 나이 */}
             <SignupFormBox
@@ -302,10 +420,43 @@ const SignupGuide: React.FC = () => {
             {/* SNS */}
             <SignupFormBox
               multiLine
-              name="snsAccount"
+              name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
               label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
+              openBox={
+                <Controller
+                  name="isOpenSns"
+                  control={methods.control}
+                  defaultValue={false}
+                  render={({ field }) => (
+                    <Box
+                      component="div"
+                      display="flex"
+                      width="100%"
+                      justifyContent="flex-end"
+                    >
+                      <FormControlLabel
+                        {...field}
+                        control={
+                          <Checkbox
+                            checked={field.value}
+                            size="small"
+                            defaultChecked
+                          />
+                        }
+                        label={intl.formatMessage({
+                          id: 'signup.form.info.private',
+                        })}
+                        sx={{
+                          color: '#42474E',
+                          fontWeight: 400,
+                        }}
+                      />
+                    </Box>
+                  )}
+                />
+              }
             />
           </Stack>
         }
