@@ -245,22 +245,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   //
 
   return (
-    <>
-      {error ? (
-        <Typography
-          whiteSpace="break-spaces"
-          color="error"
-          aria-errormessage={intl.formatMessage(
-            { id: 'message.form.required.error' },
-            { field: title },
-          )}
-        >
-          {intl.formatMessage(
-            { id: 'message.form.required.error' },
-            { field: title },
-          )}
-        </Typography>
-      ) : null}
+    <Stack gap="1rem">
       <StyledInputLabel multiLine={multiLine}>
         <Typography
           color={error ? 'error' : 'default'}
@@ -274,7 +259,22 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
         {content ? content : null}
         <Stack width="100%">{renderForm()}</Stack>
       </StyledInputLabel>
-    </>
+      {error && (
+        <Typography
+          whiteSpace="break-spaces"
+          color="error"
+          aria-errormessage={intl.formatMessage(
+            { id: 'message.form.required.error' },
+            { field: title },
+          )}
+        >
+          {intl.formatMessage(
+            { id: 'message.form.required.error' },
+            { field: title },
+          )}
+        </Typography>
+      )}
+    </Stack>
   );
 };
 
