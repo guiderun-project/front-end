@@ -1,10 +1,20 @@
-import { Button, Stack } from '@mui/material';
-import { useForm, FormProvider } from 'react-hook-form';
+import React from 'react';
+
+import {
+  Button,
+  Chip,
+  Stack,
+  Box,
+  Badge,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
-import SignupFormBox from './components/SignupFormBox';
+import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
@@ -16,36 +26,93 @@ import { RunningGroup } from '@/types/group';
 //
 //
 
-export interface SignupGuideForm {
+export type viSignupPostRequest = {
+  //common section
+  accountId: string;
+  password: string;
   name: string;
-  gender: 'MAN' | 'WOMAN';
-  phone: string;
+  gender: 'MAN' | 'WOMAN'; // GenderEnum;
+  phoneNumber: string;
+  isOpenNumber: boolean;
   age: number;
-  snsAccount: string;
-  guideExperience: boolean;
-  personalRecord: RunningGroup;
-  detailRecord: string;
-  runningPlace: string;
-  viNameRanWith: string;
-  viRecordRanWith: string;
-  viCountRanWith: string;
-  howToKnow: string[];
-  motive: string;
-  possibleViPaceGroup: RunningGroup;
-  hopePrefs: string;
+  recordDegree: RunningGroup;
+  detailRecord: string | null;
+  snsId: string | null;
+  isOpenSns: boolean;
+  //VI section
+  isRunningExp: boolean;
+  guideName: string | null;
+  runningPlace: string | null;
+
+  howToKnow: string[] | null;
+  motive: string | null;
+  hopePrefs: string | null;
+
   privacy: boolean;
   portraitRights: boolean;
-}
+};
+
+export type guideSignupPostRequest = {
+  //common section
+  accountId: string;
+  password: string;
+  name: string;
+  gender: 'MAN' | 'WOMAN'; // GenderEnum;
+  phoneNumber: string;
+  isOpenNumber: boolean;
+  age: number;
+  recordDegree: RunningGroup;
+  detailRecord: string | null;
+  snsId: string | null;
+  isOpenSns: boolean;
+  runningPlace: string | null;
+
+  //guide section
+  isGuideExp: boolean;
+  viName: string | null;
+  viRecord: string | null;
+  viCount: string | null;
+  guidingPace: RunningGroup;
+
+  howToKnow: string[] | null;
+  motive: string | null;
+  hopePrefs: string | null;
+
+  privacy: boolean;
+  portraitRights: boolean;
+};
+
+//
+//
+//
 
 //
 //
 //
 
 const SignupGuide: React.FC = () => {
+  const [isChecked, setIsChecked] = React.useState(false);
+
   const intl = useIntl();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<SignupGuideForm>();
+  const methods = useForm<guideSignupPostRequest>();
+
+  /**
+   *
+   */
+  const handleIdCheck = () => {
+    // TODO 중복 체크 API methods.getValues().accountId;
+    // alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
+    if (
+      window.confirm(
+        intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
+      )
+    ) {
+      setIsChecked(true);
+      methods.setValue('accountId', methods.getValues().accountId);
+    }
+  };
 
   /**
    *
@@ -56,13 +123,23 @@ const SignupGuide: React.FC = () => {
         title={intl.formatMessage({ id: 'signup.form.info.title' })}
         content={
           <Stack gap="2rem" width="100%" paddingTop="0.125rem">
-            <SignupFormBox
-              disabled
-              name="disability"
-              title={intl.formatMessage({ id: 'signup.form.info.disability' })}
-              label={intl.formatMessage({ id: 'common.guide' })}
-              formType={FormType.Input}
-            />
+            <Box
+              component="div"
+              display="grid"
+              gridTemplateColumns="1fr 3fr"
+              alignItems="center"
+              padding="0.25rem"
+              gap="1rem"
+            >
+              {/* 이름 */}
+              <Typography fontWeight={700} color="#666">
+                <FormattedMessage id="signup.form.info.disability" />
+              </Typography>
+              <Typography>
+                <FormattedMessage id="common.guide" />
+              </Typography>
+            </Box>
+            {/* 성별 */}
             <SignupFormBox
               required
               name="gender"
@@ -79,6 +156,82 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* 아이디 */}
+            <Controller
+              name="accountId"
+              control={methods.control}
+              defaultValue=""
+              rules={{
+                required: true,
+                minLength: 1,
+                maxLength: 15,
+                pattern: /^[a-zA-Z0-9_]+$/,
+              }}
+              render={({ field, fieldState }) => (
+                <StyledInputLabel multiLine>
+                  <Typography
+                    color={fieldState.invalid ? 'error' : 'default'}
+                    whiteSpace="break-spaces"
+                    fontWeight={700}
+                  >
+                    <Badge color="error" variant="dot">
+                      <FormattedMessage id="signup.form.info.id" />
+                    </Badge>
+                  </Typography>
+                  <Box
+                    width="100%"
+                    component="div"
+                    display="flex"
+                    gap="1rem"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <TextField
+                      {...field}
+                      fullWidth
+                      disabled={isChecked}
+                      placeholder={intl.formatMessage({
+                        id: 'signup.form.info.id.label',
+                      })}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        methods.trigger('accountId');
+                      }}
+                    />
+                    <Chip
+                      clickable
+                      component="button"
+                      variant="outlined"
+                      disabled={
+                        isChecked ||
+                        fieldState.invalid ||
+                        field.value?.length === 0
+                      }
+                      label={intl.formatMessage({
+                        id: 'signup.form.info.id.check',
+                      })}
+                      onClick={handleIdCheck}
+                      sx={{
+                        border: '1px solid #333',
+                        padding: '0.625rem 1.5rem',
+                        fontWeight: 600,
+                        fontSize: '1rem',
+                      }}
+                    />
+                  </Box>
+                  {fieldState.invalid && (
+                    <Typography color="error" fontSize="0.75rem">
+                      아이디는 15자 미만으로 영문 대소문자, 숫자, 밑줄(_)만
+                      가능합니다.
+                    </Typography>
+                  )}
+                </StyledInputLabel>
+              )}
+            />
+
+            {/* 비밀번호 */}
+
+            {/* 비밀번호 확인 */}
             <SignupFormBox
               required
               name="name"
@@ -86,6 +239,7 @@ const SignupGuide: React.FC = () => {
               label={intl.formatMessage({ id: 'signup.form.info.name.label' })}
               formType={FormType.Input}
             />
+            {/* 전화번호 */}
             <SignupFormBox
               required
               name="phone"
@@ -93,6 +247,7 @@ const SignupGuide: React.FC = () => {
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
               formType={FormType.Input}
             />
+            {/* 나이 */}
             <SignupFormBox
               required
               name="age"
@@ -144,6 +299,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* SNS */}
             <SignupFormBox
               multiLine
               name="snsAccount"
@@ -166,6 +322,7 @@ const SignupGuide: React.FC = () => {
         title={intl.formatMessage({ id: 'signup.form.running.title' })}
         content={
           <Stack gap="2rem" width="100%">
+            {/* 달리기 기록 */}
             <SignupFormBox
               required
               name="personalRecord"
@@ -211,6 +368,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* 상세기록 */}
             <SignupFormBox
               multiLine
               name="detailRecord"
@@ -220,6 +378,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Input}
             />
+            {/* 달리는 장소 */}
             <SignupFormBox
               multiLine
               name="runningPlace"
@@ -229,6 +388,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Input}
             />
+            {/* 가이드 경험 */}
             <SignupFormBox
               required
               multiLine
@@ -248,6 +408,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* 같이 뛴 시각장애러너 성함 */}
             <SignupFormBox
               multiLine
               name="viNameRanWith"
@@ -259,6 +420,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Textarea}
             />
+            {/* 시각장애러너 페이스 */}
             <SignupFormBox
               multiLine
               name="viRecordRanWith"
@@ -270,6 +432,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Input}
             />
+            {/* 가이드러닝 횟수 */}
             <SignupFormBox
               multiLine
               name="viCountRanWith"
@@ -281,6 +444,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Input}
             />
+            {/* 알게 된 경로 */}
             <SignupFormBox
               multiLine
               name="howToKnow"
@@ -313,6 +477,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* 참가 이유 */}
             <SignupFormBox
               multiLine
               name="motive"
@@ -322,6 +487,7 @@ const SignupGuide: React.FC = () => {
               })}
               formType={FormType.Textarea}
             />
+            {/* 가이드가 가능한 페이스 그룹 */}
             <SignupFormBox
               required
               multiLine
@@ -369,6 +535,7 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
+            {/* 희망사항 */}
             <SignupFormBox
               multiLine
               name="hopePrefs"
@@ -391,19 +558,18 @@ const SignupGuide: React.FC = () => {
     return (
       <Stack gap="1rem">
         <Button
+          disabled={!methods.formState.isValid}
           fullWidth
           type="submit"
           variant="contained"
           size="large"
-          color="secondary"
         >
           <FormattedMessage id="signup.form.submit" />
         </Button>
         <Button
           fullWidth
-          variant="contained"
+          variant="outlined"
           size="large"
-          color="secondary"
           onClick={() => navigate(BROWSER_PATH.SIGNUP)}
         >
           <FormattedMessage id="signup.form.back" />
@@ -419,11 +585,12 @@ const SignupGuide: React.FC = () => {
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(() => {
-          setSearchparams({
-            type: searchParams.get('type') ?? '',
-            isCompleted: 'true',
-          });
+        onSubmit={methods.handleSubmit((data) => {
+          console.log(data);
+          // setSearchparams({
+          //   type: searchParams.get('type') ?? '',
+          //   isCompleted: 'true',
+          // });
         })}
       >
         <Stack padding="5rem 0" gap="5rem">

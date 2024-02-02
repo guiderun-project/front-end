@@ -43,7 +43,7 @@ interface SignupFormBoxProps {
 //
 //
 
-const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
+export const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 1rem;
@@ -247,7 +247,14 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   return (
     <>
       {error ? (
-        <Typography whiteSpace="break-spaces" color="error">
+        <Typography
+          whiteSpace="break-spaces"
+          color="error"
+          aria-errormessage={intl.formatMessage(
+            { id: 'message.form.required.error' },
+            { field: title },
+          )}
+        >
           {intl.formatMessage(
             { id: 'message.form.required.error' },
             { field: title },
