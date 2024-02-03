@@ -80,7 +80,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   disabled = false,
 }) => {
   const intl = useIntl();
-  const { control } = useFormContext();
+  const { control, getValues } = useFormContext();
   const {
     field,
     fieldState: { error },
@@ -88,7 +88,12 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
     name,
     control,
     defaultValue: formType === FormType.CheckBox ? [] : null,
-    rules: { required },
+    rules: {
+      required:
+        formType === FormType.BooleanRadio
+          ? getValues(name) === undefined
+          : required,
+    },
   });
 
   /**
@@ -192,6 +197,39 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
               row
               value={field.value}
               onChange={(e) => field.onChange(e.target.value)}
+              sx={{
+                width: '100%',
+                padding: '1rem',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                alignItems: 'space-between',
+              }}
+            >
+              {formValue
+                ? formValue.map((el) => (
+                    <FormControlLabel
+                      key={el.label}
+                      value={el.value}
+                      control={<Radio />}
+                      label={el.label}
+                    />
+                  ))
+                : null}
+            </RadioGroup>
+          </FormControl>
+        );
+
+      case FormType.BooleanRadio:
+        return (
+          <FormControl
+            error={error ? true : false}
+            fullWidth
+            disabled={disabled}
+          >
+            <RadioGroup
+              row
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.value === 'true')}
               sx={{
                 width: '100%',
                 padding: '1rem',

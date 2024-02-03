@@ -19,7 +19,7 @@ const SignupTerms = () => {
             title={intl.formatMessage({ id: 'signup.terms.privacy.title' })}
             required
             multiLine
-            formType={FormType.Radio}
+            formType={FormType.BooleanRadio}
             formValue={[
               {
                 value: true,
@@ -64,7 +64,7 @@ const SignupTerms = () => {
             title={intl.formatMessage({ id: 'signup.terms.likeness.title' })}
             required
             multiLine
-            formType={FormType.Radio}
+            formType={FormType.BooleanRadio}
             formValue={[
               {
                 value: true,

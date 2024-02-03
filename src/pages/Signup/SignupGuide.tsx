@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   Button,
@@ -101,9 +101,7 @@ const SignupGuide: React.FC = () => {
   const [searchParams, setSearchparams] = useSearchParams();
   const methods = useForm<guideSignupPostRequest>();
 
-  useEffect(() => {
-    console.log(isPasswordConfirm);
-  }, [isPasswordConfirm]);
+  const isGuideExp = methods.watch('isGuideExp');
 
   /**
    *
@@ -138,7 +136,7 @@ const SignupGuide: React.FC = () => {
               padding="0.25rem"
               gap="1rem"
             >
-              {/* 이름 */}
+              {/* 장애유무 */}
               <Typography fontWeight={700} color="#666">
                 <FormattedMessage id="signup.form.info.disability" />
               </Typography>
@@ -230,8 +228,7 @@ const SignupGuide: React.FC = () => {
                   </Box>
                   {fieldState.invalid && (
                     <Typography color="error" fontSize="0.75rem">
-                      아이디는 15자 미만으로 영문 대소문자, 숫자, 밑줄(_)만
-                      가능합니다.
+                      <FormattedMessage id="signup.form.info.id.error" />
                     </Typography>
                   )}
                 </StyledInputLabel>
@@ -264,7 +261,6 @@ const SignupGuide: React.FC = () => {
                       fullWidth
                       size="small"
                       type="password"
-                      disabled={isChecked}
                       placeholder={intl.formatMessage({
                         id: 'signup.form.info.password.label',
                       })}
@@ -298,7 +294,6 @@ const SignupGuide: React.FC = () => {
                   fullWidth
                   size="small"
                   type="password"
-                  disabled={isChecked}
                   placeholder={intl.formatMessage({
                     id: 'signup.form.info.password.label',
                   })}
@@ -317,6 +312,7 @@ const SignupGuide: React.FC = () => {
                 </Typography>
               )}
             </Stack>
+            {/* 이름 */}
             <SignupFormBox
               required
               name="name"
@@ -374,10 +370,9 @@ const SignupGuide: React.FC = () => {
               formType={FormType.Select}
               formValue={[
                 {
-                  label: intl.formatMessage(
-                    { id: 'signup.form.info.age.class' },
-                    { age: 10 },
-                  ),
+                  label: intl.formatMessage({
+                    id: 'signup.form.info.age.class.teen',
+                  }),
                   value: 10,
                 },
                 {
@@ -410,7 +405,7 @@ const SignupGuide: React.FC = () => {
                 },
                 {
                   label: `${intl.formatMessage(
-                    { id: 'signup.form.info.age.class' },
+                    { id: 'signup.form.info.age.class.over' },
                     { age: 60 },
                   )} ${intl.formatMessage({ id: 'common.up' })}`,
                   value: 60,
@@ -476,7 +471,7 @@ const SignupGuide: React.FC = () => {
             {/* 달리기 기록 */}
             <SignupFormBox
               required
-              name="personalRecord"
+              name="recordDegree"
               title={intl.formatMessage({ id: 'signup.form.running.record' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.record.label',
@@ -543,11 +538,11 @@ const SignupGuide: React.FC = () => {
             <SignupFormBox
               required
               multiLine
-              name="guideExperience"
+              name="isGuideExp"
               title={intl.formatMessage({
                 id: 'signup.form.running.guide.experience',
               })}
-              formType={FormType.Radio}
+              formType={FormType.BooleanRadio}
               formValue={[
                 {
                   label: intl.formatMessage({ id: 'common.yes' }),
@@ -559,90 +554,108 @@ const SignupGuide: React.FC = () => {
                 },
               ]}
             />
-            {/* 같이 뛴 시각장애러너 성함 */}
-            <SignupFormBox
-              multiLine
-              name="viNameRanWith"
-              title={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.vi',
-              })}
-              label={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.vi.label',
-              })}
-              formType={FormType.Textarea}
-            />
-            {/* 시각장애러너 페이스 */}
-            <SignupFormBox
-              multiLine
-              name="viRecordRanWith"
-              title={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.pace',
-              })}
-              label={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.pace.example',
-              })}
-              formType={FormType.Input}
-            />
-            {/* 가이드러닝 횟수 */}
-            <SignupFormBox
-              multiLine
-              name="viCountRanWith"
-              title={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.count',
-              })}
-              label={intl.formatMessage({
-                id: 'signup.form.running.guide.experience.count.example',
-              })}
-              formType={FormType.Input}
-            />
-            {/* 알게 된 경로 */}
-            <SignupFormBox
-              multiLine
-              name="howToKnow"
-              title={intl.formatMessage({ id: 'signup.form.running.way' })}
-              formType={FormType.CheckBox}
-              formValue={[
-                {
-                  label: intl.formatMessage({
-                    id: `signup.form.running.way.guide.1`,
-                  }),
-                  value: `guide.1`,
-                },
-                {
-                  label: intl.formatMessage({
-                    id: `signup.form.running.way.guide.2`,
-                  }),
-                  value: `guide.2`,
-                },
-                {
-                  label: intl.formatMessage({
-                    id: `signup.form.running.way.guide.3`,
-                  }),
-                  value: `guide.3`,
-                },
-                {
-                  label: intl.formatMessage({
-                    id: `signup.form.running.way.guide.4`,
-                  }),
-                  value: `guide.4`,
-                },
-              ]}
-            />
-            {/* 참가 이유 */}
-            <SignupFormBox
-              multiLine
-              name="motive"
-              title={intl.formatMessage({ id: 'signup.form.running.reason' })}
-              label={intl.formatMessage({
-                id: 'signup.form.running.reason.label',
-              })}
-              formType={FormType.Textarea}
-            />
+            {isGuideExp && (
+              <>
+                {/* 같이 뛴 시각장애러너 성함 */}
+                <SignupFormBox
+                  multiLine
+                  required={isGuideExp}
+                  name="viName"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.vi',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.vi.label',
+                  })}
+                  formType={FormType.Textarea}
+                />
+                {/* 시각장애러너 페이스 */}
+                <SignupFormBox
+                  multiLine
+                  required={isGuideExp}
+                  name="viRecord"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.pace',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.pace.example',
+                  })}
+                  formType={FormType.Input}
+                />
+                {/* 가이드러닝 횟수 */}
+                <SignupFormBox
+                  multiLine
+                  name="viCount"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.count',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.guide.experience.count.example',
+                  })}
+                  formType={FormType.Input}
+                />
+              </>
+            )}
+            {isGuideExp !== undefined ? (
+              <>
+                {!isGuideExp && (
+                  <>
+                    {/* 알게 된 경로 */}
+                    <SignupFormBox
+                      multiLine
+                      name="howToKnow"
+                      title={intl.formatMessage({
+                        id: 'signup.form.running.way',
+                      })}
+                      formType={FormType.CheckBox}
+                      formValue={[
+                        {
+                          label: intl.formatMessage({
+                            id: `signup.form.running.way.guide.1`,
+                          }),
+                          value: `guide.1`,
+                        },
+                        {
+                          label: intl.formatMessage({
+                            id: `signup.form.running.way.guide.2`,
+                          }),
+                          value: `guide.2`,
+                        },
+                        {
+                          label: intl.formatMessage({
+                            id: `signup.form.running.way.guide.3`,
+                          }),
+                          value: `guide.3`,
+                        },
+                        {
+                          label: intl.formatMessage({
+                            id: `signup.form.running.way.guide.4`,
+                          }),
+                          value: `guide.4`,
+                        },
+                      ]}
+                    />
+                    {/* 참가 이유 */}
+                    <SignupFormBox
+                      multiLine
+                      name="motive"
+                      title={intl.formatMessage({
+                        id: 'signup.form.running.reason',
+                      })}
+                      label={intl.formatMessage({
+                        id: 'signup.form.running.reason.label',
+                      })}
+                      formType={FormType.Textarea}
+                    />
+                  </>
+                )}{' '}
+              </>
+            ) : null}
             {/* 가이드가 가능한 페이스 그룹 */}
             <SignupFormBox
               required
               multiLine
-              name="possibleViPaceGroup"
+              name="guidingPace"
               title={intl.formatMessage({ id: 'signup.form.running.group' })}
               label={intl.formatMessage({
                 id: 'signup.form.running.group.label',
@@ -709,7 +722,7 @@ const SignupGuide: React.FC = () => {
     return (
       <Stack gap="1rem">
         <Button
-          disabled={!methods.formState.isValid}
+          // disabled={!methods.formState.isValid}
           fullWidth
           type="submit"
           variant="contained"
@@ -736,12 +749,11 @@ const SignupGuide: React.FC = () => {
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) => {
-          console.log(data);
-          // setSearchparams({
-          //   type: searchParams.get('type') ?? '',
-          //   isCompleted: 'true',
-          // });
+        onSubmit={methods.handleSubmit(() => {
+          setSearchparams({
+            type: searchParams.get('type') ?? '',
+            isCompleted: 'true',
+          });
         })}
       >
         <Stack padding="5rem 0" gap="5rem">

@@ -93,7 +93,7 @@
   "signup.form.running.group.medium": "{group} Over {minutes1}, Under {minutes2}min",
   "signup.form.running.group.another": "{group} Over {minutes}min",
   "signup.form.running.group.last": "{group} No record",
-  "signup.form.running.request": "Please let us know if there are any information that we need to know to proceed with the program with you",
+  "signup.form.running.request": "Additional comment",
   "signup.form.running.request.label": "Please let us know if there are any information that we need to know to proceed with the program with you",
   "signup.form.submit": "Submission",
   "signup.form.back": "Back to previous",
