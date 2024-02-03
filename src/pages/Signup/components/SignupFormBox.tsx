@@ -80,7 +80,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   disabled = false,
 }) => {
   const intl = useIntl();
-  const { control, getValues } = useFormContext();
+  const { control, getValues, setValue } = useFormContext();
   const {
     field,
     fieldState: { error },
@@ -101,6 +101,10 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
    */
   const handleCheckBoxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = e.target.value;
+    if (!field.value) {
+      setValue(name, [selectedValue]);
+      return;
+    }
     if ((field.value as string[]).includes(selectedValue)) {
       field.onChange(
         (field.value as string[]).filter((value) => value !== selectedValue),
@@ -260,7 +264,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
                 key={el.label}
                 control={
                   <Checkbox
-                    checked={(field.value as string[]).includes(
+                    checked={(field.value as string[])?.includes(
                       el.value as string,
                     )}
                     onChange={handleCheckBoxClick}
