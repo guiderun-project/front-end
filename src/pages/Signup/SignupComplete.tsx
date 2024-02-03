@@ -14,14 +14,19 @@ const SignupComplete: React.FC = () => {
       <Header>
         <FormattedMessage id="signup.complete.title" />
       </Header>
-      <Typography fontSize="2.5rem" fontWeight={400} textAlign="center">
+      <Typography
+        fontSize="2.5rem"
+        fontWeight={400}
+        textAlign="center"
+        whiteSpace="break-spaces"
+      >
         <FormattedMessage id="signup.complete.matching" />
       </Typography>
       <Stack gap="1rem" width="100%">
         <Button variant="contained" size="large" fullWidth>
           <FormattedMessage id="signup.complete.checkInfo" />
         </Button>
-        <Button variant="contained" size="large" fullWidth>
+        <Button variant="outlined" size="large" fullWidth>
           <FormattedMessage id="common.mypage" />
         </Button>
       </Stack>
