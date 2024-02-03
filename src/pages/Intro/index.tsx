@@ -20,41 +20,55 @@ const Intro: React.FC = () => {
       height="100%"
       justifyContent="center"
       alignItems="center"
-      gap="4rem"
+      gap="8.75rem"
     >
-      <Typography variant="h1" fontSize="2.5rem" fontWeight="500">
-        <FormattedMessage id="intro.greeting" />
-      </Typography>
-      <Stack
-        aria-label={intl.formatMessage({
-          id: 'intro.signup.label',
-        })}
-        gap="1rem"
-        alignItems="center"
-      >
-        <Typography variant="subtitle1" fontWeight="700">
-          <FormattedMessage id="intro.signup" />
+      <Stack gap="2.5rem" alignItems="center">
+        <Typography variant="h1" fontSize="2.5rem" fontWeight="500">
+          <FormattedMessage id="intro.greeting" />
         </Typography>
-        <Link
+        <Stack
           aria-label={intl.formatMessage({
-            id: 'intro.signup.kakao',
+            id: 'intro.signup.label',
           })}
-          to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
+          gap="1.5rem"
+          alignItems="center"
         >
-          <Box
-            component="img"
-            src={kakaoImg}
-            alt={intl.formatMessage({
-              id: 'intro.signup.kakao.alt',
+          <Typography variant="subtitle1" fontWeight="700">
+            <FormattedMessage id="intro.signup" />
+          </Typography>
+          <Link
+            aria-label={intl.formatMessage({
+              id: 'intro.signup.kakao',
             })}
-          />
-        </Link>
+            to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
+          >
+            <Box
+              component="img"
+              maxWidth="18.4375rem"
+              src={kakaoImg}
+              alt={intl.formatMessage({
+                id: 'intro.signup.kakao.alt',
+              })}
+            />
+          </Link>
+        </Stack>
+        {/* <Link to="/intro"> */}
+        <Typography
+          onClick={() => alert('준비중입니다.')}
+          lineHeight="1.125rem"
+        >
+          이메일로 가입하기 {'>'}
+        </Typography>
+        {/* </Link> */}
       </Stack>
       <Button
         variant="contained"
-        color="warning"
         size="large"
+        fullWidth
         onClick={() => navigate(BROWSER_PATH.MAIN)}
+        sx={{
+          maxWidth: '19.6875rem',
+        }}
       >
         <FormattedMessage id="intro.main.button" />
       </Button>

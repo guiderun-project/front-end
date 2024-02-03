@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ReactDOM from 'react-dom/client';
@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 
 import Route from './Route';
 import { store } from './store';
-
 import './index.css';
+import { theme } from './theme/theme';
 
 const rootNode = document.getElementById('root');
 
@@ -28,12 +28,6 @@ async function enableMocking() {
   // once the Service Worker is up and ready to intercept requests.
   return worker.start();
 }
-
-const theme = createTheme({
-  typography: {
-    fontFamily: 'pretendard',
-  },
-});
 
 const queryClient = new QueryClient();
 

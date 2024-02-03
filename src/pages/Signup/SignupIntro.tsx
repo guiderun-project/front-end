@@ -35,6 +35,7 @@ const SignupIntro: React.FC = () => {
         <Button
           variant="contained"
           size="large"
+          color="vi"
           fullWidth
           onClick={handleTypeSelect('vi')}
         >
@@ -43,6 +44,7 @@ const SignupIntro: React.FC = () => {
         <Button
           variant="contained"
           size="large"
+          color="guide"
           fullWidth
           onClick={handleTypeSelect('guide')}
         >
