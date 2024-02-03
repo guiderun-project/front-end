@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   Badge,
@@ -19,11 +19,11 @@ import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
+import { viSignupPostRequest } from './SignupGuide';
 
 import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
-import { viSignupPostRequest } from './SignupGuide';
 
 //
 //
