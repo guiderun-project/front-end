@@ -722,7 +722,7 @@ const SignupGuide: React.FC = () => {
     return (
       <Stack gap="1rem">
         <Button
-          // disabled={!methods.formState.isValid}
+          disabled={!methods.formState.isValid}
           fullWidth
           type="submit"
           variant="contained"
