@@ -30,33 +30,33 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/event/all',
+        path: BROWSER_PATH.EVENT.ALL,
         element: <AllEvent />,
       },
       {
-        path: '/event/my',
+        path: BROWSER_PATH.EVENT.MY,
         element: <MyEvent />,
       },
       {
-        path: '/event/upcoming',
+        path: BROWSER_PATH.EVENT.MY,
         element: <UpcomingEvent />,
       },
       {
-        path: '/calendar',
+        path: BROWSER_PATH.CALENDAR,
         element: <Calendar />,
       },
       {
-        path: '/search',
+        path: BROWSER_PATH.SEARCH,
         element: <Search />,
       },
     ],
   },
   {
-    path: '/event',
+    path: BROWSER_PATH.EVENT.MAIN,
     element: <DetailEvent />,
     children: [
       {
-        path: '/event/:eventId',
+        path: `${BROWSER_PATH.EVENT.MAIN}/:eventId`,
         element: <DetailEvent />,
       },
     ],
