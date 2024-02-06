@@ -1,14 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
+import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import allEventIcon from '@/assets/navBar/all_event_icon.png';
 import mainIcon from '@/assets/navBar/main_icon.png';
 import myEventIcon from '@/assets/navBar/my_event_icon.png';
 import myPageIcon from '@/assets/navBar/my_page_icon.png';
 import { BROWSER_PATH } from '@/constants/path';
-import { Box } from '@mui/material';
 
 //
 //
