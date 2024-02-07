@@ -14,6 +14,19 @@ export enum EventSort {
 }
 
 /**
+ * @enum 전체 이벤트용 이벤트 종류
+ * @var Upcoming 예정 이벤트
+ * @var End 지난 이벤트
+ * @var My 내 이벤트
+ */
+
+export enum EventKind {
+  Upcoming = 'UPCOMING',
+  End = 'END',
+  My = 'MY',
+}
+
+/**
  * @enum PartnerSort 함께 뛴 파트너 정렬 기준
  * @var Count 횟수 순
  * @var Name 이름 순
