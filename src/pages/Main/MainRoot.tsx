@@ -30,6 +30,7 @@ const TITLE_DATA = {
 const MainRoot: React.FC = () => {
   return (
     <PageLayout>
+      {/* 인삿말 */}
       <Stack padding="5rem 0" gap="3.75rem">
         <Box
           component="header"
@@ -73,6 +74,7 @@ const MainRoot: React.FC = () => {
         </Box>
         <Outlet />
       </Stack>
+      {/* NavBar/ */}
       <NavBar />
     </PageLayout>
   );
