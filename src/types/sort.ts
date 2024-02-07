@@ -1,11 +1,13 @@
 /**
  * @enum EventSort 이벤트 정렬 기준
+ * @var Open 모집 중
  * @var Total 전체 이벤트
  * @var Upcoming 진행 예정 이벤트
  * @var End 종료된 이벤트
  */
 
 export enum EventSort {
+  Open = 'OPEN',
   Total = 'TOTAL',
   Upcoming = 'UPCOMING',
   End = 'END',
