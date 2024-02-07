@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import authReducer from './reducer/auth';
 import localeReducer from './reducer/locale';
 
 export const store = configureStore({
-  reducer: { locale: localeReducer },
+  reducer: { locale: localeReducer, auth: authReducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

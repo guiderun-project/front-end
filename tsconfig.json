@@ -24,7 +24,7 @@
     "strict": true,
     "typeRoots": ["types", "node_modules/@types"],
     "paths": {
-      "@/api/*": ["api/*"],
+      "@/apis/*": ["apis/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
       "@/fonts/*": ["fonts/*"],
