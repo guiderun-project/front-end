@@ -7,3 +7,4 @@ export * from './GroupChip';
 export * from './LinkButton';
 export * from './NavBar';
 export * from './PageLayout';
+export * from './UserBox';
