@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import { Box, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';

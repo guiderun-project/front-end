@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 //
 //
 //
 
 interface LinkButtonProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any;
   title: string;
   to: string;
