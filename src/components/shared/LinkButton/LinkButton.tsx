@@ -35,9 +35,9 @@ const StyledLinkBox = styled(Link)`
 
 const LinkButton: React.FC<LinkButtonProps> = ({ icon, title, to }) => {
   return (
-    <StyledLinkBox to={to}>
-      <Box display="flex" gap="0.625rem" alignItems="center">
-        <Box component="img" src={icon} alt="" width="1.5rem" aria-hidden />
+    <StyledLinkBox to={to} aria-label={title}>
+      <Box display="flex" gap="0.625rem" alignItems="center" aria-hidden>
+        <Box component="img" src={icon} alt="" width="1.5rem" />
         <Typography fontWeight={700}>{title}</Typography>
       </Box>
       <span

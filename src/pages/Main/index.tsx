@@ -12,12 +12,7 @@ const Main: React.FC = () => {
   const renderEvent = () => {
     return (
       <Stack gap="1.5rem">
-        <Box
-          component="header"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-        >
+        <Box display="flex" alignItems="center" justifyContent="space-between">
           <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
             이벤트
           </Typography>
@@ -57,7 +52,36 @@ const Main: React.FC = () => {
   };
 
   const renderPartner = () => {
-    return <>Partner</>;
+    return (
+      <Stack gap="1.5rem">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
+            최근 나의 파트너
+          </Typography>
+          <Link
+            //TODO 마이페이지 구현 후 함께 뛴 파트너 파트로 이동
+            to={BROWSER_PATH.EVENT.MAIN}
+            style={{
+              textDecoration: 'none',
+            }}
+          >
+            <Typography
+              component="span"
+              fontSize="0.875rem"
+              color="#666"
+              sx={{
+                textDecoration: 'underline',
+              }}
+            >
+              내 파트너 전체 보기
+            </Typography>
+            <span aria-hidden> &gt;</span>
+          </Link>
+        </Box>
+
+        <Stack gap="0.5rem"></Stack>
+      </Stack>
+    );
   };
 
   return (
