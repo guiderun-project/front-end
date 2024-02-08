@@ -1,12 +1,73 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
 import { Box, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
-import { LinkButton } from '@/components/shared';
+import { LinkButton, UserBox } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
+import { DisabilityEnum, RoleEnum, RunningGroup } from '@/types/group';
+
+//
+//
+//
+
+const PARTNER_DATA = [
+  {
+    userId: '12345',
+    contestCnt: 1,
+    trainingCnt: 0,
+    name: '조재석',
+    recordDegree: RunningGroup.B,
+    role: RoleEnum.User,
+    type: DisabilityEnum.VI,
+  },
+  {
+    userId: '12345231321',
+    contestCnt: 1,
+    trainingCnt: 0,
+    name: '배두리',
+    recordDegree: RunningGroup.A,
+    role: RoleEnum.User,
+    type: DisabilityEnum.VI,
+  },
+  {
+    userId: '1234554532',
+    contestCnt: 1,
+    trainingCnt: 0,
+    name: '이재건',
+    recordDegree: RunningGroup.C,
+    role: RoleEnum.User,
+    type: DisabilityEnum.GUIDE,
+  },
+  {
+    userId: '12345',
+    contestCnt: 1,
+    trainingCnt: 0,
+    name: '장지은',
+    recordDegree: RunningGroup.A,
+    role: RoleEnum.User,
+    type: DisabilityEnum.GUIDE,
+  },
+];
+
+//
+//
+//
+
+const StyledPartnerBox = styled.div`
+  z-index: 111111;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const Main: React.FC = () => {
   const renderEvent = () => {
@@ -79,7 +140,11 @@ const Main: React.FC = () => {
           </Link>
         </Box>
 
-        <Stack gap="0.5rem"></Stack>
+        <StyledPartnerBox>
+          {PARTNER_DATA.map((partner) => (
+            <UserBox key={partner.userId} partnerData={partner} />
+          ))}
+        </StyledPartnerBox>
       </Stack>
     );
   };
