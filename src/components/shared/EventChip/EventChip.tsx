@@ -2,10 +2,11 @@ import { Avatar } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { EVENT_COLOR } from '@/constants/color';
+import { EventType } from '@/types/group';
 
 interface EventChipProps {
   variant: 'full' | 'initial';
-  type: 'event' | 'training';
+  type: EventType;
 }
 
 //
@@ -20,10 +21,10 @@ const EventChip: React.FC<EventChipProps> = ({ variant, type }) => {
    */
   const getBgColor = () => {
     switch (type) {
-      case 'event':
+      case EventType.Competition:
         return EVENT_COLOR.EVENT;
 
-      case 'training':
+      case EventType.Training:
       default:
         return EVENT_COLOR.TRAINING;
     }
