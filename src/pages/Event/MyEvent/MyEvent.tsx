@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ErrorOutlineOutlined } from '@mui/icons-material';
 import {
   Box,
   Stack,
@@ -10,16 +11,15 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material';
-import { ErrorOutlineOutlined } from '@mui/icons-material';
 import { Link, useSearchParams } from 'react-router-dom';
 
-import MyEventIcon from '@/assets/navBar/my_event_icon.png';
+import { MyEventItemType } from '@/apis/types/event';
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
+import MyEventIcon from '@/assets/navBar/my_event_icon.png';
 import { EventLinkBox, LinkButton } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-import { EventSort } from '@/types/sort';
-import { MyEventItemType } from '@/apis/types/event';
 import { EventType } from '@/types/group';
+import { EventSort } from '@/types/sort';
 
 //
 //

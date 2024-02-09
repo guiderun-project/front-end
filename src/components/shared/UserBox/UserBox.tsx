@@ -2,10 +2,11 @@ import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import { partnerData } from '@/apis/types/info';
-import { BROWSER_PATH } from '@/constants/path';
 import { DisabilityChip } from '../DisabilityChip';
 import GropuChip from '../GroupChip/GroupChip';
+
+import { partnerData } from '@/apis/types/info';
+import { BROWSER_PATH } from '@/constants/path';
 
 //
 //
@@ -48,7 +49,7 @@ const StyledCountText = styled.span`
 //
 
 const UserBox: React.FC<UserBoxProps> = ({
-  partnerData: { userId, type, name, recordDegree, contestCnt, trainingCnt },
+  partnerData: { type, name, recordDegree, contestCnt, trainingCnt },
 }) => {
   //TODO 다른 회원정보 조회 페이지 구현 및 링크 연결
   return (

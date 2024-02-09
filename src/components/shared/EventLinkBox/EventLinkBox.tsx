@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { FormattedMessage, useIntl } from 'react-intl';
-
-import { BROWSER_PATH } from '@/constants/path';
-import { EventSort } from '@/types/sort';
-import { EventType } from '@/types/group';
 
 import { EventChip } from '../EventChip';
+
+import { BROWSER_PATH } from '@/constants/path';
+import { EventType } from '@/types/group';
+import { EventSort } from '@/types/sort';
 
 //
 //
