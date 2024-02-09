@@ -58,7 +58,6 @@ const PARTNER_DATA = [
 //
 
 const StyledPartnerBox = styled.div`
-  z-index: 111111;
   display: flex;
   align-items: center;
   justify-content: flex-start;
