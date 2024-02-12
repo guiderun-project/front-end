@@ -16,8 +16,8 @@ export enum RoleEnum {
 }
 
 export enum GenderEnum {
-  M = 'MAN',
-  W = 'WOMAN',
+  M = 'MALE',
+  W = 'FEMALE',
 }
 
 export enum DisabilityEnum {

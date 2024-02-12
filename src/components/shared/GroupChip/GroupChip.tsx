@@ -31,6 +31,7 @@ const GropuChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   }
   return (
     <Avatar
+      component="span"
       sx={{
         width: '1.875rem',
         height: '1.875rem',

@@ -8,6 +8,7 @@
   "common.status.UPCOMING": "모집 대기중",
   "common.status.OPEN": "모집 중",
   "common.status.END": "종료",
+  "common.status.CLOSE": "종료",
   "common.status.end": "이벤트 종료",
   "common.yes": "유",
   "common.no": "무",

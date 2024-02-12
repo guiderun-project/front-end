@@ -8,6 +8,7 @@
   "common.status.UPCOMING": "Waiting",
   "common.status.OPEN": "Recruiting",
   "common.status.END": "Closed",
+  "common.status.CLOSE": "Closed",
   "common.status.end": "END",
   "common.yes": "yes",
   "common.no": "no",
