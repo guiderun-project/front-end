@@ -202,10 +202,11 @@ export type partnerListGetRequest = {
   start?: number;
 };
 
-type partnerData = {
+export type partnerData = {
   userId: string;
   role: RoleEnum;
   type: DisabilityEnum;
+  recordDegree: RunningGroup;
   name: string;
   trainingCnt: number;
   contestCnt: number;

@@ -27,6 +27,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledContentContainer = styled.div`
+  box-sizing: border-box;
   position: relative;
   max-width: 48rem;
   min-height: 100vh;
