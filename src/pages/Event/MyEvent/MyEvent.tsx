@@ -90,6 +90,7 @@ const MyEvent: React.FC = () => {
           <>
             {MY_EVENT_DATA.map((event) => (
               <EventLinkBox
+                type="MY"
                 key={event.eventId}
                 eventId={event.eventId}
                 name={event.name}
@@ -106,6 +107,7 @@ const MyEvent: React.FC = () => {
           <>
             {MY_EVENT_DATA.map((event) => (
               <EventLinkBox
+                type="MY"
                 eventId={event.eventId}
                 name={event.name}
                 eventType={event.eventType}

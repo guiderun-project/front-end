@@ -14,12 +14,14 @@ import { EventSort } from '@/types/sort';
 //
 
 interface EventLinkBoxProps {
+  type: 'MY' | 'UPCOMING';
   eventId: number;
   name: string;
   eventType: EventType;
   recruitStatus: EventSort;
   date?: string;
   dDay?: number;
+  isApply?: boolean;
 }
 
 //
@@ -31,9 +33,9 @@ const StyledLink = styled(Link)`
   width: 100%;
   padding: 0.5rem 1rem;
   gap: 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4.5fr 2fr;
   align-items: center;
-  justify-content: space-between;
   box-shadow: 0px 1px 4px 0px #0000001a;
   background-color: #fff;
   text-decoration: none;
@@ -45,12 +47,14 @@ const StyledLink = styled(Link)`
 //
 
 const EventLinkBox: React.FC<EventLinkBoxProps> = ({
+  type,
   eventId,
   name,
   eventType,
   date,
   dDay,
   recruitStatus,
+  isApply,
 }) => {
   /**
    *
@@ -71,11 +75,18 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
    *
    */
   const renderText = () => {
-    switch (recruitStatus) {
-      case EventSort.Open:
-        return `D-${dDay}`;
-      case EventSort.End:
-        return date?.replace(/-/g, '.');
+    if (type === 'MY') {
+      switch (recruitStatus) {
+        case EventSort.Open:
+          return `D-${dDay}`;
+        case EventSort.End:
+          return date?.replace(/-/g, '.');
+      }
+    }
+    if (type === 'UPCOMING') {
+      return isApply
+        ? '신청 완료'
+        : `${date?.replace(/-/g, '.')}까지 신청 가능`;
     }
   };
 
@@ -96,6 +107,7 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
       <Typography
         display="flex"
         alignItems="center"
+        justifyContent="flex-end"
         gap="0.625rem"
         fontSize="0.625rem"
       >
