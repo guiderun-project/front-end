@@ -11,9 +11,11 @@ import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
 import Calendar from './pages/Calendar';
 import { AllEvent, DetailEvent, MyEvent, UpcomingEvent } from './pages/Event';
+import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Main from './pages/Main';
 import MainRoot from './pages/Main/MainRoot';
+import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Search from './pages/Search';
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
         <Signup />
       </PageLayout>
     ),
+  },
+  {
+    path: BROWSER_PATH.MYPAGE,
+    element: <Mypage />,
+  },
+  {
+    path: BROWSER_PATH.INFO,
+    element: <Info />,
   },
   {
     path: '*',
