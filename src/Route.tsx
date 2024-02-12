@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         element: <MyEvent />,
       },
       {
-        path: BROWSER_PATH.EVENT.MY,
+        path: BROWSER_PATH.EVENT.UPCOMING,
         element: <UpcomingEvent />,
       },
       {

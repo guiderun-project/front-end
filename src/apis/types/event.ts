@@ -75,7 +75,7 @@ export type MyEventItemType = {
   name: string;
   dDay: number;
   endDate: string;
-  recruitStatus: 'OPEN' | 'CLOSE';
+  recruitStatus: EventSort.Open | EventSort.End;
 };
 
 export type myEventGetResponse = {
@@ -83,7 +83,7 @@ export type myEventGetResponse = {
 };
 
 export type upcomingEventGetRequest = {
-  sort: 'OPEN' | 'UPCOMING';
+  sort: EventSort.Open | EventSort.Upcoming;
 };
 
 export type UpcomingEventItemType = {

@@ -58,10 +58,10 @@ const NavBar: React.FC = () => {
   return (
     <StyledContainer>
       {NAV_LINK_LIST.map((navItem) => (
-        <Link key={`${navItem.link}-nav`} to={navItem.link}>
+        <Link key={`${navItem.alt}-nav`} to={navItem.link}>
           <Box
             component="img"
-            width="1.875rem"
+            width="1.4375rem"
             src={navItem.img}
             alt={navItem.alt}
           />
