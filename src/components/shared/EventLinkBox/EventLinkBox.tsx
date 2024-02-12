@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
   padding: 0.5rem 1rem;
   gap: 1rem;
   display: grid;
-  grid-template-columns: 1fr 4.5fr 2fr;
+  grid-template-columns: 1fr 4fr 2fr;
   align-items: center;
   box-shadow: 0px 1px 4px 0px #0000001a;
   background-color: #fff;
@@ -96,11 +96,11 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
   return (
     <StyledLink to={`${BROWSER_PATH.EVENT.MAIN}/${eventId}`}>
       <EventChip type={eventType} variant="full" />
-      <Stack gap="0.25rem">
-        <Typography fontWeight={500} fontSize="0.875rem">
+      <Stack gap="0.25rem" overflow="hidden" textOverflow="ellipsis">
+        <Typography fontWeight={500} noWrap>
           {name}
         </Typography>
-        <Typography fontWeight={400} fontSize="0.75rem">
+        <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
           {renderText()}
         </Typography>
       </Stack>

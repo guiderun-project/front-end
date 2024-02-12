@@ -39,7 +39,7 @@ const MY_EVENT_DATA: MyEventItemType[] = [
     dDay: 253,
     endDate: '2000-01-01',
     eventType: EventType.Competition,
-    name: '동아마라톤',
+    name: '동아마라톤동아마라톤동아마라톤동아마라톤동아마라톤동아마라톤동아마라톤',
     recruitStatus: EventSort.Open,
   },
   {
