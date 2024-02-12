@@ -234,7 +234,7 @@ export type eventHistoryGetRequest = {
   start?: number;
 };
 
-type eventData = {
+export type eventData = {
   eventId: number;
   eventType: EventType;
   name: string;
