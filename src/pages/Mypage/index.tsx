@@ -1,8 +1,11 @@
+import React from 'react';
+
 import { Box, Pagination, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { eventData } from '@/apis/types/info';
 import {
+  DetailEventModal,
   DisabilityChip,
   EventChip,
   EventLinkBox,
@@ -27,7 +30,7 @@ import { FormattedMessage } from 'react-intl';
 //
 //
 
-const StyledEventBox = styled.button`
+const StyledEventButton = styled.button`
   border: 0;
   outline: 0;
   box-sizing: border-box;
@@ -100,6 +103,9 @@ const EVENT_DATA: eventData[] = [
 //
 
 const Mypage: React.FC = () => {
+  const [open, setOpen] = React.useState(false);
+  const [selectedEvent, setSelectedEvent] = React.useState(-1);
+
   const getColor = (recruitStatus: RecruitStatus) => {
     switch (recruitStatus) {
       case RecruitStatus.Open:
@@ -116,7 +122,8 @@ const Mypage: React.FC = () => {
    *
    */
   const handleEventDetailOpen = (eventId: number) => {
-    console.log(eventId);
+    setSelectedEvent(eventId);
+    setOpen(true);
   };
 
   /**
@@ -221,7 +228,7 @@ const Mypage: React.FC = () => {
         </Typography>
         <Stack>
           {EVENT_DATA.map((event) => (
-            <StyledEventBox
+            <StyledEventButton
               key={event.eventId}
               onClick={() => handleEventDetailOpen(event.eventId)}
             >
@@ -258,7 +265,7 @@ const Mypage: React.FC = () => {
                 </span>
                 <span aria-hidden>&gt;</span>
               </Typography>
-            </StyledEventBox>
+            </StyledEventButton>
           ))}
         </Stack>
         <Pagination
@@ -277,17 +284,24 @@ const Mypage: React.FC = () => {
   //
 
   return (
-    <PageLayout>
-      <Stack padding="5rem 0" gap="3.75rem">
-        {/* 이름, 팀 */}
-        {renderTeamInfo()}
-        {/* 기본정보 */}
-        {renderInfo()}
-        {/* 내가 참여한 이벤트 */}
-        {renderMyEvent()}
-      </Stack>
-      <NavBar />
-    </PageLayout>
+    <>
+      <PageLayout>
+        <Stack padding="5rem 0" gap="3.75rem">
+          {/* 이름, 팀 */}
+          {renderTeamInfo()}
+          {/* 기본정보 */}
+          {renderInfo()}
+          {/* 내가 참여한 이벤트 */}
+          {renderMyEvent()}
+        </Stack>
+        <NavBar />
+      </PageLayout>
+      <DetailEventModal
+        eventId={selectedEvent}
+        isOpen={open}
+        onModalClose={() => setOpen(false)}
+      />
+    </>
   );
 };
 

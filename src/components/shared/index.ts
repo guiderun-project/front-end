@@ -1,4 +1,5 @@
 export * from './Chip';
+export * from './DetailEventModal';
 export * from './DisabilityChip';
 export * from './EventChip';
 export * from './EventLinkBox';
