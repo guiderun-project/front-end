@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { ErrorOutlineOutlined } from '@mui/icons-material';
 import { Box, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import { UpcomingEventItemType } from '@/apis/types/event';
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
-import { EventLinkBox, LinkButton } from '@/components/shared';
+import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventType, RecruitStatus } from '@/types/group';
 import { EventSort } from '@/types/sort';
@@ -96,12 +95,7 @@ const UpcomingEvent: React.FC = () => {
           </>
         );
       default:
-        return (
-          <Stack alignItems="center" justifyContent="center" gap="2rem">
-            <ErrorOutlineOutlined fontSize="large" />
-            <Typography>해당 값이 존재하지 않습니다.</Typography>
-          </Stack>
-        );
+        return <NotFound />;
     }
   };
 

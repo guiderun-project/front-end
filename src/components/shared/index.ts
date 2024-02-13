@@ -8,5 +8,6 @@ export * from './GenderChip';
 export * from './GroupChip';
 export * from './LinkButton';
 export * from './NavBar';
+export * from './NotFound';
 export * from './PageLayout';
 export * from './UserBox';
