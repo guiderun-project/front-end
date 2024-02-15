@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, Stack, Typography } from '@mui/material';
+import { Badge, Box, Stack, Typography } from '@mui/material';
 
 import { personalInfoGetResponse } from '@/apis/types/info';
 import { DisabilityChip, GenderChip } from '@/components/shared';
@@ -63,28 +63,36 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
       {/* 장애여부 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>
-          장애여부
+          <Badge color="error" variant="dot">
+            장애여부
+          </Badge>
         </Typography>
         <DisabilityChip component="chip" type={data.type} />
       </StyledSection>
       {/* 성별 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>
-          성별
+          <Badge color="error" variant="dot">
+            성별
+          </Badge>
         </Typography>
         <GenderChip type={data.gender} />
       </StyledSection>
       {/* 이름 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>
-          이름
+          <Badge color="error" variant="dot">
+            이름
+          </Badge>
         </Typography>
         <Typography>{data.name}</Typography>
       </StyledSection>
       {/* 전화번호 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>
-          전화번호
+          <Badge color="error" variant="dot">
+            전화번호
+          </Badge>
         </Typography>
         <Box display="flex" gap="0.5rem" alignItems="center">
           <Typography>{data.phoneNumber}</Typography>
@@ -96,7 +104,9 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
       {/* 나이 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>
-          나이
+          <Badge color="error" variant="dot">
+            나이
+          </Badge>
         </Typography>
         <Typography>{getAge()}</Typography>
       </StyledSection>

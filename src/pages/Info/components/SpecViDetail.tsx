@@ -1,5 +1,5 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { StyledDataSection } from './SpecGuideDetail';
@@ -42,7 +42,9 @@ const SpecViDetail: React.FC<SpecViDetailProps> = ({ data }) => {
       {/* 달리기 경험 */}
       <StyledDataSection>
         <Typography component="h3" fontWeight={700}>
-          달리기 경험
+          <Badge color="error" variant="dot">
+            달리기 경험
+          </Badge>
         </Typography>
         <Typography component="span">
           {data.isRunningExp ? '유' : '무'}
@@ -53,7 +55,9 @@ const SpecViDetail: React.FC<SpecViDetailProps> = ({ data }) => {
           {/* 개인 기록 */}
           <StyledDataSection>
             <Typography component="h3" fontWeight={700}>
-              개인 기록
+              <Badge color="error" variant="dot">
+                개인 기록
+              </Badge>
             </Typography>
             <Box display="flex" gap="0.25rem" alignItems="center">
               <Typography component="span">

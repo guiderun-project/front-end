@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { runningSpecGuideGetResponse } from '@/apis/types/info';
@@ -86,7 +86,9 @@ const SpecGuideDetail: React.FC<SpecGuideDetailProps> = ({ data }) => {
       {/* 개인기록 */}
       <StyledDataSection>
         <Typography component="h3" fontWeight={700}>
-          개인 기록
+          <Badge color="error" variant="dot">
+            개인 기록
+          </Badge>
         </Typography>
         <Box display="flex" gap="0.25rem" alignItems="center">
           <Typography component="span">
@@ -121,7 +123,9 @@ const SpecGuideDetail: React.FC<SpecGuideDetailProps> = ({ data }) => {
       {/* 시각장애러너의 가이드러너 경험 */}
       <StyledDataSection>
         <Typography component="h3" fontWeight={700}>
-          시각장애러너의 가이드러너 경험
+          <Badge color="error" variant="dot">
+            시각장애러너의 가이드러너 경험
+          </Badge>
         </Typography>
         <Typography component="span">
           {data.isGuideExp ? '유' : '무'}
