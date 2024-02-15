@@ -1,4 +1,20 @@
+import {
+  runningSpecGuideGetResponse,
+  runningSpecViGetResponse,
+} from '@/apis/types/info';
 import { Box, Button, Typography, Stack } from '@mui/material';
+
+//
+//
+//
+
+const VI_SPEC_DATA: runningSpecViGetResponse = {};
+
+const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {};
+
+//
+//
+//
 
 const SpecSection = () => {
   return (

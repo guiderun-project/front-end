@@ -1,11 +1,12 @@
-import { NotFound, PageLayout } from '@/components/shared';
 import { Button, Stack, Tab, Tabs, Typography } from '@mui/material';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import InfoSection from './components/InfoSection';
-import SpecSection from './components/SpecSection';
-import TermsSection from './components/TermsSection';
-import styled from '@emotion/styled';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { NotFound, PageLayout } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
+
+import InfoSection from './sections/InfoSection';
+import SpecSection from './sections/SpecSection';
+import TermsSection from './sections/TermsSection';
 
 const Info = () => {
   const [searchParams, setSearchParams] = useSearchParams();
