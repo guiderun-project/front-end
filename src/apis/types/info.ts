@@ -86,19 +86,7 @@ export type runningSpecGuideGetResponse = {
   hopePrefs: string | null;
 };
 
-export type runningSpecGuidePatchRequest = {
-  recordDegree: RunningGroup;
-  detailRecord: string | null;
-  isGuideExp: boolean;
-  runningPlace: string;
-  viName: string | null;
-  viRecord: string | null;
-  viCount: string | null;
-  howToKnow: string[] | null;
-  motive: string | null;
-  guidingPace: RunningGroup;
-  hopePrefs: string | null;
-};
+export type runningSpecGuidePatchRequest = runningSpecGuideGetResponse;
 
 export type runningSpecGuidePatchResponse = {
   recordDegree: RunningGroup;
@@ -133,18 +121,7 @@ export type runningSpecViGetResponse = {
   hopePrefs: string | null;
 };
 
-export type runningSpecViPatchRequest = {
-  isRunningExp: boolean;
-  recordDegree: RunningGroup;
-  detailRecord: string | null;
-  runningPlace: string | null;
-  guideName: string | null;
-
-  howToKnow: string[] | null;
-  motive: string | null;
-
-  hopePrefs: string | null;
-};
+export type runningSpecViPatchRequest = runningSpecViGetResponse;
 
 export type runningSpecViPatchResponse = {
   isRunningExp: boolean;

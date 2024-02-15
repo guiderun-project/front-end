@@ -1,22 +1,61 @@
+import { Box, Button, Typography, Stack } from '@mui/material';
+
 import {
   runningSpecGuideGetResponse,
   runningSpecViGetResponse,
 } from '@/apis/types/info';
-import { Box, Button, Typography, Stack } from '@mui/material';
+import { DisabilityEnum, RunningGroup } from '@/types/group';
+
+import SpecGuideDetail from '../components/SpecGuideDetail';
+import SpecViDetail from '../components/SpecViDetail';
 
 //
 //
 //
 
-const VI_SPEC_DATA: runningSpecViGetResponse = {};
+const VI_SPEC_DATA: runningSpecViGetResponse = {
+  isRunningExp: true,
+  recordDegree: RunningGroup.A,
+  detailRecord: '48분 50초',
+  runningPlace: '남산 둘레길',
+  guideName: '고길동',
+  howToKnow: ['v1.1', 'vi.2'],
+  motive: '재밌어보여서!',
+  hopePrefs: '감사합니다~',
+};
 
-const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {};
+const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
+  recordDegree: RunningGroup.A,
+  detailRecord: '42분 20초',
+  isGuideExp: true,
+  runningPlace: '집 앞 공원',
+  viName: '김둘리',
+  viRecord: '5:30 ~ 6:00',
+  viCount: '1년',
+  howToKnow: ['guide.1'],
+  motive:
+    '함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!함께 하고 싶습니다!',
+  guidingPace: RunningGroup.C,
+  hopePrefs:
+    '화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!화이팅!!',
+};
 
 //
 //
 //
 
 const SpecSection = () => {
+  let type: DisabilityEnum = DisabilityEnum.VI;
+
+  const renderData = () => {
+    switch (type) {
+      case DisabilityEnum.GUIDE:
+        return <SpecGuideDetail data={GUIDE_SPEC_DATA} />;
+      case DisabilityEnum.VI:
+        return <SpecViDetail data={VI_SPEC_DATA} />;
+    }
+  };
+
   return (
     <Stack
       component="div"
@@ -28,7 +67,7 @@ const SpecSection = () => {
       <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
         러닝 스펙
       </Typography>
-      <Stack></Stack>
+      {renderData()}
       <Box display="flex" justifyContent="flex-end">
         <Button
           sx={{
