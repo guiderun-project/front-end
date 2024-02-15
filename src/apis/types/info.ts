@@ -44,6 +44,8 @@ export type personalInfoGetResponse = {
   phoneNumber: string;
   age: number;
   snsId: string;
+  isOpenNumber: boolean;
+  isOpenSns: boolean;
 };
 
 export type personalInfoPatchRequest = {
@@ -52,6 +54,8 @@ export type personalInfoPatchRequest = {
   phoneNumber: string;
   age: string;
   snsId: string;
+  isOpenNumber: boolean;
+  isOpenSns: boolean;
 };
 
 export type personalInfoPatchResponse = {
