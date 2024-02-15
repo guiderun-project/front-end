@@ -1,13 +1,13 @@
 import { Box, Button, Typography, Stack } from '@mui/material';
 
+import SpecGuideDetail from '../components/SpecGuideDetail';
+import SpecViDetail from '../components/SpecViDetail';
+
 import {
   runningSpecGuideGetResponse,
   runningSpecViGetResponse,
 } from '@/apis/types/info';
 import { DisabilityEnum, RunningGroup } from '@/types/group';
-
-import SpecGuideDetail from '../components/SpecGuideDetail';
-import SpecViDetail from '../components/SpecViDetail';
 
 //
 //
@@ -45,10 +45,10 @@ const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
 //
 
 const SpecSection = () => {
-  let type: DisabilityEnum = DisabilityEnum.VI;
+  const type = DisabilityEnum.VI;
 
   const renderData = () => {
-    switch (type) {
+    switch (type as DisabilityEnum) {
       case DisabilityEnum.GUIDE:
         return <SpecGuideDetail data={GUIDE_SPEC_DATA} />;
       case DisabilityEnum.VI:

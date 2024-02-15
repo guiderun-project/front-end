@@ -1,6 +1,8 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
 import { Box, Pagination, Stack, Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { eventData } from '@/apis/types/info';
@@ -8,7 +10,6 @@ import {
   DetailEventModal,
   DisabilityChip,
   EventChip,
-  EventLinkBox,
   GenderChip,
   GroupChip,
   NavBar,
@@ -22,9 +23,6 @@ import {
   RecruitStatus,
   RunningGroup,
 } from '@/types/group';
-import { EventSort } from '@/types/sort';
-import styled from '@emotion/styled';
-import { FormattedMessage } from 'react-intl';
 
 //
 //

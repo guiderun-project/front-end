@@ -1,7 +1,8 @@
-import { personalInfoGetResponse } from '@/apis/types/info';
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Box, Stack, Typography } from '@mui/material';
+
+import { personalInfoGetResponse } from '@/apis/types/info';
 import { DisabilityChip, GenderChip } from '@/components/shared';
 //
 //

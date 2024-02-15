@@ -2,10 +2,10 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-import { RunningGroup } from '@/types/group';
-import { runningSpecViGetResponse } from '@/apis/types/info';
-
 import { StyledDataSection } from './SpecGuideDetail';
+
+import { runningSpecViGetResponse } from '@/apis/types/info';
+import { RunningGroup } from '@/types/group';
 
 interface SpecViDetailProps {
   data: runningSpecViGetResponse;

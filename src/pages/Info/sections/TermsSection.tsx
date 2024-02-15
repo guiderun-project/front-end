@@ -1,9 +1,8 @@
-import { Button } from '@mui/material';
-import { Box } from '@mui/material';
-import { Stack, Typography } from '@mui/material';
+import { Button, Box, Stack, Typography } from '@mui/material';
+
+import TermsDetail from '../components/TermsDetail';
 
 import { permissionGetResponse } from '@/apis/types/info';
-import TermsDetail from '../components/TermsDetail';
 
 //
 //

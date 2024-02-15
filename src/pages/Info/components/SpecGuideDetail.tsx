@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Box, Divider, Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';

@@ -1,8 +1,9 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 
+import InfoDetail from '../components/InfoDetail';
+
 import { personalInfoGetResponse } from '@/apis/types/info';
 import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
-import InfoDetail from '../components/InfoDetail';
 
 //
 //

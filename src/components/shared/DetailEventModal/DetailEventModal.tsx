@@ -1,22 +1,18 @@
-import styled from '@emotion/styled';
 import { ClearOutlined } from '@mui/icons-material';
 import {
   Box,
   Dialog,
-  Stack,
   Typography,
   IconButton,
   DialogContent,
   DialogTitle,
   Divider,
-  Card,
-  CardContent,
 } from '@mui/material';
-
-import { EventType, RecruitStatus } from '@/types/group';
 
 import { EventChip } from '../EventChip';
 import { EventStatus } from '../EventStatus';
+
+import { EventType, RecruitStatus } from '@/types/group';
 
 export type DetailEventType = {
   eventId: number; //이벤트 아이디
@@ -74,7 +70,7 @@ const EVENT_DATA: DetailEventType = {
 //
 
 const DetailEventModal: React.FC<DetailEventModalProps> = ({
-  eventId,
+  //eventId,
   isOpen,
   onModalClose,
 }) => {
