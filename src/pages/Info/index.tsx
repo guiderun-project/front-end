@@ -53,6 +53,7 @@ const Info = () => {
           <Tabs
             centered
             value={type}
+            aria-label="제출 정보 선택"
             onChange={(_, newValue) => {
               setSearchParams({
                 type: newValue,
@@ -60,41 +61,52 @@ const Info = () => {
             }}
           >
             <Tab
+              id="Tab-info"
               value="info"
               label="개인 인적사항"
-              aria-controls="Tab-개인 인적사항"
+              aria-controls="Tabpanel-info"
             />
-            <Tab value="spec" label="러닝 스펙" aria-controls="Tab-러닝 스펙" />
-            <Tab value="terms" label="약관동의" aria-controls="Tab-약관동의" />
+            <Tab
+              id="Tab-spec"
+              value="spec"
+              label="러닝 스펙"
+              aria-controls="Tabpanel-spec"
+            />
+            <Tab
+              id="Tab-terms"
+              value="terms"
+              label="약관동의"
+              aria-controls="Tabpanel-terms"
+            />
           </Tabs>
           {renderInfo()}
         </Stack>
-      </Stack>
-      <Stack gap="1rem" alignItems="center">
-        <Button
-          fullWidth
-          variant="contained"
-          size="large"
-          role="link"
-          onClick={handlePageMove('my')}
-          sx={{
-            maxWidth: '19.6875rem',
-          }}
-        >
-          마이페이지
-        </Button>
-        <Button
-          fullWidth
-          variant="outlined"
-          size="large"
-          role="link"
-          onClick={handlePageMove('prev')}
-          sx={{
-            maxWidth: '19.6875rem',
-          }}
-        >
-          되돌아가기
-        </Button>
+        <Stack gap="1rem" alignItems="center">
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            role="link"
+            onClick={handlePageMove('my')}
+            sx={{
+              maxWidth: '19.6875rem',
+            }}
+          >
+            마이페이지
+          </Button>
+          <Button
+            fullWidth
+            variant="outlined"
+            size="large"
+            role="link"
+            onClick={handlePageMove('prev')}
+            sx={{
+              maxWidth: '19.6875rem',
+            }}
+          >
+            되돌아가기
+          </Button>
+        </Stack>
       </Stack>
     </PageLayout>
   );

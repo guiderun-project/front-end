@@ -1,4 +1,3 @@
-import { permissionGetResponse } from '@/apis/types/info';
 import styled from '@emotion/styled';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
@@ -11,6 +10,8 @@ import {
 import { Box } from '@mui/material';
 import { Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+
+import { permissionGetResponse } from '@/apis/types/info';
 
 //
 //
@@ -25,7 +26,7 @@ const TERMS_INFO: permissionGetResponse = {
 //
 //
 
-const StyledTermsBox = styled.div`
+const StyledTermsBox = styled.section`
   display: flex;
   gap: 2.5rem;
 `;
@@ -36,14 +37,20 @@ const StyledTermsBox = styled.div`
 
 const TermsSection = () => {
   return (
-    <Stack gap="2.5rem">
+    <Stack
+      component="div"
+      role="tabpanel"
+      id="Tabpanel-terms"
+      gap="2.5rem"
+      aria-labelledby="Tab-terms"
+    >
       <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
         약관 동의
       </Typography>
       <Stack gap="2rem">
         <Stack gap="0.5rem">
           <StyledTermsBox>
-            <Typography component="h4" fontWeight={700}>
+            <Typography component="h3" fontWeight={700}>
               <Badge color="error" variant="dot">
                 개인정보 제공 및 활용 동의
               </Badge>
@@ -81,7 +88,7 @@ const TermsSection = () => {
         </Stack>
         <Stack gap="0.5rem">
           <StyledTermsBox>
-            <Typography component="h4" fontWeight={700}>
+            <Typography component="h3" fontWeight={700}>
               <Badge color="error" variant="dot">
                 초상권 활용 동의
               </Badge>
