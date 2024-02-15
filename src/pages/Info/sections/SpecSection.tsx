@@ -19,7 +19,7 @@ const VI_SPEC_DATA: runningSpecViGetResponse = {
   detailRecord: '48분 50초',
   runningPlace: '남산 둘레길',
   guideName: '고길동',
-  howToKnow: ['v1.1', 'vi.2'],
+  howToKnow: ['vi.1', 'vi.2'],
   motive: '재밌어보여서!',
   hopePrefs: '감사합니다~',
 };
