@@ -133,10 +133,10 @@ const SpecGuideDetail: React.FC<SpecGuideDetailProps> = ({ data }) => {
       </StyledDataSection>
       {data.isGuideExp ? (
         <>
-          {/* 함께 뛰었던 가이드러너의 성함 */}
+          {/* 함께 뛰었던 시각장애러너의 성함 */}
           <StyledDataSection multiLine>
             <Typography component="h3" fontWeight={700}>
-              함께 뛰었던 가이드러너의 성함
+              함께 뛰었던 시각장애러너의 성함
             </Typography>
             <Typography component="span">{data.viName}</Typography>
           </StyledDataSection>

@@ -1,7 +1,10 @@
 import { Box, Button, Typography, Stack } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 import SpecGuideDetail from '../components/SpecGuideDetail';
+import SpecGuideEdit from '../components/SpecGuideEdit';
 import SpecViDetail from '../components/SpecViDetail';
+import SpecViEdit from '../components/SpecViEdit';
 
 import {
   runningSpecGuideGetResponse,
@@ -47,12 +50,38 @@ const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
 const SpecSection = () => {
   const type = DisabilityEnum.VI;
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const mode = searchParams.get('mode') ?? 'detail';
+
+  /**
+   *
+   */
+  const handleEditClick = () => {
+    searchParams.set('mode', 'edit');
+    setSearchParams(searchParams.toString());
+  };
+
+  /**
+   *
+   */
+
   const renderData = () => {
-    switch (type as DisabilityEnum) {
-      case DisabilityEnum.GUIDE:
-        return <SpecGuideDetail data={GUIDE_SPEC_DATA} />;
-      case DisabilityEnum.VI:
-        return <SpecViDetail data={VI_SPEC_DATA} />;
+    switch (mode) {
+      case 'detail':
+        switch (type as DisabilityEnum) {
+          case DisabilityEnum.GUIDE:
+            return <SpecGuideDetail data={GUIDE_SPEC_DATA} />;
+          case DisabilityEnum.VI:
+            return <SpecViDetail data={VI_SPEC_DATA} />;
+        }
+      case 'edit':
+        switch (type as DisabilityEnum) {
+          case DisabilityEnum.GUIDE:
+            return <SpecGuideEdit defaultValues={GUIDE_SPEC_DATA} />;
+          case DisabilityEnum.VI:
+            return <SpecViEdit defaultValues={VI_SPEC_DATA} />;
+        }
     }
   };
 
@@ -68,23 +97,26 @@ const SpecSection = () => {
         러닝 스펙
       </Typography>
       {renderData()}
-      <Box display="flex" justifyContent="flex-end">
-        <Button
-          sx={{
-            display: 'flex',
-            gap: '0.125rem',
-          }}
-        >
-          <Typography
+      {mode === 'detail' && (
+        <Box display="flex" justifyContent="flex-end">
+          <Button
             sx={{
-              textDecoration: 'underline',
+              display: 'flex',
+              gap: '0.125rem',
             }}
+            onClick={handleEditClick}
           >
-            러닝 스펙 수정하기
-          </Typography>
-          <span aria-hidden>&gt;</span>
-        </Button>
-      </Box>
+            <Typography
+              sx={{
+                textDecoration: 'underline',
+              }}
+            >
+              러닝 스펙 수정하기
+            </Typography>
+            <span aria-hidden>&gt;</span>
+          </Button>
+        </Box>
+      )}
     </Stack>
   );
 };
