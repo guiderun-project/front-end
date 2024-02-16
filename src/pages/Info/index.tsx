@@ -13,6 +13,7 @@ const Info = () => {
   const navigate = useNavigate();
 
   const type = searchParams.get('type') ?? 'info';
+  const mode = searchParams.get('mode') ?? 'detail';
 
   /**
    *
@@ -83,18 +84,34 @@ const Info = () => {
           {renderInfo()}
         </Stack>
         <Stack gap="1rem" alignItems="center">
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            role="link"
-            onClick={handlePageMove('my')}
-            sx={{
-              maxWidth: '19.6875rem',
-            }}
-          >
-            마이페이지
-          </Button>
+          {mode === 'edit' ? (
+            <Button
+              fullWidth
+              size="large"
+              variant="contained"
+              type="submit"
+              form="edit_form"
+              sx={{
+                maxWidth: '19.6875rem',
+              }}
+            >
+              변경 내용 저장하기
+            </Button>
+          ) : (
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              role="link"
+              onClick={handlePageMove('my')}
+              sx={{
+                maxWidth: '19.6875rem',
+              }}
+            >
+              마이페이지
+            </Button>
+          )}
+
           <Button
             fullWidth
             variant="outlined"

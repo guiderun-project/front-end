@@ -82,7 +82,7 @@ const TermsDetail: React.FC<TermsDetailProps> = ({ data }) => {
             </Badge>
           </Typography>
           <Typography color="#333" fontWeight={500}>
-            {data.privacy ? '동의' : '비동의'}
+            {data.portraitRights ? '동의' : '비동의'}
           </Typography>
         </StyledTermsBox>
         <Accordion
