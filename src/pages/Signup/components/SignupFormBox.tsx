@@ -49,7 +49,7 @@ export const StyledInputLabel = styled(InputLabel)<{ multiLine: boolean }>`
   grid-template-columns: 1fr 3fr;
   gap: 1rem;
   align-items: center;
-  padding: 0.25rem;
+  padding: 0.325rem;
 
   ${({ multiLine }) => {
     if (multiLine) {

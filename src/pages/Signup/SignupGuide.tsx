@@ -23,7 +23,7 @@ import TeamingCriteria from './components/TeamingCriteria';
 import { guideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
-import { RunningGroup } from '@/types/group';
+import { GenderEnum, RunningGroup } from '@/types/group';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
@@ -85,11 +85,11 @@ const SignupGuide: React.FC = () => {
               formType={FormType.Radio}
               formValue={[
                 {
-                  value: 'MAN',
+                  value: GenderEnum.M,
                   label: intl.formatMessage({ id: 'common.gender.man' }),
                 },
                 {
-                  value: 'WOMAN',
+                  value: GenderEnum.W,
                   label: intl.formatMessage({ id: 'common.gender.woman' }),
                 },
               ]}
