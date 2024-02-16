@@ -14,8 +14,8 @@ import {
   Badge,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 import { useIntl } from 'react-intl';
+import { useSearchParams } from 'react-router-dom';
 
 import { StyledInputLabel } from './InfoEdit';
 
@@ -39,7 +39,7 @@ interface SpecGuideEditProps {
 
 const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
-  const { handleSubmit, control, setValue, watch, getValues } =
+  const { handleSubmit, control, setValue, watch } =
     useForm<runningSpecGuidePatchRequest>({
       defaultValues,
     });

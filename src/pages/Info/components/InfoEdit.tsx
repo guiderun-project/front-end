@@ -1,16 +1,14 @@
-import {
-  permissionPatchRequest,
-  personalInfoPatchRequest,
-} from '@/apis/types/info';
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import {
   Badge,
   Box,
+  Checkbox,
   FormControl,
   FormControlLabel,
   InputLabel,
   MenuItem,
+  Radio,
   RadioGroup,
   Select,
   Stack,
@@ -19,10 +17,10 @@ import {
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
-import { GenderEnum } from '@/types/group';
-import { Radio } from '@mui/material';
-import { Checkbox } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
+
+import { personalInfoPatchRequest } from '@/apis/types/info';
+import { GenderEnum } from '@/types/group';
 
 //
 //

@@ -1,10 +1,10 @@
 import { Button, Box, Stack, Typography } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 import TermsDetail from '../components/TermsDetail';
+import TermsEdit from '../components/TermsEdit';
 
 import { permissionGetResponse } from '@/apis/types/info';
-import { useSearchParams } from 'react-router-dom';
-import TermsEdit from '../components/TermsEdit';
 import { NotFound } from '@/components/shared';
 
 //

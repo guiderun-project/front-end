@@ -75,6 +75,7 @@ const SpecSection = () => {
           case DisabilityEnum.VI:
             return <SpecViDetail data={VI_SPEC_DATA} />;
         }
+        break;
       case 'edit':
         switch (type as DisabilityEnum) {
           case DisabilityEnum.GUIDE:

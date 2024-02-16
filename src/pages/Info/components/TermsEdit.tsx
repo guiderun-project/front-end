@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import {
   Badge,
   Card,
@@ -10,14 +11,17 @@ import {
   Typography,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   permissionGetResponse,
   permissionPatchRequest,
 } from '@/apis/types/info';
-import styled from '@emotion/styled';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { useSearchParams } from 'react-router-dom';
+
+//
+//
+//
 
 interface TermsEditProps {
   defaultValues: permissionGetResponse;
