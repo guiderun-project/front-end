@@ -48,7 +48,7 @@ const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
 //
 
 const SpecSection = () => {
-  const type = DisabilityEnum.VI;
+  const type = DisabilityEnum.GUIDE;
 
   const [searchParams, setSearchParams] = useSearchParams();
 
