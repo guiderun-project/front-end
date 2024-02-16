@@ -104,6 +104,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         <Controller
           name="gender"
           control={control}
+          rules={{
+            required: true,
+          }}
           render={({ field }) => (
             <StyledInputLabel>
               <Typography component="h3" fontWeight={700}>
@@ -148,6 +151,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         <Controller
           name="name"
           control={control}
+          rules={{
+            required: true,
+          }}
           render={({ field }) => (
             <StyledInputLabel>
               <Typography component="h3" fontWeight={700}>
@@ -166,6 +172,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         <Controller
           name="phoneNumber"
           control={control}
+          rules={{
+            required: true,
+          }}
           render={({ field }) => (
             <Stack>
               <StyledInputLabel>
@@ -211,6 +220,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         <Controller
           name="age"
           control={control}
+          rules={{
+            required: true,
+          }}
           render={({ field }) => (
             <StyledInputLabel>
               <Typography component="h3" fontWeight={700}>
