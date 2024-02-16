@@ -97,7 +97,7 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
         <Box display="flex" gap="0.5rem" alignItems="center">
           <Typography>{data.phoneNumber}</Typography>
           <Typography fontWeight={700} color="#8F8F8F" fontSize="0.75rem">
-            {!data.isOpenNumber && '비공개'}
+            {data.isOpenNumber && '비공개'}
           </Typography>
         </Box>
       </StyledSection>
@@ -117,7 +117,7 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
             SNS(인스타그램) 아이디
           </Typography>
           <Typography fontWeight={700} color="#8F8F8F" fontSize="0.75rem">
-            {!data.isOpenSns && '비공개'}
+            {data.isOpenSns && '비공개'}
           </Typography>
         </Box>
         <a

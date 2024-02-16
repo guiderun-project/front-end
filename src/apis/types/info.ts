@@ -48,15 +48,10 @@ export type personalInfoGetResponse = {
   isOpenSns: boolean;
 };
 
-export type personalInfoPatchRequest = {
-  name: string;
-  gender: GenderEnum;
-  phoneNumber: string;
-  age: string;
-  snsId: string;
-  isOpenNumber: boolean;
-  isOpenSns: boolean;
-};
+export type personalInfoPatchRequest = Omit<
+  personalInfoGetResponse,
+  'type' | 'role'
+>;
 
 export type personalInfoPatchResponse = {
   name: string;
@@ -66,6 +61,8 @@ export type personalInfoPatchResponse = {
   phoneNumber: string;
   age: number;
   snsId: string;
+  isOpenNumber: boolean;
+  isOpenSns: boolean;
 };
 
 export type runningSpecGuideGetRequest = {

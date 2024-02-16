@@ -1,8 +1,11 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 
 import InfoDetail from '../components/InfoDetail';
+import InfoEdit from '../components/InfoEdit';
 
 import { personalInfoGetResponse } from '@/apis/types/info';
+import { NotFound } from '@/components/shared';
 import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
 
 //
@@ -26,11 +29,30 @@ const INFO_DATA: personalInfoGetResponse = {
 //
 
 const InfoSection = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const mode = searchParams.get('mode') ?? 'detail';
+
+  /**
+   *
+   */
+  const handleEditClick = () => {
+    searchParams.set('mode', 'edit');
+    setSearchParams(searchParams.toString());
+  };
+
   /**
    *
    */
   const renderData = () => {
-    return <InfoDetail data={INFO_DATA} />;
+    switch (mode) {
+      case 'detail':
+        return <InfoDetail data={INFO_DATA} />;
+      case 'edit':
+        return <InfoEdit defaultValues={INFO_DATA} />;
+      default:
+        return <NotFound />;
+    }
   };
 
   //
@@ -48,23 +70,26 @@ const InfoSection = () => {
         개인 인적사항
       </Typography>
       {renderData()}
-      <Box display="flex" justifyContent="flex-end">
-        <Button
-          sx={{
-            display: 'flex',
-            gap: '0.125rem',
-          }}
-        >
-          <Typography
+      {mode === 'detail' && (
+        <Box display="flex" justifyContent="flex-end">
+          <Button
             sx={{
-              textDecoration: 'underline',
+              display: 'flex',
+              gap: '0.125rem',
             }}
+            onClick={handleEditClick}
           >
-            인적사항 수정하기
-          </Typography>
-          <span aria-hidden>&gt;</span>
-        </Button>
-      </Box>
+            <Typography
+              sx={{
+                textDecoration: 'underline',
+              }}
+            >
+              인적사항 수정하기
+            </Typography>
+            <span aria-hidden>&gt;</span>
+          </Button>
+        </Box>
+      )}
     </Stack>
   );
 };
