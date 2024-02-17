@@ -28,19 +28,30 @@ export const theme = createTheme({
       main: '#333',
     },
     vi: {
-      main: '#8D345F',
+      main: '#900782',
       contrastText: '#FFF',
     },
     guide: {
-      main: '#34788D',
+      main: '#0C3B82',
       contrastText: '#FFF',
     },
   },
   components: {
+    MuiBadge: {
+      styleOverrides: {
+        dot: {
+          minWidth: '0.25rem',
+          height: '0.25rem',
+          top: '0.25rem',
+          right: '-0.1125rem',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         sizeLarge: {
-          padding: '1.1875rem 1rem',
+          height: '3.5rem',
+          maxWidth: '19.6875rem',
         },
         outlined: {
           borderColor: '#444',
