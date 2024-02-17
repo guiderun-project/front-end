@@ -22,7 +22,7 @@ const SignupComplete: React.FC = () => {
       >
         <FormattedMessage id="signup.complete.matching" />
       </Typography>
-      <Stack gap="1rem" width="100%">
+      <Stack gap="1rem" width="100%" alignItems="center">
         <Button variant="contained" size="large" fullWidth>
           <FormattedMessage id="signup.complete.checkInfo" />
         </Button>

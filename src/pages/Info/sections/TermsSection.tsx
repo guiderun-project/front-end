@@ -69,8 +69,10 @@ const TermsSection = () => {
             }}
           >
             <Typography
+              fontSize="0.875rem"
               sx={{
                 textDecoration: 'underline',
+                textUnderlinePosition: 'under',
               }}
             >
               동의 내용 변경하기

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Checkbox,
   FormControl,
@@ -39,7 +41,7 @@ interface SpecGuideEditProps {
 
 const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
-  const { handleSubmit, control, setValue, watch } =
+  const { handleSubmit, control, setValue, watch, setFocus } =
     useForm<runningSpecGuidePatchRequest>({
       defaultValues,
     });
@@ -58,9 +60,16 @@ const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
     }
   };
 
-  /**
-   *
-   */
+  //
+  //
+  //
+  React.useEffect(() => {
+    setFocus('recordDegree');
+  }, [setFocus]);
+
+  //
+  //
+  //
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
@@ -80,6 +89,7 @@ const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
                 <InputLabel id="recordDegree">10km 기준</InputLabel>
                 <Select
                   {...field}
+                  inputRef={field.ref}
                   fullWidth
                   labelId="recordDegree"
                   label="10km 기준"

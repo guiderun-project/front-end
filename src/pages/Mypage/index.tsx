@@ -1,6 +1,8 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Pagination, Stack, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -32,7 +34,8 @@ const StyledEventButton = styled.button`
   border: 0;
   outline: 0;
   box-sizing: border-box;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
+  padding-right: 1.5rem;
   gap: 1rem;
   display: grid;
   grid-template-columns: 1fr 4fr 2fr;
@@ -41,6 +44,7 @@ const StyledEventButton = styled.button`
   background-color: #fff;
   text-decoration: none;
   color: #000;
+  border-bottom: 1px solid #c2c7cf;
 `;
 
 //
@@ -159,18 +163,22 @@ const Mypage: React.FC = () => {
             textDecoration: 'none',
             color: '#333',
             fontSize: '0.875rem',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           <Typography
             component="span"
+            fontSize="0.875rem"
             fontWeight={500}
             sx={{
               textDecoration: 'underline',
+              textUnderlinePosition: 'under',
             }}
           >
-            러닝스펙 업데이트
-          </Typography>{' '}
-          <span aria-hidden>&gt;</span>
+            {`러닝스펙 업데이트 `}
+          </Typography>
+          <KeyboardArrowRightIcon fontSize="small" aria-hidden />
         </Link>
       </Box>
     );
@@ -197,18 +205,22 @@ const Mypage: React.FC = () => {
               textDecoration: 'none',
               color: '#333',
               fontSize: '0.875rem',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             <Typography
               component="span"
+              fontSize="0.875rem"
               fontWeight={500}
               sx={{
                 textDecoration: 'underline',
+                textUnderlinePosition: 'under',
               }}
             >
-              개인 인적사항 더보기
-            </Typography>{' '}
-            <span aria-hidden>&gt;</span>
+              {`개인 인적사항 더보기 `}
+            </Typography>
+            <KeyboardArrowRightIcon fontSize="small" aria-hidden />
           </Link>
         </Stack>
       </Box>
@@ -261,7 +273,7 @@ const Mypage: React.FC = () => {
                     id={`common.status.${event.recruitStatus}`}
                   />
                 </span>
-                <span aria-hidden>&gt;</span>
+                <ArrowRightIcon fontSize="small" />
               </Typography>
             </StyledEventButton>
           ))}
@@ -284,7 +296,7 @@ const Mypage: React.FC = () => {
   return (
     <>
       <PageLayout>
-        <Stack padding="5rem 0" gap="3.75rem">
+        <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
           {/* 이름, 팀 */}
           {renderTeamInfo()}
           {/* 기본정보 */}
