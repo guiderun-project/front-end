@@ -83,6 +83,7 @@ const InfoSection = () => {
               fontSize="0.875rem"
               sx={{
                 textDecoration: 'underline',
+                textUnderlinePosition: 'under',
               }}
             >
               인적사항 수정하기
