@@ -169,6 +169,7 @@ const Mypage: React.FC = () => {
         >
           <Typography
             component="span"
+            fontSize="0.875rem"
             fontWeight={500}
             sx={{
               textDecoration: 'underline',
@@ -210,6 +211,7 @@ const Mypage: React.FC = () => {
           >
             <Typography
               component="span"
+              fontSize="0.875rem"
               fontWeight={500}
               sx={{
                 textDecoration: 'underline',
