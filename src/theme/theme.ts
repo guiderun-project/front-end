@@ -36,4 +36,17 @@ export const theme = createTheme({
       contrastText: '#FFF',
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        sizeLarge: {
+          padding: '1.1875rem 1rem',
+        },
+        outlined: {
+          borderColor: '#444',
+          fontWeight: 600,
+        },
+      },
+    },
+  },
 });
