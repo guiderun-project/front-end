@@ -284,7 +284,7 @@ const Mypage: React.FC = () => {
   return (
     <>
       <PageLayout>
-        <Stack padding="5rem 0" gap="3.75rem">
+        <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
           {/* 이름, 팀 */}
           {renderTeamInfo()}
           {/* 기본정보 */}
