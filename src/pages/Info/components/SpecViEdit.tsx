@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Badge,
   FormControl,
@@ -36,7 +38,7 @@ interface SpecViEditProps {
 
 const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
-  const { handleSubmit, control, setValue, watch } =
+  const { handleSubmit, control, setValue, watch, setFocus } =
     useForm<runningSpecViPatchRequest>({
       defaultValues,
     });
@@ -55,6 +57,17 @@ const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
       setSearchParams(searchParams.toString());
     }
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    setFocus('isRunningExp');
+  }, [setFocus]);
+
+  //
+  //
+  //
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +96,7 @@ const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
               >
                 <FormControlLabel
                   value={true}
-                  control={<Radio />}
+                  control={<Radio inputRef={field.ref} />}
                   label={intl.formatMessage({ id: 'common.yes' })}
                 />
                 <FormControlLabel
