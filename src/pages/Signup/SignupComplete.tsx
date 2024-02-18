@@ -23,17 +23,16 @@ const SignupComplete: React.FC = () => {
           fontSize="2.5rem"
           fontWeight={400}
           textAlign="center"
-          whiteSpace="break-spaces"
-        >
+          whiteSpace="break-spaces">
           <FormattedMessage id="signup.complete.matching" />
-        </Typography>
-        <Stack gap="1rem" width="100%">
-          <Button variant="contained" size="large" fullWidth>
-            <FormattedMessage id="signup.complete.checkInfo" />
-          </Button>
-          <Button variant="outlined" size="large" fullWidth>
-            <FormattedMessage id="common.mypage" />
-          </Button>
+      </Typography>
+      <Stack gap="1rem" width="100%" alignItems="center">
+        <Button variant="contained" size="large" fullWidth>
+          <FormattedMessage id="signup.complete.checkInfo" />
+        </Button>
+        <Button variant="outlined" size="large" fullWidth>
+          <FormattedMessage id="common.mypage" />
+        </Button>
         </Stack>
       </Stack>
     </>

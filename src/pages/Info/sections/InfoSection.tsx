@@ -80,8 +80,10 @@ const InfoSection = () => {
             onClick={handleEditClick}
           >
             <Typography
+              fontSize="0.875rem"
               sx={{
                 textDecoration: 'underline',
+                textUnderlinePosition: 'under',
               }}
             >
               인적사항 수정하기

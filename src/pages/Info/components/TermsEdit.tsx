@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styled from '@emotion/styled';
 import {
   Badge,
@@ -47,7 +49,7 @@ const StyledInputLabel = styled(InputLabel)`
 
 const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
-  const { handleSubmit, control } = useForm<permissionPatchRequest>({
+  const { handleSubmit, control, setFocus } = useForm<permissionPatchRequest>({
     defaultValues,
   });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,6 +65,17 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
       setSearchParams(searchParams.toString());
     }
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    setFocus('privacy');
+  }, [setFocus]);
+
+  //
+  //
+  //
 
   //
   //
@@ -126,7 +139,7 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
               >
                 <FormControlLabel
                   value={true}
-                  control={<Radio />}
+                  control={<Radio inputRef={field.ref} />}
                   label={intl.formatMessage({ id: 'signup.radio.agree' })}
                 />
                 <FormControlLabel
