@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Box, Pagination, Stack, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -295,6 +296,9 @@ const Mypage: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>마이 페이지 - Guide run Project</title>
+      </Helmet>
       <PageLayout>
         <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
           {/* 이름, 팀 */}

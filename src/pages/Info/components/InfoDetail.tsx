@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Badge, Box, Stack, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 
 import { personalInfoGetResponse } from '@/apis/types/info';
 import { DisabilityChip, GenderChip } from '@/components/shared';
@@ -60,6 +61,9 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
 
   return (
     <Stack component="div" gap="2rem">
+      <Helmet>
+        <title>개인 인적사항 조회 - Guide run Project</title>
+      </Helmet>
       {/* 장애여부 */}
       <StyledSection>
         <Typography component="h3" fontWeight={700}>

@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -22,6 +23,9 @@ const Intro: React.FC = () => {
       alignItems="center"
       gap="8.75rem"
     >
+      <Helmet>
+        <title>시작하기 - Guide run Project</title>
+      </Helmet>
       <Stack gap="2.5rem" alignItems="center">
         <Typography variant="h1" fontSize="2.5rem" fontWeight="500">
           <FormattedMessage id="intro.greeting" />

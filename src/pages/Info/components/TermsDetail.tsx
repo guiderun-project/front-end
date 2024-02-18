@@ -8,6 +8,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 
 import { permissionGetResponse } from '@/apis/types/info';
@@ -36,6 +37,9 @@ const StyledTermsBox = styled.section`
 const TermsDetail: React.FC<TermsDetailProps> = ({ data }) => {
   return (
     <Stack gap="2rem">
+      <Helmet>
+        <title>약관 동의 내역 조회 - Guide run Project</title>
+      </Helmet>
       <Stack gap="0.5rem">
         <StyledTermsBox>
           <Typography component="h3" fontWeight={700}>

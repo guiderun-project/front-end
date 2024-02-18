@@ -15,6 +15,7 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
@@ -71,6 +72,9 @@ const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <title>러닝 스펙 수정 - Guide run Project</title>
+      </Helmet>
       <Stack gap="2rem">
         {/* 러닝 경험 */}
         <Controller

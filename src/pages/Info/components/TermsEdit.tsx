@@ -12,6 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
@@ -81,6 +82,9 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   //
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <title>약관 동의 수정 - Guide run Project</title>
+      </Helmet>
       <Stack gap="2rem" width="100%">
         <Controller
           name="privacy"
