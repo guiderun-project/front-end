@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Stack, Typography } from '@mui/material';
 import Lottie from 'lottie-react';
+import { Helmet } from 'react-helmet-async';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -34,6 +35,9 @@ const Oauth: React.FC = () => {
 
   return (
     <Stack alignItems="center" justifyContent="center" minHeight="100vh">
+      <Helmet>
+        <title>가입 인증 진행 중 - Guide run Project</title>
+      </Helmet>
       <Stack maxWidth="20rem" maxHeight="20rem" alignItems="center">
         <Lottie
           alt={intl.formatMessage({ id: 'oauth.loading.alt' })}

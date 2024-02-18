@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
 import Route from './Route';
@@ -34,14 +35,16 @@ const queryClient = new QueryClient();
 enableMocking().then(() => {
   ReactDOM.createRoot(rootNode).render(
     <React.StrictMode>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ThemeProvider theme={theme}>
-            <Route />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </Provider>
+      <HelmetProvider>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ThemeProvider theme={theme}>
+              <Route />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </Provider>
+      </HelmetProvider>
     </React.StrictMode>,
   );
 });

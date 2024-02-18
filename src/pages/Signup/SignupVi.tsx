@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -614,6 +615,9 @@ const SignupVi: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
+      <Helmet>
+        <title>회원 정보 입력(VI) - Guide run project</title>
+      </Helmet>
       <form
         onSubmit={() => {
           setSearchparams({
