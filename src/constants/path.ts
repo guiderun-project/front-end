@@ -1,6 +1,10 @@
 export const BROWSER_PATH = {
   MAIN: '',
-  ADMIN: '/admin',
+  ADMIN: {
+    MAIN: '/admin',
+    USER: '/admin/user',
+    EVENT: '/admin/event',
+  },
   EVENT: {
     MAIN: '/event',
     ALL: '/event/all',

@@ -80,12 +80,8 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: BROWSER_PATH.ADMIN,
-    element: (
-      <PageLayout>
-        <Admin />
-      </PageLayout>
-    ),
+    path: BROWSER_PATH.ADMIN.MAIN,
+    element: <Admin />,
   },
   {
     path: BROWSER_PATH.SIGNUP,
