@@ -21,6 +21,8 @@ import Oauth from './pages/Oauth';
 import Search from './pages/Search';
 import Signup from './pages/Signup';
 import { RootState } from './store';
+import AdminUser from './pages/Admin/AdminUser';
+import AdminEvent from './pages/Admin/AdminEvent';
 
 const router = createBrowserRouter([
   {
@@ -82,6 +84,16 @@ const router = createBrowserRouter([
   {
     path: BROWSER_PATH.ADMIN.MAIN,
     element: <Admin />,
+    children: [
+      {
+        path: BROWSER_PATH.ADMIN.USER,
+        element: <AdminUser />,
+      },
+      {
+        path: BROWSER_PATH.ADMIN.EVENT,
+        element: <AdminEvent />,
+      },
+    ],
   },
   {
     path: BROWSER_PATH.SIGNUP,

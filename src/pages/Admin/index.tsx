@@ -12,7 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 import { BROWSER_PATH } from '@/constants/path';
 
@@ -52,33 +52,45 @@ const NAME_DATA = {
 const Admin: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState<boolean>(false);
 
+  /**
+   *
+   */
+  const handleClose = () => {
+    setIsDrawerOpen(false);
+  };
+
+  /**
+   *
+   */
+  const handleOpen = () => {
+    setIsDrawerOpen(true);
+  };
+
   //
   //
   //
   return (
     <StyledAdminContainer>
       <IconButton
-        onClick={() => setIsDrawerOpen(true)}
+        onClick={handleOpen}
         aria-label="사이드 메뉴 버튼"
         sx={{
           position: 'absolute',
-          top: '2.5rem',
+          top: '1rem',
           left: '1.875rem',
         }}
       >
         <MenuIcon />
       </IconButton>
-      <Drawer
-        open={isDrawerOpen}
-        anchor="left"
-        onClose={() => setIsDrawerOpen(false)}
-      >
+      <Drawer open={isDrawerOpen} anchor="left" onClose={handleClose}>
         <StyledSideMenuContainer>
           <Typography
             color="#42474E"
             fontSize="1.125rem"
             fontWeight={700}
             lineHeight="1.6125rem"
+            padding="0.5rem"
+            paddingLeft="1rem"
           >
             {NAME_DATA.name} 관리자님 <br /> 안녕하세요!
           </Typography>
@@ -86,8 +98,9 @@ const Admin: React.FC = () => {
             <List>
               <ListItem disablePadding>
                 <ListItemButton
-                  component="a"
-                  href={BROWSER_PATH.ADMIN.USER}
+                  component={Link}
+                  to={BROWSER_PATH.ADMIN.USER}
+                  onClick={handleClose}
                   sx={{
                     padding: '1.125rem 1rem',
                     borderRadius: '100rem',
@@ -101,8 +114,9 @@ const Admin: React.FC = () => {
               </ListItem>
               <ListItem disablePadding>
                 <ListItemButton
-                  component="a"
-                  href={BROWSER_PATH.ADMIN.EVENT}
+                  component={Link}
+                  to={BROWSER_PATH.ADMIN.EVENT}
+                  onClick={handleClose}
                   sx={{
                     padding: '1.125rem 1rem',
                     borderRadius: '100rem',
@@ -118,7 +132,7 @@ const Admin: React.FC = () => {
           </Stack>
         </StyledSideMenuContainer>
       </Drawer>
-      <Stack padding="2.5rem">
+      <Stack width="100%" alignItems="center">
         <Outlet />
       </Stack>
     </StyledAdminContainer>

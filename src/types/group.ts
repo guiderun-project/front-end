@@ -9,6 +9,7 @@ export enum RunningGroup {
 
 export enum RoleEnum {
   New = 'NEW',
+  Reject = 'REJECT',
   Wait = 'WAIT',
   User = 'USER',
   Coach = 'COACH',
