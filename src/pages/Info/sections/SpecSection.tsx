@@ -16,7 +16,7 @@ import { DisabilityEnum, RunningGroup } from '@/types/group';
 //
 //
 
-const VI_SPEC_DATA: runningSpecViGetResponse = {
+export const VI_SPEC_DATA: runningSpecViGetResponse = {
   isRunningExp: true,
   recordDegree: RunningGroup.A,
   detailRecord: '48분 50초',
@@ -27,7 +27,7 @@ const VI_SPEC_DATA: runningSpecViGetResponse = {
   hopePrefs: '감사합니다~',
 };
 
-const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
+export const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
   recordDegree: RunningGroup.A,
   detailRecord: '42분 20초',
   isGuideExp: true,

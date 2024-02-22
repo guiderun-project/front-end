@@ -12,7 +12,7 @@ import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
 //
 //
 
-const INFO_DATA: personalInfoGetResponse = {
+export const INFO_DATA: personalInfoGetResponse = {
   name: '홍길동',
   type: DisabilityEnum.GUIDE,
   role: RoleEnum.User,

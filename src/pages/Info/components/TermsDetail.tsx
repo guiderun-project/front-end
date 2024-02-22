@@ -24,7 +24,7 @@ interface TermsDetailProps {
 //
 //
 
-const StyledTermsBox = styled.section`
+export const StyledTermsBox = styled.section`
   display: flex;
   gap: 2.5rem;
 `;

@@ -11,7 +11,7 @@ import { NotFound } from '@/components/shared';
 //
 //
 
-const TERMS_DATA: permissionGetResponse = {
+export const TERMS_DATA: permissionGetResponse = {
   privacy: true,
   portraitRights: false,
 };

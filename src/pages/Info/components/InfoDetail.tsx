@@ -16,7 +16,7 @@ interface InfoDetailProps {
 //
 //
 
-const StyledSection = styled.section<{ multiLine?: boolean }>`
+export const StyledSection = styled.section<{ multiLine?: boolean }>`
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 0.5rem;
