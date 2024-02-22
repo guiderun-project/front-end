@@ -24,6 +24,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import UserDetailDialog from './components/UserDetailDialog';
 
 //
 //
@@ -34,7 +35,7 @@ export type UserDataType = {
   role: RoleEnum; //권한
   type: DisabilityEnum; //vi인지 guide인지
   name: string;
-  pace: RunningGroup; //러닝 등급
+  team: RunningGroup; //러닝 등급
   gender: GenderEnum; //성별
   age: number; //나이
   snsId: string; //sns 계정
@@ -55,7 +56,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -70,7 +71,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.VI,
     name: '홍길동',
-    pace: RunningGroup.B,
+    team: RunningGroup.B,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -85,7 +86,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.D,
+    team: RunningGroup.D,
     gender: GenderEnum.W,
     age: 40,
     snsId: 'pride_sd',
@@ -100,7 +101,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.User,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.D,
+    team: RunningGroup.D,
     gender: GenderEnum.W,
     age: 40,
     snsId: 'pride_sd',
@@ -115,7 +116,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -130,7 +131,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.User,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -145,7 +146,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -160,7 +161,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -175,7 +176,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Reject,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -190,7 +191,7 @@ const USER_DATA: UserDataType[] = [
     role: RoleEnum.Wait,
     type: DisabilityEnum.GUIDE,
     name: '홍길동',
-    pace: RunningGroup.A,
+    team: RunningGroup.A,
     gender: GenderEnum.M,
     age: 40,
     snsId: 'pride_sd',
@@ -315,7 +316,7 @@ const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
           <GenderChip type={userData.gender} />
         </TableCell>
         <TableCell align="center">
-          {userData.name} <GroupChip type="text" group={userData.pace} />
+          {userData.name} <GroupChip type="text" group={userData.team} />
         </TableCell>
         <TableCell component="th" align="center">
           {renderApproveStatus(userData.role)}
@@ -498,6 +499,7 @@ const AdminUser: React.FC = () => {
       <Stack direction="row" justifyContent="center">
         <Pagination size="small" count={10} />
       </Stack>
+      <UserDetailDialog userData={USER_DATA[0]} open />
     </Stack>
   );
 };

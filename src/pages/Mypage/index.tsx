@@ -28,7 +28,7 @@ import {
 //
 //
 
-const StyledEventButton = styled.button`
+export const StyledEventButton = styled.button`
   border: 0;
   outline: 0;
   box-sizing: border-box;
@@ -58,7 +58,7 @@ const TEAM_DATA = {
   recordDegree: RunningGroup.B,
 };
 
-const EVENT_DATA: eventData[] = [
+export const EVENT_DATA: eventData[] = [
   {
     eventId: 1,
     eventType: EventType.Competition,
