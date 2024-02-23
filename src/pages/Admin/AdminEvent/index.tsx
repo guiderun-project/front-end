@@ -16,6 +16,7 @@ import {
   TableHead,
   Button,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 
 import { StyledCollapsBox } from '../AdminUser';
 
@@ -410,6 +411,9 @@ const AdminEvent: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
+      <Helmet>
+        <title>이벤트 관리 - Admin - Guide run Project</title>
+      </Helmet>
       <Box>
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           이벤트 관리

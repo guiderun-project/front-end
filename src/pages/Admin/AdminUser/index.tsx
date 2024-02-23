@@ -16,6 +16,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 
 import UserDetailDialog from './components/UserDetailDialog';
 
@@ -487,6 +488,9 @@ const AdminUser: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
+      <Helmet>
+        <title>회원 관리 - Admin - Guide run project</title>
+      </Helmet>
       <Box>
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           회원 관리
