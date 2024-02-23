@@ -50,14 +50,18 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
         if (window.confirm(`${userData.name}님을 승인하시겠습니까?`)) {
           alert(`${userData.name}님이 ${team}팀으로 승인되었습니다.`);
         }
+        setIsActiveConfirm(false);
+        onClose();
         break;
       case 'deny':
         if (window.confirm(`${userData.name}님을 거절하시겠습니까?`)) {
           alert(`${userData.name}님이 거절되었습니다.`);
         }
+        setIsActiveConfirm(false);
+        onClose();
         break;
     }
-    onClose();
+    setIsActiveConfirm(false);
   };
 
   /**
