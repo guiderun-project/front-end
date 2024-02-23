@@ -171,6 +171,10 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                 deleteIcon={<CheckIcon aria-hidden />}
                 onDelete={handleConfirm('confirm')}
                 onClick={handleConfirm('confirm')}
+                onTouchStart={() =>
+                  setTimeout(() => setIsActiveConfirm((prev) => !prev), 1000)
+                }
+                onTouchEnd={() => setIsActiveConfirm(false)}
                 onContextMenu={(e) => {
                   e.preventDefault();
                   setIsActiveConfirm((prev) => !prev);
@@ -192,7 +196,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                   variant="outlined"
                   label="승인 거부"
                   deleteIcon={<HighlightOffIcon aria-hidden />}
-                  onDelete={handleConfirm('confirm')}
+                  onDelete={handleConfirm('deny')}
                   onClick={handleConfirm('deny')}
                   sx={{
                     height: '2.5rem',
