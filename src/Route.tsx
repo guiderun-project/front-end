@@ -9,6 +9,8 @@ import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
+import AdminEvent from './pages/Admin/AdminEvent';
+import AdminUser from './pages/Admin/AdminUser';
 import Calendar from './pages/Calendar';
 import { AllEvent, DetailEvent, MyEvent, UpcomingEvent } from './pages/Event';
 import Info from './pages/Info';
@@ -80,12 +82,18 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: BROWSER_PATH.ADMIN,
-    element: (
-      <PageLayout>
-        <Admin />
-      </PageLayout>
-    ),
+    path: BROWSER_PATH.ADMIN.MAIN,
+    element: <Admin />,
+    children: [
+      {
+        path: BROWSER_PATH.ADMIN.USER,
+        element: <AdminUser />,
+      },
+      {
+        path: BROWSER_PATH.ADMIN.EVENT,
+        element: <AdminEvent />,
+      },
+    ],
   },
   {
     path: BROWSER_PATH.SIGNUP,

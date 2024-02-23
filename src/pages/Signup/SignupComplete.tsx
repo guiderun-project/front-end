@@ -23,7 +23,8 @@ const SignupComplete: React.FC = () => {
           fontSize="2.5rem"
           fontWeight={400}
           textAlign="center"
-          whiteSpace="break-spaces">
+          whiteSpace="break-spaces"
+        >
           <FormattedMessage id="signup.complete.matching" />
       </Typography>
       <Stack gap="1rem" width="100%" alignItems="center">
