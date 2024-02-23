@@ -16,7 +16,7 @@ const UserEventTabPanel: React.FC<UserEventTabpanelProps> = ({
       component="div"
       role="tabpanel"
       id="Tabpanel-event"
-      gap="2.5rem"
+      gap="1.25rem"
       aria-labelledby="Tab-event"
     >
       <UserEventCount count={count} />

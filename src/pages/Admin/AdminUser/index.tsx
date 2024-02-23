@@ -203,6 +203,22 @@ const USER_DATA: UserDataType[] = [
   },
 ];
 
+const INITIAL_USER_DATA: UserDataType = {
+  age: 0,
+  contestCnt: 0,
+  gender: GenderEnum.M,
+  name: '',
+  phoneNumber: '0',
+  role: RoleEnum.Reject,
+  snsId: '',
+  team: RunningGroup.A,
+  trainingCnt: 0,
+  type: DisabilityEnum.GUIDE,
+  update_date: '',
+  update_time: '',
+  userId: '',
+};
+
 //
 //
 //
@@ -242,8 +258,10 @@ const StyledUserDetailButton = styled.button`
 //
 //
 
-const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
-  const [open, setOpen] = React.useState(false);
+const AdminUser: React.FC = () => {
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [selectedUser, setSelectedUser] =
+    React.useState<UserDataType>(INITIAL_USER_DATA);
 
   /**
    *
@@ -286,78 +304,67 @@ const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
     }
   };
 
-  //
-  //
-  //
+  const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
+    const [open, setOpen] = React.useState(false);
 
-  return (
-    <>
-      <TableRow
-        onClick={() => setOpen((prev) => !prev)}
-        sx={{
-          '.MuiTableCell-root': {
-            padding: '0.75rem',
-          },
-          cursor: 'pointer',
-        }}
-      >
-        <TableCell
-          align="center"
+    //
+    //
+    //
+
+    return (
+      <>
+        <TableRow
+          onClick={() => setOpen((prev) => !prev)}
           sx={{
-            fontSize: '0.625rem',
+            '.MuiTableCell-root': {
+              padding: '0.75rem',
+            },
+            cursor: 'pointer',
           }}
         >
-          {`${userData.update_date}\n${userData.update_time}`}
-        </TableCell>
-        <TableCell align="center">
-          <DisabilityChip component="chip" type={userData.type} />
-        </TableCell>
-        <TableCell align="center">
-          <GenderChip type={userData.gender} />
-        </TableCell>
-        <TableCell align="center">
-          {userData.name} <GroupChip type="text" group={userData.team} />
-        </TableCell>
-        <TableCell component="th" align="center">
-          {renderApproveStatus(userData.role)}
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ padding: 0 }} colSpan={5}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <StyledCollapsBox>
-              <Stack
-                direction="row"
-                gap="1.5rem"
-                sx={{
-                  '.title': {
-                    fontWeight: 700,
-                    fontSize: '0.6825rem',
-                  },
-                  '.content': {
-                    fontSize: '0.625rem',
-                  },
-                  '.normal': {
-                    fontSize: '0.6825rem',
-                  },
-                }}
-              >
-                <StyledProfileImg aria-hidden></StyledProfileImg>
-                <Stack gap="0.5rem">
-                  <Box
-                    component="div"
-                    display="flex"
-                    alignItems="center"
-                    gap="0.25rem"
-                  >
-                    <Typography component="h3" className="title">
-                      마지막 업데이트
-                    </Typography>
-                    <Typography className="normal">
-                      {`${userData.update_date} ${userData.update_time}`}
-                    </Typography>
-                  </Box>
-                  <Stack direction="row" gap="0.75rem" alignItems="center">
+          <TableCell
+            align="center"
+            sx={{
+              fontSize: '0.625rem',
+            }}
+          >
+            {`${userData.update_date}\n${userData.update_time}`}
+          </TableCell>
+          <TableCell align="center">
+            <DisabilityChip component="chip" type={userData.type} />
+          </TableCell>
+          <TableCell align="center">
+            <GenderChip type={userData.gender} />
+          </TableCell>
+          <TableCell align="center">
+            {userData.name} <GroupChip type="text" group={userData.team} />
+          </TableCell>
+          <TableCell component="th" align="center">
+            {renderApproveStatus(userData.role)}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ padding: 0 }} colSpan={5}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <StyledCollapsBox>
+                <Stack
+                  direction="row"
+                  gap="1.5rem"
+                  sx={{
+                    '.title': {
+                      fontWeight: 700,
+                      fontSize: '0.6825rem',
+                    },
+                    '.content': {
+                      fontSize: '0.625rem',
+                    },
+                    '.normal': {
+                      fontSize: '0.6825rem',
+                    },
+                  }}
+                >
+                  <StyledProfileImg aria-hidden></StyledProfileImg>
+                  <Stack gap="0.5rem">
                     <Box
                       component="div"
                       display="flex"
@@ -365,94 +372,110 @@ const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
                       gap="0.25rem"
                     >
                       <Typography component="h3" className="title">
-                        SNS
+                        마지막 업데이트
                       </Typography>
                       <Typography className="normal">
-                        {`@${userData.snsId}`}
+                        {`${userData.update_date} ${userData.update_time}`}
                       </Typography>
                     </Box>
-                    <Box
-                      component="div"
-                      display="flex"
-                      alignItems="center"
-                      gap="0.25rem"
-                    >
-                      <Typography component="h3" className="title">
-                        연령대
-                      </Typography>
-                      <Typography className="content">
-                        {`${userData.age}대`}
-                      </Typography>
-                    </Box>
-                    <Box
-                      component="div"
-                      display="flex"
-                      alignItems="center"
-                      gap="0.25rem"
-                    >
-                      <Typography component="h3" className="title">
-                        전화번호
-                      </Typography>
-                      <Typography className="normal">
-                        {`${userData.phoneNumber}`}
-                      </Typography>
-                    </Box>
+                    <Stack direction="row" gap="0.75rem" alignItems="center">
+                      <Box
+                        component="div"
+                        display="flex"
+                        alignItems="center"
+                        gap="0.25rem"
+                      >
+                        <Typography component="h3" className="title">
+                          SNS
+                        </Typography>
+                        <Typography className="normal">
+                          {`@${userData.snsId}`}
+                        </Typography>
+                      </Box>
+                      <Box
+                        component="div"
+                        display="flex"
+                        alignItems="center"
+                        gap="0.25rem"
+                      >
+                        <Typography component="h3" className="title">
+                          연령대
+                        </Typography>
+                        <Typography className="content">
+                          {`${userData.age}대`}
+                        </Typography>
+                      </Box>
+                      <Box
+                        component="div"
+                        display="flex"
+                        alignItems="center"
+                        gap="0.25rem"
+                      >
+                        <Typography component="h3" className="title">
+                          전화번호
+                        </Typography>
+                        <Typography className="normal">
+                          {`${userData.phoneNumber}`}
+                        </Typography>
+                      </Box>
+                    </Stack>
                   </Stack>
                 </Stack>
-              </Stack>
-              <Stack direction="row" justifyContent="flex-end">
-                <StyledUserDetailButton
-                  title="참여 이벤트 자세히 보기"
-                  onClick={() => console.log('click')}
-                >
-                  <Typography fontSize="0.6875rem" fontWeight={700}>
-                    참여 이벤트
-                  </Typography>
-                  <Stack
-                    direction="row"
-                    gap="0.75rem"
-                    alignItems="center"
-                    sx={{
-                      '.MuiTypography-root': {
-                        fontSize: '0.6875rem',
-                      },
-                      '.total': {
-                        color: '#DE1313',
-                        fontWeight: 700,
-                      },
-                      '.event': {},
+                <Stack direction="row" justifyContent="flex-end">
+                  <StyledUserDetailButton
+                    title="참여 이벤트 자세히 보기"
+                    onClick={() => {
+                      setIsDialogOpen(true);
+                      setSelectedUser(userData);
                     }}
                   >
-                    <Typography>
-                      {`총 `}
-                      <span className="total">
-                        {userData.contestCnt + userData.trainingCnt}
-                      </span>
-                      {`회`}
+                    <Typography fontSize="0.6875rem" fontWeight={700}>
+                      참여 이벤트
                     </Typography>
-                    <Typography>
-                      {`대회 `}
-                      <span className="event">{userData.contestCnt}</span>
-                      {`회`}
-                    </Typography>
-                    <Typography>{`훈련 ${userData.trainingCnt}회`}</Typography>
-                    <KeyboardArrowRightIcon aria-hidden fontSize="small" />
-                  </Stack>
-                </StyledUserDetailButton>
-              </Stack>
-            </StyledCollapsBox>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
-  );
-};
+                    <Stack
+                      direction="row"
+                      gap="0.75rem"
+                      alignItems="center"
+                      sx={{
+                        '.MuiTypography-root': {
+                          fontSize: '0.6875rem',
+                        },
+                        '.total': {
+                          color: '#DE1313',
+                          fontWeight: 700,
+                        },
+                        '.event': {},
+                      }}
+                    >
+                      <Typography>
+                        {`총 `}
+                        <span className="total">
+                          {userData.contestCnt + userData.trainingCnt}
+                        </span>
+                        {`회`}
+                      </Typography>
+                      <Typography>
+                        {`대회 `}
+                        <span className="event">{userData.contestCnt}</span>
+                        {`회`}
+                      </Typography>
+                      <Typography>{`훈련 ${userData.trainingCnt}회`}</Typography>
+                      <KeyboardArrowRightIcon aria-hidden fontSize="small" />
+                    </Stack>
+                  </StyledUserDetailButton>
+                </Stack>
+              </StyledCollapsBox>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </>
+    );
+  };
 
-//
-//
-//
+  //
+  //
+  //
 
-const AdminUser: React.FC = () => {
   return (
     <Stack
       boxSizing="border-box"
@@ -499,7 +522,13 @@ const AdminUser: React.FC = () => {
       <Stack direction="row" justifyContent="center">
         <Pagination size="small" count={10} />
       </Stack>
-      <UserDetailDialog userData={USER_DATA[0]} open />
+      <UserDetailDialog
+        userData={selectedUser}
+        open={isDialogOpen}
+        onClose={() => {
+          setIsDialogOpen(false);
+        }}
+      />
     </Stack>
   );
 };

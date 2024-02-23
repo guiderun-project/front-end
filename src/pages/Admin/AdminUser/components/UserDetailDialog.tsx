@@ -25,6 +25,7 @@ import UserEventTabPanel from './event/UserEventTabpanel';
 
 interface UserDetailDialogProps extends DialogProps {
   userData: UserDataType;
+  onClose: () => void;
 }
 
 //
@@ -32,7 +33,7 @@ interface UserDetailDialogProps extends DialogProps {
 //
 
 const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
-  const { userData } = props;
+  const { userData, onClose } = props;
   const [team, setTeam] = React.useState<RunningGroup>(userData.team);
   const [tabValue, setTabValue] = React.useState<'info' | 'event'>('info');
 
@@ -255,7 +256,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
       }}
     >
       <IconButton
-        onClick={() => props.onClose}
+        onClick={onClose}
         size="large"
         sx={{
           position: 'absolute',

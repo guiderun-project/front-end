@@ -51,7 +51,7 @@ const UserEventList: React.FC<UserEventListProps> = ({}) => {
   //
 
   return (
-    <Stack gap="2rem" alignItems="center" width="100%">
+    <Stack gap="1.25rem" alignItems="center" width="100%">
       <Box
         display="flex"
         alignItems="center"
