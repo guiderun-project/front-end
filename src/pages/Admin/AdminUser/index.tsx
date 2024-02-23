@@ -497,7 +497,7 @@ const AdminUser: React.FC = () => {
         </Typography>
       </Box>
       <TableContainer component={Paper}>
-        <Table aria-label="회원 정보 테이블" sx={{ width: '100%' }}>
+        <Table aria-label="회원 정보 테이블" sx={{ boxSizing: 'border-box' }}>
           <caption style={{ display: 'none' }}>
             회원 정보 테이블. 회원 정보 조회 및 승인 가능
           </caption>
