@@ -78,6 +78,7 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
     <Dialog
       open={isOpen}
       fullWidth
+      keepMounted={false}
       maxWidth="xs"
       onClose={onModalClose}
       sx={{

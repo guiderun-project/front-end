@@ -1,5 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 
 import { StyledDataSection } from './SpecGuideDetail';
@@ -39,6 +40,9 @@ const SpecViDetail: React.FC<SpecViDetailProps> = ({ data }) => {
 
   return (
     <Stack component="div" gap="2rem">
+      <Helmet>
+        <title>러닝 스펙 조회 - Guide run Project</title>
+      </Helmet>
       {/* 달리기 경험 */}
       <StyledDataSection>
         <Typography component="h3" fontWeight={700}>

@@ -17,6 +17,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
@@ -113,6 +114,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <title>개인 인적사항 수정 - Guide run Project</title>
+      </Helmet>
       <Stack gap="2rem">
         <Controller
           name="gender"
