@@ -6,9 +6,6 @@ import SignupContentBox from './SignupContentBox';
 import { GroupChip } from '@/components/shared';
 import { RunningGroup } from '@/types/group';
 
-import { GroupChip } from '@/components/shared';
-import { RunningGroup } from '@/types/group';
-
 //
 //
 //
