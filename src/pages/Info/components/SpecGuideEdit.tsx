@@ -13,6 +13,7 @@ import {
   RadioGroup,
   Badge,
 } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
@@ -64,6 +65,9 @@ const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <title>러닝 스펙 수정 - Guide run Project</title>
+      </Helmet>
       <Stack gap="2rem">
         {/* 개인 기록 */}
         <Controller

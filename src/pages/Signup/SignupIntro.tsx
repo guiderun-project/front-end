@@ -1,4 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 
@@ -25,6 +26,9 @@ const SignupIntro: React.FC = () => {
       alignItems="center"
       gap="2.5rem"
     >
+      <Helmet>
+        <title>장애여부 선택 - Guide run project</title>
+      </Helmet>
       <Header>
         <FormattedMessage id="signup.intro.title" />
       </Header>
