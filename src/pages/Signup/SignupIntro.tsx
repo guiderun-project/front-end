@@ -32,10 +32,10 @@ const SignupIntro: React.FC = () => {
       <Header>
         <FormattedMessage id="signup.intro.title" />
       </Header>
-      <Typography variant="h3" fontWeight={700}>
+      <Typography variant="h2">
         <FormattedMessage id="signup.intro.introduce" />
       </Typography>
-      <Stack gap="1rem" width="100%">
+      <Stack gap="1rem" width="100%" alignItems="center">
         <Button
           variant="contained"
           size="large"
