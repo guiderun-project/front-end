@@ -17,6 +17,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import UserDetailDialog from './components/UserDetailDialog';
+
 import { DisabilityChip, GenderChip, GroupChip } from '@/components/shared';
 import {
   DisabilityEnum,
@@ -24,7 +26,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import UserDetailDialog from './components/UserDetailDialog';
 
 //
 //

@@ -1,6 +1,7 @@
+import { Box, Typography } from '@mui/material';
+
 import { EventChip } from '@/components/shared';
 import { EventType } from '@/types/group';
-import { Box, Typography } from '@mui/material';
 
 interface UserEventCountProps {
   count: { eventCount: number; trainingCount: number };

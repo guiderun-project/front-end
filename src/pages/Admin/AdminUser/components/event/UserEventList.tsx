@@ -1,16 +1,25 @@
+import React from 'react';
+
+import {
+  Pagination,
+  SelectChangeEvent,
+  Typography,
+  Box,
+  MenuItem,
+  Select,
+  Stack,
+} from '@mui/material';
+import { FormattedMessage } from 'react-intl';
+
 import { DetailEventModal, EventChip } from '@/components/shared';
 import { EVENT_DATA, StyledEventButton } from '@/pages/Mypage';
 import { RecruitStatus } from '@/types/group';
-import { Pagination, SelectChangeEvent, Typography } from '@mui/material';
-import { Box, MenuItem, Select, Stack } from '@mui/material';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 interface UserEventListProps {
   userId: string;
 }
 
-const UserEventList: React.FC<UserEventListProps> = ({}) => {
+const UserEventList: React.FC<UserEventListProps> = () => {
   const [selelectedDate, setSelectedDate] = React.useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,

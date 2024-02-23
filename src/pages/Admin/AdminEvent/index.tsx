@@ -17,10 +17,10 @@ import {
   Button,
 } from '@mui/material';
 
+import { StyledCollapsBox } from '../AdminUser';
+
 import { DetailEventModal, GroupChip } from '@/components/shared';
 import { RecruitStatus, RunningGroup } from '@/types/group';
-
-import { StyledCollapsBox } from '../AdminUser';
 
 //
 //

@@ -1,13 +1,14 @@
-import { StyledSection } from '@/pages/Info/components/InfoDetail';
-import { INFO_DATA } from '@/pages/Info/sections/InfoSection';
-import { Box } from '@mui/material';
 import {
+  Box,
   Card,
   CardContent,
   CardHeader,
   Stack,
   Typography,
 } from '@mui/material';
+
+import { StyledSection } from '@/pages/Info/components/InfoDetail';
+import { INFO_DATA } from '@/pages/Info/sections/InfoSection';
 
 interface UserInfoCardProps {
   userId: string;

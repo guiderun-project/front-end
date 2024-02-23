@@ -1,11 +1,18 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Stack,
+  Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from '@mui/material';
+import { FormattedMessage } from 'react-intl';
+
 import { StyledTermsBox } from '@/pages/Info/components/TermsDetail';
 import { TERMS_DATA } from '@/pages/Info/sections/TermsSection';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { Typography } from '@mui/material';
-import { CardContent, CardHeader, Stack } from '@mui/material';
-import { Card } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 
 interface UserTermsCardProps {
   userId: string;

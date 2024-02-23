@@ -1,16 +1,20 @@
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { FormattedMessage } from 'react-intl';
+
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { StyledDataSection } from '@/pages/Info/components/SpecGuideDetail';
 import {
   GUIDE_SPEC_DATA,
   VI_SPEC_DATA,
 } from '@/pages/Info/sections/SpecSection';
-import { DisabilityEnum, RunningGroup } from '@/types/group';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Box, Divider } from '@mui/material';
-import { Stack, Typography } from '@mui/material';
-import { CardContent } from '@mui/material';
-import { Card, CardHeader } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { DisabilityEnum } from '@/types/group';
 
 interface UserSpecCardProps {
   userId: string;
@@ -18,51 +22,6 @@ interface UserSpecCardProps {
 }
 
 const UserSpecCard: React.FC<UserSpecCardProps> = ({ type }) => {
-  /**
-   *
-   */
-  const getRecord = () => {
-    const record = GUIDE_SPEC_DATA.recordDegree;
-
-    switch (record) {
-      case RunningGroup.A:
-        return '~45분';
-      case RunningGroup.B:
-        return '46~52분';
-      case RunningGroup.C:
-        return '53~59분';
-      case RunningGroup.D:
-        return '60분~';
-      case RunningGroup.E:
-      default:
-        return '기록 없음';
-    }
-  };
-
-  /**
-   *
-   */
-  const getGuidingPace = () => {
-    const guidingPace = GUIDE_SPEC_DATA.guidingPace;
-
-    switch (guidingPace) {
-      case RunningGroup.A:
-        return `${guidingPace} ~50분 기록을 가진 시각장애러너`;
-      case RunningGroup.B:
-        return `${guidingPace} 51~56분 기록을 가진 시각장애러너`;
-      case RunningGroup.C:
-        return `${guidingPace} 57~65분 기록을 가진 시각장애러너`;
-      case RunningGroup.D:
-        return `${guidingPace} 66분~ 기록을 가진 시각장애러너`;
-      case RunningGroup.E:
-      default:
-        return `${guidingPace} 기록이 없는 시각장애러너`;
-    }
-  };
-
-  //
-  //
-  //
   switch (type) {
     case DisabilityEnum.VI:
       return (

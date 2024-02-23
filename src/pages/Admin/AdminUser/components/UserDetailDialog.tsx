@@ -17,13 +17,14 @@ import {
   Tabs,
   Tab,
 } from '@mui/material';
+
+import UserEventTabPanel from './event/UserEventTabpanel';
+import UserInfoTabpanel from './Info/UserInfoTabpanel';
 import { UserDataType } from '..';
+
 import { DisabilityChip, GenderChip } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RoleEnum, RunningGroup } from '@/types/group';
-
-import UserInfoTabpanel from './Info/UserInfoTabpanel';
-import UserEventTabPanel from './event/UserEventTabpanel';
 
 interface UserDetailDialogProps extends DialogProps {
   userData: UserDataType;

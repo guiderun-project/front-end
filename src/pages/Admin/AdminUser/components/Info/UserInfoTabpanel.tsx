@@ -1,7 +1,9 @@
 import { Stack } from '@mui/material';
+
 import UserInfoCard from './UserInfoCard';
 import UserSpecCard from './UserSpecCard';
 import UserTermsCard from './UserTermsCard';
+
 import { DisabilityEnum } from '@/types/group';
 
 interface UserInfoTabpanelProps {
