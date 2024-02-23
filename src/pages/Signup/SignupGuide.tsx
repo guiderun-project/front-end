@@ -651,7 +651,7 @@ const SignupGuide: React.FC = () => {
    */
   const renderButton = () => {
     return (
-      <Stack gap="1rem">
+      <Stack gap="1rem" alignItems="center">
         <Button
           disabled={!methods.formState.isValid}
           fullWidth

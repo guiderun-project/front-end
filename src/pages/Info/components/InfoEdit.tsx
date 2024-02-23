@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import {
@@ -71,17 +73,19 @@ const InfoEdit: React.FC<InfoEditProps> = ({
   },
 }) => {
   const intl = useIntl();
-  const { handleSubmit, control } = useForm<personalInfoPatchRequest>({
-    defaultValues: {
-      age,
-      gender,
-      isOpenNumber,
-      isOpenSns,
-      name,
-      phoneNumber,
-      snsId,
+  const { handleSubmit, control, setFocus } = useForm<personalInfoPatchRequest>(
+    {
+      defaultValues: {
+        age,
+        gender,
+        isOpenNumber,
+        isOpenSns,
+        name,
+        phoneNumber,
+        snsId,
+      },
     },
-  });
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -96,6 +100,17 @@ const InfoEdit: React.FC<InfoEditProps> = ({
       setSearchParams(searchParams.toString());
     }
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    setFocus('gender');
+  }, [setFocus]);
+
+  //
+  //
+  //
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
@@ -141,7 +156,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                     <FormControlLabel
                       key={el.label}
                       value={el.value}
-                      control={<Radio />}
+                      control={<Radio inputRef={field.ref} />}
                       label={el.label}
                     />
                   ))}
