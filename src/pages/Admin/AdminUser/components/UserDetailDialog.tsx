@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ClearOutlined } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -17,9 +19,9 @@ import {
 } from '@mui/material';
 import { UserDataType } from '..';
 import { DisabilityChip, GenderChip } from '@/components/shared';
-import React from 'react';
-import { RoleEnum, RunningGroup } from '@/types/group';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
+import { RoleEnum, RunningGroup } from '@/types/group';
+
 import UserInfoTabpanel from './Info/UserInfoTabpanel';
 import UserEventTabPanel from './event/UserEventTabpanel';
 
@@ -36,6 +38,26 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   const { userData, onClose } = props;
   const [team, setTeam] = React.useState<RunningGroup>(userData.team);
   const [tabValue, setTabValue] = React.useState<'info' | 'event'>('info');
+  const [isActiveConfirm, setIsActiveConfirm] = React.useState(false);
+
+  const handleConfirm = (result: 'confirm' | 'deny') => () => {
+    if (!isActiveConfirm) {
+      return;
+    }
+    switch (result) {
+      case 'confirm':
+        if (window.confirm(`${userData.name}님을 승인하시겠습니까?`)) {
+          alert(`${userData.name}님이 ${team}팀으로 승인되었습니다.`);
+        }
+        break;
+      case 'deny':
+        if (window.confirm(`${userData.name}님을 거절하시겠습니까?`)) {
+          alert(`${userData.name}님이 거절되었습니다.`);
+        }
+        break;
+    }
+    onClose();
+  };
 
   /**
    *
@@ -146,7 +168,12 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                 variant="filled"
                 label="그룹편성 승인"
                 deleteIcon={<CheckIcon aria-hidden />}
-                onDelete={() => null}
+                onDelete={handleConfirm('confirm')}
+                onClick={handleConfirm('confirm')}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  setIsActiveConfirm((prev) => !prev);
+                }}
                 sx={{
                   height: '2.5rem',
                   width: '8.75rem',
@@ -156,23 +183,26 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                   },
                 }}
               />
-              <Chip
-                component="button"
-                clickable
-                color="primary"
-                variant="outlined"
-                label="승인 거부"
-                deleteIcon={<HighlightOffIcon aria-hidden />}
-                onDelete={() => null}
-                sx={{
-                  height: '2.5rem',
-                  width: '8.75rem',
-                  borderRadius: '100rem',
-                  '.MuiChip-deleteIcon': {
-                    fontSize: '0.75rem',
-                  },
-                }}
-              />
+              {isActiveConfirm && (
+                <Chip
+                  component="button"
+                  clickable
+                  color="primary"
+                  variant="outlined"
+                  label="승인 거부"
+                  deleteIcon={<HighlightOffIcon aria-hidden />}
+                  onDelete={handleConfirm('confirm')}
+                  onClick={handleConfirm('deny')}
+                  sx={{
+                    height: '2.5rem',
+                    width: '8.75rem',
+                    borderRadius: '100rem',
+                    '.MuiChip-deleteIcon': {
+                      fontSize: '0.75rem',
+                    },
+                  }}
+                />
+              )}
             </Stack>
             {renderApproveStatus(userData.role)}
           </Box>
@@ -242,6 +272,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   return (
     <Dialog
       {...props}
+      keepMounted={false}
       fullWidth
       maxWidth="xs"
       sx={{
