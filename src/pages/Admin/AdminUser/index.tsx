@@ -223,7 +223,7 @@ const INITIAL_USER_DATA: UserDataType = {
 //
 //
 
-const StyledCollapsBox = styled.div`
+export const StyledCollapsBox = styled.div`
   background-color: #e5e5e5;
   padding: 1.5rem 1.75rem;
   display: flex;
@@ -326,6 +326,7 @@ const AdminUser: React.FC = () => {
             align="center"
             sx={{
               fontSize: '0.625rem',
+              whiteSpace: 'break-spaces',
             }}
           >
             {`${userData.update_date}\n${userData.update_time}`}
