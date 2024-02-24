@@ -16,7 +16,6 @@ import {
 import { Link, Outlet } from 'react-router-dom';
 
 import { BROWSER_PATH } from '@/constants/path';
-import { ClearOutlined } from '@mui/icons-material';
 
 //
 //
