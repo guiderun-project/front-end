@@ -15,6 +15,7 @@ import {
 import { Link, Outlet } from 'react-router-dom';
 
 import { BROWSER_PATH } from '@/constants/path';
+import { ClearOutlined } from '@mui/icons-material';
 
 //
 //
@@ -27,6 +28,7 @@ const StyledAdminContainer = styled.div`
 `;
 
 const StyledSideMenuContainer = styled.div`
+  position: relative;
   box-sizing: border-box;
   width: 15rem;
   min-height: 100vh;
@@ -84,6 +86,18 @@ const Admin: React.FC = () => {
       </IconButton>
       <Drawer open={isDrawerOpen} anchor="left" onClose={handleClose}>
         <StyledSideMenuContainer>
+          <IconButton
+            onClick={handleClose}
+            size="large"
+            aria-label="닫기"
+            sx={{
+              position: 'absolute',
+              top: '1rem',
+              right: '1rem',
+            }}
+          >
+            <ClearOutlined fontSize="large" />
+          </IconButton>
           <Typography
             color="#42474E"
             fontSize="1.125rem"
