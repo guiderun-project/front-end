@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import { ClearOutlined } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Drawer,

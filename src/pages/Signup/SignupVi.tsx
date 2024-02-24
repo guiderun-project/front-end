@@ -216,7 +216,6 @@ const SignupVi: React.FC = () => {
                       fullWidth
                       size="small"
                       type="password"
-                      disabled={isChecked}
                       placeholder={intl.formatMessage({
                         id: 'signup.form.info.password.label',
                       })}
@@ -250,7 +249,6 @@ const SignupVi: React.FC = () => {
                   fullWidth
                   size="small"
                   type="password"
-                  disabled={isChecked}
                   placeholder={intl.formatMessage({
                     id: 'signup.form.info.password.label',
                   })}
