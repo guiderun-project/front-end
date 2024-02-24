@@ -92,6 +92,7 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
       <IconButton
         onClick={onModalClose}
         size="large"
+        aria-label="닫기"
         sx={{
           position: 'absolute',
           top: '1rem',

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 
 import Header from './components/Header';
+import { BROWSER_PATH } from '@/constants/path';
 
 const SignupComplete: React.FC = () => {
   return (
@@ -27,11 +28,23 @@ const SignupComplete: React.FC = () => {
         >
           <FormattedMessage id="signup.complete.matching" />
         </Typography>
-        <Stack gap="1rem" width="100%" justifyContent="center">
-          <Button variant="contained" size="large" fullWidth>
+        <Stack gap="1rem" width="100%" alignItems="center">
+          <Button
+            role="link"
+            href={BROWSER_PATH.INFO}
+            variant="contained"
+            size="large"
+            fullWidth
+          >
             <FormattedMessage id="signup.complete.checkInfo" />
           </Button>
-          <Button variant="outlined" size="large" fullWidth>
+          <Button
+            role="link"
+            href={BROWSER_PATH.MYPAGE}
+            variant="outlined"
+            size="large"
+            fullWidth
+          >
             <FormattedMessage id="common.mypage" />
           </Button>
         </Stack>

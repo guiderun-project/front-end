@@ -297,6 +297,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
     >
       <IconButton
         onClick={onClose}
+        aria-label="닫기"
         size="large"
         sx={{
           position: 'absolute',
