@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 
 import Header from './components/Header';
+
 import { BROWSER_PATH } from '@/constants/path';
 
 const SignupComplete: React.FC = () => {
