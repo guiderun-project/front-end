@@ -8,7 +8,7 @@ export type kakaoAuthPostResponse = {
   accessToken: string;
   //false: new user
   //true: go to main
-  userStatus: boolean;
+  isExist: boolean;
 };
 
 export type viSignupPostRequest = {

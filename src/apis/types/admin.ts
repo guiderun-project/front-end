@@ -95,6 +95,7 @@ export type adminGuideApplyGetResponse = {
 export type adminApproveUserPostRequest = {
   userId: string;
   isApprove: boolean;
+  recordDegree: RunningGroup;
 };
 
 export type adminApproveUserPostResponse = {
