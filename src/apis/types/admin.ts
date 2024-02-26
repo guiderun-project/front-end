@@ -45,21 +45,21 @@ export type adminViApplyGetRequest = {
 
 export type adminViApplyGetResponse = {
   //인적사항
-  phoneNumber: String; //전화번호
+  phoneNumber: string; //전화번호
   age: number; //나이
-  snsId: String | null; //sns 계정
+  snsId: string | null; //sns 계정
 
   //러닝스펙
   isRunningExp: boolean; //러닝 경험 유무
-  runningPlace: String | null; //러닝한 장소
-  detailRecord: String | null; //상세기록
+  runningPlace: string | null; //러닝한 장소
+  detailRecord: string | null; //상세기록
   recordDegree: RunningGroup | null; //기록
-  guideName: String | null; // 함께 뛴 가이드 이름
+  guideName: string | null; // 함께 뛴 가이드 이름
   hopePrefs: string | null; //희망사항
 
   //러닝 경험 있을 시 null
-  howToknow: String[] | null; //알게 된 계기
-  motive: String | null; //동기
+  howToknow: string[] | null; //알게 된 계기
+  motive: string | null; //동기
 
   //약관동의
   privacy: boolean; //개인정보 동의
