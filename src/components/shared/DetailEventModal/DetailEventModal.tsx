@@ -70,7 +70,7 @@ const EVENT_DATA: DetailEventType = {
 //
 
 const DetailEventModal: React.FC<DetailEventModalProps> = ({
-  //eventId,
+  // eventId,
   isOpen,
   onModalClose,
 }) => {

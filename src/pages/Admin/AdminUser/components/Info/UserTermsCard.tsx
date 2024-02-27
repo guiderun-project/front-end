@@ -8,17 +8,23 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  CircularProgress,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { FormattedMessage } from 'react-intl';
 
+import infoApi from '@/apis/requests/info';
 import { StyledTermsBox } from '@/pages/Info/components/TermsDetail';
-import { TERMS_DATA } from '@/pages/Info/sections/TermsSection';
 
 interface UserTermsCardProps {
   userId: string;
 }
 
-const UserTermsCard: React.FC<UserTermsCardProps> = () => {
+const UserTermsCard: React.FC<UserTermsCardProps> = ({ userId }) => {
+  const { data: termsData, isLoading } = useQuery({
+    queryKey: ['permissionGet', userId],
+    queryFn: () => infoApi.permissionGet({ userId }),
+  });
   return (
     <Card>
       <CardHeader
@@ -35,82 +41,88 @@ const UserTermsCard: React.FC<UserTermsCardProps> = () => {
           },
         }}
       >
-        <Stack gap="2rem">
-          <Stack gap="0.5rem">
-            <StyledTermsBox>
-              <Typography component="h3" fontWeight={700}>
-                개인정보 제공 및 활용 동의
-              </Typography>
-              <Typography color="#333" fontWeight={500}>
-                {TERMS_DATA.privacy ? '동의' : '비동의'}
-              </Typography>
-            </StyledTermsBox>
-            <Accordion
-              elevation={0}
-              sx={{
-                border: 'none',
-                '&:before': {
-                  display: 'none',
-                },
-              }}
-            >
-              <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography>동의내용 자세히 보기</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {Array(4)
-                  .fill(0)
-                  .map((_, idx) => (
-                    <Typography
-                      key={`signup.terms.privacy.${idx + 1}`}
-                      whiteSpace="break-spaces"
-                    >
-                      <FormattedMessage
-                        id={`signup.terms.privacy.${idx + 1}`}
-                      />
-                    </Typography>
-                  ))}
-              </AccordionDetails>
-            </Accordion>
+        {isLoading ? (
+          <Stack alignItems="center" justifyContent="center">
+            <CircularProgress size="2rem" />
           </Stack>
-          <Stack gap="0.5rem">
-            <StyledTermsBox>
-              <Typography component="h3" fontWeight={700}>
-                초상권 활용 동의
-              </Typography>
-              <Typography color="#333" fontWeight={500}>
-                {TERMS_DATA.portraitRights ? '동의' : '비동의'}
-              </Typography>
-            </StyledTermsBox>
-            <Accordion
-              elevation={0}
-              sx={{
-                border: 'none',
-                '&:before': {
-                  display: 'none',
-                },
-              }}
-            >
-              <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
-                <Typography>동의내용 자세히 보기</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {Array(5)
-                  .fill(0)
-                  .map((_, idx) => (
-                    <Typography
-                      key={`signup.terms.likeness.${idx + 1}`}
-                      whiteSpace="break-spaces"
-                    >
-                      <FormattedMessage
-                        id={`signup.terms.likeness.${idx + 1}`}
-                      />
-                    </Typography>
-                  ))}
-              </AccordionDetails>
-            </Accordion>
+        ) : (
+          <Stack gap="2rem">
+            <Stack gap="0.5rem">
+              <StyledTermsBox>
+                <Typography component="h3" fontWeight={700}>
+                  개인정보 제공 및 활용 동의
+                </Typography>
+                <Typography color="#333" fontWeight={500}>
+                  {termsData?.privacy ? '동의' : '비동의'}
+                </Typography>
+              </StyledTermsBox>
+              <Accordion
+                elevation={0}
+                sx={{
+                  border: 'none',
+                  '&:before': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+                  <Typography>동의내용 자세히 보기</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {Array(4)
+                    .fill(0)
+                    .map((_, idx) => (
+                      <Typography
+                        key={`signup.terms.privacy.${idx + 1}`}
+                        whiteSpace="break-spaces"
+                      >
+                        <FormattedMessage
+                          id={`signup.terms.privacy.${idx + 1}`}
+                        />
+                      </Typography>
+                    ))}
+                </AccordionDetails>
+              </Accordion>
+            </Stack>
+            <Stack gap="0.5rem">
+              <StyledTermsBox>
+                <Typography component="h3" fontWeight={700}>
+                  초상권 활용 동의
+                </Typography>
+                <Typography color="#333" fontWeight={500}>
+                  {termsData?.portraitRights ? '동의' : '비동의'}
+                </Typography>
+              </StyledTermsBox>
+              <Accordion
+                elevation={0}
+                sx={{
+                  border: 'none',
+                  '&:before': {
+                    display: 'none',
+                  },
+                }}
+              >
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+                  <Typography>동의내용 자세히 보기</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {Array(5)
+                    .fill(0)
+                    .map((_, idx) => (
+                      <Typography
+                        key={`signup.terms.likeness.${idx + 1}`}
+                        whiteSpace="break-spaces"
+                      >
+                        <FormattedMessage
+                          id={`signup.terms.likeness.${idx + 1}`}
+                        />
+                      </Typography>
+                    ))}
+                </AccordionDetails>
+              </Accordion>
+            </Stack>
           </Stack>
-        </Stack>
+        )}
       </CardContent>
     </Card>
   );
