@@ -26,6 +26,12 @@ export const userSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<userInfoGetResponse>) => {
       state = action.payload;
     },
+    updateId: (state, action: PayloadAction<{ userId: string }>) => {
+      state.userId = action.payload.userId;
+    },
+    updateRole: (state, action: PayloadAction<{ role: RoleEnum }>) => {
+      state.role = action.payload.role;
+    },
     resetUserInfo: (state) => {
       state = initialState;
     },
