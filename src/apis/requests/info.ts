@@ -32,7 +32,7 @@ import type {
 
 import { EventSort, PartnerSort } from '@/types/sort';
 
-class AuthApi {
+class InfoApi {
   /**
    * @returns 마이페이지 상단에 있는 값 반환
    */
@@ -176,6 +176,6 @@ class AuthApi {
   };
 }
 
-const authApi = new AuthApi();
+const infoApi = new InfoApi();
 
-export default authApi;
+export default infoApi;
