@@ -26,11 +26,14 @@ export const userSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<userInfoGetResponse>) => {
       state = action.payload;
     },
-    updateId: (state, action: PayloadAction<{ userId: string }>) => {
-      state.userId = action.payload.userId;
-    },
-    updateRole: (state, action: PayloadAction<{ role: RoleEnum }>) => {
-      state.role = action.payload.role;
+    updateInfo: (
+      state,
+      action: PayloadAction<Partial<userInfoGetResponse>>,
+    ) => {
+      state = {
+        ...state,
+        ...action.payload,
+      };
     },
     resetUserInfo: (state) => {
       state = initialState;
@@ -38,5 +41,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { resetUserInfo, setUserInfo } = userSlice.actions;
+export const { resetUserInfo, setUserInfo, updateInfo } = userSlice.actions;
 export default userSlice.reducer;
