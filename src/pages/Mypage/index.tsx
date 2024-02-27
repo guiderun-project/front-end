@@ -2,8 +2,15 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import InfoIcon from '@mui/icons-material/Info';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, Pagination, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -26,6 +33,10 @@ import {
   RecruitStatus,
   RunningGroup,
 } from '@/types/group';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/index';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import infoApi from '@/apis/requests/info';
 
 //
 //
@@ -56,11 +67,6 @@ const INFO_DATA = {
   name: '조재석',
   type: DisabilityEnum.GUIDE,
   gender: GenderEnum.M,
-};
-
-const TEAM_DATA = {
-  name: '조재석',
-  recordDegree: RunningGroup.B,
 };
 
 export const EVENT_DATA: eventData[] = [
@@ -101,6 +107,8 @@ export const EVENT_DATA: eventData[] = [
   },
 ];
 
+const MAX_EVENT_LENGTH = 5;
+
 //
 //
 //
@@ -108,6 +116,25 @@ export const EVENT_DATA: eventData[] = [
 const Mypage: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
+  const [page, setPage] = React.useState(1);
+  const userData = useSelector((state: RootState) => state.user);
+  const { data: eventCount } = useSuspenseQuery({
+    queryKey: ['eventHistoryCountGet', userData.userId],
+    queryFn: () => infoApi.eventHistoryCountGet({ userId: userData.userId }),
+  });
+  const { data: eventList, isLoading } = useQuery({
+    queryKey: ['eventHistoryGet', eventCount, userData.userId, page],
+    queryFn: () =>
+      infoApi.eventHistoryGet({
+        userId: userData.userId,
+        start: startIndex,
+        limit: 10,
+      }),
+    enabled: (eventCount ?? 0) > 0,
+  });
+
+  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
+  const startIndex = (page - 1) * maxPage;
 
   const getColor = (recruitStatus: RecruitStatus) => {
     switch (recruitStatus) {
@@ -142,7 +169,7 @@ const Mypage: React.FC = () => {
       >
         <Stack gap="0.325rem">
           <Typography component="span" fontSize="2rem">
-            {TEAM_DATA.name} 님은
+            {userData.name} 님은
           </Typography>
           <Typography
             component="span"
@@ -154,7 +181,7 @@ const Mypage: React.FC = () => {
             <Typography component="span" fontSize="1.5rem" fontWeight={700}>
               Team
             </Typography>
-            <GroupChip group={TEAM_DATA.recordDegree} type="avatar" />
+            <GroupChip group={userData.recordDegree} type="avatar" />
             입니다
           </Typography>
         </Stack>
@@ -196,9 +223,9 @@ const Mypage: React.FC = () => {
         </Typography>
         <Stack gap="0.5rem">
           <Box display="flex" gap="0.5rem">
-            <Typography>{INFO_DATA.name}</Typography>
-            <DisabilityChip component="chip" type={INFO_DATA.type} />
-            <GenderChip type={INFO_DATA.gender} />
+            <Typography>{userData.name}</Typography>
+            <DisabilityChip component="chip" type={userData.type} />
+            <GenderChip type={userData.gender} />
           </Box>
           <Link
             to={`${BROWSER_PATH.INFO}?type=info`}
@@ -237,55 +264,75 @@ const Mypage: React.FC = () => {
         <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
           내가 참여한 이벤트
         </Typography>
-        <Stack>
-          {EVENT_DATA.map((event) => (
-            <StyledEventButton
-              key={event.eventId}
-              onClick={() => handleEventDetailOpen(event.eventId)}
-            >
-              <EventChip type={event.eventType} variant="full" />
-              <Stack
-                gap="0.25rem"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                alignItems="flex-start"
+        {isLoading ? (
+          <Stack justifyContent="center" alignItems="center">
+            <CircularProgress
+              size="2rem"
+              aria-label="데이터를 가지고 오는 중"
+            />
+          </Stack>
+        ) : maxPage === 0 ? (
+          <Stack justifyContent="center" alignItems="center" gap="2rem">
+            <InfoIcon aria-label="알림" />
+            <Typography fontWeight={700} fontSize="1.25rem">
+              참여한 이벤트가 존재하지 않습니다.
+            </Typography>
+          </Stack>
+        ) : (
+          <Stack>
+            {eventList?.items.map((event) => (
+              <StyledEventButton
+                key={event.eventId}
+                onClick={() => handleEventDetailOpen(event.eventId)}
               >
-                <Typography fontWeight={500} noWrap>
-                  {event.name}
-                </Typography>
-                <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
-                  {event.date.replace(/-/g, '.')}
-                </Typography>
-              </Stack>
-              <Typography
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-end"
-                gap="0.625rem"
-                fontSize="0.6875rem"
-              >
-                <span
-                  style={{
-                    color: getColor(event.recruitStatus),
-                    fontWeight: 500,
-                  }}
+                <EventChip type={event.eventType} variant="full" />
+                <Stack
+                  gap="0.25rem"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  alignItems="flex-start"
                 >
-                  <FormattedMessage
-                    id={`common.status.${event.recruitStatus}`}
-                  />
-                </span>
-                <ArrowRightIcon fontSize="small" />
-              </Typography>
-            </StyledEventButton>
-          ))}
-        </Stack>
-        <Pagination
-          count={5}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
+                  <Typography fontWeight={500} noWrap>
+                    {event.name}
+                  </Typography>
+                  <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
+                    {event.date.replace(/-/g, '.')}
+                  </Typography>
+                </Stack>
+                <Typography
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  gap="0.625rem"
+                  fontSize="0.6875rem"
+                >
+                  <span
+                    style={{
+                      color: getColor(event.recruitStatus),
+                      fontWeight: 500,
+                    }}
+                  >
+                    <FormattedMessage
+                      id={`common.status.${event.recruitStatus}`}
+                    />
+                  </span>
+                  <ArrowRightIcon fontSize="small" />
+                </Typography>
+              </StyledEventButton>
+            ))}
+          </Stack>
+        )}
+        {maxPage > 1 && (
+          <Pagination
+            page={page}
+            onChange={(_, selectedPage) => setPage(selectedPage)}
+            count={maxPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        )}
       </Stack>
     );
   };
