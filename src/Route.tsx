@@ -113,11 +113,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: (
-      <PageLayout>
-        <NotFound />
-      </PageLayout>
-    ),
+    element: <NotFound />,
   },
 ]);
 
