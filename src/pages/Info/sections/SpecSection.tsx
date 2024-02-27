@@ -1,4 +1,13 @@
-import { Box, Button, Typography, Stack } from '@mui/material';
+import React from 'react';
+
+import {
+  Box,
+  Button,
+  Typography,
+  Stack,
+  CircularProgress,
+} from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import SpecGuideDetail from '../components/SpecGuideDetail';
@@ -10,6 +19,7 @@ import {
   runningSpecGuideGetResponse,
   runningSpecViGetResponse,
 } from '@/apis/types/info';
+import { RootState } from '@/store/index';
 import { DisabilityEnum, RunningGroup } from '@/types/group';
 
 //
@@ -47,8 +57,8 @@ export const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
 //
 //
 
-const SpecSection = () => {
-  const type = DisabilityEnum.GUIDE;
+const SpecSection: React.FC = () => {
+  const type = useSelector((state: RootState) => state.user.type);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -65,23 +75,33 @@ const SpecSection = () => {
   /**
    *
    */
+  const Loading: React.FC = () => {
+    return (
+      <Stack alignItems="center" justifyContent="center">
+        <CircularProgress size="2.5rem" />
+      </Stack>
+    );
+  };
 
+  /**
+   *
+   */
   const renderData = () => {
     switch (mode) {
       case 'detail':
-        switch (type as DisabilityEnum) {
+        switch (type) {
           case DisabilityEnum.GUIDE:
-            return <SpecGuideDetail data={GUIDE_SPEC_DATA} />;
+            return <SpecGuideDetail />;
           case DisabilityEnum.VI:
-            return <SpecViDetail data={VI_SPEC_DATA} />;
+            return <SpecViDetail />;
         }
         break;
       case 'edit':
-        switch (type as DisabilityEnum) {
+        switch (type) {
           case DisabilityEnum.GUIDE:
-            return <SpecGuideEdit defaultValues={GUIDE_SPEC_DATA} />;
+            return <SpecGuideEdit />;
           case DisabilityEnum.VI:
-            return <SpecViEdit defaultValues={VI_SPEC_DATA} />;
+            return <SpecViEdit />;
         }
     }
   };
@@ -97,7 +117,7 @@ const SpecSection = () => {
       <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
         러닝 스펙
       </Typography>
-      {renderData()}
+      <React.Suspense fallback={<Loading />}>{renderData()}</React.Suspense>
       {mode === 'detail' && (
         <Box display="flex" justifyContent="flex-end">
           <Button

@@ -20,9 +20,11 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
+import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import { personalInfoPatchRequest } from '@/apis/types/info';
+import infoApi from '@/apis/requests/info';
 import { GenderEnum } from '@/types/group';
 
 //
@@ -73,6 +75,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
   },
 }) => {
   const intl = useIntl();
+  const queryClient = useQueryClient();
   const { handleSubmit, control, setFocus } = useForm<personalInfoPatchRequest>(
     {
       defaultValues: {
@@ -92,12 +95,17 @@ const InfoEdit: React.FC<InfoEditProps> = ({
   /**
    *
    */
-  const onSubmit = (data: personalInfoPatchRequest) => {
-    // TODO 로직 생성
+  const onSubmit = async (data: personalInfoPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
-      alert('저장되었습니다. ');
-      searchParams.set('mode', 'detail');
-      setSearchParams(searchParams.toString());
+      try {
+        await infoApi.personalInfoPatch(data);
+        alert('저장되었습니다. ');
+        queryClient.invalidateQueries({ queryKey: ['personalInfoGet'] });
+        searchParams.set('mode', 'detail');
+        setSearchParams(searchParams.toString());
+      } catch (err) {
+        alert('오류가 발생했습니다.');
+      }
     }
   };
 

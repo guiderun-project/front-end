@@ -15,12 +15,14 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
 import {
   permissionGetResponse,
   permissionPatchRequest,
 } from '@/apis/types/info';
+import infoApi from '@/apis/requests/info';
 
 //
 //
@@ -49,6 +51,7 @@ const StyledInputLabel = styled(InputLabel)`
 
 const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
+  const queryClient = useQueryClient();
   const { handleSubmit, control, setFocus } = useForm<permissionPatchRequest>({
     defaultValues,
   });
@@ -57,12 +60,17 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   /**
    *
    */
-  const onSubmit = (data: permissionPatchRequest) => {
-    //TODO 로직 생성
+  const onSubmit = async (data: permissionPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
-      alert('저장되었습니다. ');
-      searchParams.set('mode', 'detail');
-      setSearchParams(searchParams.toString());
+      try {
+        await infoApi.permissionPatch(data);
+        alert('저장되었습니다. ');
+        queryClient.invalidateQueries({ queryKey: ['permissionGet'] });
+        searchParams.set('mode', 'detail');
+        setSearchParams(searchParams.toString());
+      } catch (err) {
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
+      }
     }
   };
 
