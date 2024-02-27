@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import Route from './Route';
 import { store } from './store';
 import './index.css';
 import { theme } from './theme/theme';
+import Loading from './pages/Loading';
 
 const rootNode = document.getElementById('root');
 
@@ -40,7 +41,9 @@ enableMocking().then(() => {
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
             <ThemeProvider theme={theme}>
-              <Route />
+              <Suspense fallback={<Loading />}>
+                <Route />
+              </Suspense>
             </ThemeProvider>
           </QueryClientProvider>
         </Provider>
