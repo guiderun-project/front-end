@@ -26,13 +26,7 @@ import {
   PageLayout,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-import {
-  DisabilityEnum,
-  EventType,
-  GenderEnum,
-  RecruitStatus,
-  RunningGroup,
-} from '@/types/group';
+import { EventType, RecruitStatus } from '@/types/group';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
@@ -62,12 +56,6 @@ export const StyledEventButton = styled.button`
 //
 //
 //
-
-const INFO_DATA = {
-  name: '조재석',
-  type: DisabilityEnum.GUIDE,
-  gender: GenderEnum.M,
-};
 
 export const EVENT_DATA: eventData[] = [
   {
