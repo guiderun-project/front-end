@@ -1,12 +1,34 @@
+import React from 'react';
+
 import { Button, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 
 import Header from './components/Header';
 
 import { BROWSER_PATH } from '@/constants/path';
+import { RootState } from '@/store/index';
+import { RoleEnum } from '@/types/group';
+import { useNavigate } from 'react-router-dom';
 
 const SignupComplete: React.FC = () => {
+  const { role } = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    if (role !== RoleEnum.Wait) {
+      navigate(BROWSER_PATH.MAIN);
+    }
+  }, [role]);
+
+  //
+  //
+  //
+
   return (
     <>
       <Helmet>
