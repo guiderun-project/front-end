@@ -14,6 +14,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
@@ -25,12 +26,16 @@ import { guideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { FormType } from '@/types/form';
 import { GenderEnum, RunningGroup } from '@/types/group';
+import authApi from '@/apis/requests/auth';
+import { updateInfo } from '@/store/reducer/user';
+import { setAccessToken } from '@/store/reducer/auth';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
 
   const intl = useIntl();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
   const methods = useForm<guideSignupPostRequest>();
@@ -40,17 +45,45 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const handleIdCheck = () => {
-    // TODO 중복 체크 API methods.getValues().accountId;
-    // alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
-    if (
-      window.confirm(
-        intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
-      )
-    ) {
-      setIsChecked(true);
-      methods.setValue('accountId', methods.getValues().accountId);
-    }
+  const handleIdCheck = async () => {
+    const accountId = methods.getValues().accountId;
+    authApi
+      .checkDuplicatedPost({ accountId })
+      .then((isDuplicate) => {
+        if (isDuplicate) {
+          if (
+            window.confirm(
+              intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
+            )
+          ) {
+            setIsChecked(true);
+            methods.setValue('accountId', methods.getValues().accountId);
+          }
+          return;
+        }
+        alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
+      })
+      .catch((err) => alert(err.message));
+  };
+
+  /**
+   *
+   */
+  const handleSubmit = async () => {
+    methods.handleSubmit(async (data) => {
+      try {
+        const { role, userId, accessToken } =
+          await authApi.guideSignupPost(data);
+        dispatch(updateInfo({ role, userId }));
+        dispatch(setAccessToken(accessToken));
+        setSearchparams({
+          type: searchParams.get('type') ?? '',
+          isCompleted: 'true',
+        });
+      } catch (e) {
+        alert('에러가 발생했습니다. ');
+      }
+    });
   };
 
   /**
@@ -682,14 +715,7 @@ const SignupGuide: React.FC = () => {
       <Helmet>
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
-      <form
-        onSubmit={methods.handleSubmit(() => {
-          setSearchparams({
-            type: searchParams.get('type') ?? '',
-            isCompleted: 'true',
-          });
-        })}
-      >
+      <form onSubmit={handleSubmit}>
         <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}
