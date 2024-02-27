@@ -69,21 +69,18 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async () => {
-    methods.handleSubmit(async (data) => {
-      try {
-        const { role, userId, accessToken } =
-          await authApi.guideSignupPost(data);
-        dispatch(updateInfo({ role, userId }));
-        dispatch(setAccessToken(accessToken));
-        setSearchparams({
-          type: searchParams.get('type') ?? '',
-          isCompleted: 'true',
-        });
-      } catch (e) {
-        alert('에러가 발생했습니다. ');
-      }
-    });
+  const handleSubmit = async (data: guideSignupPostRequest) => {
+    try {
+      const { role, userId, accessToken } = await authApi.guideSignupPost(data);
+      dispatch(updateInfo({ role, userId }));
+      dispatch(setAccessToken(accessToken));
+      setSearchparams({
+        type: searchParams.get('type') ?? '',
+        isCompleted: 'true',
+      });
+    } catch (e) {
+      alert('에러가 발생했습니다. ');
+    }
   };
 
   /**
@@ -715,7 +712,7 @@ const SignupGuide: React.FC = () => {
       <Helmet>
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={methods.handleSubmit(handleSubmit)}>
         <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}
