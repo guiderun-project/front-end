@@ -1,4 +1,4 @@
-import { axiosInstance, axiosInstanceWithToken } from 'apis/axios';
+import { axiosInstance, axiosInstanceWithToken } from '../axios';
 import {
   accessTokenGetResponse,
   checkDuplicatedPostRequest,
@@ -8,7 +8,7 @@ import {
   kakaoAuthPostResponse,
   signupPostResponse,
   viSignupPostRequest,
-} from 'apis/types/auth';
+} from '../types/auth';
 
 class AuthApi {
   kakaoAuthPost = async ({ code }: kakaoAuthPostRequest) => {

@@ -1,12 +1,21 @@
+import React from 'react';
+
 import { Button, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
-import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Header from './components/Header';
 
+import { BROWSER_PATH } from '@/constants/path';
+import { RootState } from '@/store/index';
+import { RoleEnum } from '@/types/group';
+
 const SignupIntro: React.FC = () => {
   const [, setSearchparams] = useSearchParams();
+  const navigate = useNavigate();
+  const role = useSelector((state: RootState) => state.user.role);
 
   /**
    *
@@ -14,6 +23,15 @@ const SignupIntro: React.FC = () => {
   const handleTypeSelect = (type: 'vi' | 'guide') => () => {
     setSearchparams({ type });
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    if (role !== RoleEnum.New) {
+      navigate(BROWSER_PATH.MAIN);
+    }
+  }, [role]);
 
   //
   //

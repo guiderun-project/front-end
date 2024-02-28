@@ -14,6 +14,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SignupContentBox from './components/SignupContentBox';
@@ -21,8 +22,11 @@ import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
+import authApi from '@/apis/requests/auth';
 import { viSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
+import { setAccessToken } from '@/store/reducer/auth';
+import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
 
@@ -57,20 +61,46 @@ const SignupVi: React.FC = () => {
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
   const methods = useForm<viSignupPostRequest>();
 
-  const handleIdCheck = () => {
-    // TODO 중복 체크 API methods.getValues().accountId;
-    // alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
-    if (
-      window.confirm(
-        intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
-      )
-    ) {
-      setIsChecked(true);
-      methods.setValue('accountId', methods.getValues().accountId);
+  const handleIdCheck = async () => {
+    const accountId = methods.getValues().accountId;
+    authApi
+      .checkDuplicatedPost({ accountId })
+      .then((isDuplicate) => {
+        if (isDuplicate) {
+          if (
+            window.confirm(
+              intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
+            )
+          ) {
+            setIsChecked(true);
+            methods.setValue('accountId', methods.getValues().accountId);
+          }
+          return;
+        }
+        alert(intl.formatMessage({ id: 'signup.form.info.id.check.failed' }));
+      })
+      .catch((err) => alert(err.message));
+  };
+
+  /**
+   *
+   */
+  const handleSubmit = async (data: viSignupPostRequest) => {
+    try {
+      const { role, userId, accessToken } = await authApi.viSignupPost(data);
+      dispatch(updateInfo({ role, userId }));
+      dispatch(setAccessToken(accessToken));
+      setSearchparams({
+        type: searchParams.get('type') ?? '',
+        isCompleted: 'true',
+      });
+    } catch (e) {
+      alert('에러가 발생했습니다. ');
     }
   };
 
@@ -616,14 +646,7 @@ const SignupVi: React.FC = () => {
       <Helmet>
         <title>회원 정보 입력(VI) - Guide run project</title>
       </Helmet>
-      <form
-        onSubmit={() => {
-          setSearchparams({
-            type: searchParams.get('type') ?? '',
-            isCompleted: 'true',
-          });
-        }}
-      >
+      <form onSubmit={methods.handleSubmit(handleSubmit)}>
         <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}

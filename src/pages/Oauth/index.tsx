@@ -4,12 +4,16 @@ import { Stack, Typography } from '@mui/material';
 import Lottie from 'lottie-react';
 import { Helmet } from 'react-helmet-async';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import authApi from '@/apis/requests/auth';
 import runningLottie from '@/assets/running_lottie.json';
 import { BROWSER_PATH } from '@/constants/path';
+import { setAccessToken } from '@/store/reducer/auth';
 
 const Oauth: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const intl = useIntl();
@@ -22,11 +26,17 @@ const Oauth: React.FC = () => {
   React.useEffect(() => {
     if (!code) {
       navigate(BROWSER_PATH.INTRO);
+      return;
     }
-    setTimeout(() => {
+
+    authApi.kakaoAuthPost({ code }).then((res) => {
+      dispatch(setAccessToken(res.accessToken));
+      if (res.isExist) {
+        navigate(BROWSER_PATH.MAIN);
+        return;
+      }
       navigate(BROWSER_PATH.SIGNUP);
-    }, 1000);
-    //TODO 액세스토큰 발급 요청 및 회원가입 또는 로그인 로직 구현
+    });
   }, [code]);
 
   //

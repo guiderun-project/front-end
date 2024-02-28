@@ -8,24 +8,61 @@ import {
   MenuItem,
   Select,
   Stack,
+  CircularProgress,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { FormattedMessage } from 'react-intl';
 
+import adminApi from '@/apis/requests/admin';
 import { DetailEventModal, EventChip } from '@/components/shared';
-import { EVENT_DATA, StyledEventButton } from '@/pages/Mypage';
+import { StyledEventButton } from '@/pages/Mypage';
 import { RecruitStatus } from '@/types/group';
 
 interface UserEventListProps {
   userId: string;
 }
 
-const UserEventList: React.FC<UserEventListProps> = () => {
+//
+//
+//
+
+const MAX_EVENT_LENGTH = 5;
+
+//
+//
+//
+
+const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
   const [selelectedDate, setSelectedDate] = React.useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   });
   const [open, setOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
+  const { data: eventCount, isLoading } = useQuery({
+    queryKey: ['adminEventHistoryCountGet', userId, selelectedDate],
+    queryFn: () =>
+      adminApi.adminEventHistoryCountGet({
+        userId,
+        year: selelectedDate.year,
+        month: selelectedDate.month,
+      }),
+  });
+  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
+  const startIndex = (page - 1) * maxPage;
+  const { data: EventList, isLoading: eventLoading } = useQuery({
+    queryKey: ['adminEventHistoryGet', startIndex, selelectedDate],
+    queryFn: () =>
+      adminApi.adminEventHistoryGet({
+        userId,
+        year: selelectedDate.year,
+        month: selelectedDate.month,
+        limit: MAX_EVENT_LENGTH,
+        start: startIndex,
+      }),
+    enabled: !isLoading,
+  });
 
   const getColor = (recruitStatus: RecruitStatus) => {
     switch (recruitStatus) {
@@ -95,47 +132,66 @@ const UserEventList: React.FC<UserEventListProps> = () => {
           ))}
         </Select>
       </Box>
-      <Stack>
-        {EVENT_DATA.map((event) => (
-          <StyledEventButton
-            key={event.eventId}
-            onClick={() => handleEventDetailOpen(event.eventId)}
-          >
-            <EventChip type={event.eventType} variant="full" />
-            <Stack
-              gap="0.25rem"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              alignItems="flex-start"
+      {eventLoading ? (
+        <Stack alignItems="center" justifyContent="center">
+          <CircularProgress size="2rem" />
+        </Stack>
+      ) : (eventCount ?? 0) > 0 ? (
+        <Stack>
+          {EventList?.map((event) => (
+            <StyledEventButton
+              key={event.eventId}
+              onClick={() => handleEventDetailOpen(event.eventId)}
             >
-              <Typography fontWeight={500} noWrap>
-                {event.name}
-              </Typography>
-              <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
-                {event.date.replace(/-/g, '.')}
-              </Typography>
-            </Stack>
-            <Typography
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              gap="0.625rem"
-              fontSize="0.6875rem"
-            >
-              <span
-                style={{
-                  color: getColor(event.recruitStatus),
-                  fontWeight: 500,
-                }}
+              <EventChip type={event.eventType} variant="full" />
+              <Stack
+                gap="0.25rem"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                alignItems="flex-start"
               >
-                <FormattedMessage id={`common.status.${event.recruitStatus}`} />
-              </span>
-              <span aria-hidden>&gt;</span>
-            </Typography>
-          </StyledEventButton>
-        ))}
-      </Stack>
-      <Pagination size="small" count={10} />
+                <Typography fontWeight={500} noWrap>
+                  {event.name}
+                </Typography>
+                <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
+                  {event.endDate.replace(/-/g, '.')}
+                </Typography>
+              </Stack>
+              <Typography
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                gap="0.625rem"
+                fontSize="0.6875rem"
+              >
+                <span
+                  style={{
+                    color: getColor(event.recruitStatus),
+                    fontWeight: 500,
+                  }}
+                >
+                  <FormattedMessage
+                    id={`common.status.${event.recruitStatus}`}
+                  />
+                </span>
+                <span aria-hidden>&gt;</span>
+              </Typography>
+            </StyledEventButton>
+          ))}
+        </Stack>
+      ) : (
+        <Stack justifyContent="center" alignItems="center">
+          <Typography fontWeight={700}>값이 존재하지 않습니다.</Typography>
+        </Stack>
+      )}
+      {maxPage > 1 && (
+        <Pagination
+          size="small"
+          page={page}
+          count={maxPage}
+          onChange={(_, value) => setPage(value)}
+        />
+      )}
       <DetailEventModal
         eventId={selectedEvent}
         isOpen={open}

@@ -29,7 +29,7 @@ export type userInfoGetResponse = {
   phoneNumber: string;
   recordDegree: RunningGroup;
   age: number;
-  snsId: string;
+  snsId: string | null;
 };
 
 export type personalInfoGetRequest = {

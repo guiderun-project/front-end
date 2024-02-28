@@ -6,17 +6,25 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
+import infoApi from '@/apis/requests/info';
 import { StyledSection } from '@/pages/Info/components/InfoDetail';
-import { INFO_DATA } from '@/pages/Info/sections/InfoSection';
-
 interface UserInfoCardProps {
   userId: string;
 }
 
-const UserInfoCard: React.FC<UserInfoCardProps> = () => {
+const UserInfoCard: React.FC<UserInfoCardProps> = ({ userId }) => {
+  const { data: infoData } = useQuery({
+    queryKey: ['personalInfoGet', userId],
+    queryFn: () => infoApi.personalInfoGet({ userId }),
+  });
+
+  /**
+   *
+   */
   const getAge = () => {
-    const age = INFO_DATA.age;
+    const age = infoData?.age ?? 0;
 
     if (age <= 19) {
       return '10대 이하';
@@ -46,7 +54,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = () => {
               전화번호
             </Typography>
             <Typography sx={{ opacity: '0.5' }}>
-              {INFO_DATA.phoneNumber}
+              {infoData?.phoneNumber}
             </Typography>
           </StyledSection>
           {/* 나이 */}
@@ -64,7 +72,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = () => {
               </Typography>
             </Box>
             <a
-              href={`https://instagram.com/${INFO_DATA.snsId}`}
+              href={`https://instagram.com/${infoData?.snsId ?? ''}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -72,7 +80,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = () => {
                 color: '#333',
               }}
             >
-              <Typography fontWeight={500}>{INFO_DATA.snsId}</Typography>
+              <Typography fontWeight={500}>{infoData?.snsId ?? ''}</Typography>
             </a>
           </StyledSection>
         </Stack>

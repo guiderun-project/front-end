@@ -15,36 +15,35 @@ import {
   RadioGroup,
   Badge,
 } from '@mui/material';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { StyledInputLabel } from './InfoEdit';
 
-import {
-  runningSpecGuideGetResponse,
-  runningSpecGuidePatchRequest,
-} from '@/apis/types/info';
+import infoApi from '@/apis/requests/info';
+import { runningSpecGuidePatchRequest } from '@/apis/types/info';
+import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
 //
 //
 //
 
-interface SpecGuideEditProps {
-  defaultValues: runningSpecGuideGetResponse;
-}
-
-//
-//
-//
-
-const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
+const SpecGuideEdit: React.FC = () => {
   const intl = useIntl();
+  const queryClient = useQueryClient();
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const { data } = useSuspenseQuery({
+    queryKey: ['runningSpecGuideGet', userId],
+    queryFn: () => infoApi.runningSpecGuideGet({ userId }),
+  });
   const { handleSubmit, control, setValue, watch, setFocus } =
     useForm<runningSpecGuidePatchRequest>({
-      defaultValues,
+      defaultValues: data,
     });
   const [searchParams, setSearchParams] = useSearchParams();
   const isGuideExp = watch('isGuideExp');
@@ -52,12 +51,17 @@ const SpecGuideEdit: React.FC<SpecGuideEditProps> = ({ defaultValues }) => {
   /**
    *
    */
-  const onSubmit = (data: runningSpecGuidePatchRequest) => {
-    //TODO 로직 생성
+  const onSubmit = async (data: runningSpecGuidePatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
-      alert('저장되었습니다. ');
-      searchParams.set('mode', 'detail');
-      setSearchParams(searchParams.toString());
+      try {
+        await infoApi.runningSpecGuidePatch(data);
+        alert('저장되었습니다. ');
+        queryClient.invalidateQueries({ queryKey: ['runningSpecGuideGet'] });
+        searchParams.set('mode', 'detail');
+        setSearchParams(searchParams.toString());
+      } catch (err) {
+        alert('오류가 발생했습니다. ');
+      }
     }
   };
 

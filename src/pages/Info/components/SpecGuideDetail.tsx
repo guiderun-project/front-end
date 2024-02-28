@@ -2,15 +2,14 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 
-import { runningSpecGuideGetResponse } from '@/apis/types/info';
+import infoApi from '@/apis/requests/info';
+import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
-
-interface SpecGuideDetailProps {
-  data: runningSpecGuideGetResponse;
-}
 
 //
 //
@@ -35,7 +34,13 @@ export const StyledDataSection = styled.section<{ multiLine?: boolean }>`
 //
 //
 
-const SpecGuideDetail: React.FC<SpecGuideDetailProps> = ({ data }) => {
+const SpecGuideDetail: React.FC = () => {
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const { data } = useSuspenseQuery({
+    queryKey: ['runningSpecGuideGet', userId],
+    queryFn: () => infoApi.runningSpecGuideGet({ userId }),
+  });
+
   /**
    *
    */

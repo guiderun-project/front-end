@@ -16,10 +16,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import UserDetailDialog from './components/UserDetailDialog';
 
+import adminApi from '@/apis/requests/admin';
+import { UserListItemType } from '@/apis/types/admin';
 import { DisabilityChip, GenderChip, GroupChip } from '@/components/shared';
 import {
   DisabilityEnum,
@@ -52,162 +55,9 @@ export type UserDataType = {
 //
 //
 
-const USER_DATA: UserDataType[] = [
-  {
-    userId: '1',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '2',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.VI,
-    name: '홍길동',
-    team: RunningGroup.B,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '3',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.D,
-    gender: GenderEnum.W,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '4',
-    role: RoleEnum.User,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.D,
-    gender: GenderEnum.W,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '5',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '6',
-    role: RoleEnum.User,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '7',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '8',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '9',
-    role: RoleEnum.Reject,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-  {
-    userId: '10',
-    role: RoleEnum.Wait,
-    type: DisabilityEnum.GUIDE,
-    name: '홍길동',
-    team: RunningGroup.A,
-    gender: GenderEnum.M,
-    age: 40,
-    snsId: 'pride_sd',
-    phoneNumber: '01012345678',
-    trainingCnt: 2,
-    contestCnt: 4,
-    update_date: '2000-00-00',
-    update_time: '00:00:00',
-  },
-];
-
-const INITIAL_USER_DATA: UserDataType = {
+const INITIAL_USER_DATA: UserListItemType = {
   age: 0,
-  contestCnt: 0,
+  competitionCnt: 0,
   gender: GenderEnum.M,
   name: '',
   phoneNumber: '0',
@@ -220,6 +70,8 @@ const INITIAL_USER_DATA: UserDataType = {
   update_time: '',
   userId: '',
 };
+
+const MAX_USER_LENGTH = 10;
 
 //
 //
@@ -261,9 +113,24 @@ const StyledUserDetailButton = styled.button`
 //
 
 const AdminUser: React.FC = () => {
+  const [page, setPage] = React.useState(1);
+  const { data: userCount } = useSuspenseQuery({
+    queryKey: ['adminUserListCountGet'],
+    queryFn: () => adminApi.adminUserListCountGet(),
+  });
+
+  const maxPage = Math.ceil(userCount / MAX_USER_LENGTH);
+  const startIndex = (page - 1) * maxPage;
+
+  const { data: userList } = useSuspenseQuery({
+    queryKey: ['adminUserListGet', startIndex],
+    queryFn: () =>
+      adminApi.adminUserListGet({ limit: MAX_USER_LENGTH, start: startIndex }),
+  });
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
   const [selectedUser, setSelectedUser] =
-    React.useState<UserDataType>(INITIAL_USER_DATA);
+    React.useState<UserListItemType>(INITIAL_USER_DATA);
 
   /**
    *
@@ -306,7 +173,7 @@ const AdminUser: React.FC = () => {
     }
   };
 
-  const Row: React.FC<{ userData: UserDataType }> = ({ userData }) => {
+  const Row: React.FC<{ userData: UserListItemType }> = ({ userData }) => {
     const [open, setOpen] = React.useState(false);
 
     //
@@ -453,13 +320,13 @@ const AdminUser: React.FC = () => {
                       <Typography>
                         {`총 `}
                         <span className="total">
-                          {userData.contestCnt + userData.trainingCnt}
+                          {userData.competitionCnt + userData.trainingCnt}
                         </span>
                         {`회`}
                       </Typography>
                       <Typography>
                         {`대회 `}
-                        <span className="event">{userData.contestCnt}</span>
+                        <span className="event">{userData.competitionCnt}</span>
                         {`회`}
                       </Typography>
                       <Typography>{`훈련 ${userData.trainingCnt}회`}</Typography>
@@ -496,38 +363,53 @@ const AdminUser: React.FC = () => {
           회원 관리
         </Typography>
       </Box>
-      <TableContainer component={Paper}>
-        <Table aria-label="회원 정보 테이블" sx={{ boxSizing: 'border-box' }}>
-          <caption style={{ display: 'none' }}>
-            회원 정보 테이블. 회원 정보 조회 및 승인 가능
-          </caption>
-          <TableHead>
-            <TableRow
-              sx={{
-                '.MuiTableCell-root': {
-                  padding: '0.75rem',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                },
-              }}
-            >
-              <TableCell align="center">Time stamp</TableCell>
-              <TableCell align="center">장애여부</TableCell>
-              <TableCell align="center">성별</TableCell>
-              <TableCell align="center">이름/팀</TableCell>
-              <TableCell align="center">승인여부</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {USER_DATA.map((user) => (
-              <Row userData={user} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Stack direction="row" justifyContent="center">
-        <Pagination size="small" count={10} />
-      </Stack>
+      {userCount > 0 ? (
+        <TableContainer component={Paper}>
+          <Table aria-label="회원 정보 테이블" sx={{ boxSizing: 'border-box' }}>
+            <caption style={{ display: 'none' }}>
+              회원 정보 테이블. 회원 정보 조회 및 승인 가능
+            </caption>
+            <TableHead>
+              <TableRow
+                sx={{
+                  '.MuiTableCell-root': {
+                    padding: '0.75rem',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                  },
+                }}
+              >
+                <TableCell align="center">Time stamp</TableCell>
+                <TableCell align="center">장애여부</TableCell>
+                <TableCell align="center">성별</TableCell>
+                <TableCell align="center">이름/팀</TableCell>
+                <TableCell align="center">승인여부</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {userList.map((user) => (
+                <Row userData={user} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Stack alignItems="center" justifyContent="center">
+          <Typography fontSize="1.5rem" fontWeight={700}>
+            정보가 존재하지 않습니다.
+          </Typography>
+        </Stack>
+      )}
+      {maxPage > 1 && (
+        <Stack direction="row" justifyContent="center">
+          <Pagination
+            size="small"
+            page={page}
+            count={maxPage}
+            onChange={(_, value) => setPage(value)}
+          />
+        </Stack>
+      )}
       <UserDetailDialog
         userData={selectedUser}
         open={isDialogOpen}

@@ -1,18 +1,23 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 
 import { StyledDataSection } from './SpecGuideDetail';
 
-import { runningSpecViGetResponse } from '@/apis/types/info';
+import infoApi from '@/apis/requests/info';
+import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
-interface SpecViDetailProps {
-  data: runningSpecViGetResponse;
-}
+const SpecViDetail: React.FC = () => {
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const { data } = useSuspenseQuery({
+    queryKey: ['runningSpecViGet', userId],
+    queryFn: () => infoApi.runningSpecViGet({ userId }),
+  });
 
-const SpecViDetail: React.FC<SpecViDetailProps> = ({ data }) => {
   /**
    *
    */

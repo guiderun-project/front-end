@@ -17,17 +17,19 @@ import {
   Tabs,
   Tab,
 } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 
 import UserEventTabPanel from './event/UserEventTabpanel';
 import UserInfoTabpanel from './Info/UserInfoTabpanel';
-import { UserDataType } from '..';
 
+import adminApi from '@/apis/requests/admin';
+import { UserListItemType } from '@/apis/types/admin';
 import { DisabilityChip, GenderChip } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RoleEnum, RunningGroup } from '@/types/group';
 
 interface UserDetailDialogProps extends DialogProps {
-  userData: UserDataType;
+  userData: UserListItemType;
   onClose: () => void;
 }
 
@@ -40,22 +42,47 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   const [team, setTeam] = React.useState<RunningGroup>(userData.team);
   const [tabValue, setTabValue] = React.useState<'info' | 'event'>('info');
   const [isActiveConfirm, setIsActiveConfirm] = React.useState(false);
+  const queryClient = useQueryClient();
 
-  const handleConfirm = (result: 'confirm' | 'deny') => () => {
+  const handleConfirm = (result: 'confirm' | 'deny') => async () => {
     if (!isActiveConfirm) {
       return;
     }
     switch (result) {
       case 'confirm':
         if (window.confirm(`${userData.name}님을 승인하시겠습니까?`)) {
-          alert(`${userData.name}님이 ${team}팀으로 승인되었습니다.`);
+          try {
+            await adminApi.adminApproveUserPost({
+              userId: userData.userId,
+              isApprove: true,
+              recordDegree: team,
+            });
+            alert(`${userData.name}님이 ${team}팀으로 승인되었습니다.`);
+            queryClient.invalidateQueries({
+              queryKey: ['adminUserListCountGet', 'adminUserListGet'],
+            });
+          } catch (err) {
+            alert('오류가 발생했습니다.');
+          }
         }
         setIsActiveConfirm(false);
         onClose();
         break;
       case 'deny':
         if (window.confirm(`${userData.name}님을 거절하시겠습니까?`)) {
-          alert(`${userData.name}님이 거절되었습니다.`);
+          try {
+            await adminApi.adminApproveUserPost({
+              userId: userData.userId,
+              isApprove: false,
+              recordDegree: team,
+            });
+            alert(`${userData.name}님이 거절되었습니다.`);
+            queryClient.invalidateQueries({
+              queryKey: ['adminUserListCountGet', 'adminUserListGet'],
+            });
+          } catch (err) {
+            alert('오류가 발생했습니다.');
+          }
         }
         setIsActiveConfirm(false);
         onClose();
@@ -230,7 +257,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
           <UserEventTabPanel
             userId={userData.userId}
             count={{
-              eventCount: userData.contestCnt,
+              eventCount: userData.competitionCnt,
               trainingCount: userData.trainingCnt,
             }}
           />

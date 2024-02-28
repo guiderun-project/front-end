@@ -42,4 +42,5 @@ export enum RecruitStatus {
   Upcoming = 'UPCOMING',
   Open = 'OPEN',
   Close = 'CLOSE',
+  End = 'END',
 }

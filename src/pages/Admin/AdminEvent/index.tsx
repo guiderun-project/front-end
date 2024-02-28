@@ -16,189 +16,20 @@ import {
   TableHead,
   Button,
 } from '@mui/material';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import { StyledCollapsBox } from '../AdminUser';
 
+import adminApi from '@/apis/requests/admin';
+import { EventListItemType } from '@/apis/types/admin';
 import { DetailEventModal, GroupChip } from '@/components/shared';
-import { RecruitStatus, RunningGroup } from '@/types/group';
 
 //
 //
 //
 
-type EventDataType = {
-  eventId: number;
-  title: string;
-  smallDate: string; // 좋은 이름 추천 받아요 [1/7]
-  date: string; //24.02.21 PM 2:15:09
-  organizer: string; //생성자
-  pace: RunningGroup; // 생성자 pace A ,B,C,D,E로 구분
-  recuitStatus: RecruitStatus;
-  approval: boolean; //이벤트 승인 여부
-  participation: number; //50
-  viParticipation: number; //20
-  guideParticipation: number; //30
-  update_date: string; // 24.02.21
-  update_time: string; // 2:15:09
-};
-
-//
-//
-//
-
-const EVENT_DATA: EventDataType[] = [
-  {
-    eventId: 1,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 2,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: true,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 3,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 4,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 5,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 6,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: true,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 7,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 8,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.D, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 9,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.C, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: true,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-  {
-    eventId: 10,
-    title: '가이드런 동마 대비반 1회차',
-    smallDate: '[1/1]',
-    date: '24.02.21 PM 2:15:09',
-    organizer: '홍길동', //생성자
-    pace: RunningGroup.B, // 생성자 pace A ,B,C,D,E로 구분
-    recuitStatus: RecruitStatus.Open,
-    approval: false,
-    participation: 50,
-    viParticipation: 30,
-    guideParticipation: 20,
-    update_date: '24.02.21',
-    update_time: '2:15:09',
-  },
-];
+const MAX_EVENT_LENGTH = 10;
 
 //
 //
@@ -207,10 +38,24 @@ const EVENT_DATA: EventDataType[] = [
 const AdminEvent: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
+  const [page, setPage] = React.useState(1);
+  const { data: eventCount } = useSuspenseQuery({
+    queryKey: ['adminEventListCountGet'],
+    queryFn: () => adminApi.adminEventListCountGet(),
+  });
 
-  /**
-   *
-   */
+  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
+  const startIndex = (page - 1) * maxPage;
+
+  const { data: eventList } = useQuery({
+    queryKey: ['adminEventListGet', startIndex],
+    queryFn: () =>
+      adminApi.adminEventListGet({
+        limit: MAX_EVENT_LENGTH,
+        start: startIndex,
+      }),
+  });
+
   /**
    *
    */
@@ -245,7 +90,7 @@ const AdminEvent: React.FC = () => {
   //
   //
   //
-  const Row: React.FC<{ eventData: EventDataType }> = ({ eventData }) => {
+  const Row: React.FC<{ eventData: EventListItemType }> = ({ eventData }) => {
     const [open, setOpen] = React.useState(false);
 
     //
@@ -419,43 +264,56 @@ const AdminEvent: React.FC = () => {
           이벤트 관리
         </Typography>
       </Box>
-      <TableContainer component={Paper}>
-        <Table aria-label="회원 정보 테이블" sx={{ width: '100%' }}>
-          <caption style={{ display: 'none' }}>
-            이벤트 정보 테이블. 이벤트 정보 조회 및 승인 가능
-          </caption>
-          <TableHead>
-            <TableRow
-              sx={{
-                '.MuiTableCell-root': {
-                  padding: '0.75rem',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                },
-              }}
-            >
-              <TableCell align="center">Time stamp</TableCell>
-              <TableCell align="center">이벤트 제목</TableCell>
-              <TableCell align="center">생성자</TableCell>
-              <TableCell
-                align="center"
+      {eventCount > 0 ? (
+        <TableContainer component={Paper}>
+          <Table aria-label="회원 정보 테이블" sx={{ width: '100%' }}>
+            <caption style={{ display: 'none' }}>
+              이벤트 정보 테이블. 이벤트 정보 조회 및 승인 가능
+            </caption>
+            <TableHead>
+              <TableRow
                 sx={{
-                  whiteSpace: 'break-spaces',
-                  lineHeight: '0.895rem',
+                  '.MuiTableCell-root': {
+                    padding: '0.75rem',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                  },
                 }}
-              >{`승인\n여부`}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {EVENT_DATA.map((event) => (
-              <Row eventData={event} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Stack direction="row" justifyContent="center">
-        <Pagination size="small" count={10} />
-      </Stack>
+              >
+                <TableCell align="center">Time stamp</TableCell>
+                <TableCell align="center">이벤트 제목</TableCell>
+                <TableCell align="center">생성자</TableCell>
+                <TableCell
+                  align="center"
+                  sx={{
+                    whiteSpace: 'break-spaces',
+                    lineHeight: '0.895rem',
+                  }}
+                >{`승인\n여부`}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {eventList?.map((event) => <Row eventData={event} />)}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Stack justifyContent="center" alignItems="center">
+          <Typography fontSize="1.5rem" fontWeight={700}>
+            이벤트가 존재하지 않습니다.
+          </Typography>
+        </Stack>
+      )}
+      {maxPage > 1 && (
+        <Stack direction="row" justifyContent="center">
+          <Pagination
+            size="small"
+            page={page}
+            count={maxPage}
+            onChange={(_, value) => setPage(value)}
+          />
+        </Stack>
+      )}
       <DetailEventModal
         eventId={selectedEvent}
         isOpen={isDialogOpen}

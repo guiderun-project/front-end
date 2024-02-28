@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
+import Loading from './pages/Loading';
 import Route from './Route';
 import { store } from './store';
 import './index.css';
@@ -40,7 +41,9 @@ enableMocking().then(() => {
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools initialIsOpen={false} />
             <ThemeProvider theme={theme}>
-              <Route />
+              <Suspense fallback={<Loading />}>
+                <Route />
+              </Suspense>
             </ThemeProvider>
           </QueryClientProvider>
         </Provider>

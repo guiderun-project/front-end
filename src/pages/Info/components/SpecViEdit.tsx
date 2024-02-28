@@ -15,33 +15,35 @@ import {
   Radio,
   RadioGroup,
 } from '@mui/material';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { StyledInputLabel } from './InfoEdit';
 
+import infoApi from '@/apis/requests/info';
 import { runningSpecViPatchRequest } from '@/apis/types/info';
+import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
 //
 //
 //
 
-interface SpecViEditProps {
-  defaultValues: runningSpecViPatchRequest;
-}
-
-//
-//
-//
-
-const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
+const SpecViEdit: React.FC = () => {
+  const userId = useSelector((state: RootState) => state.user.userId);
+  const queryClient = useQueryClient();
+  const { data } = useSuspenseQuery({
+    queryKey: ['runningSpecViGet', userId],
+    queryFn: () => infoApi.runningSpecViGet({ userId }),
+  });
   const intl = useIntl();
   const { handleSubmit, control, setValue, watch, setFocus } =
     useForm<runningSpecViPatchRequest>({
-      defaultValues,
+      defaultValues: data,
     });
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -50,10 +52,11 @@ const SpecViEdit: React.FC<SpecViEditProps> = ({ defaultValues }) => {
   /**
    *
    */
-  const onSubmit = (data: runningSpecViPatchRequest) => {
-    //TODO 로직 생성
+  const onSubmit = async (data: runningSpecViPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
+      await infoApi.runningSpecViPatch(data);
       alert('저장되었습니다. ');
+      queryClient.invalidateQueries({ queryKey: ['runningSpecViGet'] });
       searchParams.set('mode', 'detail');
       setSearchParams(searchParams.toString());
     }
