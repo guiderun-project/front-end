@@ -23,6 +23,8 @@ import Oauth from './pages/Oauth';
 import Search from './pages/Search';
 import Signup from './pages/Signup';
 import { RootState } from './store';
+// import { useSuspenseQuery } from '@tanstack/react-query';
+// import authApi from './apis/requests/auth';
 
 const router = createBrowserRouter([
   {
@@ -119,6 +121,7 @@ const router = createBrowserRouter([
 
 const Route: React.FC = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
+  // useSuspenseQuery({queryKey: [], queryFn: () => authApi.accessTokenGet(), })
 
   const messages = locale === 'ko' ? koMessages : enMessages;
 

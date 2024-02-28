@@ -113,26 +113,24 @@ const StyledUserDetailButton = styled.button`
 //
 
 const AdminUser: React.FC = () => {
+  const [page, setPage] = React.useState(1);
   const { data: userCount } = useSuspenseQuery({
-    queryKey: [],
+    queryKey: ['adminUserListCountGet'],
     queryFn: () => adminApi.adminUserListCountGet(),
   });
+
+  const maxPage = Math.ceil(userCount / MAX_USER_LENGTH);
+  const startIndex = (page - 1) * maxPage;
+
   const { data: userList } = useSuspenseQuery({
-    queryKey: [],
+    queryKey: ['adminUserListGet', startIndex],
     queryFn: () =>
       adminApi.adminUserListGet({ limit: MAX_USER_LENGTH, start: startIndex }),
   });
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-  const [page, setPage] = React.useState(1);
+
   const [selectedUser, setSelectedUser] =
     React.useState<UserListItemType>(INITIAL_USER_DATA);
-
-  //
-  //
-  //
-
-  const maxPage = Math.ceil(userCount / MAX_USER_LENGTH);
-  const startIndex = (page - 1) * maxPage;
 
   /**
    *

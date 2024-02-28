@@ -43,13 +43,18 @@ const AdminEvent: React.FC = () => {
     queryKey: ['adminEventListCountGet'],
     queryFn: () => adminApi.adminEventListCountGet(),
   });
-  const { data: eventList } = useQuery({
-    queryKey: [''],
-    queryFn: () => adminApi.adminEventListGet({ limit: 0, start: startIndex }),
-  });
 
   const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
   const startIndex = (page - 1) * maxPage;
+
+  const { data: eventList } = useQuery({
+    queryKey: ['adminEventListGet', startIndex],
+    queryFn: () =>
+      adminApi.adminEventListGet({
+        limit: MAX_EVENT_LENGTH,
+        start: startIndex,
+      }),
+  });
 
   /**
    *

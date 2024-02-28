@@ -41,7 +41,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
   const [page, setPage] = React.useState(1);
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
   const { data: eventCount, isLoading } = useQuery({
-    queryKey: [],
+    queryKey: ['adminEventHistoryCountGet', userId, selelectedDate],
     queryFn: () =>
       adminApi.adminEventHistoryCountGet({
         userId,
@@ -49,8 +49,10 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
         month: selelectedDate.month,
       }),
   });
+  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
+  const startIndex = (page - 1) * maxPage;
   const { data: EventList, isLoading: eventLoading } = useQuery({
-    queryKey: [],
+    queryKey: ['adminEventHistoryGet', startIndex, selelectedDate],
     queryFn: () =>
       adminApi.adminEventHistoryGet({
         userId,
@@ -61,9 +63,6 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
       }),
     enabled: !isLoading,
   });
-
-  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
-  const startIndex = (page - 1) * maxPage;
 
   const getColor = (recruitStatus: RecruitStatus) => {
     switch (recruitStatus) {
