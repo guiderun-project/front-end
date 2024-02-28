@@ -6,16 +6,16 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import TermsDetail from '../components/TermsDetail';
 import TermsEdit from '../components/TermsEdit';
 
+import infoApi from '@/apis/requests/info';
 import { permissionGetResponse } from '@/apis/types/info';
 import { NotFound } from '@/components/shared';
-import { useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
-import infoApi from '@/apis/requests/info';
 
 //
 //

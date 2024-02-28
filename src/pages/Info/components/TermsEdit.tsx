@@ -12,17 +12,17 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
+import infoApi from '@/apis/requests/info';
 import {
   permissionGetResponse,
   permissionPatchRequest,
 } from '@/apis/types/info';
-import infoApi from '@/apis/requests/info';
 
 //
 //

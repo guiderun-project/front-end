@@ -22,13 +22,13 @@ import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
+import authApi from '@/apis/requests/auth';
 import { guideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
+import { setAccessToken } from '@/store/reducer/auth';
+import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
 import { GenderEnum, RunningGroup } from '@/types/group';
-import authApi from '@/apis/requests/auth';
-import { updateInfo } from '@/store/reducer/user';
-import { setAccessToken } from '@/store/reducer/auth';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);

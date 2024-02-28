@@ -22,13 +22,13 @@ import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
+import authApi from '@/apis/requests/auth';
 import { viSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
+import { setAccessToken } from '@/store/reducer/auth';
+import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
 import { RunningGroup } from '@/types/group';
-import authApi from '@/apis/requests/auth';
-import { updateInfo } from '@/store/reducer/user';
-import { setAccessToken } from '@/store/reducer/auth';
 
 //
 //

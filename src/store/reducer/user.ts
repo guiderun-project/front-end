@@ -1,3 +1,5 @@
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { userInfoGetResponse } from '@/apis/types/info';
 import {
   DisabilityEnum,
@@ -5,7 +7,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: userInfoGetResponse = {
   userId: '',
@@ -35,11 +36,11 @@ export const userSlice = createSlice({
         ...action.payload,
       };
     },
-    resetUserInfo: (state) => {
-      state = initialState;
-    },
+    // resetUserInfo: (state) => {
+    //   state = { ...initialState };
+    // },
   },
 });
 
-export const { resetUserInfo, setUserInfo, updateInfo } = userSlice.actions;
+export const { setUserInfo, updateInfo } = userSlice.actions;
 export default userSlice.reducer;

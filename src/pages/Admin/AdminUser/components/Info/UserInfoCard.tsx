@@ -8,9 +8,8 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
-import { StyledSection } from '@/pages/Info/components/InfoDetail';
 import infoApi from '@/apis/requests/info';
-
+import { StyledSection } from '@/pages/Info/components/InfoDetail';
 interface UserInfoCardProps {
   userId: string;
 }

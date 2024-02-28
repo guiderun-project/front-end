@@ -11,10 +11,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import infoApi from '@/apis/requests/info';
 import { eventData } from '@/apis/types/info';
 import {
   DetailEventModal,
@@ -26,11 +29,8 @@ import {
   PageLayout,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-import { EventType, RecruitStatus } from '@/types/group';
-import { useSelector } from 'react-redux';
 import { RootState } from '@/store/index';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import infoApi from '@/apis/requests/info';
+import { EventType, RecruitStatus } from '@/types/group';
 
 //
 //

@@ -24,8 +24,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { StyledInputLabel } from './InfoEdit';
 
-import { runningSpecGuidePatchRequest } from '@/apis/types/info';
 import infoApi from '@/apis/requests/info';
+import { runningSpecGuidePatchRequest } from '@/apis/types/info';
 import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 

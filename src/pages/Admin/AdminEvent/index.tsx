@@ -16,6 +16,7 @@ import {
   TableHead,
   Button,
 } from '@mui/material';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import { StyledCollapsBox } from '../AdminUser';
@@ -23,7 +24,6 @@ import { StyledCollapsBox } from '../AdminUser';
 import adminApi from '@/apis/requests/admin';
 import { EventListItemType } from '@/apis/types/admin';
 import { DetailEventModal, GroupChip } from '@/components/shared';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 //
 //

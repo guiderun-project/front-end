@@ -16,10 +16,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import UserDetailDialog from './components/UserDetailDialog';
 
+import adminApi from '@/apis/requests/admin';
+import { UserListItemType } from '@/apis/types/admin';
 import { DisabilityChip, GenderChip, GroupChip } from '@/components/shared';
 import {
   DisabilityEnum,
@@ -27,9 +30,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import adminApi from '@/apis/requests/admin';
-import { UserListItemType } from '@/apis/types/admin';
 
 //
 //

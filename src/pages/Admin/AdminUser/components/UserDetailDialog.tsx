@@ -23,10 +23,10 @@ import UserEventTabPanel from './event/UserEventTabpanel';
 import UserInfoTabpanel from './Info/UserInfoTabpanel';
 
 import adminApi from '@/apis/requests/admin';
+import { UserListItemType } from '@/apis/types/admin';
 import { DisabilityChip, GenderChip } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RoleEnum, RunningGroup } from '@/types/group';
-import { UserListItemType } from '@/apis/types/admin';
 
 interface UserDetailDialogProps extends DialogProps {
   userData: UserListItemType;

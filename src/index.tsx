@@ -7,11 +7,11 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
+import Loading from './pages/Loading';
 import Route from './Route';
 import { store } from './store';
 import './index.css';
 import { theme } from './theme/theme';
-import Loading from './pages/Loading';
 
 const rootNode = document.getElementById('root');
 
