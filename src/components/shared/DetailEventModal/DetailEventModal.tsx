@@ -31,6 +31,7 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
   const { data: eventData, isSuccess } = useQuery({
     queryKey: ['eventPopupGet', eventApi],
     queryFn: () => eventApi.eventPopupGet({ eventId }),
+    enabled: eventId !== -1,
   });
 
   return (

@@ -139,6 +139,7 @@ const GuideSpecCard: React.FC<{ userId: string }> = ({ userId }) => {
   const { data: guideData, isLoading } = useQuery({
     queryKey: ['runningSpecGuideGet', userId],
     queryFn: () => infoApi.runningSpecGuideGet({ userId }),
+    enabled: userId !== '',
   });
   return (
     <Card>

@@ -18,6 +18,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({ userId }) => {
   const { data: infoData } = useQuery({
     queryKey: ['personalInfoGet', userId],
     queryFn: () => infoApi.personalInfoGet({ userId }),
+    enabled: userId !== '',
   });
 
   /**

@@ -24,6 +24,7 @@ const UserTermsCard: React.FC<UserTermsCardProps> = ({ userId }) => {
   const { data: termsData, isLoading } = useQuery({
     queryKey: ['permissionGet', userId],
     queryFn: () => infoApi.permissionGet({ userId }),
+    enabled: userId !== '',
   });
   return (
     <Card>

@@ -31,7 +31,7 @@ class AdminApi {
 
   adminUserListCountGet = async () => {
     return await axiosInstanceWithToken
-      .get<adminUserListCountGetResponse>(`/admin/new-user/count`)
+      .get<adminUserListCountGetResponse>(`/admin/user-list/count`)
       .then((res) => res.data.count);
   };
 

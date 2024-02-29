@@ -48,6 +48,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
         year: selelectedDate.year,
         month: selelectedDate.month,
       }),
+    enabled: userId !== '',
   });
   const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
   const startIndex = (page - 1) * maxPage;
@@ -61,7 +62,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
         limit: MAX_EVENT_LENGTH,
         start: startIndex,
       }),
-    enabled: !isLoading,
+    enabled: !isLoading && userId !== '',
   });
 
   const getColor = (recruitStatus: RecruitStatus) => {
