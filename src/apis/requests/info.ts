@@ -156,10 +156,12 @@ class InfoApi {
     sort = EventSort.Total,
     limit = 3,
     start = 0,
+    year,
+    month
   }: eventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<eventHistoryGetResponse>(
-        `/user/event-history/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
+        `/user/event-history/${userId}?sort=${sort}&limit=${limit}&start=${start}&year=${year}month=${month}`,
       )
       .then((res) => res.data);
   };
@@ -167,10 +169,12 @@ class InfoApi {
   eventHistoryCountGet = async ({
     userId,
     sort = EventSort.Total,
+    year,
+    month
   }: eventHistoryCountGetRequest) => {
     return axiosInstanceWithToken
       .get<eventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}`,
+        `/user/event-history/count/${userId}?sort=${sort}&year=${year}month=${month}`,
       )
       .then((res) => res.data.count);
   };
