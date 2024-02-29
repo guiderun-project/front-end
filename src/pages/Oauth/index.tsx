@@ -29,14 +29,19 @@ const Oauth: React.FC = () => {
       return;
     }
 
-    authApi.kakaoAuthPost({ code }).then((res) => {
-      dispatch(setAccessToken(res.accessToken));
-      if (res.isExist) {
-        navigate('/');
-        return;
-      }
-      navigate(BROWSER_PATH.SIGNUP);
-    });
+    authApi
+      .kakaoAuthPost({ code })
+      .then((res) => {
+        dispatch(setAccessToken(res.accessToken));
+        if (res.isExist) {
+          navigate('/');
+          return;
+        }
+        navigate(BROWSER_PATH.SIGNUP);
+      })
+      .catch((err) => {
+        throw Error(err);
+      });
   }, [code]);
 
   //
