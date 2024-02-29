@@ -20,7 +20,7 @@ const App: React.FC = () => {
     enabled:
       !!accessToken && userRole !== RoleEnum.Wait && userRole !== RoleEnum.New,
   });
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //
@@ -35,12 +35,12 @@ const App: React.FC = () => {
   //
   //
   //
-  React.useEffect(() => {
-    if (!accessToken) {
-      navigate(BROWSER_PATH.INTRO);
-      return;
-    }
-  }, [accessToken]);
+  //   React.useEffect(() => {
+  //     if (!accessToken) {
+  //       navigate(BROWSER_PATH.INTRO);
+  //       return;
+  //     }
+  //   }, [accessToken]);
   return (
     <Suspense fallback={<Loading />}>
       <Outlet />
