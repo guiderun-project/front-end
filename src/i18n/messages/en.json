@@ -1,6 +1,8 @@
 {
   "common.whelk": "@",
   "common.vi": "Blind Runner",
+  "common.VI": "Blind Runner",
+  "common.GUIDE": "Guide Runner",
   "common.guide": "Guide Runner",
   "common.mypage": "My page",
   "common.chip.COMPETITION": "Race\nEvent",

@@ -82,5 +82,5 @@ export type checkDuplicatedPostRequest = {
 };
 
 export type checkDuplicatedPostResponse = {
-  unique: boolean;
+  isUnique: boolean;
 };

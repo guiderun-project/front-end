@@ -1,6 +1,8 @@
 {
   "common.whelk": "@",
   "common.vi": "시각장애러너",
+  "common.VI": "시각장애러너",
+  "common.GUIDE": "가이드러너",
   "common.guide": "가이드러너",
   "common.mypage": "마이 페이지",
   "common.chip.COMPETITION": "대회",
