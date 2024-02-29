@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
-import Loading from './pages/Loading';
 import Route from './Route';
 import { store } from './store';
 import './index.css';
@@ -19,35 +18,33 @@ if (!rootNode) {
   throw new Error('Failed to find the root element');
 }
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+// async function enableMocking() {
+//   if (process.env.NODE_ENV !== 'development') {
+//     return;
+//   }
 
-  const { worker } = await import('./mocks/browser');
+//   const { worker } = await import('./mocks/browser');
 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
-}
+//   // `worker.start()` returns a Promise that resolves
+//   // once the Service Worker is up and ready to intercept requests.
+//   return worker.start();
+// }
 
 const queryClient = new QueryClient();
 
-enableMocking().then(() => {
-  ReactDOM.createRoot(rootNode).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
-            <ThemeProvider theme={theme}>
-              <Suspense fallback={<Loading />}>
-                <Route />
-              </Suspense>
-            </ThemeProvider>
-          </QueryClientProvider>
-        </Provider>
-      </HelmetProvider>
-    </React.StrictMode>,
-  );
-});
+// enableMocking().then(() => {
+ReactDOM.createRoot(rootNode).render(
+  // <React.StrictMode>
+  <HelmetProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <ThemeProvider theme={theme}>
+          <Route />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </Provider>
+  </HelmetProvider>,
+  // </React.StrictMode>,
+);
+// });

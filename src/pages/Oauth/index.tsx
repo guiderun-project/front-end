@@ -32,7 +32,7 @@ const Oauth: React.FC = () => {
     authApi.kakaoAuthPost({ code }).then((res) => {
       dispatch(setAccessToken(res.accessToken));
       if (res.isExist) {
-        navigate(BROWSER_PATH.MAIN);
+        navigate('/');
         return;
       }
       navigate(BROWSER_PATH.SIGNUP);

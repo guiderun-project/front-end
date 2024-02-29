@@ -37,18 +37,17 @@ const NAV_LINK_LIST = [
     alt: '전체 이벤트',
   },
   {
-    link: BROWSER_PATH.MAIN,
+    link: BROWSER_PATH.ADMIN.MAIN,
     img: mainIcon,
-    alt: '메인 페이지',
+    alt: '어드민 페이지',
   },
   {
-    link: BROWSER_PATH.EVENT.MY,
+    link: BROWSER_PATH.INFO,
     img: myEventIcon,
-    alt: '내가 신청한 이벤트',
+    alt: '내가 제출한 내용',
   },
   {
-    //TODO: 마이페이지로 수정
-    link: BROWSER_PATH.MAIN,
+    link: BROWSER_PATH.MYPAGE,
     img: myPageIcon,
     alt: '마이 페이지',
   },

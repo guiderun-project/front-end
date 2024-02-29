@@ -28,7 +28,7 @@ import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
-import { RunningGroup } from '@/types/group';
+import { DisabilityEnum, RoleEnum, RunningGroup } from '@/types/group';
 
 //
 //
@@ -70,8 +70,8 @@ const SignupVi: React.FC = () => {
     const accountId = methods.getValues().accountId;
     authApi
       .checkDuplicatedPost({ accountId })
-      .then((isDuplicate) => {
-        if (isDuplicate) {
+      .then((isUnique) => {
+        if (isUnique) {
           if (
             window.confirm(
               intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
@@ -92,8 +92,10 @@ const SignupVi: React.FC = () => {
    */
   const handleSubmit = async (data: viSignupPostRequest) => {
     try {
-      const { role, userId, accessToken } = await authApi.viSignupPost(data);
-      dispatch(updateInfo({ role, userId }));
+      const { userId, accessToken } = await authApi.viSignupPost(data);
+      dispatch(
+        updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
+      );
       dispatch(setAccessToken(accessToken));
       setSearchparams({
         type: searchParams.get('type') ?? '',

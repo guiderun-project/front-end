@@ -3,6 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import SignupContentBox from './SignupContentBox';
+
 import { GroupChip } from '@/components/shared';
 import { RunningGroup } from '@/types/group';
 

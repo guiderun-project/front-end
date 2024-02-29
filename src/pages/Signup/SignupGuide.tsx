@@ -28,7 +28,12 @@ import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
-import { GenderEnum, RunningGroup } from '@/types/group';
+import {
+  DisabilityEnum,
+  GenderEnum,
+  RoleEnum,
+  RunningGroup,
+} from '@/types/group';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
@@ -49,8 +54,8 @@ const SignupGuide: React.FC = () => {
     const accountId = methods.getValues().accountId;
     authApi
       .checkDuplicatedPost({ accountId })
-      .then((isDuplicate) => {
-        if (isDuplicate) {
+      .then((isUnique) => {
+        if (isUnique) {
           if (
             window.confirm(
               intl.formatMessage({ id: 'signup.form.info.id.check.success' }),
@@ -71,8 +76,10 @@ const SignupGuide: React.FC = () => {
    */
   const handleSubmit = async (data: guideSignupPostRequest) => {
     try {
-      const { role, userId, accessToken } = await authApi.guideSignupPost(data);
-      dispatch(updateInfo({ role, userId }));
+      const { userId, accessToken } = await authApi.guideSignupPost(data);
+      dispatch(
+        updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
+      );
       dispatch(setAccessToken(accessToken));
       setSearchparams({
         type: searchParams.get('type') ?? '',

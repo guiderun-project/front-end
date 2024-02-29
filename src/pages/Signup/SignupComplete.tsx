@@ -4,9 +4,10 @@ import { Button, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
+
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { RoleEnum } from '@/types/group';
@@ -52,8 +53,8 @@ const SignupComplete: React.FC = () => {
         </Typography>
         <Stack gap="1rem" width="100%" alignItems="center">
           <Button
-            role="link"
-            href={BROWSER_PATH.INFO}
+            component={Link}
+            to={BROWSER_PATH.INFO}
             variant="contained"
             size="large"
             fullWidth
@@ -61,8 +62,8 @@ const SignupComplete: React.FC = () => {
             <FormattedMessage id="signup.complete.checkInfo" />
           </Button>
           <Button
-            role="link"
-            href={BROWSER_PATH.MYPAGE}
+            component={Link}
+            to={BROWSER_PATH.MYPAGE}
             variant="outlined"
             size="large"
             fullWidth

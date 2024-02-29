@@ -26,6 +26,7 @@ export const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action: PayloadAction<userInfoGetResponse>) => {
       state = action.payload;
+      return state;
     },
     updateInfo: (
       state,
@@ -35,10 +36,12 @@ export const userSlice = createSlice({
         ...state,
         ...action.payload,
       };
+      return state;
     },
-    // resetUserInfo: (state) => {
-    //   state = { ...initialState };
-    // },
+    resetUserInfo: (state) => {
+      state = { ...initialState };
+      return state;
+    },
   },
 });
 

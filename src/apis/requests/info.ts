@@ -56,7 +56,7 @@ class InfoApi {
    */
   personalInfoGet = async ({ userId }: personalInfoGetRequest) => {
     return await axiosInstanceWithToken
-      .get<personalInfoGetResponse>(`user/personal/${userId}`)
+      .get<personalInfoGetResponse>(`/user/personal/${userId}`)
       .then((res) => res.data);
   };
 
@@ -170,7 +170,7 @@ class InfoApi {
   }: eventHistoryCountGetRequest) => {
     return axiosInstanceWithToken
       .get<eventHistoryCountGetResponse>(
-        `api/user/event-history/count/${userId}?sort=${sort}`,
+        `/user/event-history/count/${userId}?sort=${sort}`,
       )
       .then((res) => res.data.count);
   };

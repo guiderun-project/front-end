@@ -1,6 +1,7 @@
 export * from './Chip';
 export * from './DetailEventModal';
 export * from './DisabilityChip';
+export * from './ErrorBoundary';
 export * from './EventChip';
 export * from './EventLinkBox';
 export * from './EventStatus';

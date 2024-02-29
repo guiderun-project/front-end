@@ -22,8 +22,8 @@ export enum GenderEnum {
 }
 
 export enum DisabilityEnum {
-  VI = 'vi',
-  GUIDE = 'guide',
+  VI = 'VI',
+  GUIDE = 'GUIDE',
 }
 
 export enum EventType {

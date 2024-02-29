@@ -38,7 +38,7 @@ class AuthApi {
   checkDuplicatedPost = async (id: checkDuplicatedPostRequest) =>
     axiosInstanceWithToken
       .post<checkDuplicatedPostResponse>('/signup/duplicated', id)
-      .then((res) => res.data.unique);
+      .then((res) => res.data.isUnique);
 }
 
 const authApi = new AuthApi();
