@@ -15,10 +15,13 @@ import { RoleEnum } from './types/group';
 const App: React.FC = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const userRole = useSelector((state: RootState) => state.user.role);
-  const { data: newAccessToken, isError } = useSuspenseQuery({
-    queryKey: ['accessTokenGet'],
-    queryFn: () => authApi.accessTokenGet(),
-  });
+  // const { data: newAccessToken, error } = useSuspenseQuery<
+  //   string,
+  //   { errorCode: string; message: string }
+  // >({
+  //   queryKey: ['accessTokenGet'],
+  //   queryFn: () => authApi.accessTokenGet(),
+  // });
   const { data: userData } = useQuery({
     queryKey: ['userInfoGet', accessToken, userRole],
     queryFn: () => infoApi.userInfoGet(),
@@ -39,14 +42,14 @@ const App: React.FC = () => {
   //
   //
   //
-  React.useEffect(() => {
-    if (isError) {
-      navigate(BROWSER_PATH.INTRO);
-    }
-    if (newAccessToken) {
-      dispatch(setAccessToken(newAccessToken));
-    }
-  }, [newAccessToken, isError]);
+  // React.useEffect(() => {
+  //   if (error) {
+  //     if (error.errorCode === '0104') navigate(BROWSER_PATH.INTRO);
+  //   }
+  //   if (newAccessToken) {
+  //     dispatch(setAccessToken(newAccessToken));
+  //   }
+  // }, [newAccessToken, error]);
 
   //
   //
