@@ -31,7 +31,7 @@ class AuthApi {
 
   accessTokenGet = async () => {
     return await axiosInstance
-      .get<accessTokenGetResponse>('/user/reissue')
+      .get<accessTokenGetResponse>('/oauth/login/reissue')
       .then((res) => res.data.accessToken);
   };
 
