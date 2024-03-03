@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
-import { eventData } from '@/apis/types/info';
 import {
   DetailEventModal,
   DisabilityChip,
@@ -30,7 +29,7 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { EventType, RecruitStatus } from '@/types/group';
+import { RecruitStatus } from '@/types/group';
 
 //
 //
@@ -57,44 +56,6 @@ export const StyledEventButton = styled.button`
 //
 //
 
-export const EVENT_DATA: eventData[] = [
-  {
-    eventId: 1,
-    eventType: EventType.Competition,
-    date: '2000-01-01',
-    name: '가이드런 1회차',
-    recruitStatus: RecruitStatus.Close,
-  },
-  {
-    eventId: 2,
-    eventType: EventType.Training,
-    date: '2000-01-01',
-    name: '가이드런 2회차',
-    recruitStatus: RecruitStatus.Close,
-  },
-  {
-    eventId: 3,
-    eventType: EventType.Competition,
-    date: '2000-01-01',
-    name: '가이드런 3회차',
-    recruitStatus: RecruitStatus.Close,
-  },
-  {
-    eventId: 4,
-    eventType: EventType.Training,
-    date: '2000-01-01',
-    name: '가이드런 4회차',
-    recruitStatus: RecruitStatus.Close,
-  },
-  {
-    eventId: 5,
-    eventType: EventType.Competition,
-    date: '2000-01-01',
-    name: '가이드런 5회차',
-    recruitStatus: RecruitStatus.Close,
-  },
-];
-
 const MAX_EVENT_LENGTH = 5;
 
 //
@@ -106,9 +67,10 @@ const Mypage: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
   const [page, setPage] = React.useState(1);
   const userData = useSelector((state: RootState) => state.user);
-  const { data: eventCount } = useSuspenseQuery({
+  const { data: eventCount, isLoading: countLoading } = useQuery({
     queryKey: ['eventHistoryCountGet', userData.userId],
     queryFn: () => infoApi.eventHistoryCountGet({ userId: userData.userId }),
+    enabled: !!userData.userId,
   });
   const { data: eventList, isLoading } = useQuery({
     queryKey: ['eventHistoryGet', eventCount, userData.userId, page],
@@ -252,7 +214,7 @@ const Mypage: React.FC = () => {
         <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
           내가 참여한 이벤트
         </Typography>
-        {isLoading ? (
+        {isLoading || countLoading ? (
           <Stack justifyContent="center" alignItems="center">
             <CircularProgress
               size="2rem"
