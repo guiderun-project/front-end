@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
-
 import { ErrorBoundary, PageLayout, ProtectedRoute } from './components/shared';
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
@@ -13,17 +12,12 @@ import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
 import AdminEvent from './pages/Admin/AdminEvent';
 import AdminUser from './pages/Admin/AdminUser';
-import Calendar from './pages/Calendar';
-import { AllEvent, DetailEvent, MyEvent, UpcomingEvent } from './pages/Event';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Loading from './pages/Loading';
-import Main from './pages/Main';
-import MainRoot from './pages/Main/MainRoot';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
-import Search from './pages/Search';
 import Signup from './pages/Signup';
 import { RootState } from './store';
 // import { useSuspenseQuery } from '@tanstack/react-query';

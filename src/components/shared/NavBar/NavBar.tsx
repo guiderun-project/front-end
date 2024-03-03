@@ -11,8 +11,8 @@ import mainIcon from '@/assets/navBar/main_icon.png';
 import myEventIcon from '@/assets/navBar/my_event_icon.png';
 import myPageIcon from '@/assets/navBar/my_page_icon.png';
 import { BROWSER_PATH } from '@/constants/path';
-import { RoleEnum } from '@/types/group';
 import { RootState } from '@/store/index';
+import { RoleEnum } from '@/types/group';
 
 //
 //
@@ -74,7 +74,7 @@ const NavBar: React.FC = () => {
   return (
     <StyledContainer>
       {NAV_LINK_LIST.map((navItem) =>
-        !!navItem?.limit ? (
+        navItem?.limit ? (
           navItem.limit === role ? (
             <Tooltip title={navItem.alt}>
               <Link

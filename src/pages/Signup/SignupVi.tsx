@@ -116,7 +116,7 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
-  const hadleInvalid = (errors: FieldErrors<viSignupPostRequest>) => {
+  const handleInvalid = (errors: FieldErrors<viSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
       alert(errors[key as keyof FieldErrors<viSignupPostRequest>]?.message);
     });
@@ -662,7 +662,7 @@ const SignupVi: React.FC = () => {
       <Helmet>
         <title>회원 정보 입력(VI) - Guide run project</title>
       </Helmet>
-      <form onSubmit={methods.handleSubmit(handleSubmit)}>
+      <form onSubmit={methods.handleSubmit(handleSubmit, handleInvalid)}>
         <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}

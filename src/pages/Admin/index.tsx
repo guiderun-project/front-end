@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
