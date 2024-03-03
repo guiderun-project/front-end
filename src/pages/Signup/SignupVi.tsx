@@ -12,7 +12,12 @@ import {
   Typography,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+import {
+  useForm,
+  FormProvider,
+  Controller,
+  FieldErrors,
+} from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -111,6 +116,15 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
+  const hadleInvalid = (errors: FieldErrors<viSignupPostRequest>) => {
+    Object.keys(errors).forEach((key) => {
+      alert(errors[key as keyof FieldErrors<viSignupPostRequest>]?.message);
+    });
+  };
+
+  /**
+   *
+   */
   const renderUserInfo = () => {
     return (
       <SignupContentBox
@@ -156,7 +170,7 @@ const SignupVi: React.FC = () => {
               control={methods.control}
               defaultValue=""
               rules={{
-                required: true,
+                required: '아이디는 필수 입력입니다.',
                 minLength: 1,
                 maxLength: 15,
                 pattern: /^[a-zA-Z0-9_]+$/,
@@ -228,7 +242,7 @@ const SignupVi: React.FC = () => {
               name="password"
               control={methods.control}
               rules={{
-                required: true,
+                required: '비밀번호는 필수 입력입니다.',
                 minLength: 8,
                 maxLength: 32,
                 pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
@@ -619,7 +633,6 @@ const SignupVi: React.FC = () => {
     return (
       <Stack gap="1rem" alignItems="center">
         <Button
-          disabled={!methods.formState.isValid}
           fullWidth
           type="submit"
           variant="contained"

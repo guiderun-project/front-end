@@ -92,7 +92,12 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
       required:
         formType === FormType.BooleanRadio
           ? getValues(name) === undefined
-          : required,
+          : required
+            ? `${intl.formatMessage(
+                { id: 'message.form.required.error' },
+                { field: title },
+              )}`
+            : false,
     },
   });
 

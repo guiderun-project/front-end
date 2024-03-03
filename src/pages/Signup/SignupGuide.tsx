@@ -12,7 +12,12 @@ import {
   Checkbox,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldErrors,
+  FormProvider,
+  useForm,
+} from 'react-hook-form';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -93,6 +98,15 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
+  const hadleInvalid = (errors: FieldErrors<guideSignupPostRequest>) => {
+    Object.keys(errors).forEach((key) => {
+      alert(errors[key as keyof FieldErrors<guideSignupPostRequest>]?.message);
+    });
+  };
+
+  /**
+   *
+   */
   const renderUserInfo = () => {
     return (
       <SignupContentBox
@@ -138,7 +152,7 @@ const SignupGuide: React.FC = () => {
               control={methods.control}
               defaultValue=""
               rules={{
-                required: true,
+                required: '아이디는 필수 입력입니다.',
                 minLength: 1,
                 maxLength: 15,
                 pattern: /^[a-zA-Z0-9_]+$/,
@@ -210,7 +224,7 @@ const SignupGuide: React.FC = () => {
               name="password"
               control={methods.control}
               rules={{
-                required: true,
+                required: '비밀번호는 필수 입력입니다.',
                 minLength: 8,
                 maxLength: 32,
                 pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
@@ -688,13 +702,7 @@ const SignupGuide: React.FC = () => {
   const renderButton = () => {
     return (
       <Stack gap="1rem" alignItems="center">
-        <Button
-          disabled={!methods.formState.isValid}
-          fullWidth
-          type="submit"
-          variant="contained"
-          size="large"
-        >
+        <Button fullWidth type="submit" variant="contained" size="large">
           <FormattedMessage id="signup.form.submit" />
         </Button>
         <Button
@@ -718,7 +726,7 @@ const SignupGuide: React.FC = () => {
       <Helmet>
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
-      <form onSubmit={methods.handleSubmit(handleSubmit)}>
+      <form onSubmit={methods.handleSubmit(handleSubmit, hadleInvalid)}>
         <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}
