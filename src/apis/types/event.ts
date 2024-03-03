@@ -75,7 +75,7 @@ export type eventPopupGetRequest = {
 export type eventPopupGetResponse = {
   eventId: number; //이벤트 아이디
   type: EventType; //대회인지 훈련인지
-  title: string; //제목
+  name: string; //제목
   recruitStatus: RecruitStatus; //이벤트 모집 상태
   date: string; //이벤트 시작일
   startTime: string; //"HH : MM"
