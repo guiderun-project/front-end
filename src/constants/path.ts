@@ -24,4 +24,6 @@ export const BROWSER_PATH = {
 
 // }
 
+export const PREV_PATH_KEY = 'PREV_PATH';
+
 export const KAKAO_REDIRECT_URL = `${window.location.origin}${BROWSER_PATH.OAUTH}`;

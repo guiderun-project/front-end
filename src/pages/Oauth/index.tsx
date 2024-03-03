@@ -9,7 +9,7 @@ import Loading from '../Loading';
 import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
 import { ErrorType } from '@/apis/types/error';
-import { BROWSER_PATH } from '@/constants/path';
+import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 
@@ -19,10 +19,11 @@ const Oauth: React.FC = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  //
-  //
-  //
+  const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
 
+  //
+  //
+  //
   React.useEffect(() => {
     if (!code) {
       navigate(BROWSER_PATH.INTRO);
@@ -36,8 +37,9 @@ const Oauth: React.FC = () => {
         if (res.isExist) {
           infoApi.userInfoGet().then((res) => {
             dispatch(updateInfo(res));
+
+            navigate(prevPath ? prevPath : '/');
           });
-          navigate('/');
           return;
         }
         navigate(BROWSER_PATH.SIGNUP);
