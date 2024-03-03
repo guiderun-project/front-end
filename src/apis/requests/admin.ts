@@ -83,7 +83,7 @@ class AdminApi {
   }: adminEventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<adminEventHistoryGetResponse>(
-        `api/admin/${userId}/event-list?start=${start}&limit=${limit}&year=${year}&month=${month}`,
+        `/admin/${userId}/event-list?start=${start}&limit=${limit}&year=${year}&month=${month}`,
       )
       .then((res) => res.data.items);
   };
