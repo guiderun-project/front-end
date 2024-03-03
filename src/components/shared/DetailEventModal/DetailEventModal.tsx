@@ -29,7 +29,7 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
   onModalClose,
 }) => {
   const { data: eventData, isSuccess } = useQuery({
-    queryKey: ['eventPopupGet', eventApi],
+    queryKey: ['eventPopupGet', eventId],
     queryFn: () => eventApi.eventPopupGet({ eventId }),
     enabled: eventId !== -1,
   });
@@ -71,7 +71,7 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
               fontSize="1.25rem"
               fontWeight={700}
             >
-              {eventData.title}
+              {eventData.name}
               <EventStatus status={eventData.recruitStatus} />
             </Typography>
           </DialogTitle>
