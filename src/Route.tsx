@@ -83,11 +83,7 @@ const router = createBrowserRouter([
       },
       {
         path: BROWSER_PATH.OAUTH,
-        element: (
-          <PageLayout>
-            <Oauth />
-          </PageLayout>
-        ),
+        element: <Oauth />,
       },
       {
         path: BROWSER_PATH.ADMIN.MAIN,
