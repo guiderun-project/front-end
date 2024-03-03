@@ -207,8 +207,6 @@ export type partnerListCountGetResponse = {
 
 export type eventHistoryGetRequest = {
   userId: string;
-  year: number;
-  month: number;
   sort?: EventSort;
   limit?: number;
   start?: number;
@@ -231,8 +229,6 @@ export type eventHistoryGetResponse = {
 
 export type eventHistoryCountGetRequest = {
   userId: string;
-  year: number;
-  month: number;
   sort?: EventSort;
 };
 
