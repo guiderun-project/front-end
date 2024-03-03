@@ -66,6 +66,8 @@ const SignupVi: React.FC = () => {
   const [searchParams, setSearchparams] = useSearchParams();
   const methods = useForm<viSignupPostRequest>();
 
+  const isRunngingExp = methods.watch('isRunningExp');
+
   const handleIdCheck = async () => {
     const accountId = methods.getValues().accountId;
     authApi
@@ -473,128 +475,127 @@ const SignupVi: React.FC = () => {
                 },
               ]}
             />
-            {methods.watch('isRunningExp') !== undefined ? (
-              methods.watch('isRunningExp') ? (
-                <>
-                  {/* 달리기 기록 */}
-                  <SignupFormBox
-                    required={methods.watch('isRunningExp')}
-                    name="recordDegree"
-                    title={intl.formatMessage({
-                      id: 'signup.form.running.record',
-                    })}
-                    label={intl.formatMessage({
-                      id: 'signup.form.running.record.label',
-                    })}
-                    formType={FormType.Select}
-                    formValue={[
-                      {
-                        label: `A ${intl.formatMessage(
-                          { id: 'teamingCriteria.record.fast' },
-                          { minutes: 50 },
-                        )}`,
-                        value: RunningGroup.A,
-                      },
-                      {
-                        label: `B ${intl.formatMessage(
-                          { id: 'teamingCriteria.record.medium' },
-                          { minutes1: 51, minutes2: 56 },
-                        )}`,
-                        value: RunningGroup.B,
-                      },
-                      {
-                        label: `C ${intl.formatMessage(
-                          { id: 'teamingCriteria.record.medium' },
-                          { minutes1: 57, minutes2: 65 },
-                        )}`,
-                        value: RunningGroup.C,
-                      },
-                      {
-                        label: `D ${intl.formatMessage(
-                          { id: 'teamingCriteria.record.another' },
-                          { minutes: 66 },
-                        )}`,
-                        value: RunningGroup.D,
-                      },
-                      {
-                        label: `E ${intl.formatMessage({
-                          id: 'teamingCriteria.record.none',
-                        })}`,
-                        value: RunningGroup.E,
-                      },
-                    ]}
-                  />
-                  {/* 상세 기록 */}
-                  <SignupFormBox
-                    multiLine
-                    name="detailRecord"
-                    title={intl.formatMessage({
-                      id: 'signup.form.running.detail',
-                    })}
-                    label={intl.formatMessage({
-                      id: 'signup.form.running.detail.label',
-                    })}
-                    formType={FormType.Input}
-                  />
-                  {/* 주로 뛰는 장소 */}
-                  <SignupFormBox
-                    multiLine
-                    name="runningPlace"
-                    title={intl.formatMessage({
-                      id: 'signup.form.running.location',
-                    })}
-                    label={intl.formatMessage({
-                      id: 'signup.form.running.location.label',
-                    })}
-                    formType={FormType.Input}
-                  />
-                </>
-              ) : (
-                <>
-                  {/* 프로그램을 알게 된 경로 */}
-                  <SignupFormBox
-                    multiLine
-                    name="howToKnow"
-                    title={intl.formatMessage({
-                      id: 'signup.form.running.way',
-                    })}
-                    formType={FormType.CheckBox}
-                    formValue={[
-                      {
-                        label: intl.formatMessage({
-                          id: `signup.form.running.way.vi.1`,
-                        }),
-                        value: `vi.1`,
-                      },
-                      {
-                        label: intl.formatMessage({
-                          id: `signup.form.running.way.vi.2`,
-                        }),
-                        value: `vi.2`,
-                      },
-                      {
-                        label: intl.formatMessage({
-                          id: `signup.form.running.way.vi.3`,
-                        }),
-                        value: `vi.3`,
-                      },
-                    ]}
-                  />
-                  {/* 참여 동기 */}
-                  <SignupFormBox
-                    multiLine
-                    name="motive"
-                    title={intl.formatMessage({
-                      id: 'signup.form.running.reason',
-                    })}
-                    label={intl.formatMessage({
-                      id: 'signup.form.running.reason.label',
-                    })}
-                    formType={FormType.Textarea}
-                  />
-                </>
-              )
-            ) : null}
+            {isRunngingExp !== undefined && isRunngingExp && (
+              <>
+                {/* 달리기 기록 */}
+                <SignupFormBox
+                  required={methods.watch('isRunningExp')}
+                  name="recordDegree"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.record',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.record.label',
+                  })}
+                  formType={FormType.Select}
+                  formValue={[
+                    {
+                      label: `A ${intl.formatMessage(
+                        { id: 'teamingCriteria.record.fast' },
+                        { minutes: 50 },
+                      )}`,
+                      value: RunningGroup.A,
+                    },
+                    {
+                      label: `B ${intl.formatMessage(
+                        { id: 'teamingCriteria.record.medium' },
+                        { minutes1: 51, minutes2: 56 },
+                      )}`,
+                      value: RunningGroup.B,
+                    },
+                    {
+                      label: `C ${intl.formatMessage(
+                        { id: 'teamingCriteria.record.medium' },
+                        { minutes1: 57, minutes2: 65 },
+                      )}`,
+                      value: RunningGroup.C,
+                    },
+                    {
+                      label: `D ${intl.formatMessage(
+                        { id: 'teamingCriteria.record.another' },
+                        { minutes: 66 },
+                      )}`,
+                      value: RunningGroup.D,
+                    },
+                    {
+                      label: `E ${intl.formatMessage({
+                        id: 'teamingCriteria.record.none',
+                      })}`,
+                      value: RunningGroup.E,
+                    },
+                  ]}
+                />
+                {/* 상세 기록 */}
+                <SignupFormBox
+                  multiLine
+                  name="detailRecord"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.detail',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.detail.label',
+                  })}
+                  formType={FormType.Input}
+                />
+                {/* 주로 뛰는 장소 */}
+                <SignupFormBox
+                  multiLine
+                  name="runningPlace"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.location',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.location.label',
+                  })}
+                  formType={FormType.Input}
+                />
+              </>
+            )}{' '}
+            {isRunngingExp !== undefined && !isRunngingExp && (
+              <>
+                {/* 프로그램을 알게 된 경로 */}
+                <SignupFormBox
+                  multiLine
+                  name="howToKnow"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.way',
+                  })}
+                  formType={FormType.CheckBox}
+                  formValue={[
+                    {
+                      label: intl.formatMessage({
+                        id: `signup.form.running.way.vi.1`,
+                      }),
+                      value: `vi.1`,
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: `signup.form.running.way.vi.2`,
+                      }),
+                      value: `vi.2`,
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: `signup.form.running.way.vi.3`,
+                      }),
+                      value: `vi.3`,
+                    },
+                  ]}
+                />
+                {/* 참여 동기 */}
+                <SignupFormBox
+                  multiLine
+                  name="motive"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.reason',
+                  })}
+                  label={intl.formatMessage({
+                    id: 'signup.form.running.reason.label',
+                  })}
+                  formType={FormType.Textarea}
+                />
+              </>
+            )}
             {/* 이 외 희망사항 */}
             <SignupFormBox
               multiLine
