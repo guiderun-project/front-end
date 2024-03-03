@@ -16,7 +16,7 @@ export const BROWSER_PATH = {
   INTRO: '/intro',
   OAUTH: '/oauth',
   SIGNUP: '/signup',
-  MYPAGE: '/my',
+  MYPAGE: '/',
   INFO: '/info',
 };
 
