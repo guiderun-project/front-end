@@ -116,7 +116,7 @@ const Mypage: React.FC = () => {
       infoApi.eventHistoryGet({
         userId: userData.userId,
         start: startIndex,
-        limit: 10,
+        limit: MAX_EVENT_LENGTH,
       }),
     enabled: (eventCount ?? 0) > 0,
   });
