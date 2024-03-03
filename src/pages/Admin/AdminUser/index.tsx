@@ -115,7 +115,7 @@ const StyledUserDetailButton = styled.button`
 const AdminUser: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const { data: userCount } = useSuspenseQuery({
-    queryKey: ['adminUserListCountGet'],
+    queryKey: ['adminUserListCountGet', 'adminUserListGet'],
     queryFn: () => adminApi.adminUserListCountGet(),
   });
 
@@ -388,7 +388,7 @@ const AdminUser: React.FC = () => {
             </TableHead>
             <TableBody>
               {userList.map((user) => (
-                <Row userData={user} />
+                <Row key={user.userId} userData={user} />
               ))}
             </TableBody>
           </Table>

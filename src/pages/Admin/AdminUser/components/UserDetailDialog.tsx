@@ -59,7 +59,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
             });
             alert(`${userData.name}님이 ${team}팀으로 승인되었습니다.`);
             queryClient.invalidateQueries({
-              queryKey: ['adminUserListCountGet', 'adminUserListGet'],
+              queryKey: ['adminUserListGet'],
             });
           } catch (err) {
             alert('오류가 발생했습니다.');
@@ -78,7 +78,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
             });
             alert(`${userData.name}님이 거절되었습니다.`);
             queryClient.invalidateQueries({
-              queryKey: ['adminUserListCountGet', 'adminUserListGet'],
+              queryKey: ['adminUserListGet'],
             });
           } catch (err) {
             alert('오류가 발생했습니다.');
@@ -90,6 +90,13 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
     }
     setIsActiveConfirm(false);
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    setTeam(userData.team);
+  }, [userData]);
 
   /**
    *

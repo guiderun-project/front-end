@@ -13,9 +13,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 import { BROWSER_PATH } from '@/constants/path';
+import { RootState } from '@/store/index';
+import { RoleEnum } from '@/types/group';
 
 //
 //
@@ -43,16 +46,10 @@ const StyledSideMenuContainer = styled.div`
 //
 //
 
-const NAME_DATA = {
-  name: '홍길동',
-};
-
-//
-//
-//
-
 const Admin: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState<boolean>(false);
+  const navigate = useNavigate();
+  const userData = useSelector((state: RootState) => state.user);
 
   /**
    *
@@ -71,7 +68,7 @@ const Admin: React.FC = () => {
   //
   //
   //
-  return (
+  return userData.role === RoleEnum.Admin ? (
     <StyledAdminContainer>
       <IconButton
         onClick={handleOpen}
@@ -106,15 +103,17 @@ const Admin: React.FC = () => {
             padding="0.5rem"
             paddingLeft="1rem"
           >
-            {NAME_DATA.name} 관리자님 <br /> 안녕하세요!
+            {userData.name} 관리자님 <br /> 안녕하세요!
           </Typography>
           <Stack gap="1.5rem">
             <List>
               <ListItem disablePadding>
                 <ListItemButton
-                  component={Link}
-                  to={BROWSER_PATH.ADMIN.USER}
-                  onClick={handleClose}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClose();
+                    navigate(BROWSER_PATH.ADMIN.USER);
+                  }}
                   sx={{
                     padding: '1.125rem 1rem',
                     borderRadius: '100rem',
@@ -128,9 +127,11 @@ const Admin: React.FC = () => {
               </ListItem>
               <ListItem disablePadding>
                 <ListItemButton
-                  component={Link}
-                  to={BROWSER_PATH.ADMIN.EVENT}
-                  onClick={handleClose}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClose();
+                    navigate(BROWSER_PATH.ADMIN.EVENT);
+                  }}
                   sx={{
                     padding: '1.125rem 1rem',
                     borderRadius: '100rem',
@@ -150,6 +151,8 @@ const Admin: React.FC = () => {
         <Outlet />
       </Stack>
     </StyledAdminContainer>
+  ) : (
+    <Navigate to={BROWSER_PATH.MYPAGE} replace />
   );
 };
 

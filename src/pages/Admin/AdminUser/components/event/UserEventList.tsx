@@ -53,7 +53,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
   const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
   const startIndex = (page - 1) * maxPage;
   const { data: EventList, isLoading: eventLoading } = useQuery({
-    queryKey: ['adminEventHistoryGet', startIndex, selelectedDate],
+    queryKey: ['adminEventHistoryGet', startIndex, selelectedDate, userId],
     queryFn: () =>
       adminApi.adminEventHistoryGet({
         userId,

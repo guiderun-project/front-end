@@ -293,7 +293,9 @@ const AdminEvent: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {eventList?.map((event) => <Row eventData={event} />)}
+              {eventList?.map((event) => (
+                <Row key={event.eventId} eventData={event} />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
