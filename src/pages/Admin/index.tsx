@@ -81,7 +81,14 @@ const Admin: React.FC = () => {
       >
         <MenuIcon />
       </IconButton>
-      <Drawer open={isDrawerOpen} anchor="left" onClose={handleClose}>
+      <Drawer
+        open={isDrawerOpen}
+        anchor="left"
+        onClose={handleClose}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <StyledSideMenuContainer>
           <IconButton
             onClick={handleClose}
