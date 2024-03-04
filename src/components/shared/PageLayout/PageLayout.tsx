@@ -1,13 +1,13 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import LanguageIcon from '@mui/icons-material/Language';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+// import LanguageIcon from '@mui/icons-material/Language';
+// import { IconButton, Menu, MenuItem } from '@mui/material';
+// import { useSelector, useDispatch } from 'react-redux';
 
-import { RootState } from '@/store/index';
-import { change } from '@/store/reducer/locale';
-import { Locale } from '@/types/locale';
+// import { RootState } from '@/store/index';
+// import { change } from '@/store/reducer/locale';
+// import { Locale } from '@/types/locale';
 
 interface PagelayoutProps {
   children?: React.ReactNode;
@@ -27,57 +27,58 @@ const StyledContainer = styled.div`
 `;
 
 const StyledContentContainer = styled.div`
+  box-sizing: border-box;
   position: relative;
   max-width: 48rem;
   min-height: 100vh;
   width: 100%;
   height: 100%;
   padding: 0 1.875rem;
-  background-color: #fff;
+  background-color: #f8f9ff;
 `;
 
-const StyledLocaleBox = styled.div`
-  position: absolute;
-  top: 2.5rem;
-  right: 1.875rem;
-  z-index: 1111;
-`;
+// const StyledLocaleBox = styled.div`
+//   position: absolute;
+//   top: 2.5rem;
+//   right: 1.875rem;
+//   z-index: 1111;
+// `;
 
 //
 //
 //
 
 const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const locale = useSelector((state: RootState) => state.locale.locale);
-  const dispatch = useDispatch();
+  // const locale = useSelector((state: RootState) => state.locale.locale);
+  // const dispatch = useDispatch();
 
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
+
+  // /**
+  //  *
+  //  */
+  // const handleLocaleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   setAnchorEl(e.currentTarget);
+  // };
+
+  // /**
+  //  *
+  //  */
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   /**
    *
    */
-  const handleLocaleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(e.currentTarget);
-  };
-
-  /**
-   *
-   */
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  /**
-   *
-   */
-  const handleLocaleChange = (selectedLocale: Locale) => () => {
-    if (locale !== selectedLocale) {
-      dispatch(change(selectedLocale));
-    }
-    handleClose();
-  };
+  // const handleLocaleChange = (selectedLocale: Locale) => () => {
+  //   if (locale !== selectedLocale) {
+  //     dispatch(change(selectedLocale));
+  //   }
+  //   handleClose();
+  // };
 
   //
   //
@@ -85,7 +86,7 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
   return (
     <StyledContainer>
       <StyledContentContainer>
-        <StyledLocaleBox>
+        {/* <StyledLocaleBox>
           <IconButton onClick={handleLocaleOpen}>
             <LanguageIcon />
           </IconButton>
@@ -115,7 +116,7 @@ const PageLayout: React.FC<PagelayoutProps> = ({ children }) => {
               English
             </MenuItem>
           </Menu>
-        </StyledLocaleBox>
+        </StyledLocaleBox> */}
         {children}
       </StyledContentContainer>
     </StyledContainer>

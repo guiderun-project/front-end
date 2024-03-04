@@ -16,7 +16,7 @@ interface GroupChipProps {
 //
 //
 
-const GropuChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
+const GroupChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   if (type === 'text') {
     return (
       <Typography
@@ -31,6 +31,7 @@ const GropuChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   }
   return (
     <Avatar
+      component="span"
       sx={{
         width: '1.875rem',
         height: '1.875rem',
@@ -44,4 +45,4 @@ const GropuChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   );
 };
 
-export default GropuChip;
+export default GroupChip;
