@@ -84,7 +84,7 @@ const Mypage: React.FC = () => {
   });
 
   const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
-  const startIndex = (page - 1) * maxPage;
+  const startIndex = (page - 1) * MAX_EVENT_LENGTH;
 
   const getColor = (recruitStatus: RecruitStatus) => {
     switch (recruitStatus) {

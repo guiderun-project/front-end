@@ -120,7 +120,7 @@ const AdminUser: React.FC = () => {
   });
 
   const maxPage = Math.ceil(userCount / MAX_USER_LENGTH);
-  const startIndex = (page - 1) * maxPage;
+  const startIndex = (page - 1) * MAX_USER_LENGTH;
 
   const { data: userList } = useSuspenseQuery({
     queryKey: ['adminUserListGet', startIndex],
