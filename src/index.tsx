@@ -34,17 +34,17 @@ const queryClient = new QueryClient();
 
 // enableMocking().then(() => {
 ReactDOM.createRoot(rootNode).render(
-  // <React.StrictMode>
-  <HelmetProvider>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider theme={theme}>
-          <Route />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </Provider>
-  </HelmetProvider>,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <HelmetProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <ThemeProvider theme={theme}>
+            <Route />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </Provider>
+    </HelmetProvider>
+  </React.StrictMode>,
 );
 // });
