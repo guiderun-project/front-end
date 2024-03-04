@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 // import authApi from './apis/requests/auth';
 import infoApi from './apis/requests/info';
