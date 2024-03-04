@@ -237,7 +237,11 @@ const Mypage: React.FC = () => {
               >
                 <EventChip type={event.eventType} variant="full" />
                 <Stack gap="0.25rem" alignItems="flex-start">
-                  <Typography fontWeight={500} whiteSpace="wrap">
+                  <Typography
+                    fontWeight={500}
+                    whiteSpace="normal"
+                    textAlign="left"
+                  >
                     {event.name}
                   </Typography>
                   <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
