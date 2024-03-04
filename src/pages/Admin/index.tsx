@@ -116,8 +116,7 @@ const Admin: React.FC = () => {
             <List>
               <ListItem disablePadding>
                 <ListItemButton
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     handleClose();
                     navigate(BROWSER_PATH.ADMIN.USER);
                   }}
@@ -134,8 +133,7 @@ const Admin: React.FC = () => {
               </ListItem>
               <ListItem disablePadding>
                 <ListItemButton
-                  onClick={(e) => {
-                    e.preventDefault();
+                  onClick={() => {
                     handleClose();
                     navigate(BROWSER_PATH.ADMIN.EVENT);
                   }}
