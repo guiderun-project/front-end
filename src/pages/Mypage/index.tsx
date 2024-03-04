@@ -236,13 +236,8 @@ const Mypage: React.FC = () => {
                 onClick={() => handleEventDetailOpen(event.eventId)}
               >
                 <EventChip type={event.eventType} variant="full" />
-                <Stack
-                  gap="0.25rem"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  alignItems="flex-start"
-                >
-                  <Typography fontWeight={500} noWrap>
+                <Stack gap="0.25rem" alignItems="flex-start">
+                  <Typography fontWeight={500} whiteSpace="wrap">
                     {event.name}
                   </Typography>
                   <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
