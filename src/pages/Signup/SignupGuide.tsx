@@ -6,6 +6,7 @@ import {
   Stack,
   Box,
   Badge,
+  CircularProgress,
   TextField,
   Typography,
   FormControlLabel,
@@ -40,7 +41,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { CircularProgress } from '@mui/material';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
