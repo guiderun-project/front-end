@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   Chip,
+  CircularProgress,
   FormControlLabel,
   Stack,
   TextField,
@@ -65,6 +66,7 @@ export interface SignupViForm {
 const SignupVi: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -100,6 +102,7 @@ const SignupVi: React.FC = () => {
    */
   const handleSubmit = async (data: viSignupPostRequest) => {
     try {
+      setIsSubmitting(true);
       const { userId, accessToken } = await authApi.viSignupPost(data);
       dispatch(
         updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
@@ -110,6 +113,7 @@ const SignupVi: React.FC = () => {
         isCompleted: 'true',
       });
     } catch (e) {
+      setIsSubmitting(false);
       if (
         axios.isAxiosError<{
           errorCode: string;
@@ -645,12 +649,16 @@ const SignupVi: React.FC = () => {
       <Stack gap="1rem" alignItems="center">
         <Button
           fullWidth
+          disabled={isSubmitting}
           type="submit"
           variant="contained"
           size="large"
-          color="secondary"
         >
-          <FormattedMessage id="signup.form.submit" />
+          {isSubmitting ? (
+            <CircularProgress color="inherit" />
+          ) : (
+            <FormattedMessage id="signup.form.submit" />
+          )}
         </Button>
         <Button
           fullWidth

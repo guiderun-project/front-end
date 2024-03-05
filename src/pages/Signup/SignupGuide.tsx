@@ -40,10 +40,12 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { CircularProgress } from '@mui/material';
 
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -82,6 +84,7 @@ const SignupGuide: React.FC = () => {
    */
   const handleSubmit = async (data: guideSignupPostRequest) => {
     try {
+      setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
       dispatch(
         updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
@@ -92,6 +95,7 @@ const SignupGuide: React.FC = () => {
         isCompleted: 'true',
       });
     } catch (e) {
+      setIsSubmitting(false);
       if (
         axios.isAxiosError<{
           errorCode: string;
@@ -713,8 +717,18 @@ const SignupGuide: React.FC = () => {
   const renderButton = () => {
     return (
       <Stack gap="1rem" alignItems="center">
-        <Button fullWidth type="submit" variant="contained" size="large">
-          <FormattedMessage id="signup.form.submit" />
+        <Button
+          fullWidth
+          disabled={isSubmitting}
+          type="submit"
+          variant="contained"
+          size="large"
+        >
+          {isSubmitting ? (
+            <CircularProgress color="inherit" />
+          ) : (
+            <FormattedMessage id="signup.form.submit" />
+          )}
         </Button>
         <Button
           fullWidth
