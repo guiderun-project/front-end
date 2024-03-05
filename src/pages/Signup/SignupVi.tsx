@@ -35,7 +35,12 @@ import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
-import { DisabilityEnum, RoleEnum, RunningGroup } from '@/types/group';
+import {
+  DisabilityEnum,
+  GenderEnum,
+  RoleEnum,
+  RunningGroup,
+} from '@/types/group';
 
 //
 //
@@ -170,11 +175,11 @@ const SignupVi: React.FC = () => {
               formType={FormType.Radio}
               formValue={[
                 {
-                  value: 'MAN',
+                  value: GenderEnum.M,
                   label: intl.formatMessage({ id: 'common.gender.man' }),
                 },
                 {
-                  value: 'WOMAN',
+                  value: GenderEnum.W,
                   label: intl.formatMessage({ id: 'common.gender.woman' }),
                 },
               ]}
