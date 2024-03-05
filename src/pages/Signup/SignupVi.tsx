@@ -42,32 +42,6 @@ import {
   RunningGroup,
 } from '@/types/group';
 
-//
-//
-//
-
-export interface SignupViForm {
-  name: string;
-  gender: 'MAN' | 'WOMAN';
-  phone: string;
-  age: number;
-  snsAccount: string;
-  runningExperience: boolean;
-  personalRecord: RunningGroup;
-  detailRecord: string;
-  runnigPlace: string;
-  guideNameRanWith: string;
-  howToKnow: string[];
-  motive: string;
-  hopePrefs: string;
-  privacy: boolean;
-  portraitRights: boolean;
-}
-
-//
-//
-//
-
 const SignupVi: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
@@ -571,6 +545,16 @@ const SignupVi: React.FC = () => {
                   })}
                   formType={FormType.Input}
                 />
+                {/* 상세 기록 */}
+                <SignupFormBox
+                  multiLine
+                  name="guideName"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.vi.guide.name',
+                  })}
+                  label="당시 파트너 성함을 입력해주세요"
+                  formType={FormType.Input}
+                />
                 {/* 주로 뛰는 장소 */}
                 <SignupFormBox
                   multiLine
@@ -584,7 +568,7 @@ const SignupVi: React.FC = () => {
                   formType={FormType.Input}
                 />
               </>
-            )}{' '}
+            )}
             {isRunngingExp !== undefined && !isRunngingExp && (
               <>
                 {/* 프로그램을 알게 된 경로 */}
