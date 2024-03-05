@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import {
   useForm,
@@ -109,6 +110,16 @@ const SignupVi: React.FC = () => {
         isCompleted: 'true',
       });
     } catch (e) {
+      if (
+        axios.isAxiosError<{
+          errorCode: string;
+          message: string;
+        }>(e) &&
+        e.response
+      ) {
+        alert(e.response.data.message);
+        return;
+      }
       alert('에러가 발생했습니다. ');
     }
   };
