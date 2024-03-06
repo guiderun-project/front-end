@@ -30,7 +30,7 @@ const SpecViDetail: React.FC = () => {
       case RunningGroup.B:
         return '50~56분';
       case RunningGroup.C:
-        return '58~65분';
+        return '57~65분';
       case RunningGroup.D:
         return '66분~';
       case RunningGroup.E:
