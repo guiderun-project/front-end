@@ -111,13 +111,8 @@ const Mypage: React.FC = () => {
    */
   const renderTeamInfo = () => {
     return (
-      <Box
-        component="h1"
-        display="flex"
-        alignItems="flex-end"
-        justifyContent="space-between"
-      >
-        <Stack gap="0.325rem">
+      <Box display="flex" alignItems="flex-end" justifyContent="space-between">
+        <Stack component="h1" gap="0.325rem">
           <Typography component="span" fontSize="2rem">
             {userData.name} 님은
           </Typography>
