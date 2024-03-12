@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
-import {
-  isRouteErrorResponse,
-  useNavigate,
-  useRouteError,
-} from 'react-router-dom';
+import { useNavigate, useRouteError } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+import { ErrorType } from '@/apis/types/error';
 
 // interface ErrorBoundaryProps {
 //   children: JSX.Element;
@@ -66,10 +64,10 @@ const ErrorBoundary: React.FC = () => {
 
   let errorMessage: string;
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = `${error.data}` || error.statusText;
+  if (axios.isAxiosError<ErrorType>(error) && error.response) {
+    errorMessage = `${error.response.data.message ?? error.response.status}`;
   } else {
-    errorMessage = 'Unknown error';
+    errorMessage = '알 수 없는 에러';
   }
 
   return (
@@ -85,7 +83,7 @@ const ErrorBoundary: React.FC = () => {
       </Typography>
       <Stack component="caption" alignItems="center" padding="2rem">
         <Typography component="h2" fontSize="1.25rem" fontWeight={700}>
-          에러 코드
+          에러 메시지
         </Typography>
         <Typography>{errorMessage}</Typography>
       </Stack>
