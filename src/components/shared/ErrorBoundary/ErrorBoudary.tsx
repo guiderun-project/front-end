@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
+import axios from 'axios';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+
 import { ErrorType } from '@/apis/types/error';
 
 // interface ErrorBoundaryProps {
