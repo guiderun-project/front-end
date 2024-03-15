@@ -6,11 +6,13 @@ import {
   Stack,
   Box,
   Badge,
+  CircularProgress,
   TextField,
   Typography,
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import {
   Controller,
@@ -43,6 +45,7 @@ import {
 const SignupGuide: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -81,6 +84,7 @@ const SignupGuide: React.FC = () => {
    */
   const handleSubmit = async (data: guideSignupPostRequest) => {
     try {
+      setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
       dispatch(
         updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
@@ -91,6 +95,17 @@ const SignupGuide: React.FC = () => {
         isCompleted: 'true',
       });
     } catch (e) {
+      setIsSubmitting(false);
+      if (
+        axios.isAxiosError<{
+          errorCode: string;
+          message: string;
+        }>(e) &&
+        e.response
+      ) {
+        alert(e.response.data.message);
+        return;
+      }
       alert('에러가 발생했습니다. ');
     }
   };
@@ -702,8 +717,18 @@ const SignupGuide: React.FC = () => {
   const renderButton = () => {
     return (
       <Stack gap="1rem" alignItems="center">
-        <Button fullWidth type="submit" variant="contained" size="large">
-          <FormattedMessage id="signup.form.submit" />
+        <Button
+          fullWidth
+          disabled={isSubmitting}
+          type="submit"
+          variant="contained"
+          size="large"
+        >
+          {isSubmitting ? (
+            <CircularProgress color="inherit" />
+          ) : (
+            <FormattedMessage id="signup.form.submit" />
+          )}
         </Button>
         <Button
           fullWidth

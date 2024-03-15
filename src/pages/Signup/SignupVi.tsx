@@ -6,11 +6,13 @@ import {
   Button,
   Checkbox,
   Chip,
+  CircularProgress,
   FormControlLabel,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
+import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import {
   useForm,
@@ -33,37 +35,17 @@ import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import { FormType } from '@/types/form';
-import { DisabilityEnum, RoleEnum, RunningGroup } from '@/types/group';
-
-//
-//
-//
-
-export interface SignupViForm {
-  name: string;
-  gender: 'MAN' | 'WOMAN';
-  phone: string;
-  age: number;
-  snsAccount: string;
-  runningExperience: boolean;
-  personalRecord: RunningGroup;
-  detailRecord: string;
-  runnigPlace: string;
-  guideNameRanWith: string;
-  howToKnow: string[];
-  motive: string;
-  hopePrefs: string;
-  privacy: boolean;
-  portraitRights: boolean;
-}
-
-//
-//
-//
+import {
+  DisabilityEnum,
+  GenderEnum,
+  RoleEnum,
+  RunningGroup,
+} from '@/types/group';
 
 const SignupVi: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -99,6 +81,7 @@ const SignupVi: React.FC = () => {
    */
   const handleSubmit = async (data: viSignupPostRequest) => {
     try {
+      setIsSubmitting(true);
       const { userId, accessToken } = await authApi.viSignupPost(data);
       dispatch(
         updateInfo({ type: DisabilityEnum.GUIDE, role: RoleEnum.Wait, userId }),
@@ -109,6 +92,17 @@ const SignupVi: React.FC = () => {
         isCompleted: 'true',
       });
     } catch (e) {
+      setIsSubmitting(false);
+      if (
+        axios.isAxiosError<{
+          errorCode: string;
+          message: string;
+        }>(e) &&
+        e.response
+      ) {
+        alert(e.response.data.message);
+        return;
+      }
       alert('에러가 발생했습니다. ');
     }
   };
@@ -155,11 +149,11 @@ const SignupVi: React.FC = () => {
               formType={FormType.Radio}
               formValue={[
                 {
-                  value: 'MAN',
+                  value: GenderEnum.M,
                   label: intl.formatMessage({ id: 'common.gender.man' }),
                 },
                 {
-                  value: 'WOMAN',
+                  value: GenderEnum.W,
                   label: intl.formatMessage({ id: 'common.gender.woman' }),
                 },
               ]}
@@ -551,6 +545,16 @@ const SignupVi: React.FC = () => {
                   })}
                   formType={FormType.Input}
                 />
+                {/* 상세 기록 */}
+                <SignupFormBox
+                  multiLine
+                  name="guideName"
+                  title={intl.formatMessage({
+                    id: 'signup.form.running.vi.guide.name',
+                  })}
+                  label="당시 파트너 성함을 입력해주세요"
+                  formType={FormType.Input}
+                />
                 {/* 주로 뛰는 장소 */}
                 <SignupFormBox
                   multiLine
@@ -564,7 +568,7 @@ const SignupVi: React.FC = () => {
                   formType={FormType.Input}
                 />
               </>
-            )}{' '}
+            )}
             {isRunngingExp !== undefined && !isRunngingExp && (
               <>
                 {/* 프로그램을 알게 된 경로 */}
@@ -634,12 +638,16 @@ const SignupVi: React.FC = () => {
       <Stack gap="1rem" alignItems="center">
         <Button
           fullWidth
+          disabled={isSubmitting}
           type="submit"
           variant="contained"
           size="large"
-          color="secondary"
         >
-          <FormattedMessage id="signup.form.submit" />
+          {isSubmitting ? (
+            <CircularProgress color="inherit" />
+          ) : (
+            <FormattedMessage id="signup.form.submit" />
+          )}
         </Button>
         <Button
           fullWidth

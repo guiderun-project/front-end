@@ -3,14 +3,21 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { AxiosError } from 'axios';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 
+import { ErrorType } from './apis/types/error';
 import Route from './Route';
 import { store } from './store';
 import './index.css';
 import { theme } from './theme/theme';
+declare module '@tanstack/react-query' {
+  interface Register {
+    defaultError: AxiosError<ErrorType>;
+  }
+}
 
 const rootNode = document.getElementById('root');
 
