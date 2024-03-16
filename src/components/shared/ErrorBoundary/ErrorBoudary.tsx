@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { Navigate, useNavigate, useRouteError } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useRouteError } from 'react-router-dom';
 
 import { ErrorType } from '@/apis/types/error';
 import { BROWSER_PATH } from '@/constants/path';
@@ -96,14 +96,25 @@ const ErrorBoundary: React.FC = () => {
         </Typography>
         <Typography>{errorMessage}</Typography>
       </Stack>
-      <Button
-        fullWidth
-        variant="outlined"
-        size="large"
-        onClick={() => navigate(-1)}
-      >
-        이전 페이지로 이동
-      </Button>
+      <Stack alignItems="center" gap="2rem">
+        <Button
+          fullWidth
+          variant="outlined"
+          size="large"
+          onClick={() => navigate(-1)}
+        >
+          이전 페이지로 이동
+        </Button>
+        <Button
+          component={Link}
+          to={BROWSER_PATH.MAIN}
+          fullWidth
+          variant="outlined"
+          size="large"
+        >
+          메인 페이지로 이동
+        </Button>
+      </Stack>
     </Stack>
   );
 };
