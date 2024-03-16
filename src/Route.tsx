@@ -81,16 +81,16 @@ const router = createBrowserRouter([
         element: <Oauth />,
       },
       {
+        path: BROWSER_PATH.SIGNUP,
+        element: (
+          <PageLayout>
+            <Signup />
+          </PageLayout>
+        ),
+      },
+      {
         element: <ProtectedRoute />,
         children: [
-          {
-            path: BROWSER_PATH.SIGNUP,
-            element: (
-              <PageLayout>
-                <Signup />
-              </PageLayout>
-            ),
-          },
           {
             path: BROWSER_PATH.ADMIN.MAIN,
             element: <Admin />,
