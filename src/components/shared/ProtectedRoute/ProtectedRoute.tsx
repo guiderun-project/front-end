@@ -13,7 +13,7 @@ const ProtectedRoute: React.FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const { data, isError, error, isLoading } = useQuery({
+  const { data, isError, error, isLoading, isSuccess } = useQuery({
     queryKey: ['accessTokenGet'],
     queryFn: () => authApi.accessTokenGet(),
     retry: false,
@@ -48,13 +48,9 @@ const ProtectedRoute: React.FC = () => {
     return <Navigate to={BROWSER_PATH.INTRO} replace />;
   }
 
-  if (data) {
-    if (data.accessToken) {
-      if (data.isExist) {
-        return <Outlet />;
-      } else {
-        return <Navigate to={BROWSER_PATH.SIGNUP} replace />;
-      }
+  if (isSuccess) {
+    if (data.accessToken && data.isExist) {
+      return <Outlet />;
     }
   }
   return <Navigate to={BROWSER_PATH.INTRO} replace />;
