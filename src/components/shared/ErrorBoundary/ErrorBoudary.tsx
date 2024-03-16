@@ -2,9 +2,12 @@ import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import { useNavigate, useRouteError } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Navigate, useNavigate, useRouteError } from 'react-router-dom';
 
 import { ErrorType } from '@/apis/types/error';
+import { BROWSER_PATH } from '@/constants/path';
+import { resetAccessToken } from '@/store/reducer/auth';
 
 // interface ErrorBoundaryProps {
 //   children: JSX.Element;
@@ -61,11 +64,16 @@ import { ErrorType } from '@/apis/types/error';
 
 const ErrorBoundary: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const error = useRouteError();
 
   let errorMessage: string;
 
   if (axios.isAxiosError<ErrorType>(error) && error.response) {
+    if (error.status === 401) {
+      dispatch(resetAccessToken());
+      return <Navigate to={BROWSER_PATH.INTRO} replace />;
+    }
     errorMessage = `${error.response.data.message ?? error.response.status}`;
   } else {
     errorMessage = '알 수 없는 에러';
