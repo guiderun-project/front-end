@@ -32,7 +32,7 @@ class AuthApi {
   accessTokenGet = async () => {
     return await axiosInstance
       .get<accessTokenGetResponse>('/oauth/login/reissue')
-      .then((res) => res.data.accessToken);
+      .then((res) => res.data);
   };
 
   checkDuplicatedPost = async (id: checkDuplicatedPostRequest) =>
