@@ -20,10 +20,6 @@ const ProtectedRoute: React.FC = () => {
     throwOnError: false,
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   if (isError && error.status === 401) {
     return <Navigate to={BROWSER_PATH.INTRO} replace />;
   }
@@ -48,15 +44,20 @@ const ProtectedRoute: React.FC = () => {
   //
   //
 
-  return data?.accessToken ? (
-    data.isExist ? (
-      <Outlet />
-    ) : (
-      <Navigate to={BROWSER_PATH.SIGNUP} replace />
-    )
-  ) : (
-    <Navigate to={BROWSER_PATH.INTRO} replace />
-  );
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    if (data) {
+      if (data.accessToken) {
+        if (data.isExist) {
+          return <Outlet />;
+        } else {
+          <Navigate to={BROWSER_PATH.SIGNUP} replace />;
+        }
+      }
+    }
+    <Navigate to={BROWSER_PATH.INTRO} replace />;
+  }
 };
 
 export default ProtectedRoute;
