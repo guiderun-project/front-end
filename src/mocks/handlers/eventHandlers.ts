@@ -1,6 +1,7 @@
+import { http, HttpHandler, HttpResponse } from 'msw';
+
 import { eventPopupGetResponse } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
-import { http, HttpHandler, HttpResponse } from 'msw';
 
 //You can add HTTP handler by msw DOCS
 //https://mswjs.io/docs/network-behavior/rest
