@@ -30,7 +30,7 @@ export const authHandlers: HttpHandler[] = [
 
   //viSignupPost
   http.post<Record<string, never>, viSignupPostRequest, signupPostResponse>(
-    baseURL + 'signup/vi',
+    baseURL + '/signup/vi',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
     },
@@ -38,7 +38,7 @@ export const authHandlers: HttpHandler[] = [
 
   //guideSignupPost
   http.post<Record<string, never>, guideSignupPostRequest, signupPostResponse>(
-    baseURL + 'signup/guide',
+    baseURL + '/signup/guide',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
     },

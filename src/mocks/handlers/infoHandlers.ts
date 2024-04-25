@@ -1,5 +1,6 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { baseURL } from '@/apis/axios';
 import {
   eventHistoryCountGetResponse,
   eventHistoryGetResponse,
@@ -33,7 +34,7 @@ import {
 export const infoHandlers: HttpHandler[] = [
   //myPageGet
   http.get<Record<string, never>, Record<string, never>, myPageGetResponse>(
-    '/user/mypage',
+    baseURL + '/user/mypage',
     () => {
       return HttpResponse.json({
         contestCnt: 10,
@@ -50,7 +51,7 @@ export const infoHandlers: HttpHandler[] = [
 
   //userInfoGet
   http.get<Record<string, never>, Record<string, never>, userInfoGetResponse>(
-    '/user/personal',
+    baseURL + '/user/personal',
     () => {
       return HttpResponse.json({
         age: 10,
@@ -68,7 +69,7 @@ export const infoHandlers: HttpHandler[] = [
 
   // personalInfoGet
   http.get<{ userId: string }, Record<string, never>, personalInfoGetResponse>(
-    '/user/personal/:userId',
+    baseURL + '/user/personal/:userId',
     () => {
       return HttpResponse.json({
         age: 20,
@@ -89,7 +90,7 @@ export const infoHandlers: HttpHandler[] = [
     Record<string, never>,
     personalInfoPatchRequest,
     personalInfoPatchResponse
-  >('/user/personal', async ({ request }) => {
+  >(baseURL + '/user/personal', async ({ request }) => {
     const newInfo = await request.json();
     return HttpResponse.json({
       ...newInfo,
@@ -103,7 +104,7 @@ export const infoHandlers: HttpHandler[] = [
     { userId: string },
     Record<string, never>,
     runningSpecGuideGetResponse
-  >('/user/running/guide/:userId', () => {
+  >(baseURL+ '/user/running/guide/:userId', () => {
     return HttpResponse.json({
       detailRecord: '1시간',
       guidingPace: RunningGroup.A,
@@ -124,14 +125,14 @@ export const infoHandlers: HttpHandler[] = [
     Record<string, never>,
     runningSpecGuidePatchRequest,
     runningSpecGuidePatchResponse
-  >('/user/running/guide', async ({ request }) => {
+  >(baseURL + '/user/running/guide', async ({ request }) => {
     const newSpec = await request.json();
     return HttpResponse.json(newSpec);
   }),
 
   // runningSpecViGet
   http.get<{ userId: string }, Record<string, never>, runningSpecViGetResponse>(
-    '/user/running/vi/:userId',
+    baseURL + '/user/running/vi/:userId',
     () => {
       return HttpResponse.json({
         detailRecord: '테스트',
@@ -151,14 +152,14 @@ export const infoHandlers: HttpHandler[] = [
     Record<string, never>,
     runningSpecViPatchRequest,
     runningSpecViPatchResponse
-  >('/user/running/vi', async ({ request }) => {
+  >(baseURL + '/user/running/vi', async ({ request }) => {
     const newSpec = await request.json();
     return HttpResponse.json(newSpec);
   }),
 
   //permissionGet
   http.get<{ userId: string }, Record<string, never>, permissionGetResponse>(
-    '/user/permission/:userId',
+    baseURL + '/user/permission/:userId',
     () => {
       return HttpResponse.json({ portraitRights: true, privacy: true });
     },
@@ -169,7 +170,7 @@ export const infoHandlers: HttpHandler[] = [
     Record<string, never>,
     permissionPatchRequest,
     permissionPatchResponse
-  >('/user/permission', async ({ request }) => {
+  >(baseURL + '/user/permission', async ({ request }) => {
     const newPermission = await request.json();
     return HttpResponse.json(newPermission);
   }),
@@ -182,7 +183,7 @@ export const infoHandlers: HttpHandler[] = [
 
   //eventHistoryGet
   http.get<{ userId: string }, Record<string, never>, eventHistoryGetResponse>(
-    '/user/event-history/:userId',
+    baseURL + '/user/event-history/:userId',
     () => {
       return HttpResponse.json({
         start: 0,
@@ -269,7 +270,7 @@ export const infoHandlers: HttpHandler[] = [
     { userId: string },
     Record<string, never>,
     eventHistoryCountGetResponse
-  >('/user/event-history/count/:userId', () => {
+  >(baseURL + '/user/event-history/count/:userId', () => {
     return HttpResponse.json({ count: 37 });
   }),
 ];

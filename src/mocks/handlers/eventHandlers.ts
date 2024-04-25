@@ -1,5 +1,6 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { baseURL } from '@/apis/axios';
 import { eventPopupGetResponse } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 
@@ -9,7 +10,7 @@ import { EventType, RecruitStatus } from '@/types/group';
 export const eventHandlers: HttpHandler[] = [
   //eventPopupGet
   http.get<{ eventId: string }, Record<string, never>, eventPopupGetResponse>(
-    '/event/pop/:eventId',
+    baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
         content: '테스트용 이벤트입니다!',
