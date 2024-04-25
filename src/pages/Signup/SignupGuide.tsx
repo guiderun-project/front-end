@@ -417,7 +417,8 @@ const SignupGuide: React.FC = () => {
               multiLine
               name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
-              label={intl.formatMessage({ id: 'common.whelk' })}
+              label={intl.formatMessage({ id: 'signup.form.info.sns.label' })}
+              prefix={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
               openBox={
                 <Controller
