@@ -1,20 +1,23 @@
 import { Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-import { RecruitStatus } from '@/types/group';
+import { EventStatus as EventStatusType, RecruitStatus } from '@/types/group';
 
 interface EventStatusProps {
-  status: RecruitStatus;
+  status: RecruitStatus | EventStatusType;
 }
 
 const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   const getTextColor = () => {
     switch (status) {
       case RecruitStatus.Open:
+      case EventStatusType.Open:
         return '#DE1313';
       case RecruitStatus.Upcoming:
+      case EventStatusType.Upcoming:
         return '#534040';
       case RecruitStatus.Close:
+      case EventStatusType.End:
       default:
         return '#8F8F8F';
     }
