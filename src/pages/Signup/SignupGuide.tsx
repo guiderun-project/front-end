@@ -757,7 +757,6 @@ const SignupGuide: React.FC = () => {
           {renderUserInfo()}
           {renderRunningSpec()}
           <SignupTerms />
-          <TeamingCriteria />
           {renderButton()}
         </Stack>
       </form>
