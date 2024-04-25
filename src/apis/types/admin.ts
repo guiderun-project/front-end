@@ -149,14 +149,16 @@ export type adminEventHistoryGetRequest = {
   month: number;
 };
 
+export type EventHistoryItemType = {
+  eventId: number;
+  eventType: EventType;
+  name: string;
+  endDate: string;
+  recruitStatus: RecruitStatus;
+};
+
 export type adminEventHistoryGetResponse = {
-  items: {
-    eventId: number;
-    eventType: EventType;
-    name: string;
-    endDate: string;
-    recruitStatus: RecruitStatus;
-  }[];
+  items: EventHistoryItemType[];
 };
 
 export type adminEventTotalCountGetRequest = {
