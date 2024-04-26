@@ -12,7 +12,9 @@ interface SignupFormBoxProps {
 const SignupContentBox: React.FC<SignupFormBoxProps> = ({ title, content }) => {
   return (
     <Stack width="100%" alignItems="flex-start" gap="2.5rem">
-      <Typography variant="h4">{title}</Typography>
+      <Typography component="h2" fontWeight={700} fontSize="1.5rem">
+        {title}
+      </Typography>
       {content}
     </Stack>
   );
