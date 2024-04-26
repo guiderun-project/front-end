@@ -30,7 +30,7 @@ import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
-import { guideSignupPostRequest } from '@/apis/types/auth';
+import { GuideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -51,7 +51,7 @@ const SignupGuide: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<guideSignupPostRequest>();
+  const methods = useForm<GuideSignupPostRequest>();
 
   const isGuideExp = methods.watch('isGuideExp');
 
@@ -82,7 +82,7 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async (data: guideSignupPostRequest) => {
+  const handleSubmit = async (data: GuideSignupPostRequest) => {
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
@@ -113,9 +113,9 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const hadleInvalid = (errors: FieldErrors<guideSignupPostRequest>) => {
+  const hadleInvalid = (errors: FieldErrors<GuideSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<guideSignupPostRequest>]?.message);
+      alert(errors[key as keyof FieldErrors<GuideSignupPostRequest>]?.message);
     });
   };
 

@@ -30,7 +30,7 @@ import SignupTerms from './components/SignupTerms';
 import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
-import { viSignupPostRequest } from '@/apis/types/auth';
+import { ViSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -51,7 +51,7 @@ const SignupVi: React.FC = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<viSignupPostRequest>();
+  const methods = useForm<ViSignupPostRequest>();
 
   const isRunngingExp = methods.watch('isRunningExp');
 
@@ -79,7 +79,7 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async (data: viSignupPostRequest) => {
+  const handleSubmit = async (data: ViSignupPostRequest) => {
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.viSignupPost(data);
@@ -110,9 +110,9 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
-  const handleInvalid = (errors: FieldErrors<viSignupPostRequest>) => {
+  const handleInvalid = (errors: FieldErrors<ViSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<viSignupPostRequest>]?.message);
+      alert(errors[key as keyof FieldErrors<ViSignupPostRequest>]?.message);
     });
   };
 

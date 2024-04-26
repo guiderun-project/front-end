@@ -2,22 +2,22 @@ import { http, HttpHandler, HttpResponse } from 'msw';
 
 import { baseURL } from '@/apis/axios';
 import {
-  eventHistoryCountGetResponse,
-  eventHistoryGetResponse,
-  myPageGetResponse,
-  permissionGetResponse,
-  permissionPatchRequest,
-  permissionPatchResponse,
-  personalInfoGetResponse,
-  personalInfoPatchRequest,
-  personalInfoPatchResponse,
-  runningSpecGuideGetResponse,
-  runningSpecGuidePatchRequest,
-  runningSpecGuidePatchResponse,
-  runningSpecViGetResponse,
-  runningSpecViPatchRequest,
+  EventHistoryCountGetResponse,
+  EventHistoryGetResponse,
+  MyPageGetResponse,
+  PermissionGetResponse,
+  PermissionPatchRequest,
+  PermissionPatchResponse,
+  PersonalInfoGetResponse,
+  PersonalInfoPatchRequest,
+  PersonalInfoPatchResponse,
+  RunningSpecGuideGetResponse,
+  RunningSpecGuidePatchRequest,
+  RunningSpecGuidePatchResponse,
+  RunningSpecViGetResponse,
+  RunningSpecViPatchRequest,
   runningSpecViPatchResponse,
-  userInfoGetResponse,
+  UserInfoGetResponse,
 } from '@/apis/types/info';
 import {
   DisabilityEnum,
@@ -33,7 +33,7 @@ import {
 
 export const infoHandlers: HttpHandler[] = [
   //myPageGet
-  http.get<Record<string, never>, Record<string, never>, myPageGetResponse>(
+  http.get<Record<string, never>, Record<string, never>, MyPageGetResponse>(
     baseURL + '/user/mypage',
     () => {
       return HttpResponse.json({
@@ -50,7 +50,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   //userInfoGet
-  http.get<Record<string, never>, Record<string, never>, userInfoGetResponse>(
+  http.get<Record<string, never>, Record<string, never>, UserInfoGetResponse>(
     baseURL + '/user/personal',
     () => {
       return HttpResponse.json({
@@ -68,7 +68,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // personalInfoGet
-  http.get<{ userId: string }, Record<string, never>, personalInfoGetResponse>(
+  http.get<{ userId: string }, Record<string, never>, PersonalInfoGetResponse>(
     baseURL + '/user/personal/:userId',
     () => {
       return HttpResponse.json({
@@ -88,8 +88,8 @@ export const infoHandlers: HttpHandler[] = [
   //personalInfoPatch
   http.patch<
     Record<string, never>,
-    personalInfoPatchRequest,
-    personalInfoPatchResponse
+    PersonalInfoPatchRequest,
+    PersonalInfoPatchResponse
   >(baseURL + '/user/personal', async ({ request }) => {
     const newInfo = await request.json();
     return HttpResponse.json({
@@ -103,8 +103,8 @@ export const infoHandlers: HttpHandler[] = [
   http.get<
     { userId: string },
     Record<string, never>,
-    runningSpecGuideGetResponse
-  >(baseURL+ '/user/running/guide/:userId', () => {
+    RunningSpecGuideGetResponse
+  >(baseURL + '/user/running/guide/:userId', () => {
     return HttpResponse.json({
       detailRecord: '1시간',
       guidingPace: RunningGroup.A,
@@ -123,15 +123,15 @@ export const infoHandlers: HttpHandler[] = [
   // runningSpecGuidePatch
   http.patch<
     Record<string, never>,
-    runningSpecGuidePatchRequest,
-    runningSpecGuidePatchResponse
+    RunningSpecGuidePatchRequest,
+    RunningSpecGuidePatchResponse
   >(baseURL + '/user/running/guide', async ({ request }) => {
     const newSpec = await request.json();
     return HttpResponse.json(newSpec);
   }),
 
   // runningSpecViGet
-  http.get<{ userId: string }, Record<string, never>, runningSpecViGetResponse>(
+  http.get<{ userId: string }, Record<string, never>, RunningSpecViGetResponse>(
     baseURL + '/user/running/vi/:userId',
     () => {
       return HttpResponse.json({
@@ -150,7 +150,7 @@ export const infoHandlers: HttpHandler[] = [
   // runningSpecViPatch
   http.patch<
     Record<string, never>,
-    runningSpecViPatchRequest,
+    RunningSpecViPatchRequest,
     runningSpecViPatchResponse
   >(baseURL + '/user/running/vi', async ({ request }) => {
     const newSpec = await request.json();
@@ -158,7 +158,7 @@ export const infoHandlers: HttpHandler[] = [
   }),
 
   //permissionGet
-  http.get<{ userId: string }, Record<string, never>, permissionGetResponse>(
+  http.get<{ userId: string }, Record<string, never>, PermissionGetResponse>(
     baseURL + '/user/permission/:userId',
     () => {
       return HttpResponse.json({ portraitRights: true, privacy: true });
@@ -168,8 +168,8 @@ export const infoHandlers: HttpHandler[] = [
   //permissionPatch
   http.patch<
     Record<string, never>,
-    permissionPatchRequest,
-    permissionPatchResponse
+    PermissionPatchRequest,
+    PermissionPatchResponse
   >(baseURL + '/user/permission', async ({ request }) => {
     const newPermission = await request.json();
     return HttpResponse.json(newPermission);
@@ -182,7 +182,7 @@ export const infoHandlers: HttpHandler[] = [
   //TODO: partnerListCountGet
 
   //eventHistoryGet
-  http.get<{ userId: string }, Record<string, never>, eventHistoryGetResponse>(
+  http.get<{ userId: string }, Record<string, never>, EventHistoryGetResponse>(
     baseURL + '/user/event-history/:userId',
     () => {
       return HttpResponse.json({
@@ -269,7 +269,7 @@ export const infoHandlers: HttpHandler[] = [
   http.get<
     { userId: string },
     Record<string, never>,
-    eventHistoryCountGetResponse
+    EventHistoryCountGetResponse
   >(baseURL + '/user/event-history/count/:userId', () => {
     return HttpResponse.json({ count: 37 });
   }),

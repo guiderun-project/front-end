@@ -8,7 +8,7 @@ import {
 } from '@/types/group';
 import { EventSort, PartnerSort } from '@/types/sort';
 
-export type myPageGetResponse = {
+export type MyPageGetResponse = {
   role: RoleEnum;
   type: DisabilityEnum;
   gender: GenderEnum;
@@ -20,7 +20,7 @@ export type myPageGetResponse = {
   contestCnt: number;
 };
 
-export type userInfoGetResponse = {
+export type UserInfoGetResponse = {
   userId: string;
   name: string;
   type: DisabilityEnum;
@@ -32,11 +32,11 @@ export type userInfoGetResponse = {
   snsId: string | null;
 };
 
-export type personalInfoGetRequest = {
+export type PersonalInfoGetRequest = {
   userId: string;
 };
 
-export type personalInfoGetResponse = {
+export type PersonalInfoGetResponse = {
   name: string;
   type: DisabilityEnum;
   role: RoleEnum;
@@ -48,12 +48,12 @@ export type personalInfoGetResponse = {
   isOpenSns: boolean;
 };
 
-export type personalInfoPatchRequest = Omit<
-  personalInfoGetResponse,
+export type PersonalInfoPatchRequest = Omit<
+  PersonalInfoGetResponse,
   'type' | 'role'
 >;
 
-export type personalInfoPatchResponse = {
+export type PersonalInfoPatchResponse = {
   name: string;
   type: DisabilityEnum;
   role: RoleEnum;
@@ -65,11 +65,11 @@ export type personalInfoPatchResponse = {
   isOpenSns: boolean;
 };
 
-export type runningSpecGuideGetRequest = {
+export type RunningSpecGuideGetRequest = {
   userId: string;
 };
 
-export type runningSpecGuideGetResponse = {
+export type RunningSpecGuideGetResponse = {
   recordDegree: RunningGroup;
   detailRecord: string | null;
   isGuideExp: boolean;
@@ -83,9 +83,9 @@ export type runningSpecGuideGetResponse = {
   hopePrefs: string | null;
 };
 
-export type runningSpecGuidePatchRequest = runningSpecGuideGetResponse;
+export type RunningSpecGuidePatchRequest = RunningSpecGuideGetResponse;
 
-export type runningSpecGuidePatchResponse = {
+export type RunningSpecGuidePatchResponse = {
   recordDegree: RunningGroup;
   detailRecord: string | null;
   isGuideExp: boolean;
@@ -101,11 +101,11 @@ export type runningSpecGuidePatchResponse = {
   hopePrefs: string | null;
 };
 
-export type runningSpecViGetRequest = {
+export type RunningSpecViGetRequest = {
   userId: string;
 };
 
-export type runningSpecViGetResponse = {
+export type RunningSpecViGetResponse = {
   isRunningExp: boolean;
   recordDegree: RunningGroup;
   detailRecord: string | null;
@@ -118,7 +118,7 @@ export type runningSpecViGetResponse = {
   hopePrefs: string | null;
 };
 
-export type runningSpecViPatchRequest = runningSpecViGetResponse;
+export type RunningSpecViPatchRequest = RunningSpecViGetResponse;
 
 export type runningSpecViPatchResponse = {
   isRunningExp: boolean;
@@ -133,30 +133,30 @@ export type runningSpecViPatchResponse = {
   hopePrefs: string | null;
 };
 
-export type permissionGetRequest = {
+export type PermissionGetRequest = {
   userId: string;
 };
 
-export type permissionGetResponse = {
+export type PermissionGetResponse = {
   privacy: boolean;
   portraitRights: boolean;
 };
 
-export type permissionPatchRequest = {
+export type PermissionPatchRequest = {
   privacy: boolean;
   portraitRights: boolean;
 };
 
-export type permissionPatchResponse = {
+export type PermissionPatchResponse = {
   privacy: boolean;
   portraitRights: boolean;
 };
 
-export type profileGetRequest = {
+export type ProfileGetRequest = {
   userId: string;
 };
 
-export type profileGetResponse = {
+export type ProfileGetResponse = {
   userId: string;
   role: RoleEnum;
   type: DisabilityEnum;
@@ -173,14 +173,14 @@ export type profileGetResponse = {
   contestCnt: number;
 };
 
-export type partnerListGetRequest = {
+export type PartnerListGetRequest = {
   userId: string;
   sort?: PartnerSort;
   limit?: number;
   start?: number;
 };
 
-export type partnerData = {
+export type PartnerDataType = {
   userId: string;
   role: RoleEnum;
   type: DisabilityEnum;
@@ -190,29 +190,29 @@ export type partnerData = {
   contestCnt: number;
 };
 
-export type partnerListGetResponse = {
+export type PartnerListGetResponse = {
   sort: string;
   limit: number;
   start: number;
-  items: partnerData[];
+  items: PartnerDataType[];
 };
 
-export type partnerListCountGetRequest = {
+export type PartnerListCountGetRequest = {
   userId: string;
 };
 
-export type partnerListCountGetResponse = {
+export type PartnerListCountGetResponse = {
   count: number;
 };
 
-export type eventHistoryGetRequest = {
+export type EventHistoryGetRequest = {
   userId: string;
   sort?: EventSort;
   limit?: number;
   start?: number;
 };
 
-export type eventData = {
+export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
@@ -220,18 +220,18 @@ export type eventData = {
   recruitStatus: RecruitStatus;
 };
 
-export type eventHistoryGetResponse = {
+export type EventHistoryGetResponse = {
   sort: string;
   limit: number;
   start: number;
-  items: eventData[];
+  items: EventDataType[];
 };
 
-export type eventHistoryCountGetRequest = {
+export type EventHistoryCountGetRequest = {
   userId: string;
   sort?: EventSort;
 };
 
-export type eventHistoryCountGetResponse = {
+export type EventHistoryCountGetResponse = {
   count: number;
 };

@@ -2,18 +2,18 @@ import { http, HttpHandler, HttpResponse } from 'msw';
 
 import { baseURL } from '@/apis/axios';
 import {
-  adminApproveUserPostResponse,
-  adminEventHistoryCountGetResponse,
-  adminEventHistoryGetResponse,
-  adminEventListCountGetResponse,
-  adminEventListGetResponse,
-  adminEventTotalCountGetResponse,
-  adminGuideApplyGetRequest,
-  adminGuideApplyGetResponse,
-  adminUserListCountGetResponse,
-  adminUserListGetResponse,
-  adminViApplyGetRequest,
-  adminViApplyGetResponse,
+  AdminApproveUserPostResponse,
+  AdminEventHistoryCountGetResponse,
+  AdminEventHistoryGetResponse,
+  AdminEventListCountGetResponse,
+  AdminEventListGetResponse,
+  AdminEventTotalCountGetResponse,
+  AdminGuideApplyGetRequest,
+  AdminGuideApplyGetResponse,
+  AdminUserListCountGetResponse,
+  AdminUserListGetResponse,
+  AdminViApplyGetRequest,
+  AdminViApplyGetResponse,
   EventHistoryItemType,
   EventListItemType,
   UserListItemType,
@@ -225,7 +225,7 @@ const EVENT_HISTORY_DATA: EventHistoryItemType[] = [
   },
 ];
 
-const VI_APPLY_DATA: adminViApplyGetResponse = {
+const VI_APPLY_DATA: AdminViApplyGetResponse = {
   age: 20,
   detailRecord: '22분',
   guideName: '홍길동',
@@ -241,7 +241,7 @@ const VI_APPLY_DATA: adminViApplyGetResponse = {
   snsId: 'prind',
 };
 
-const GUIDE_APPLY_DATA: adminGuideApplyGetResponse = {
+const GUIDE_APPLY_DATA: AdminGuideApplyGetResponse = {
   age: 20,
   detailRecord: '33분',
   guidingPace: RunningGroup.A,
@@ -266,7 +266,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     Record<string, never>,
     Record<string, never>,
-    adminUserListGetResponse
+    AdminUserListGetResponse
   >(baseURL + '/admin/user-list', () => {
     return HttpResponse.json({
       limit: 5,
@@ -279,25 +279,25 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     Record<string, never>,
     Record<string, never>,
-    adminUserListCountGetResponse
+    AdminUserListCountGetResponse
   >(baseURL + '/admin/user-list/count', () => {
     return HttpResponse.json({ count: 30 });
   }),
 
   //adminViApplyGet
   http.get<
-    adminViApplyGetRequest,
+    AdminViApplyGetRequest,
     Record<string, never>,
-    adminViApplyGetResponse
+    AdminViApplyGetResponse
   >(baseURL + '/admin/apply/vi/:userId', () => {
     return HttpResponse.json(VI_APPLY_DATA);
   }),
 
   //adminGuideApplyGet
   http.get<
-    adminGuideApplyGetRequest,
+    AdminGuideApplyGetRequest,
     Record<string, never>,
-    adminGuideApplyGetResponse
+    AdminGuideApplyGetResponse
   >(baseURL + '/admin/apply/guide/:userId', () => {
     return HttpResponse.json(GUIDE_APPLY_DATA);
   }),
@@ -306,7 +306,7 @@ export const adminHandlers: HttpHandler[] = [
   http.post<
     { userId: string },
     { isApptove: boolean; recordDegree: RunningGroup },
-    adminApproveUserPostResponse
+    AdminApproveUserPostResponse
   >(baseURL + '/admin/approval-user/:userId', () => {
     return HttpResponse.json({ role: RoleEnum.User });
   }),
@@ -315,7 +315,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     Record<string, never>,
     Record<string, never>,
-    adminEventListGetResponse
+    AdminEventListGetResponse
   >(baseURL + '/admin/event-list', () => {
     return HttpResponse.json({ items: EVENT_LIST_DATA });
   }),
@@ -324,7 +324,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     Record<string, never>,
     Record<string, never>,
-    adminEventListCountGetResponse
+    AdminEventListCountGetResponse
   >(baseURL + '/admin/event-list/count', () => {
     return HttpResponse.json({ count: 30 });
   }),
@@ -333,7 +333,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     { userId: string },
     Record<string, never>,
-    adminEventHistoryGetResponse
+    AdminEventHistoryGetResponse
   >(baseURL + '/admin/:userId/event-list', () => {
     return HttpResponse.json({ items: EVENT_HISTORY_DATA });
   }),
@@ -342,7 +342,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     { userId: string },
     Record<string, never>,
-    adminEventHistoryCountGetResponse
+    AdminEventHistoryCountGetResponse
   >(baseURL + '/admin/:userId/event-list/count', () => {
     return HttpResponse.json({ count: 40 });
   }),
@@ -351,7 +351,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<
     { userId: string },
     Record<string, never>,
-    adminEventTotalCountGetResponse
+    AdminEventTotalCountGetResponse
   >(baseURL + '/admin/:userId/event-type/count', () => {
     return HttpResponse.json({ competition: 10, training: 10 });
   }),
