@@ -27,7 +27,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
-import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
 import { viSignupPostRequest } from '@/apis/types/auth';
@@ -41,7 +40,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import Header from './components/Header';
 
 const SignupVi: React.FC = () => {
   const [isChecked, setIsChecked] = React.useState(false);

@@ -27,7 +27,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
-import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
 import { guideSignupPostRequest } from '@/apis/types/auth';
