@@ -27,7 +27,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
-import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
 import { GuideSignupPostRequest } from '@/apis/types/auth';
@@ -283,7 +282,7 @@ const SignupGuide: React.FC = () => {
               <StyledInputLabel multiLine={false}>
                 <Typography
                   color={!isPasswordConfirm ? 'error' : 'default'}
-                  whiteSpace="break-spaces"
+                  whiteSpace="normal"
                   fontWeight={700}
                 >
                   <Badge color="error" variant="dot">
@@ -753,11 +752,13 @@ const SignupGuide: React.FC = () => {
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
       <form onSubmit={methods.handleSubmit(handleSubmit, hadleInvalid)}>
-        <Stack padding="5rem 0" gap="5rem">
+        <Stack padding="5rem 0" gap="3.75rem">
+          <Typography component="h1" fontSize="2rem" fontWeight={400}>
+            기본 정보 입력하기
+          </Typography>
           {renderUserInfo()}
           {renderRunningSpec()}
           <SignupTerms />
-          <TeamingCriteria />
           {renderButton()}
         </Stack>
       </form>
