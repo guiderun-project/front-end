@@ -1,5 +1,5 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
