@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
 import { RootState } from './store';
+import Login from './pages/Login';
 // import { useSuspenseQuery } from '@tanstack/react-query';
 // import authApi from './apis/requests/auth';
 
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
       {
         path: BROWSER_PATH.OAUTH,
         element: <Oauth />,
+      },
+      {
+        path: BROWSER_PATH.LOGIN,
+        element: (
+          <PageLayout>
+            <Login />
+          </PageLayout>
+        ),
       },
       {
         element: <ProtectedRoute />,

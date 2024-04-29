@@ -72,7 +72,7 @@ const Intro: React.FC = () => {
             alignItems="center"
             fontSize="0.875rem"
             fontWeight={500}
-            onClick={() => navigate('')}
+            onClick={() => navigate(BROWSER_PATH.LOGIN)}
             sx={{
               textDecoration: 'underline',
               textUnderlinePosition: 'under',
