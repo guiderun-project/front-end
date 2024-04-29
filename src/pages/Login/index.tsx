@@ -70,6 +70,7 @@ const Login: React.FC = () => {
               <TextField
                 required
                 fullWidth
+                autoComplete="off"
                 placeholder="아이디"
                 sx={{
                   height: '3.5rem',
