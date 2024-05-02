@@ -24,26 +24,26 @@ export type UserListItemType = {
   update_time: string; //수정 시간
 };
 
-export type adminUserListGetRequest = {
+export type AdminUserListGetRequest = {
   limit: number;
   start: number;
 };
 
-export type adminUserListGetResponse = {
+export type AdminUserListGetResponse = {
   limit: number;
   start: number;
   items: UserListItemType[];
 };
 
-export type adminUserListCountGetResponse = {
+export type AdminUserListCountGetResponse = {
   count: number;
 };
 
-export type adminViApplyGetRequest = {
+export type AdminViApplyGetRequest = {
   userId: string;
 };
 
-export type adminViApplyGetResponse = {
+export type AdminViApplyGetResponse = {
   //인적사항
   phoneNumber: string; //전화번호
   age: number; //나이
@@ -66,11 +66,11 @@ export type adminViApplyGetResponse = {
   portraitRights: boolean; //초상권 동의
 };
 
-export type adminGuideApplyGetRequest = {
+export type AdminGuideApplyGetRequest = {
   userId: string;
 };
 
-export type adminGuideApplyGetResponse = {
+export type AdminGuideApplyGetResponse = {
   //인적사항
   phoneNumber: string; //전화번호
   age: number; //나이
@@ -92,17 +92,17 @@ export type adminGuideApplyGetResponse = {
   portraitRights: boolean; //초상권 동의 *필수
 };
 
-export type adminApproveUserPostRequest = {
+export type AdminApproveUserPostRequest = {
   userId: string;
   isApprove: boolean;
   recordDegree: RunningGroup;
 };
 
-export type adminApproveUserPostResponse = {
+export type AdminApproveUserPostResponse = {
   role: RoleEnum;
 };
 
-export type adminEventListGetRequest = {
+export type AdminEventListGetRequest = {
   limit: number;
   start: number;
 };
@@ -123,25 +123,25 @@ export type EventListItemType = {
   update_time: string; // 2:15:09
 };
 
-export type adminEventListGetResponse = {
+export type AdminEventListGetResponse = {
   items: EventListItemType[];
 };
 
-export type adminEventListCountGetResponse = {
+export type AdminEventListCountGetResponse = {
   count: number;
 };
 
-export type adminEventHistoryCountGetRequest = {
+export type AdminEventHistoryCountGetRequest = {
   userId: string;
   year: number;
   month: number;
 };
 
-export type adminEventHistoryCountGetResponse = {
+export type AdminEventHistoryCountGetResponse = {
   count: number;
 };
 
-export type adminEventHistoryGetRequest = {
+export type AdminEventHistoryGetRequest = {
   userId: string;
   start: number;
   limit: number;
@@ -157,15 +157,15 @@ export type EventHistoryItemType = {
   recruitStatus: RecruitStatus;
 };
 
-export type adminEventHistoryGetResponse = {
+export type AdminEventHistoryGetResponse = {
   items: EventHistoryItemType[];
 };
 
-export type adminEventTotalCountGetRequest = {
+export type AdminEventTotalCountGetRequest = {
   userId: string;
 };
 
-export type adminEventTotalCountGetResponse = {
+export type AdminEventTotalCountGetResponse = {
   training: number;
   competition: number;
 };

@@ -1,5 +1,5 @@
 export const BROWSER_PATH = {
-  MAIN: '',
+  MAIN: '/',
   ADMIN: {
     MAIN: '/admin',
     USER: '/admin',
@@ -18,6 +18,7 @@ export const BROWSER_PATH = {
   SIGNUP: '/signup',
   MYPAGE: '/',
   INFO: '/info',
+  LOGIN: '/login',
 };
 
 // const API_PATH = {
