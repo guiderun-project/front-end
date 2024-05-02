@@ -7,6 +7,8 @@ import {
   CheckDuplicatedPostResponse,
   GuideSignupPostRequest,
   KakaoAuthPostResponse,
+  LoginPostRequest,
+  LoginPostResponse,
   SignupPostResponse,
   ViSignupPostRequest,
 } from '@/apis/types/auth';
@@ -61,4 +63,13 @@ export const authHandlers: HttpHandler[] = [
   >(baseURL + '/signup/duplicated', () => {
     return HttpResponse.json({ isUnique: true });
   }),
+
+  //loginPost
+  http.post<Record<string, never>, LoginPostRequest, LoginPostResponse>(
+    baseURL + '/login',
+    () => {
+      return HttpResponse.json({ accessToken: '123' });
+      // return HttpResponse.json({}, { status: 500 });
+    },
+  ),
 ];

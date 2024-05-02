@@ -84,3 +84,12 @@ export type CheckDuplicatedPostRequest = {
 export type CheckDuplicatedPostResponse = {
   isUnique: boolean;
 };
+
+export type LoginPostRequest = {
+  accountId: string;
+  password: string;
+};
+
+export type LoginPostResponse = {
+  accessToken: string;
+};
