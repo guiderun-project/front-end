@@ -15,12 +15,12 @@ import AdminUser from './pages/Admin/AdminUser';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Loading from './pages/Loading';
+import Login from './pages/Login';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
 import { RootState } from './store';
-import Login from './pages/Login';
 // import { useSuspenseQuery } from '@tanstack/react-query';
 // import authApi from './apis/requests/auth';
 

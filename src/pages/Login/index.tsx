@@ -48,6 +48,14 @@ const StyledSubmitButton = styled.button`
   &:hover {
     background-color: #e8e8e8;
   }
+
+  &:disabled {
+    cursor: default;
+    transition: none;
+    &:hover {
+      background-color: inherit;
+    }
+  }
 `;
 
 const StyledLoginForm = styled.form`
@@ -138,52 +146,61 @@ const Login: React.FC = () => {
             아이디로 로그인
           </Typography>
           <Stack gap="2.5rem">
-            <StyledLoginForm onSubmit={handleSubmit(handleLoginSubmit)}>
-              <Controller
-                name="accountId"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    autoFocus
-                    required
-                    fullWidth
-                    inputRef={inputRef}
-                    autoComplete="off"
-                    placeholder="아이디"
-                    sx={{
-                      height: '3.5rem',
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    required
-                    fullWidth
-                    type="password"
-                    placeholder="비밀번호"
-                    sx={{
-                      height: '3.5rem',
-                    }}
-                  />
-                )}
-              />
-              <StyledSubmitButton
-                disabled={isPending || isSuccess}
-                type="submit"
-              >
-                {isPending || isSuccess ? (
-                  <CircularProgress size={14} />
-                ) : (
-                  '로그인'
-                )}
-              </StyledSubmitButton>
-            </StyledLoginForm>
+            <Stack gap="0.25rem">
+              {formState.errors.root ? (
+                <Typography role="alert" color="error" fontSize="0.875rem">
+                  {formState.errors.root.message}
+                </Typography>
+              ) : null}
+              <StyledLoginForm onSubmit={handleSubmit(handleLoginSubmit)}>
+                <Controller
+                  name="accountId"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      autoFocus
+                      required
+                      fullWidth
+                      inputRef={inputRef}
+                      color={formState.errors.root ? 'error' : 'primary'}
+                      autoComplete="off"
+                      placeholder="아이디"
+                      sx={{
+                        height: '3.5rem',
+                      }}
+                    />
+                  )}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      required
+                      fullWidth
+                      color={formState.errors.root ? 'error' : 'primary'}
+                      type="password"
+                      placeholder="비밀번호"
+                      sx={{
+                        height: '3.5rem',
+                      }}
+                    />
+                  )}
+                />
+                <StyledSubmitButton
+                  disabled={isPending || isSuccess}
+                  type="submit"
+                >
+                  {isPending || isSuccess ? (
+                    <CircularProgress size={14} />
+                  ) : (
+                    '로그인'
+                  )}
+                </StyledSubmitButton>
+              </StyledLoginForm>
+            </Stack>
             <Stack
               component={Link}
               to="/"
