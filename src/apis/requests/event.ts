@@ -1,10 +1,10 @@
 import { axiosInstanceWithToken } from '../axios';
-import { EventPopupGetRequest, EventPopupGetResponse } from '../types/event';
+import { eventPopupGetRequest, eventPopupGetResponse } from '../types/event';
 
 class EventApi {
-  eventPopupGet = async ({ eventId }: EventPopupGetRequest) => {
+  eventPopupGet = async ({ eventId }: eventPopupGetRequest) => {
     return await axiosInstanceWithToken
-      .get<EventPopupGetResponse>(`/event/pop/${eventId}`)
+      .get<eventPopupGetResponse>(`/event/pop/${eventId}`)
       .then((res) => res.data);
   };
 }

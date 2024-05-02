@@ -16,8 +16,8 @@ import SpecViDetail from '../components/SpecViDetail';
 import SpecViEdit from '../components/SpecViEdit';
 
 import {
-  RunningSpecGuideGetResponse,
-  RunningSpecViGetResponse,
+  runningSpecGuideGetResponse,
+  runningSpecViGetResponse,
 } from '@/apis/types/info';
 import { RootState } from '@/store/index';
 import { DisabilityEnum, RunningGroup } from '@/types/group';
@@ -26,7 +26,7 @@ import { DisabilityEnum, RunningGroup } from '@/types/group';
 //
 //
 
-export const VI_SPEC_DATA: RunningSpecViGetResponse = {
+export const VI_SPEC_DATA: runningSpecViGetResponse = {
   isRunningExp: true,
   recordDegree: RunningGroup.A,
   detailRecord: '48분 50초',
@@ -37,7 +37,7 @@ export const VI_SPEC_DATA: RunningSpecViGetResponse = {
   hopePrefs: '감사합니다~',
 };
 
-export const GUIDE_SPEC_DATA: RunningSpecGuideGetResponse = {
+export const GUIDE_SPEC_DATA: runningSpecGuideGetResponse = {
   recordDegree: RunningGroup.A,
   detailRecord: '42분 20초',
   isGuideExp: true,

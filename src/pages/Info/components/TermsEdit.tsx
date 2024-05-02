@@ -20,8 +20,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import {
-  PermissionGetResponse,
-  PermissionPatchRequest,
+  permissionGetResponse,
+  permissionPatchRequest,
 } from '@/apis/types/info';
 
 //
@@ -29,7 +29,7 @@ import {
 //
 
 interface TermsEditProps {
-  defaultValues: PermissionGetResponse;
+  defaultValues: permissionGetResponse;
 }
 
 //
@@ -52,7 +52,7 @@ const StyledInputLabel = styled(InputLabel)`
 const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
-  const { handleSubmit, control, setFocus } = useForm<PermissionPatchRequest>({
+  const { handleSubmit, control, setFocus } = useForm<permissionPatchRequest>({
     defaultValues,
   });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,7 +60,7 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   /**
    *
    */
-  const onSubmit = async (data: PermissionPatchRequest) => {
+  const onSubmit = async (data: permissionPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
       try {
         await infoApi.permissionPatch(data);

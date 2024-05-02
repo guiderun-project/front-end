@@ -25,7 +25,7 @@ import { useSearchParams } from 'react-router-dom';
 import { StyledInputLabel } from './InfoEdit';
 
 import infoApi from '@/apis/requests/info';
-import { RunningSpecViPatchRequest } from '@/apis/types/info';
+import { runningSpecViPatchRequest } from '@/apis/types/info';
 import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
@@ -42,7 +42,7 @@ const SpecViEdit: React.FC = () => {
   });
   const intl = useIntl();
   const { handleSubmit, control, setValue, watch, setFocus } =
-    useForm<RunningSpecViPatchRequest>({
+    useForm<runningSpecViPatchRequest>({
       defaultValues: data,
     });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +52,7 @@ const SpecViEdit: React.FC = () => {
   /**
    *
    */
-  const onSubmit = async (data: RunningSpecViPatchRequest) => {
+  const onSubmit = async (data: runningSpecViPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
       await infoApi.runningSpecViPatch(data);
       alert('저장되었습니다. ');
