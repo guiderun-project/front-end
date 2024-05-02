@@ -27,9 +27,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
+import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
-import { GuideSignupPostRequest } from '@/apis/types/auth';
+import { guideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -50,7 +51,7 @@ const SignupGuide: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<GuideSignupPostRequest>();
+  const methods = useForm<guideSignupPostRequest>();
 
   const isGuideExp = methods.watch('isGuideExp');
 
@@ -81,7 +82,7 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async (data: GuideSignupPostRequest) => {
+  const handleSubmit = async (data: guideSignupPostRequest) => {
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
@@ -112,9 +113,9 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const hadleInvalid = (errors: FieldErrors<GuideSignupPostRequest>) => {
+  const hadleInvalid = (errors: FieldErrors<guideSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<GuideSignupPostRequest>]?.message);
+      alert(errors[key as keyof FieldErrors<guideSignupPostRequest>]?.message);
     });
   };
 
@@ -282,7 +283,7 @@ const SignupGuide: React.FC = () => {
               <StyledInputLabel multiLine={false}>
                 <Typography
                   color={!isPasswordConfirm ? 'error' : 'default'}
-                  whiteSpace="normal"
+                  whiteSpace="break-spaces"
                   fontWeight={700}
                 >
                   <Badge color="error" variant="dot">
@@ -416,8 +417,7 @@ const SignupGuide: React.FC = () => {
               multiLine
               name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
-              label={intl.formatMessage({ id: 'signup.form.info.sns.label' })}
-              prefix={intl.formatMessage({ id: 'common.whelk' })}
+              label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
               openBox={
                 <Controller
@@ -752,13 +752,11 @@ const SignupGuide: React.FC = () => {
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
       <form onSubmit={methods.handleSubmit(handleSubmit, hadleInvalid)}>
-        <Stack padding="5rem 0" gap="3.75rem">
-          <Typography component="h1" fontSize="2rem" fontWeight={400}>
-            기본 정보 입력하기
-          </Typography>
+        <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}
           <SignupTerms />
+          <TeamingCriteria />
           {renderButton()}
         </Stack>
       </form>

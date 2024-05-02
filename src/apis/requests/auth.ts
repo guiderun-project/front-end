@@ -1,53 +1,44 @@
 import { axiosInstance, axiosInstanceWithToken } from '../axios';
 import {
-  AccessTokenGetResponse,
-  CheckDuplicatedPostRequest,
-  CheckDuplicatedPostResponse,
-  GuideSignupPostRequest,
-  KakaoAuthPostRequest,
-  KakaoAuthPostResponse,
-  LoginPostRequest,
-  LoginPostResponse,
-  SignupPostResponse,
-  ViSignupPostRequest,
+  accessTokenGetResponse,
+  checkDuplicatedPostRequest,
+  checkDuplicatedPostResponse,
+  guideSignupPostRequest,
+  kakaoAuthPostRequest,
+  kakaoAuthPostResponse,
+  signupPostResponse,
+  viSignupPostRequest,
 } from '../types/auth';
 
 class AuthApi {
-  kakaoAuthPost = async ({ code }: KakaoAuthPostRequest) => {
+  kakaoAuthPost = async ({ code }: kakaoAuthPostRequest) => {
     return await axiosInstance
-      .post<KakaoAuthPostResponse>(`/oauth/login/kakao?code=${code}`)
+      .post<kakaoAuthPostResponse>(`/oauth/login/kakao?code=${code}`)
       .then((res) => res.data);
   };
 
-  viSignupPost = async (signupData: ViSignupPostRequest) => {
+  viSignupPost = async (signupData: viSignupPostRequest) => {
     return await axiosInstanceWithToken
-      .post<SignupPostResponse>('/signup/vi', signupData)
+      .post<signupPostResponse>('/signup/vi', signupData)
       .then((res) => res.data);
   };
 
-  guideSignupPost = async (signupData: GuideSignupPostRequest) => {
+  guideSignupPost = async (signupData: guideSignupPostRequest) => {
     return await axiosInstanceWithToken
-      .post<SignupPostResponse>('/signup/guide', signupData)
+      .post<signupPostResponse>('/signup/guide', signupData)
       .then((res) => res.data);
   };
 
   accessTokenGet = async () => {
     return await axiosInstance
-      .get<AccessTokenGetResponse>('/oauth/login/reissue')
+      .get<accessTokenGetResponse>('/oauth/login/reissue')
       .then((res) => res.data.accessToken);
   };
 
-  checkDuplicatedPost = async (id: CheckDuplicatedPostRequest) => {
-    return axiosInstanceWithToken
-      .post<CheckDuplicatedPostResponse>('/signup/duplicated', id)
+  checkDuplicatedPost = async (id: checkDuplicatedPostRequest) =>
+    axiosInstanceWithToken
+      .post<checkDuplicatedPostResponse>('/signup/duplicated', id)
       .then((res) => res.data.isUnique);
-  };
-
-  loginPost = async (loginData: LoginPostRequest) => {
-    return axiosInstance
-      .post<LoginPostResponse>('/login', loginData)
-      .then((res) => res.data.accessToken);
-  };
 }
 
 const authApi = new AuthApi();

@@ -1,17 +1,17 @@
 import { GenderEnum, RoleEnum, RunningGroup } from '@/types/group';
 
-export type KakaoAuthPostRequest = {
+export type kakaoAuthPostRequest = {
   code: string;
 };
 
-export type KakaoAuthPostResponse = {
+export type kakaoAuthPostResponse = {
   accessToken: string;
   //false: new user
   //true: go to main
   isExist: boolean;
 };
 
-export type ViSignupPostRequest = {
+export type viSignupPostRequest = {
   //common section
   accountId: string;
   password: string;
@@ -37,7 +37,7 @@ export type ViSignupPostRequest = {
   portraitRights: boolean;
 };
 
-export type GuideSignupPostRequest = {
+export type guideSignupPostRequest = {
   //common section
   accountId: string;
   password: string;
@@ -67,29 +67,20 @@ export type GuideSignupPostRequest = {
   portraitRights: boolean;
 };
 
-export type SignupPostResponse = {
+export type signupPostResponse = {
   userId: string;
   accessToken: string;
   role: RoleEnum;
 };
 
-export type AccessTokenGetResponse = {
+export type accessTokenGetResponse = {
   accessToken: string;
 };
 
-export type CheckDuplicatedPostRequest = {
+export type checkDuplicatedPostRequest = {
   accountId: string;
 };
 
-export type CheckDuplicatedPostResponse = {
+export type checkDuplicatedPostResponse = {
   isUnique: boolean;
-};
-
-export type LoginPostRequest = {
-  accountId: string;
-  password: string;
-};
-
-export type LoginPostResponse = {
-  accessToken: string;
 };

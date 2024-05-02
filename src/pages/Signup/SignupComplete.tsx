@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
-import TeamingCriteria from './components/TeamingCriteria';
 
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
@@ -35,26 +34,23 @@ const SignupComplete: React.FC = () => {
       <Helmet>
         <title>회원가입 완료 - Guide run Project</title>
       </Helmet>
-      <Header>
-        <FormattedMessage id="signup.complete.title" />
-      </Header>
       <Stack
-        component="main"
         minHeight="100vh"
         justifyContent="space-around"
         alignItems="center"
         gap="2.5rem"
-        paddingBottom="3.4375rem"
       >
+        <Header>
+          <FormattedMessage id="signup.complete.title" />
+        </Header>
         <Typography
-          fontSize="2rem"
+          fontSize="2.5rem"
           fontWeight={400}
           textAlign="center"
           whiteSpace="break-spaces"
         >
           <FormattedMessage id="signup.complete.matching" />
         </Typography>
-        <TeamingCriteria />
         <Stack gap="1rem" width="100%" alignItems="center">
           <Button
             component={Link}

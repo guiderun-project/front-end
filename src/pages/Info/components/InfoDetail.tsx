@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 import { Badge, Box, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 
-import { PersonalInfoGetResponse } from '@/apis/types/info';
+import { personalInfoGetResponse } from '@/apis/types/info';
 import { DisabilityChip, GenderChip } from '@/components/shared';
 //
 //
 //
 
 interface InfoDetailProps {
-  data: PersonalInfoGetResponse;
+  data: personalInfoGetResponse;
 }
 
 //

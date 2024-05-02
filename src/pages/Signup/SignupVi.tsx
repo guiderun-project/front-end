@@ -27,9 +27,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
+import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
-import { ViSignupPostRequest } from '@/apis/types/auth';
+import { viSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -50,7 +51,7 @@ const SignupVi: React.FC = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<ViSignupPostRequest>();
+  const methods = useForm<viSignupPostRequest>();
 
   const isRunngingExp = methods.watch('isRunningExp');
 
@@ -78,7 +79,7 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async (data: ViSignupPostRequest) => {
+  const handleSubmit = async (data: viSignupPostRequest) => {
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.viSignupPost(data);
@@ -109,9 +110,9 @@ const SignupVi: React.FC = () => {
   /**
    *
    */
-  const handleInvalid = (errors: FieldErrors<ViSignupPostRequest>) => {
+  const handleInvalid = (errors: FieldErrors<viSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<ViSignupPostRequest>]?.message);
+      alert(errors[key as keyof FieldErrors<viSignupPostRequest>]?.message);
     });
   };
 
@@ -277,15 +278,15 @@ const SignupVi: React.FC = () => {
             {/* 비밀번호 확인 */}
             <Stack gap="0.5rem">
               <StyledInputLabel multiLine={false}>
-                <Badge color="error" variant="dot">
-                  <Typography
-                    color={!isPasswordConfirm ? 'error' : 'default'}
-                    whiteSpace="normal"
-                    fontWeight={700}
-                  >
+                <Typography
+                  color={!isPasswordConfirm ? 'error' : 'default'}
+                  whiteSpace="break-spaces"
+                  fontWeight={700}
+                >
+                  <Badge color="error" variant="dot">
                     <FormattedMessage id="signup.form.info.password.confirm" />
-                  </Typography>
-                </Badge>
+                  </Badge>
+                </Typography>
                 <TextField
                   fullWidth
                   size="small"
@@ -412,8 +413,7 @@ const SignupVi: React.FC = () => {
               multiLine
               name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
-              label={intl.formatMessage({ id: 'signup.form.info.sns.label' })}
-              prefix={intl.formatMessage({ id: 'common.whelk' })}
+              label={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
               openBox={
                 <Controller
@@ -671,13 +671,11 @@ const SignupVi: React.FC = () => {
         <title>회원 정보 입력(VI) - Guide run project</title>
       </Helmet>
       <form onSubmit={methods.handleSubmit(handleSubmit, handleInvalid)}>
-        <Stack padding="5rem 0" gap="3.75rem">
-          <Typography component="h1" fontSize="2rem" fontWeight={400}>
-            기본 정보 입력하기
-          </Typography>
+        <Stack padding="5rem 0" gap="5rem">
           {renderUserInfo()}
           {renderRunningSpec()}
           <SignupTerms />
+          <TeamingCriteria />
           {renderButton()}
         </Stack>
       </form>

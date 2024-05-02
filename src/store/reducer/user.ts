@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { UserInfoGetResponse } from '@/apis/types/info';
+import { userInfoGetResponse } from '@/apis/types/info';
 import {
   DisabilityEnum,
   GenderEnum,
@@ -8,7 +8,7 @@ import {
   RunningGroup,
 } from '@/types/group';
 
-const initialState: UserInfoGetResponse = {
+const initialState: userInfoGetResponse = {
   userId: '',
   gender: GenderEnum.M,
   age: 0,
@@ -24,13 +24,13 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserInfo: (state, action: PayloadAction<UserInfoGetResponse>) => {
+    setUserInfo: (state, action: PayloadAction<userInfoGetResponse>) => {
       state = action.payload;
       return state;
     },
     updateInfo: (
       state,
-      action: PayloadAction<Partial<UserInfoGetResponse>>,
+      action: PayloadAction<Partial<userInfoGetResponse>>,
     ) => {
       state = {
         ...state,

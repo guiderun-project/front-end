@@ -15,7 +15,6 @@ import AdminUser from './pages/Admin/AdminUser';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Loading from './pages/Loading';
-import Login from './pages/Login';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
@@ -80,14 +79,6 @@ const router = createBrowserRouter([
       {
         path: BROWSER_PATH.OAUTH,
         element: <Oauth />,
-      },
-      {
-        path: BROWSER_PATH.LOGIN,
-        element: (
-          <PageLayout>
-            <Login />
-          </PageLayout>
-        ),
       },
       {
         element: <ProtectedRoute />,

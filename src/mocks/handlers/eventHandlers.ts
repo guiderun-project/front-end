@@ -1,7 +1,7 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
 import { baseURL } from '@/apis/axios';
-import { EventPopupGetResponse } from '@/apis/types/event';
+import { eventPopupGetResponse } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 
 //You can add HTTP handler by msw DOCS
@@ -9,7 +9,7 @@ import { EventType, RecruitStatus } from '@/types/group';
 
 export const eventHandlers: HttpHandler[] = [
   //eventPopupGet
-  http.get<{ eventId: string }, Record<string, never>, EventPopupGetResponse>(
+  http.get<{ eventId: string }, Record<string, never>, eventPopupGetResponse>(
     baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
