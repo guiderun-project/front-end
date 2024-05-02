@@ -2,19 +2,17 @@ import { http, HttpHandler, HttpResponse } from 'msw';
 
 import { baseURL } from '@/apis/axios';
 import {
-  AccessTokenGetResponse,
-  CheckDuplicatedPostRequest,
-  CheckDuplicatedPostResponse,
-  GuideSignupPostRequest,
-  KakaoAuthPostResponse,
-  LoginPostRequest,
-  LoginPostResponse,
-  SignupPostResponse,
-  ViSignupPostRequest,
+  accessTokenGetResponse,
+  checkDuplicatedPostRequest,
+  checkDuplicatedPostResponse,
+  guideSignupPostRequest,
+  kakaoAuthPostResponse,
+  signupPostResponse,
+  viSignupPostRequest,
 } from '@/apis/types/auth';
 import { RoleEnum } from '@/types/group';
 
-const SIGN_UP_DATA: SignupPostResponse = {
+const SIGN_UP_DATA: signupPostResponse = {
   accessToken: '123',
   role: RoleEnum.Admin,
   userId: '123',
@@ -25,13 +23,13 @@ export const authHandlers: HttpHandler[] = [
   http.post<
     Record<string, never>,
     Record<string, never>,
-    KakaoAuthPostResponse
+    kakaoAuthPostResponse
   >(baseURL + '/oauth/login/kakao', () => {
     return HttpResponse.json({ accessToken: '123', isExist: true });
   }),
 
   //viSignupPost
-  http.post<Record<string, never>, ViSignupPostRequest, SignupPostResponse>(
+  http.post<Record<string, never>, viSignupPostRequest, signupPostResponse>(
     baseURL + '/signup/vi',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
@@ -39,7 +37,7 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   //guideSignupPost
-  http.post<Record<string, never>, GuideSignupPostRequest, SignupPostResponse>(
+  http.post<Record<string, never>, guideSignupPostRequest, signupPostResponse>(
     baseURL + '/signup/guide',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
@@ -50,7 +48,7 @@ export const authHandlers: HttpHandler[] = [
   http.get<
     Record<string, never>,
     Record<string, never>,
-    AccessTokenGetResponse
+    accessTokenGetResponse
   >(baseURL + '/oauth/login/reissue', () => {
     return HttpResponse.json({ accessToken: '123' });
   }),
@@ -58,18 +56,9 @@ export const authHandlers: HttpHandler[] = [
   //checkDuplicatedPost
   http.post<
     Record<string, never>,
-    CheckDuplicatedPostRequest,
-    CheckDuplicatedPostResponse
+    checkDuplicatedPostRequest,
+    checkDuplicatedPostResponse
   >(baseURL + '/signup/duplicated', () => {
     return HttpResponse.json({ isUnique: true });
   }),
-
-  //loginPost
-  http.post<Record<string, never>, LoginPostRequest, LoginPostResponse>(
-    baseURL + '/login',
-    () => {
-      return HttpResponse.json({ accessToken: '123' });
-      // return HttpResponse.json({}, { status: 500 });
-    },
-  ),
 ];

@@ -1,4 +1,3 @@
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -17,81 +16,59 @@ const Intro: React.FC = () => {
   //
 
   return (
-    <>
+    <Stack
+      minHeight="100vh"
+      height="100%"
+      justifyContent="center"
+      alignItems="center"
+      gap="8.75rem"
+    >
       <Helmet>
         <title>시작하기 - Guide run Project</title>
       </Helmet>
-      <Stack
-        boxSizing="border-box"
-        minHeight="100vh"
-        height="100%"
-        justifyContent="space-between"
-        alignItems="center"
-        paddingTop="13.875rem"
-        paddingBottom="5.125rem"
-      >
-        <Stack gap="2.5rem" alignItems="center">
-          <Typography
-            component="h1"
-            variant="h1"
-            fontSize="2.5rem"
-            fontWeight="500"
-          >
-            <FormattedMessage id="intro.greeting" />
-          </Typography>
-          <Stack
-            aria-label={intl.formatMessage({
-              id: 'intro.signup.label',
-            })}
-            gap="1.5rem"
-            alignItems="center"
-          >
-            <Typography variant="subtitle1" fontWeight="700">
-              <FormattedMessage id="intro.signup" />
-            </Typography>
-            <Link
-              aria-label={intl.formatMessage({
-                id: 'intro.signup.kakao',
-              })}
-              to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
-            >
-              <Box
-                component="img"
-                maxWidth="18.4375rem"
-                src={kakaoImg}
-                alt={intl.formatMessage({
-                  id: 'intro.signup.kakao.alt',
-                })}
-              />
-            </Link>
-          </Stack>
-          <Typography
-            role="link"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            fontSize="0.875rem"
-            fontWeight={500}
-            onClick={() => navigate(BROWSER_PATH.LOGIN)}
-            sx={{
-              textDecoration: 'underline',
-              textUnderlinePosition: 'under',
-              cursor: 'pointer',
-            }}
-          >
-            ID/PW로 로그인 <ChevronRightIcon aria-hidden fontSize="small" />
-          </Typography>
-        </Stack>
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          onClick={() => navigate(BROWSER_PATH.MAIN)}
+      <Stack gap="2.5rem" alignItems="center">
+        <Typography variant="h1" fontSize="2.5rem" fontWeight="500">
+          <FormattedMessage id="intro.greeting" />
+        </Typography>
+        <Stack
+          aria-label={intl.formatMessage({
+            id: 'intro.signup.label',
+          })}
+          gap="1.5rem"
+          alignItems="center"
         >
-          <FormattedMessage id="intro.main.button" />
-        </Button>
+          <Typography variant="subtitle1" fontWeight="700">
+            <FormattedMessage id="intro.signup" />
+          </Typography>
+          <Link
+            aria-label={intl.formatMessage({
+              id: 'intro.signup.kakao',
+            })}
+            to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
+          >
+            <Box
+              component="img"
+              maxWidth="18.4375rem"
+              src={kakaoImg}
+              alt={intl.formatMessage({
+                id: 'intro.signup.kakao.alt',
+              })}
+            />
+          </Link>
+        </Stack>
       </Stack>
-    </>
+      <Button
+        variant="contained"
+        size="large"
+        fullWidth
+        onClick={() => navigate(BROWSER_PATH.MAIN)}
+        sx={{
+          maxWidth: '19.6875rem',
+        }}
+      >
+        <FormattedMessage id="intro.main.button" />
+      </Button>
+    </Stack>
   );
 };
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { DisabilityChip } from '../DisabilityChip';
 import GropuChip from '../GroupChip/GroupChip';
 
-import { PartnerDataType } from '@/apis/types/info';
+import { partnerData } from '@/apis/types/info';
 import { BROWSER_PATH } from '@/constants/path';
 
 //
@@ -13,7 +13,7 @@ import { BROWSER_PATH } from '@/constants/path';
 //
 
 interface UserBoxProps {
-  partnerData: PartnerDataType;
+  partnerData: partnerData;
 }
 
 //

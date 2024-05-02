@@ -1,7 +1,7 @@
 import { EventType, RecruitStatus } from '@/types/group';
 import { EventKind, EventSort } from '@/types/sort';
 
-export type EventPostRequest = {
+export type eventPostRequest = {
   recruitStartDate: string;
   recruitEndDate: string;
   name: string;
@@ -14,14 +14,14 @@ export type EventPostRequest = {
   content: string;
 };
 
-export type EventPostResponse = {
+export type eventPostResponse = {
   eventId: number;
   isApprove: boolean;
 };
 
-export type EventPatchRequest = {
+export type eventPatchRequest = {
   eventId: number;
-  EventPatchRequestBody: {
+  eventPatchRequestBody: {
     recruitStartDate: string;
     recruitEndDate: string;
     name: string;
@@ -35,20 +35,20 @@ export type EventPatchRequest = {
   };
 };
 
-export type EventPatchResponse = {
+export type eventPatchResponse = {
   eventId: number;
   isApprove: boolean;
 };
 
-export type EventDeleteRequest = {
+export type eventDeleteRequest = {
   eventId: number;
 };
 
-export type EventGetRequest = {
+export type eventGetRequest = {
   eventId: number;
 };
 
-export type EventGetResponse = {
+export type eventGetResponse = {
   eventId: number; //이벤트 아이디
   type: EventType; //대회인지 훈련인지
   hasPartner: boolean; //파트너가 있는지 (1차 기준 false)
@@ -68,11 +68,11 @@ export type EventGetResponse = {
   place: string; //달리는 장소
 };
 
-export type EventPopupGetRequest = {
+export type eventPopupGetRequest = {
   eventId: number;
 };
 
-export type EventPopupGetResponse = {
+export type eventPopupGetResponse = {
   eventId: number; //이벤트 아이디
   type: EventType; //대회인지 훈련인지
   name: string; //제목
@@ -87,7 +87,7 @@ export type EventPopupGetResponse = {
   updatedAt: string; //수정일
 };
 
-export type MyEventGetRequest = {
+export type myEventGetRequest = {
   sort: 'OPEN' | 'END';
   year: number;
   month: number;
@@ -102,11 +102,11 @@ export type MyEventItemType = {
   recruitStatus: EventSort.Open | EventSort.End;
 };
 
-export type MyEventGetResponse = {
+export type myEventGetResponse = {
   items: MyEventItemType[];
 };
 
-export type UpcomingEventGetRequest = {
+export type upcomingEventGetRequest = {
   sort: EventSort.Open | EventSort.Upcoming;
 };
 
@@ -119,11 +119,11 @@ export type UpcomingEventItemType = {
   recuitStatus: RecruitStatus; //이벤트 모집 상태
 };
 
-export type UpcomingEventGetResponse = {
+export type upcomingEventGetResponse = {
   items: UpcomingEventItemType[];
 };
 
-export type AllEventGetRequest = {
+export type allEventGetRequest = {
   limit: number;
   start: number;
   sort: EventSort;
@@ -139,21 +139,21 @@ export type AllEventItemType = {
   recruitStatus: RecruitStatus;
 };
 
-export type AllEventGetResponse = {
+export type allEventGetResponse = {
   items: AllEventItemType[];
 };
 
-export type AllEventCountGetRequest = {
+export type allEventCountGetRequest = {
   sort: EventSort;
   type: EventType;
   kind: EventKind;
 };
 
-export type AllEventCountGetResponse = {
+export type allEventCountGetResponse = {
   count: number;
 };
 
-export type SearchEventGetRequest = {
+export type searchEventGetRequest = {
   title: string;
 };
 
@@ -165,11 +165,11 @@ export type SearchEventItemType = {
   recruitStatus: RecruitStatus;
 };
 
-export type SearchEventGetResponse = {
+export type searchEventGetResponse = {
   items: SearchEventItemType[];
 };
 
-export type CalendarGetRequest = {
+export type calendarGetRequest = {
   year: number;
   month: number;
 };
@@ -180,11 +180,11 @@ export type CalendarResultType = {
   training: boolean;
 };
 
-export type CalendarGetResponse = {
+export type calendarGetResponse = {
   result: CalendarResultType[];
 };
 
-export type DetailCalendarGetRequest = {
+export type detailCalendarGetRequest = {
   year: number;
   month: number;
   day: number;
@@ -192,6 +192,6 @@ export type DetailCalendarGetRequest = {
 
 export type DetailCalendarItemType = SearchEventItemType;
 
-export type DetailCalendarGetResponse = {
+export type detailCalendarGetResponse = {
   items: DetailCalendarItemType[];
 };
