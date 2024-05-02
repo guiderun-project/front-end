@@ -1,5 +1,5 @@
 export const BROWSER_PATH = {
-  MAIN: '',
+  MAIN: '/',
   ADMIN: {
     MAIN: '/admin',
     USER: '/admin',

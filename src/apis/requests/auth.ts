@@ -6,6 +6,8 @@ import {
   GuideSignupPostRequest,
   KakaoAuthPostRequest,
   KakaoAuthPostResponse,
+  LoginPostRequest,
+  LoginPostResponse,
   SignupPostResponse,
   ViSignupPostRequest,
 } from '../types/auth';
@@ -35,10 +37,17 @@ class AuthApi {
       .then((res) => res.data.accessToken);
   };
 
-  checkDuplicatedPost = async (id: CheckDuplicatedPostRequest) =>
-    axiosInstanceWithToken
+  checkDuplicatedPost = async (id: CheckDuplicatedPostRequest) => {
+    return axiosInstanceWithToken
       .post<CheckDuplicatedPostResponse>('/signup/duplicated', id)
       .then((res) => res.data.isUnique);
+  };
+
+  loginPost = async (loginData: LoginPostRequest) => {
+    return axiosInstance
+      .post<LoginPostResponse>('/login', loginData)
+      .then((res) => res.data.accessToken);
+  };
 }
 
 const authApi = new AuthApi();

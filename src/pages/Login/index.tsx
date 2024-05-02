@@ -1,10 +1,29 @@
-import styled from '@emotion/styled';
-import { Stack, TextField, Typography } from '@mui/material';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Helmet } from 'react-helmet-async';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
+import styled from '@emotion/styled';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {
+  Button,
+  CircularProgress,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
+import { Helmet } from 'react-helmet-async';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
+import authApi from '@/apis/requests/auth';
+import infoApi from '@/apis/requests/info';
+import { LoginPostRequest } from '@/apis/types/auth';
+import { ErrorType } from '@/apis/types/error';
+import { BROWSER_PATH } from '@/constants/path';
+import { setAccessToken } from '@/store/reducer/auth';
+import { setUserInfo } from '@/store/reducer/user';
 //
 //
 //
@@ -44,6 +63,61 @@ const StyledLoginForm = styled.form`
 //
 
 const Login: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const { control, formState, handleSubmit, setError } =
+    useForm<LoginPostRequest>({
+      defaultValues: {
+        accountId: '',
+        password: '',
+      },
+    });
+  const { isPending, isSuccess, mutate } = useMutation({
+    mutationKey: ['loginPost'],
+    mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
+    onSuccess: async (accessToken) => {
+      dispatch(setAccessToken(accessToken));
+      infoApi
+        .userInfoGet()
+        .then((res) => {
+          dispatch(setUserInfo(res));
+          navigate(BROWSER_PATH.MAIN);
+        })
+        .catch((err) => {
+          if (isAxiosError<ErrorType>(err))
+            throw Error(err.response?.data.message);
+        });
+    },
+    onError: (error) => {
+      if (error.response) {
+        const errorCode = error.response.data.errorCode;
+        if (errorCode === '0001' || errorCode === '0002') {
+          setError('root', {
+            message: '아이디 혹은 비밀번호가 일치하지 않습니다.',
+          });
+        } else {
+          alert('에러가 발생했습니다. 다시 시도해주세요.');
+        }
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
+    },
+  });
+
+  /**
+   *
+   */
+  const handleLoginSubmit: SubmitHandler<LoginPostRequest> = (loginData) => {
+    mutate(loginData);
+  };
+
+  //
+  //
+  //
+
   return (
     <>
       <Helmet>
@@ -51,41 +125,64 @@ const Login: React.FC = () => {
       </Helmet>
       <Stack
         boxSizing="border-box"
+        minHeight="100vh"
+        height="100%"
         paddingTop="10.375rem"
         paddingBottom="5.125rem"
         alignItems="center"
         justifyContent="space-between"
+        gap="7.875rem"
       >
         <Stack alignItems="center" gap="3.75rem">
           <Typography component="h1" fontSize="2.5rem" fontWeight={400}>
             아이디로 로그인
           </Typography>
           <Stack gap="2.5rem">
-            <StyledLoginForm
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert('제출');
-              }}
-            >
-              <TextField
-                required
-                fullWidth
-                autoComplete="off"
-                placeholder="아이디"
-                sx={{
-                  height: '3.5rem',
-                }}
+            <StyledLoginForm onSubmit={handleSubmit(handleLoginSubmit)}>
+              <Controller
+                name="accountId"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    autoFocus
+                    required
+                    fullWidth
+                    inputRef={inputRef}
+                    autoComplete="off"
+                    placeholder="아이디"
+                    sx={{
+                      height: '3.5rem',
+                    }}
+                  />
+                )}
               />
-              <TextField
-                required
-                fullWidth
-                type="password"
-                placeholder="비밀번호"
-                sx={{
-                  height: '3.5rem',
-                }}
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    fullWidth
+                    type="password"
+                    placeholder="비밀번호"
+                    sx={{
+                      height: '3.5rem',
+                    }}
+                  />
+                )}
               />
-              <StyledSubmitButton type="submit">로그인</StyledSubmitButton>
+              <StyledSubmitButton
+                disabled={isPending || isSuccess}
+                type="submit"
+              >
+                {isPending || isSuccess ? (
+                  <CircularProgress size={14} />
+                ) : (
+                  '로그인'
+                )}
+              </StyledSubmitButton>
             </StyledLoginForm>
             <Stack
               component={Link}
@@ -111,6 +208,14 @@ const Login: React.FC = () => {
             </Stack>
           </Stack>
         </Stack>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={() => navigate(BROWSER_PATH.MAIN)}
+        >
+          <FormattedMessage id="intro.main.button" />
+        </Button>
       </Stack>
     </>
   );
