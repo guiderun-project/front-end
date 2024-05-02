@@ -203,7 +203,7 @@ const Login: React.FC = () => {
             </Stack>
             <Stack
               component={Link}
-              to="/"
+              to={BROWSER_PATH.FIND_ID_PASSWORD}
               direction="row"
               gap="0.25rem"
               alignItems="center"
