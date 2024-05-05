@@ -29,16 +29,27 @@ const InputBox: React.FC<InputBoxProps> = ({
     <Stack
       direction={singleline ? 'row' : 'column'}
       gap={singleline ? '0.5rem' : '0.25rem'}
+      alignItems={singleline ? 'center' : 'flex-start'}
     >
-      <Typography fontWeight={700} component="label" htmlFor={id}>
+      <Typography
+        whiteSpace="nowrap"
+        fontWeight={700}
+        component="label"
+        htmlFor={id}
+      >
         {label}
       </Typography>
-      <Stack direction="row" gap="0.25rem" alignItems="center">
+      <Stack width="100%" direction="row" gap="0.25rem" alignItems="center">
         <TextField
           fullWidth
           variant="standard"
           id={id}
           placeholder={placeholder}
+          InputProps={{
+            style: {
+              padding: '0.25rem 0.75rem',
+            },
+          }}
         />
         {!isHidenSubmitButton && (
           <Chip
