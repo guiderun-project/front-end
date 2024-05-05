@@ -93,3 +93,34 @@ export type LoginPostRequest = {
 export type LoginPostResponse = {
   accessToken: string;
 };
+
+export type GetCertificationTokenPasswordPostRequest = {
+  accountId: string;
+  phoneNum: string;
+};
+
+export type CheckCertificationTokenPostRequest = {
+  number: string;
+};
+
+export type CheckCertificationTokenPostResponse = {
+  token: string;
+};
+
+export type GetCertificationTokenIdPostRequest = {
+  phoneNum: string;
+};
+
+export type RenewalPasswordPatchRequest = {
+  token: string;
+  newPassword: string;
+};
+
+export type GetUserIdPostRequest = {
+  token: string;
+};
+
+export type GetUserIdPostResponse = {
+  accountId: string;
+  createdAt: string;
+};
