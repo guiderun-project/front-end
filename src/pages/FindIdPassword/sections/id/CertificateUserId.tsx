@@ -12,6 +12,7 @@ const CertificateUserId: React.FC = () => {
     <Stack gap="1.5rem">
       <form onSubmit={(e) => e.preventDefault}>
         <InputBox
+          autoFocus
           id="phoneNumber"
           label="휴대전화번호"
           placeholder={`휴대 전화번호 입력 ('-'제외)`}

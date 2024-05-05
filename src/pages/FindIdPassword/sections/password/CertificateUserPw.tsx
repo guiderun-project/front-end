@@ -7,6 +7,7 @@ const CertificateUserPw: React.FC = () => {
     <Stack gap="1.5rem">
       <Stack component="form" gap="1.5rem">
         <InputBox
+          autoFocus
           isHidenSubmitButton
           singleline
           id="id"

@@ -6,6 +6,7 @@ interface InputBoxProps {
   id: string;
   label: string;
   placeholder: string;
+  autoFocus?: boolean;
   submitButtonLabel?: string;
   singleline?: boolean;
   isHidenSubmitButton?: boolean;
@@ -15,6 +16,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   id,
   label,
   placeholder,
+  autoFocus = false,
   submitButtonLabel = '제출',
   singleline = false,
   isHidenSubmitButton = false,
@@ -42,6 +44,7 @@ const InputBox: React.FC<InputBoxProps> = ({
       <Stack width="100%" direction="row" gap="0.25rem" alignItems="center">
         <TextField
           fullWidth
+          autoFocus={autoFocus}
           variant="standard"
           id={id}
           placeholder={placeholder}
