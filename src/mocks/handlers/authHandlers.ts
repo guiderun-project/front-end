@@ -3,12 +3,19 @@ import { http, HttpHandler, HttpResponse } from 'msw';
 import { baseURL } from '@/apis/axios';
 import {
   AccessTokenGetResponse,
+  CheckCertificationTokenPostRequest,
+  CheckCertificationTokenPostResponse,
   CheckDuplicatedPostRequest,
   CheckDuplicatedPostResponse,
+  GetCertificationTokenIdPostRequest,
+  GetCertificationTokenPasswordPostRequest,
+  GetUserIdPostRequest,
+  GetUserIdPostResponse,
   GuideSignupPostRequest,
   KakaoAuthPostResponse,
   LoginPostRequest,
   LoginPostResponse,
+  RenewalPasswordPatchRequest,
   SignupPostResponse,
   ViSignupPostRequest,
 } from '@/apis/types/auth';
@@ -70,6 +77,50 @@ export const authHandlers: HttpHandler[] = [
     () => {
       return HttpResponse.json({ accessToken: '123' });
       // return HttpResponse.json({}, { status: 500 });
+    },
+  ),
+
+  // getCertificationTokenPasswordPost
+  http.post<Record<string, never>, GetCertificationTokenPasswordPostRequest>(
+    baseURL + '/sms/password',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  // getCertificationTokenIdPost
+  http.post<Record<string, never>, GetCertificationTokenIdPostRequest>(
+    baseURL + '/sms/accountId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  //checkCertificationTokenPost
+  http.post<
+    Record<string, never>,
+    CheckCertificationTokenPostRequest,
+    CheckCertificationTokenPostResponse
+  >(baseURL + '/sms/token', () => {
+    return HttpResponse.json({ token: 'token' });
+  }),
+
+  // renewalPasswordPatch
+  http.patch<Record<string, never>, RenewalPasswordPatchRequest>(
+    baseURL + '/new-password',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  //getUserIdPost
+  http.post<Record<string, never>, GetUserIdPostRequest, GetUserIdPostResponse>(
+    baseURL + '/accountId',
+    () => {
+      return HttpResponse.json({
+        accountId: 'guide_run_project',
+        createdAt: '0000-00-00',
+      });
     },
   ),
 ];
