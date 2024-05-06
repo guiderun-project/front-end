@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { Stack, Tab, Tabs, Typography } from '@mui/material';
+
+import { useSearchParams } from 'react-router-dom';
 
 import FindIdSection from './sections/FindIdSection';
 import FindPwSection from './sections/FindPwSection';
@@ -11,7 +11,9 @@ export enum FindTabEnum {
 }
 
 const FindIdPassword: React.FC = () => {
-  const [selectedTab, setSelectedTab] = React.useState(FindTabEnum.Id);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const selectedTab = searchParams.get('type') ?? FindTabEnum.Id;
 
   /**
    *
@@ -47,7 +49,11 @@ const FindIdPassword: React.FC = () => {
           variant="fullWidth"
           centered
           value={selectedTab}
-          onChange={(_, newValue) => setSelectedTab(newValue)}
+          onChange={(_, newValue) =>
+            setSearchParams({
+              type: newValue,
+            })
+          }
         >
           <Tab
             id="tab-find-id"
