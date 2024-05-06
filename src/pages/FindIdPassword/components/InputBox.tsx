@@ -21,7 +21,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   singleline = false,
   isHidenSubmitButton = false,
 }) => {
-  const { control } = useFormContext();
+  const { control, formState } = useFormContext();
 
   //
   //
@@ -50,6 +50,7 @@ const InputBox: React.FC<InputBoxProps> = ({
               {...field}
               fullWidth
               required
+              disabled={formState.isSubmitting || formState.isSubmitSuccessful}
               autoFocus={autoFocus}
               variant="standard"
               id={id}
@@ -66,6 +67,7 @@ const InputBox: React.FC<InputBoxProps> = ({
         {!isHidenSubmitButton && (
           <Chip
             clickable
+            disabled={formState.isSubmitting || formState.isSubmitSuccessful}
             component="button"
             type="submit"
             variant="outlined"

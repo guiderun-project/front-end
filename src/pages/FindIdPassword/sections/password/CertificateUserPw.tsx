@@ -22,8 +22,9 @@ const CertificateUserPw: React.FC = () => {
       alert('인증번호가 전송되었습니다.');
     },
     onError: (e) => {
+      getTokenMethod.reset(undefined, { keepValues: true });
       if (e.response) {
-        const code = e.response.data.errorCode;
+        const code = e.response.data?.errorCode ?? '';
         if (code === '1008') {
           alert('아이디가 존재하지 않습니다.');
           return;
@@ -45,6 +46,7 @@ const CertificateUserPw: React.FC = () => {
       alert('인증되었습니다. ');
     },
     onError: (e) => {
+      checkTokenMethod.reset(undefined, { keepValues: true });
       if (e.response) {
         const code = e.response.data.errorCode;
         if (code === '1007') {

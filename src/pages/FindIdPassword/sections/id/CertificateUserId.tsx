@@ -23,14 +23,15 @@ const CertificateUserId: React.FC = () => {
       alert('인증번호가 전송되었습니다.');
     },
     onError: (e) => {
+      getTokenMethod.reset(undefined, { keepValues: true });
       if (e.response) {
-        const code = e.response.data.errorCode;
+        const code = e.response.data?.errorCode ?? '';
         if (code === '1009') {
           alert('전화번호가 존재하지 않습니다.');
           return;
         }
       }
-      alert('알 수 없는 에러가 발생했습니다. 다시 시도해주세요.');
+      alert('에러가 발생했습니다. 다시 시도해주세요.');
     },
   });
 
@@ -42,8 +43,9 @@ const CertificateUserId: React.FC = () => {
       alert('인증되었습니다. ');
     },
     onError: (e) => {
+      checkTokenMethod.reset(undefined, { keepValues: true });
       if (e.response) {
-        const code = e.response.data.errorCode;
+        const code = e.response.data?.errorCode ?? '';
         if (code === '1007') {
           alert('다른 인증번호를 입력했습니다. 다시 입력해주세요.');
           return;
