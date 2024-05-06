@@ -19,6 +19,7 @@ export const BROWSER_PATH = {
   MYPAGE: '/',
   INFO: '/info',
   LOGIN: '/login',
+  FIND_ID_PASSWORD: '/find-id-password',
 };
 
 // const API_PATH = {

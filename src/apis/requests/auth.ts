@@ -1,13 +1,20 @@
 import { axiosInstance, axiosInstanceWithToken } from '../axios';
 import {
   AccessTokenGetResponse,
+  CheckCertificationTokenPostRequest,
+  CheckCertificationTokenPostResponse,
   CheckDuplicatedPostRequest,
   CheckDuplicatedPostResponse,
+  GetCertificationTokenIdPostRequest,
+  GetCertificationTokenPasswordPostRequest,
+  GetUserIdPostRequest,
+  GetUserIdPostResponse,
   GuideSignupPostRequest,
   KakaoAuthPostRequest,
   KakaoAuthPostResponse,
   LoginPostRequest,
   LoginPostResponse,
+  RenewalPasswordPatchRequest,
   SignupPostResponse,
   ViSignupPostRequest,
 } from '../types/auth';
@@ -47,6 +54,42 @@ class AuthApi {
     return axiosInstance
       .post<LoginPostResponse>('/login', loginData)
       .then((res) => res.data.accessToken);
+  };
+
+  /**
+   *
+   * @param data 아이디, 휴대전화 번호
+   * @returns 성공여부
+   */
+
+  getCertificationTokenPasswordPost = async (
+    data: GetCertificationTokenPasswordPostRequest,
+  ) => {
+    return axiosInstance.post('/sms/password', data);
+  };
+
+  getCertificationTokenIdPost = async (
+    data: GetCertificationTokenIdPostRequest,
+  ) => {
+    return axiosInstance.post('/sms/accountId', data);
+  };
+
+  checkCertificationTokenPost = async (
+    token: CheckCertificationTokenPostRequest,
+  ) => {
+    return axiosInstance
+      .post<CheckCertificationTokenPostResponse>('/sms/token', token)
+      .then((res) => res.data.token);
+  };
+
+  renewalPasswordPatch = async (data: RenewalPasswordPatchRequest) => {
+    return axiosInstance.patch('/new-password', data);
+  };
+
+  getUserIdPost = async (token: GetUserIdPostRequest) => {
+    return axiosInstance
+      .post<GetUserIdPostResponse>('/accountId', token)
+      .then((res) => res.data);
   };
 }
 

@@ -12,6 +12,7 @@ import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
 import AdminEvent from './pages/Admin/AdminEvent';
 import AdminUser from './pages/Admin/AdminUser';
+import FindIdPassword from './pages/FindIdPassword';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Loading from './pages/Loading';
@@ -86,6 +87,14 @@ const router = createBrowserRouter([
         element: (
           <PageLayout>
             <Login />
+          </PageLayout>
+        ),
+      },
+      {
+        path: BROWSER_PATH.FIND_ID_PASSWORD,
+        element: (
+          <PageLayout>
+            <FindIdPassword />
           </PageLayout>
         ),
       },
