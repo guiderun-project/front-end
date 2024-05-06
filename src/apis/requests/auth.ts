@@ -88,7 +88,7 @@ class AuthApi {
 
   getUserIdPost = async (token: GetUserIdPostRequest) => {
     return axiosInstance
-      .post<GetUserIdPostResponse>('accountId', token)
+      .post<GetUserIdPostResponse>('/accountId', token)
       .then((res) => res.data);
   };
 }
