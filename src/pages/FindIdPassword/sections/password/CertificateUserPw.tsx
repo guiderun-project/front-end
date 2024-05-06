@@ -18,6 +18,23 @@ const CertificateUserPw: React.FC = () => {
     mutationKey: ['getCertificationTokenPasswordPost'],
     mutationFn: (data: GetCertificationTokenPasswordPostRequest) =>
       authApi.getCertificationTokenPasswordPost(data),
+    onSuccess: () => {
+      alert('인증번호가 전송되었습니다.');
+    },
+    onError: (e) => {
+      if (e.response) {
+        const code = e.response.data.errorCode;
+        if (code === '1008') {
+          alert('아이디가 존재하지 않습니다.');
+          return;
+        }
+        if (code === '1009') {
+          alert('전화번호가 존재하지 않습니다.');
+          return;
+        }
+      }
+      alert('알 수 없는 에러가 발생했습니다. 다시 시도해주세요.');
+    },
   });
 
   const { mutate: checkTokenMutate } = useMutation({
@@ -26,6 +43,16 @@ const CertificateUserPw: React.FC = () => {
       authApi.checkCertificationTokenPost(data),
     onSuccess: () => {
       alert('인증되었습니다. ');
+    },
+    onError: (e) => {
+      if (e.response) {
+        const code = e.response.data.errorCode;
+        if (code === '1007') {
+          alert('다른 인증번호를 입력했습니다. 다시 입력해주세요.');
+          return;
+        }
+      }
+      alert(e.status + '에러가 발생했습니다');
     },
   });
 
