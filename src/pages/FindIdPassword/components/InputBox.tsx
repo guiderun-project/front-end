@@ -1,6 +1,6 @@
 import { Chip } from '@mui/material';
 import { Stack, TextField, Typography } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 interface InputBoxProps {
   id: string;
@@ -21,7 +21,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   singleline = false,
   isHidenSubmitButton = false,
 }) => {
-  //   const { control } = useFormContext();
+  const { control } = useFormContext();
 
   //
   //
@@ -42,18 +42,27 @@ const InputBox: React.FC<InputBoxProps> = ({
         {label}
       </Typography>
       <Stack width="100%" direction="row" gap="0.25rem" alignItems="center">
-        <TextField
-          fullWidth
-          autoFocus={autoFocus}
-          variant="standard"
-          id={id}
-          placeholder={placeholder}
-          InputProps={{
-            style: {
-              padding: '0.25rem 0.75rem',
-            },
-          }}
+        <Controller
+          control={control}
+          name={id}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              fullWidth
+              required
+              autoFocus={autoFocus}
+              variant="standard"
+              id={id}
+              placeholder={placeholder}
+              InputProps={{
+                style: {
+                  padding: '0.25rem 0.75rem',
+                },
+              }}
+            />
+          )}
         />
+
         {!isHidenSubmitButton && (
           <Chip
             clickable

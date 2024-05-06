@@ -1,5 +1,7 @@
+import { GetUserIdPostResponse } from '@/apis/types/auth';
 import styled from '@emotion/styled';
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { useMutationState } from '@tanstack/react-query';
 
 const StyledIdInfoBox = styled.section`
   box-sizing: border-box;
@@ -13,14 +15,22 @@ const StyledIdInfoBox = styled.section`
 `;
 
 const UserIdInfo: React.FC = () => {
+  const [userInfo] = useMutationState({
+    filters: { mutationKey: ['getUserIdPost'] },
+    select: (mutate) => mutate.state.data as GetUserIdPostResponse,
+  });
   return (
     <Stack gap="1.5rem">
       <Typography autoFocus component="h2" fontWeight={700} textAlign="center">
         휴대전화정보와 일치하는 아이디입니다.
       </Typography>
       <StyledIdInfoBox>
-        <Typography>아이디: whwotjr98</Typography>
-        <Typography>가입일: 2024.1.1</Typography>
+        {userInfo ? (
+          <>
+            <Typography>아이디: {userInfo.accountId}</Typography>
+            <Typography>가입일: {userInfo.createdAt}</Typography>
+          </>
+        ) : null}
       </StyledIdInfoBox>
     </Stack>
   );
