@@ -13,7 +13,7 @@ import InfoDetail from '../components/InfoDetail';
 import InfoEdit from '../components/InfoEdit';
 
 import infoApi from '@/apis/requests/info';
-import { personalInfoGetResponse } from '@/apis/types/info';
+import { PersonalInfoGetResponse } from '@/apis/types/info';
 import { NotFound } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
@@ -22,7 +22,7 @@ import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
 //
 //
 
-export const INFO_DATA: personalInfoGetResponse = {
+export const INFO_DATA: PersonalInfoGetResponse = {
   name: '홍길동',
   type: DisabilityEnum.GUIDE,
   role: RoleEnum.User,

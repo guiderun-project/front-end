@@ -1,29 +1,29 @@
 import { axiosInstanceWithToken } from '../axios';
 import {
-  adminApproveUserPostRequest,
-  adminApproveUserPostResponse,
-  adminEventHistoryCountGetRequest,
-  adminEventHistoryCountGetResponse,
-  adminEventHistoryGetRequest,
-  adminEventHistoryGetResponse,
-  adminEventListCountGetResponse,
-  adminEventListGetRequest,
-  adminEventListGetResponse,
-  adminEventTotalCountGetRequest,
-  adminEventTotalCountGetResponse,
-  adminGuideApplyGetRequest,
-  adminGuideApplyGetResponse,
-  adminUserListCountGetResponse,
-  adminUserListGetRequest,
-  adminUserListGetResponse,
-  adminViApplyGetRequest,
-  adminViApplyGetResponse,
+  AdminApproveUserPostRequest,
+  AdminApproveUserPostResponse,
+  AdminEventHistoryCountGetRequest,
+  AdminEventHistoryCountGetResponse,
+  AdminEventHistoryGetRequest,
+  AdminEventHistoryGetResponse,
+  AdminEventListCountGetResponse,
+  AdminEventListGetRequest,
+  AdminEventListGetResponse,
+  AdminEventTotalCountGetRequest,
+  AdminEventTotalCountGetResponse,
+  AdminGuideApplyGetRequest,
+  AdminGuideApplyGetResponse,
+  AdminUserListCountGetResponse,
+  AdminUserListGetRequest,
+  AdminUserListGetResponse,
+  AdminViApplyGetRequest,
+  AdminViApplyGetResponse,
 } from '../types/admin';
 
 class AdminApi {
-  adminUserListGet = async ({ limit, start }: adminUserListGetRequest) => {
+  adminUserListGet = async ({ limit, start }: AdminUserListGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminUserListGetResponse>(
+      .get<AdminUserListGetResponse>(
         `/admin/user-list?limit=${limit}&start=${start}`,
       )
       .then((res) => res.data.items);
@@ -31,19 +31,19 @@ class AdminApi {
 
   adminUserListCountGet = async () => {
     return await axiosInstanceWithToken
-      .get<adminUserListCountGetResponse>(`/admin/user-list/count`)
+      .get<AdminUserListCountGetResponse>(`/admin/user-list/count`)
       .then((res) => res.data.count);
   };
 
-  adminViApplyGet = async ({ userId }: adminViApplyGetRequest) => {
+  adminViApplyGet = async ({ userId }: AdminViApplyGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminViApplyGetResponse>(`/admin/apply/vi/${userId}`)
+      .get<AdminViApplyGetResponse>(`/admin/apply/vi/${userId}`)
       .then((res) => res.data);
   };
 
-  adminGuideApplyGet = async ({ userId }: adminGuideApplyGetRequest) => {
+  adminGuideApplyGet = async ({ userId }: AdminGuideApplyGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminGuideApplyGetResponse>(`/admin/apply/guide/${userId}`)
+      .get<AdminGuideApplyGetResponse>(`/admin/apply/guide/${userId}`)
       .then((res) => res.data);
   };
 
@@ -51,18 +51,18 @@ class AdminApi {
     isApprove,
     userId,
     recordDegree,
-  }: adminApproveUserPostRequest) => {
+  }: AdminApproveUserPostRequest) => {
     return await axiosInstanceWithToken
-      .post<adminApproveUserPostResponse>(`/admin/approval-user/${userId}`, {
+      .post<AdminApproveUserPostResponse>(`/admin/approval-user/${userId}`, {
         isApprove,
         recordDegree,
       })
       .then((res) => res.data);
   };
 
-  adminEventListGet = async ({ limit, start }: adminEventListGetRequest) => {
+  adminEventListGet = async ({ limit, start }: AdminEventListGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminEventListGetResponse>(
+      .get<AdminEventListGetResponse>(
         `/admin/event-list?limit=${limit}&start=${start}`,
       )
       .then((res) => res.data.items);
@@ -70,7 +70,7 @@ class AdminApi {
 
   adminEventListCountGet = async () => {
     return await axiosInstanceWithToken
-      .get<adminEventListCountGetResponse>(`/admin/event-list/count`)
+      .get<AdminEventListCountGetResponse>(`/admin/event-list/count`)
       .then((res) => res.data.count);
   };
 
@@ -80,9 +80,9 @@ class AdminApi {
     start,
     userId,
     year,
-  }: adminEventHistoryGetRequest) => {
+  }: AdminEventHistoryGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminEventHistoryGetResponse>(
+      .get<AdminEventHistoryGetResponse>(
         `/admin/${userId}/event-list?start=${start}&limit=${limit}&year=${year}&month=${month}`,
       )
       .then((res) => res.data.items);
@@ -92,9 +92,9 @@ class AdminApi {
     month,
     userId,
     year,
-  }: adminEventHistoryCountGetRequest) => {
+  }: AdminEventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminEventHistoryCountGetResponse>(
+      .get<AdminEventHistoryCountGetResponse>(
         `/admin/${userId}/event-list/count?year=${year}&month=${month}`,
       )
       .then((res) => res.data.count);
@@ -102,9 +102,9 @@ class AdminApi {
 
   adminEventTotalCountGet = async ({
     userId,
-  }: adminEventTotalCountGetRequest) => {
+  }: AdminEventTotalCountGetRequest) => {
     return await axiosInstanceWithToken
-      .get<adminEventTotalCountGetResponse>(`/admin/${userId}/event-type/count`)
+      .get<AdminEventTotalCountGetResponse>(`/admin/${userId}/event-type/count`)
       .then((res) => res.data);
   };
 }

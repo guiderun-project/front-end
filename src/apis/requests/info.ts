@@ -1,33 +1,33 @@
 import { axiosInstanceWithToken } from '../axios';
 import type {
-  eventHistoryCountGetRequest,
-  eventHistoryCountGetResponse,
-  eventHistoryGetRequest,
-  eventHistoryGetResponse,
-  myPageGetResponse,
-  partnerListCountGetRequest,
-  partnerListCountGetResponse,
-  partnerListGetRequest,
-  partnerListGetResponse,
-  permissionGetRequest,
-  permissionGetResponse,
-  permissionPatchRequest,
-  permissionPatchResponse,
-  personalInfoGetRequest,
-  personalInfoGetResponse,
-  personalInfoPatchRequest,
-  personalInfoPatchResponse,
-  profileGetRequest,
-  profileGetResponse,
-  runningSpecGuideGetRequest,
-  runningSpecGuideGetResponse,
-  runningSpecGuidePatchRequest,
-  runningSpecGuidePatchResponse,
-  runningSpecViGetRequest,
-  runningSpecViGetResponse,
-  runningSpecViPatchRequest,
+  EventHistoryCountGetRequest,
+  EventHistoryCountGetResponse,
+  EventHistoryGetRequest,
+  EventHistoryGetResponse,
+  MyPageGetResponse,
+  PartnerListCountGetRequest,
+  PartnerListCountGetResponse,
+  PartnerListGetRequest,
+  PartnerListGetResponse,
+  PermissionGetRequest,
+  PermissionGetResponse,
+  PermissionPatchRequest,
+  PermissionPatchResponse,
+  PersonalInfoGetRequest,
+  PersonalInfoGetResponse,
+  PersonalInfoPatchRequest,
+  PersonalInfoPatchResponse,
+  ProfileGetRequest,
+  ProfileGetResponse,
+  RunningSpecGuideGetRequest,
+  RunningSpecGuideGetResponse,
+  RunningSpecGuidePatchRequest,
+  RunningSpecGuidePatchResponse,
+  RunningSpecViGetRequest,
+  RunningSpecViGetResponse,
+  RunningSpecViPatchRequest,
   runningSpecViPatchResponse,
-  userInfoGetResponse,
+  UserInfoGetResponse,
 } from '../types/info';
 
 import { EventSort, PartnerSort } from '@/types/sort';
@@ -38,7 +38,7 @@ class InfoApi {
    */
   myPageGet = async () => {
     return await axiosInstanceWithToken
-      .get<myPageGetResponse>('/user/mypage')
+      .get<MyPageGetResponse>('/user/mypage')
       .then((res) => res.data);
   };
 
@@ -47,37 +47,37 @@ class InfoApi {
    */
   userInfoGet = async () => {
     return await axiosInstanceWithToken
-      .get<userInfoGetResponse>('/user/personal')
+      .get<UserInfoGetResponse>('/user/personal')
       .then((res) => res.data);
   };
 
   /**
    * @return 회원가입 시 입력한 기본 인적사항 반환
    */
-  personalInfoGet = async ({ userId }: personalInfoGetRequest) => {
+  personalInfoGet = async ({ userId }: PersonalInfoGetRequest) => {
     return await axiosInstanceWithToken
-      .get<personalInfoGetResponse>(`/user/personal/${userId}`)
+      .get<PersonalInfoGetResponse>(`/user/personal/${userId}`)
       .then((res) => res.data);
   };
 
-  personalInfoPatch = async (updateData: personalInfoPatchRequest) => {
+  personalInfoPatch = async (updateData: PersonalInfoPatchRequest) => {
     return await axiosInstanceWithToken
-      .patch<personalInfoPatchResponse>('/user/personal', updateData)
+      .patch<PersonalInfoPatchResponse>('/user/personal', updateData)
       .then((res) => res.data);
   };
 
   /**
    * @returns 회원가입 인적사항 중 러닝 스펙과 관련된 내용 반환
    */
-  runningSpecGuideGet = async ({ userId }: runningSpecGuideGetRequest) => {
+  runningSpecGuideGet = async ({ userId }: RunningSpecGuideGetRequest) => {
     return await axiosInstanceWithToken
-      .get<runningSpecGuideGetResponse>(`/user/running/guide/${userId}`)
+      .get<RunningSpecGuideGetResponse>(`/user/running/guide/${userId}`)
       .then((res) => res.data);
   };
 
-  runningSpecGuidePatch = async (updataData: runningSpecGuidePatchRequest) => {
+  runningSpecGuidePatch = async (updataData: RunningSpecGuidePatchRequest) => {
     return await axiosInstanceWithToken
-      .patch<runningSpecGuidePatchResponse>('/user/running/guide', updataData)
+      .patch<RunningSpecGuidePatchResponse>('/user/running/guide', updataData)
       .then((res) => res.data);
   };
 
@@ -85,13 +85,13 @@ class InfoApi {
    * @returns 시각 장애 러너 러닝 스펙 반환
    */
 
-  runningSpecViGet = async ({ userId }: runningSpecViGetRequest) => {
+  runningSpecViGet = async ({ userId }: RunningSpecViGetRequest) => {
     return await axiosInstanceWithToken
-      .get<runningSpecViGetResponse>(`/user/running/vi/${userId}`)
+      .get<RunningSpecViGetResponse>(`/user/running/vi/${userId}`)
       .then((res) => res.data);
   };
 
-  runningSpecViPatch = async (updateData: runningSpecViPatchRequest) => {
+  runningSpecViPatch = async (updateData: RunningSpecViPatchRequest) => {
     return await axiosInstanceWithToken
       .patch<runningSpecViPatchResponse>('/user/running/vi', updateData)
       .then((res) => res.data);
@@ -101,15 +101,15 @@ class InfoApi {
    * @returns 권한 동의 여부 반환
    */
 
-  permissionGet = async ({ userId }: permissionGetRequest) => {
+  permissionGet = async ({ userId }: PermissionGetRequest) => {
     return await axiosInstanceWithToken
-      .get<permissionGetResponse>(`/user/permission/${userId}`)
+      .get<PermissionGetResponse>(`/user/permission/${userId}`)
       .then((res) => res.data);
   };
 
-  permissionPatch = async (updateData: permissionPatchRequest) => {
+  permissionPatch = async (updateData: PermissionPatchRequest) => {
     return await axiosInstanceWithToken
-      .patch<permissionPatchResponse>('/user/permission', updateData)
+      .patch<PermissionPatchResponse>('/user/permission', updateData)
       .then((res) => res.data);
   };
 
@@ -118,9 +118,9 @@ class InfoApi {
    * @returns 사용자 기초 정보를 반환
    */
 
-  profileGet = async ({ userId }: profileGetRequest) => {
+  profileGet = async ({ userId }: ProfileGetRequest) => {
     return await axiosInstanceWithToken
-      .get<profileGetResponse>(`/user/profile/${userId}`)
+      .get<ProfileGetResponse>(`/user/profile/${userId}`)
       .then((res) => res.data);
   };
 
@@ -134,15 +134,15 @@ class InfoApi {
     sort = PartnerSort.Count,
     limit = 4,
     start = 0,
-  }: partnerListGetRequest) => {
-    return await axiosInstanceWithToken.get<partnerListGetResponse>(
+  }: PartnerListGetRequest) => {
+    return await axiosInstanceWithToken.get<PartnerListGetResponse>(
       `/user/partner-list/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
     );
   };
 
-  partnerListCountGet = async ({ userId }: partnerListCountGetRequest) => {
+  partnerListCountGet = async ({ userId }: PartnerListCountGetRequest) => {
     return await axiosInstanceWithToken
-      .get<partnerListCountGetResponse>(`/user/partner-list/count/${userId}`)
+      .get<PartnerListCountGetResponse>(`/user/partner-list/count/${userId}`)
       .then((res) => res.data.count);
   };
 
@@ -156,9 +156,9 @@ class InfoApi {
     sort = EventSort.Total,
     limit = 3,
     start = 0,
-  }: eventHistoryGetRequest) => {
+  }: EventHistoryGetRequest) => {
     return await axiosInstanceWithToken
-      .get<eventHistoryGetResponse>(
+      .get<EventHistoryGetResponse>(
         `/user/event-history/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
       )
       .then((res) => res.data);
@@ -167,9 +167,9 @@ class InfoApi {
   eventHistoryCountGet = async ({
     userId,
     sort = EventSort.Total,
-  }: eventHistoryCountGetRequest) => {
+  }: EventHistoryCountGetRequest) => {
     return axiosInstanceWithToken
-      .get<eventHistoryCountGetResponse>(
+      .get<EventHistoryCountGetResponse>(
         `/user/event-history/count/${userId}?sort=${sort}`,
       )
       .then((res) => res.data.count);

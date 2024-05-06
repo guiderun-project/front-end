@@ -1,44 +1,96 @@
 import { axiosInstance, axiosInstanceWithToken } from '../axios';
 import {
-  accessTokenGetResponse,
-  checkDuplicatedPostRequest,
-  checkDuplicatedPostResponse,
-  guideSignupPostRequest,
-  kakaoAuthPostRequest,
-  kakaoAuthPostResponse,
-  signupPostResponse,
-  viSignupPostRequest,
+  AccessTokenGetResponse,
+  CheckCertificationTokenPostRequest,
+  CheckCertificationTokenPostResponse,
+  CheckDuplicatedPostRequest,
+  CheckDuplicatedPostResponse,
+  GetCertificationTokenIdPostRequest,
+  GetCertificationTokenPasswordPostRequest,
+  GetUserIdPostRequest,
+  GetUserIdPostResponse,
+  GuideSignupPostRequest,
+  KakaoAuthPostRequest,
+  KakaoAuthPostResponse,
+  LoginPostRequest,
+  LoginPostResponse,
+  RenewalPasswordPatchRequest,
+  SignupPostResponse,
+  ViSignupPostRequest,
 } from '../types/auth';
 
 class AuthApi {
-  kakaoAuthPost = async ({ code }: kakaoAuthPostRequest) => {
+  kakaoAuthPost = async ({ code }: KakaoAuthPostRequest) => {
     return await axiosInstance
-      .post<kakaoAuthPostResponse>(`/oauth/login/kakao?code=${code}`)
+      .post<KakaoAuthPostResponse>(`/oauth/login/kakao?code=${code}`)
       .then((res) => res.data);
   };
 
-  viSignupPost = async (signupData: viSignupPostRequest) => {
+  viSignupPost = async (signupData: ViSignupPostRequest) => {
     return await axiosInstanceWithToken
-      .post<signupPostResponse>('/signup/vi', signupData)
+      .post<SignupPostResponse>('/signup/vi', signupData)
       .then((res) => res.data);
   };
 
-  guideSignupPost = async (signupData: guideSignupPostRequest) => {
+  guideSignupPost = async (signupData: GuideSignupPostRequest) => {
     return await axiosInstanceWithToken
-      .post<signupPostResponse>('/signup/guide', signupData)
+      .post<SignupPostResponse>('/signup/guide', signupData)
       .then((res) => res.data);
   };
 
   accessTokenGet = async () => {
     return await axiosInstance
-      .get<accessTokenGetResponse>('/oauth/login/reissue')
+      .get<AccessTokenGetResponse>('/oauth/login/reissue')
       .then((res) => res.data.accessToken);
   };
 
-  checkDuplicatedPost = async (id: checkDuplicatedPostRequest) =>
-    axiosInstanceWithToken
-      .post<checkDuplicatedPostResponse>('/signup/duplicated', id)
+  checkDuplicatedPost = async (id: CheckDuplicatedPostRequest) => {
+    return axiosInstanceWithToken
+      .post<CheckDuplicatedPostResponse>('/signup/duplicated', id)
       .then((res) => res.data.isUnique);
+  };
+
+  loginPost = async (loginData: LoginPostRequest) => {
+    return axiosInstance
+      .post<LoginPostResponse>('/login', loginData)
+      .then((res) => res.data.accessToken);
+  };
+
+  /**
+   *
+   * @param data 아이디, 휴대전화 번호
+   * @returns 성공여부
+   */
+
+  getCertificationTokenPasswordPost = async (
+    data: GetCertificationTokenPasswordPostRequest,
+  ) => {
+    return axiosInstance.post('/sms/password', data);
+  };
+
+  getCertificationTokenIdPost = async (
+    data: GetCertificationTokenIdPostRequest,
+  ) => {
+    return axiosInstance.post('/sms/accountId', data);
+  };
+
+  checkCertificationTokenPost = async (
+    token: CheckCertificationTokenPostRequest,
+  ) => {
+    return axiosInstance
+      .post<CheckCertificationTokenPostResponse>('/sms/token', token)
+      .then((res) => res.data.token);
+  };
+
+  renewalPasswordPatch = async (data: RenewalPasswordPatchRequest) => {
+    return axiosInstance.patch('/new-password', data);
+  };
+
+  getUserIdPost = async (token: GetUserIdPostRequest) => {
+    return axiosInstance
+      .post<GetUserIdPostResponse>('/accountId', token)
+      .then((res) => res.data);
+  };
 }
 
 const authApi = new AuthApi();

@@ -1,17 +1,17 @@
 import { GenderEnum, RoleEnum, RunningGroup } from '@/types/group';
 
-export type kakaoAuthPostRequest = {
+export type KakaoAuthPostRequest = {
   code: string;
 };
 
-export type kakaoAuthPostResponse = {
+export type KakaoAuthPostResponse = {
   accessToken: string;
   //false: new user
   //true: go to main
   isExist: boolean;
 };
 
-export type viSignupPostRequest = {
+export type ViSignupPostRequest = {
   //common section
   accountId: string;
   password: string;
@@ -37,7 +37,7 @@ export type viSignupPostRequest = {
   portraitRights: boolean;
 };
 
-export type guideSignupPostRequest = {
+export type GuideSignupPostRequest = {
   //common section
   accountId: string;
   password: string;
@@ -67,20 +67,60 @@ export type guideSignupPostRequest = {
   portraitRights: boolean;
 };
 
-export type signupPostResponse = {
+export type SignupPostResponse = {
   userId: string;
   accessToken: string;
   role: RoleEnum;
 };
 
-export type accessTokenGetResponse = {
+export type AccessTokenGetResponse = {
   accessToken: string;
 };
 
-export type checkDuplicatedPostRequest = {
+export type CheckDuplicatedPostRequest = {
   accountId: string;
 };
 
-export type checkDuplicatedPostResponse = {
+export type CheckDuplicatedPostResponse = {
   isUnique: boolean;
+};
+
+export type LoginPostRequest = {
+  accountId: string;
+  password: string;
+};
+
+export type LoginPostResponse = {
+  accessToken: string;
+};
+
+export type GetCertificationTokenPasswordPostRequest = {
+  accountId: string;
+  phoneNum: string;
+};
+
+export type CheckCertificationTokenPostRequest = {
+  number: string;
+};
+
+export type CheckCertificationTokenPostResponse = {
+  token: string;
+};
+
+export type GetCertificationTokenIdPostRequest = {
+  phoneNum: string;
+};
+
+export type RenewalPasswordPatchRequest = {
+  token: string;
+  newPassword: string;
+};
+
+export type GetUserIdPostRequest = {
+  token: string;
+};
+
+export type GetUserIdPostResponse = {
+  accountId: string;
+  createdAt: string;
 };
