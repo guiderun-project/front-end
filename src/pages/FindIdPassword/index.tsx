@@ -1,14 +1,21 @@
 import { Stack, Tab, Tabs, Typography } from '@mui/material';
-
 import { useSearchParams } from 'react-router-dom';
 
 import FindIdSection from './sections/FindIdSection';
 import FindPwSection from './sections/FindPwSection';
 
+//
+//
+//
+
 export enum FindTabEnum {
   Id = 'id',
   Pw = 'pw',
 }
+
+//
+//
+//
 
 const FindIdPassword: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

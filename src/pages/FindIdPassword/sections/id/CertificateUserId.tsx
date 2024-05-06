@@ -5,11 +5,12 @@ import { useMutation } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import InputBox from '../../components/InputBox';
+
+import authApi from '@/apis/requests/auth';
 import {
   CheckCertificationTokenPostRequest,
   GetCertificationTokenIdPostRequest,
 } from '@/apis/types/auth';
-import authApi from '@/apis/requests/auth';
 
 const CertificateUserId: React.FC = () => {
   const getTokenMethod = useForm<GetCertificationTokenIdPostRequest>();

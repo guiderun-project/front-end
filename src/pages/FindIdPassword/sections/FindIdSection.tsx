@@ -1,13 +1,13 @@
-import { Box, Button, Stack } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Box, Button, Stack } from '@mui/material';
 import { useMutation, useMutationState } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import CertificateUserId from './id/CertificateUserId';
 import UserIdInfo from './id/UserIdInfo';
 
-import { GetUserIdPostRequest } from '@/apis/types/auth';
 import authApi from '@/apis/requests/auth';
+import { GetUserIdPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 
 const FindIdSection = () => {

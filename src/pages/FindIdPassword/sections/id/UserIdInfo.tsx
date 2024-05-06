@@ -1,7 +1,12 @@
-import { GetUserIdPostResponse } from '@/apis/types/auth';
 import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
 import { useMutationState } from '@tanstack/react-query';
+
+import { GetUserIdPostResponse } from '@/apis/types/auth';
+
+//
+//
+//
 
 const StyledIdInfoBox = styled.section`
   box-sizing: border-box;
@@ -14,11 +19,20 @@ const StyledIdInfoBox = styled.section`
   border-radius: 8px;
 `;
 
+//
+//
+//
+
 const UserIdInfo: React.FC = () => {
   const [userInfo] = useMutationState({
     filters: { mutationKey: ['getUserIdPost'] },
     select: (mutate) => mutate.state.data as GetUserIdPostResponse,
   });
+
+  //
+  //
+  //
+
   return (
     <Stack gap="1.5rem">
       <Typography autoFocus component="h2" fontWeight={700} textAlign="center">
