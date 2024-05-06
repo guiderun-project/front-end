@@ -1,20 +1,14 @@
-import React from 'react';
-
 import { Box, Button, Stack } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Mutation, useMutation, useMutationState } from '@tanstack/react-query';
+import { useMutation, useMutationState } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-
-import { BROWSER_PATH } from '@/constants/path';
 
 import CertificateUserId from './id/CertificateUserId';
 import UserIdInfo from './id/UserIdInfo';
-import {
-  CheckCertificationTokenPostResponse,
-  GetUserIdPostRequest,
-} from '@/apis/types/auth';
+
+import { GetUserIdPostRequest } from '@/apis/types/auth';
 import authApi from '@/apis/requests/auth';
-import { useQueryClient } from '@tanstack/react-query';
+import { BROWSER_PATH } from '@/constants/path';
 
 const FindIdSection = () => {
   const { mutate, isPending, isSuccess } = useMutation({
