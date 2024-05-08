@@ -13,9 +13,8 @@ import {
 import { Link, useSearchParams } from 'react-router-dom';
 
 import { MyEventItemType } from '@/apis/types/event';
-import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
-import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
+import { EventLinkBox, NotFound } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventType } from '@/types/group';
 import { EventSort } from '@/types/sort';
@@ -216,11 +215,6 @@ const MyEvent: React.FC = () => {
         </Box>
         <Stack>{renderEventList()}</Stack>
       </Stack>
-      <LinkButton
-        icon={PlanedEventIcon}
-        title="예정 이벤트"
-        to={BROWSER_PATH.EVENT.UPCOMING}
-      />
     </Stack>
   );
 };

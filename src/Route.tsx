@@ -12,18 +12,22 @@ import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
 import AdminEvent from './pages/Admin/AdminEvent';
 import AdminUser from './pages/Admin/AdminUser';
+import AllEvent from './pages/Event/pages/AllEvent';
+import EventCalendar from './pages/Event/pages/EventCalendar';
+import EventSearch from './pages/Event/pages/EventSearch';
+import MyEvent from './pages/Event/pages/MyEvent';
 import FindIdPassword from './pages/FindIdPassword';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
 import Loading from './pages/Loading';
 import Login from './pages/Login';
+import Main from './pages/Main';
+import MainRoot from './pages/Main/MainRoot';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
 import { RootState } from './store';
-// import { useSuspenseQuery } from '@tanstack/react-query';
-// import authApi from './apis/requests/auth';
 
 const router = createBrowserRouter([
   {
@@ -101,6 +105,38 @@ const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [
+          {
+            path: BROWSER_PATH.MAIN,
+            element: <MainRoot />,
+            children: [
+              {
+                path: BROWSER_PATH.MAIN,
+                element: <Main />,
+              },
+            ],
+          },
+          {
+            path: BROWSER_PATH.EVENT.MAIN,
+            element: <MainRoot />,
+            children: [
+              {
+                path: BROWSER_PATH.EVENT.ALL,
+                element: <AllEvent />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.MY,
+                element: <MyEvent />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.CALENDAR,
+                element: <EventCalendar />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.SEARCH,
+                element: <EventSearch />,
+              },
+            ],
+          },
           {
             path: BROWSER_PATH.SIGNUP,
             element: (
