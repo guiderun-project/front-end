@@ -104,7 +104,7 @@ const Main: React.FC = () => {
           <LinkButton
             icon={PlanedEventIcon}
             title="예정 이벤트"
-            to={BROWSER_PATH.EVENT.UPCOMING}
+            to={BROWSER_PATH.EVENT.ALL}
           />
         </Stack>
       </Stack>
