@@ -28,12 +28,14 @@ export enum EventKind {
 
 /**
  * @enum PartnerSort 함께 뛴 파트너 정렬 기준
+ * @var Recent 최신 순
  * @var Count 횟수 순
  * @var Name 이름 순
  * @var Record 기록 순
  */
 
 export enum PartnerSort {
+  Recent = 'RECENT',
   Count = 'COUNT',
   Name = 'NAME',
   Record = 'RECORD',
