@@ -2,7 +2,14 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Box, CircularProgress, Stack, Typography } from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
@@ -78,6 +85,27 @@ const Main: React.FC = () => {
         <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           이벤트
         </Typography>
+        {/* TODO 이벤트 생성 페이지 구현 및 연결 */}
+        <Stack direction="row" justifyContent="center">
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            color="primary"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              borderRadius: '1000000px',
+            }}
+          >
+            <Typography fontSize="0.9375rem" fontWeight={600}>
+              이벤트 만들기
+            </Typography>
+            <ChevronRightIcon />
+          </Button>
+        </Stack>
         <Stack
           direction="row"
           alignItems="center"
