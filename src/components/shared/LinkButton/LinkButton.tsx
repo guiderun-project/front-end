@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 //
