@@ -31,6 +31,7 @@ const StyledContainer = styled.div`
   padding: 0.75rem 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
+  background-color: #fff;
 `;
 
 const StyledCountText = styled.span`

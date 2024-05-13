@@ -43,6 +43,7 @@ const StyledPartnerListButton = styled(Link)`
   padding: 1.5rem 1.25rem;
   text-decoration: none;
   color: #000;
+  background-color: #fff;
 `;
 
 //
@@ -74,38 +75,25 @@ const Main: React.FC = () => {
   const renderEvent = () => {
     return (
       <Stack gap="1.5rem">
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
-            이벤트
-          </Typography>
-          <Link
-            to={BROWSER_PATH.EVENT.ALL}
-            style={{
-              textDecoration: 'none',
-            }}
-          >
-            <Typography
-              component="span"
-              fontSize="0.875rem"
-              color="#666"
-              sx={{
-                textDecoration: 'underline',
-              }}
-            >
-              이벤트 전체보기
-            </Typography>
-            <span aria-hidden> &gt;</span>
-          </Link>
-        </Box>
-        <Stack gap="0.5rem">
+        <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
+          이벤트
+        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          gap="0.5rem"
+        >
           <LinkButton
-            icon={MyEventIcon}
-            title="내가 신청한 이벤트"
+            type="block"
+            icon={PlanedEventIcon}
+            title="전체 이벤트"
             to={BROWSER_PATH.EVENT.MY}
           />
           <LinkButton
-            icon={PlanedEventIcon}
-            title="예정 이벤트"
+            type="block"
+            icon={MyEventIcon}
+            title="나의 이벤트"
             to={BROWSER_PATH.EVENT.ALL}
           />
         </Stack>
@@ -117,7 +105,7 @@ const Main: React.FC = () => {
     return (
       <Stack gap="1.5rem">
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
+          <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
             최근 나의 파트너
           </Typography>
           <Link
