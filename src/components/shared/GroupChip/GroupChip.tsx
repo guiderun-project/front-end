@@ -24,7 +24,6 @@ const GroupChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
         fontSize="1.125rem"
         fontWeight={700}
         color={TEAM_COLOR?.[group]}
-        aria-label={`Group ${group}`}
       >
         {group}
       </Typography>
@@ -33,7 +32,6 @@ const GroupChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   return (
     <Avatar
       component="span"
-      aria-label={`Group ${group}`}
       sx={{
         width: '1.875rem',
         height: '1.875rem',

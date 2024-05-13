@@ -11,5 +11,5 @@ export * from './LinkButton';
 export * from './NavBar';
 export * from './NotFound';
 export * from './PageLayout';
-export * from './PartnerBox';
 export * from './ProtectedRoute';
+export * from './UserBox';
