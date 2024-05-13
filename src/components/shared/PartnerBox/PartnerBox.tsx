@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { Avatar, Stack, Typography } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Avatar, Stack, Typography } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 import GroupChip from '../GroupChip/GroupChip';
@@ -51,7 +51,6 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
     recordDegree,
     trainingCnt,
     type,
-    userId,
   },
 }) => {
   return (
