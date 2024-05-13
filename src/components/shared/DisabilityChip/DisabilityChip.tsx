@@ -60,9 +60,6 @@ const DisabilityChip: React.FC<DisabilityChipProps> = ({
   if (component === 'avartar') {
     return (
       <Avatar
-        aria-label={
-          type === DisabilityEnum.GUIDE ? '가이드러너' : '시각장애러너'
-        }
         sx={{
           width: 24,
           height: 24,
@@ -70,7 +67,6 @@ const DisabilityChip: React.FC<DisabilityChipProps> = ({
           color: getAvatarTextColor(),
           fontSize: '0.8125rem',
           fontWeight: 700,
-          alignItems: 'center',
         }}
       >
         {type[0].toUpperCase()}

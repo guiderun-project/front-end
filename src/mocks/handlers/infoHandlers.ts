@@ -5,9 +5,6 @@ import {
   EventHistoryCountGetResponse,
   EventHistoryGetResponse,
   MyPageGetResponse,
-  PartnerListCountGetRequest,
-  PartnerListCountGetResponse,
-  PartnerListGetResponse,
   PermissionGetResponse,
   PermissionPatchRequest,
   PermissionPatchResponse,
@@ -30,7 +27,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { PartnerSort } from '@/types/sort';
 
 //You can add HTTP handler by msw DOCS
 //https://mswjs.io/docs/network-behavior/rest
@@ -181,100 +177,9 @@ export const infoHandlers: HttpHandler[] = [
 
   //TODO: profileGet
 
-  // partnerListGet
-  http.get<{ userId: string }, Record<string, never>, PartnerListGetResponse>(
-    baseURL + '/user/partner-list/:userId',
-    ({ request }) => {
-      const url = new URL(request.url);
+  //TODO: partnerListGet
 
-      const limit = Number(url.searchParams.get('limit'));
-      if (limit === 2) {
-        return HttpResponse.json({
-          limit: 2,
-          sort: PartnerSort.Recent,
-          start: 0,
-          items: [
-            {
-              userId: '1e12kdsn1',
-              type: DisabilityEnum.GUIDE,
-              recordDegree: RunningGroup.C,
-              role: RoleEnum.User,
-              img: '',
-              contestCnt: 25,
-              isLiked: true,
-              trainingCnt: 10,
-              like: 123,
-              name: '배두리',
-            },
-            {
-              userId: '1sfdsfq3345413',
-              type: DisabilityEnum.GUIDE,
-              recordDegree: RunningGroup.A,
-              role: RoleEnum.User,
-              img: 'https://mui.com/static/images/avatar/2.jpg',
-              contestCnt: 1,
-              isLiked: false,
-              trainingCnt: 4,
-              like: 10,
-              name: '이재건',
-            },
-          ],
-        });
-      }
-      return HttpResponse.json({
-        limit: 2,
-        sort: PartnerSort.Recent,
-        start: 0,
-        items: [
-          {
-            userId: '1e12kdsn1',
-            type: DisabilityEnum.GUIDE,
-            recordDegree: RunningGroup.C,
-            role: RoleEnum.User,
-            img: '',
-            contestCnt: 25,
-            isLiked: true,
-            trainingCnt: 10,
-            like: 123,
-            name: '배두리',
-          },
-          {
-            userId: '1sfdsfq3345413',
-            type: DisabilityEnum.GUIDE,
-            recordDegree: RunningGroup.A,
-            role: RoleEnum.User,
-            img: 'https://mui.com/static/images/avatar/2.jpg',
-            contestCnt: 1,
-            isLiked: false,
-            trainingCnt: 4,
-            like: 10,
-            name: '이재건',
-          },
-          {
-            userId: '1sfdsfq3345413asdsad',
-            type: DisabilityEnum.GUIDE,
-            recordDegree: RunningGroup.C,
-            role: RoleEnum.User,
-            img: 'https://mui.com/static/images/avatar/1.jpg',
-            contestCnt: 1,
-            isLiked: true,
-            trainingCnt: 4,
-            like: 1,
-            name: '조재석',
-          },
-        ],
-      });
-    },
-  ),
-
-  // partnerListCountGet
-  http.get<
-    PartnerListCountGetRequest,
-    Record<string, never>,
-    PartnerListCountGetResponse
-  >(baseURL + '/user/partner-list/count/:userId', () => {
-    return HttpResponse.json({ count: 50 });
-  }),
+  //TODO: partnerListCountGet
 
   //eventHistoryGet
   http.get<{ userId: string }, Record<string, never>, EventHistoryGetResponse>(
