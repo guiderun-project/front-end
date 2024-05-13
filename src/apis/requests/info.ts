@@ -135,9 +135,11 @@ class InfoApi {
     limit = 4,
     start = 0,
   }: PartnerListGetRequest) => {
-    return await axiosInstanceWithToken.get<PartnerListGetResponse>(
-      `/user/partner-list/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
-    );
+    return await axiosInstanceWithToken
+      .get<PartnerListGetResponse>(
+        `/user/partner-list/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
   };
 
   partnerListCountGet = async ({ userId }: PartnerListCountGetRequest) => {

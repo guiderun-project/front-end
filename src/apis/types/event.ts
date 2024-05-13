@@ -195,3 +195,12 @@ export type DetailCalendarItemType = SearchEventItemType;
 export type DetailCalendarGetResponse = {
   items: DetailCalendarItemType[];
 };
+
+type UpcomingEventDdayType = {
+  name: string;
+  dDay: number;
+};
+
+export type UpcomingEventDdayGetResponse = {
+  eventItems: UpcomingEventDdayType[];
+};

@@ -182,16 +182,19 @@ export type PartnerListGetRequest = {
 
 export type PartnerDataType = {
   userId: string;
-  role: RoleEnum;
-  type: DisabilityEnum;
-  recordDegree: RunningGroup;
+  img: string; //프로필 이미지
+  role: RoleEnum; //권한
+  type: DisabilityEnum; //vi인지 guide 인지
   name: string;
-  trainingCnt: number;
-  contestCnt: number;
+  recordDegree: RunningGroup;
+  trainingCnt: number; //훈련에서 함께 한 수
+  contestCnt: number; //대회에서 함께 한 수
+  like: number; //좋아요 수
+  isLiked: boolean; //해당 파트너에게 좋아요를 눌렀는지
 };
 
 export type PartnerListGetResponse = {
-  sort: string;
+  sort: PartnerSort;
   limit: number;
   start: number;
   items: PartnerDataType[];

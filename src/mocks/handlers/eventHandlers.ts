@@ -1,7 +1,10 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
 import { baseURL } from '@/apis/axios';
-import { EventPopupGetResponse } from '@/apis/types/event';
+import {
+  EventPopupGetResponse,
+  UpcomingEventDdayGetResponse,
+} from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 
 //You can add HTTP handler by msw DOCS
@@ -28,4 +31,18 @@ export const eventHandlers: HttpHandler[] = [
       });
     },
   ),
+
+  // upcomingEventDdayGet
+  http.get<
+    Record<string, never>,
+    Record<string, never>,
+    UpcomingEventDdayGetResponse
+  >(baseURL + '/event/dday', () => {
+    return HttpResponse.json({
+      eventItems: [
+        { dDay: 12, name: 'JTBC 마라톤' },
+        { dDay: 22, name: '옥스팜 트레일워커' },
+      ],
+    });
+  }),
 ];
