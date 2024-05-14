@@ -45,6 +45,7 @@ const StyledLinkBlock = styled(Link)`
   border: 1px solid #ccc;
   border-radius: 1rem;
   box-shadow: 0px 1px 4px 0px #0000001a;
+  gap: 1rem;
 `;
 
 //
