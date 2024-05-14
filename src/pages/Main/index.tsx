@@ -116,13 +116,13 @@ const Main: React.FC = () => {
             type="block"
             icon={PlanedEventIcon}
             title="전체 이벤트"
-            to={BROWSER_PATH.EVENT.MY}
+            to={BROWSER_PATH.EVENT.ALL}
           />
           <LinkButton
             type="block"
             icon={MyEventIcon}
             title="나의 이벤트"
-            to={BROWSER_PATH.EVENT.ALL}
+            to={BROWSER_PATH.EVENT.MY}
           />
         </Stack>
       </Stack>
