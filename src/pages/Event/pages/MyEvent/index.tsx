@@ -115,7 +115,7 @@ const MyEvent: React.FC = () => {
       return (
         <Stack>
           {eventListData.map((event) => (
-            <EventLinkBox eventData={event} />
+            <EventLinkBox key={event.eventId} eventData={event} />
           ))}
         </Stack>
       );
