@@ -15,12 +15,13 @@ import {
 } from '@mui/material';
 import { Link, useSearchParams } from 'react-router-dom';
 
+import allEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventSort } from '@/types/sort';
 import { useQuery } from '@tanstack/react-query';
 import eventApi from '@/apis/requests/event';
-import { EventLinkBox, NotFound } from '@/components/shared';
+import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
 
 const MyEvent: React.FC = () => {
   const [selelectedYear, setSelectedYear] = React.useState(
@@ -164,6 +165,11 @@ const MyEvent: React.FC = () => {
         {renderTitle()}
         {renderEventList()}
       </Stack>
+      <LinkButton
+        icon={allEventIcon}
+        title="전체 이벤트"
+        to={BROWSER_PATH.EVENT.ALL}
+      />
     </Stack>
   );
 };
