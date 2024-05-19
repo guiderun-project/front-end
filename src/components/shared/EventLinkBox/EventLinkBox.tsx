@@ -57,6 +57,7 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
       case RecruitStatus.Open:
         return '#DE1313';
       case RecruitStatus.End:
+      case RecruitStatus.Close:
         return '#42474E';
       case RecruitStatus.Upcoming:
       default:
