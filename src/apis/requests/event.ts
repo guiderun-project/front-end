@@ -2,6 +2,8 @@ import { axiosInstanceWithToken } from '../axios';
 import {
   EventPopupGetRequest,
   EventPopupGetResponse,
+  MyEventGetRequest,
+  MyEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '../types/event';
 
@@ -20,6 +22,12 @@ class EventApi {
     return await axiosInstanceWithToken
       .get<UpcomingEventDdayGetResponse>('/event/dday')
       .then((res) => res.data.eventItems);
+  };
+
+  myEventGet = async ({ year, sort }: MyEventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<MyEventGetResponse>(`/event/my?sort=${sort}&year=${year}`)
+      .then((res) => res.data.items);
   };
 }
 

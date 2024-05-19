@@ -3,9 +3,11 @@ import { http, HttpHandler, HttpResponse } from 'msw';
 import { baseURL } from '@/apis/axios';
 import {
   EventPopupGetResponse,
+  MyEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
+import { EventSort } from '@/types/sort';
 
 //You can add HTTP handler by msw DOCS
 //https://mswjs.io/docs/network-behavior/rest
@@ -45,4 +47,108 @@ export const eventHandlers: HttpHandler[] = [
       ],
     });
   }),
+
+  //myEventGet
+  http.get<Record<string, never>, Record<string, never>, MyEventGetResponse>(
+    baseURL + '/event/my',
+    ({ request }) => {
+      const url = new URL(request.url);
+
+      const sort = url.searchParams.get('sort');
+      const year = Number(url.searchParams.get('year'));
+
+      switch (sort) {
+        case EventSort.Upcoming:
+          return HttpResponse.json({
+            items: [
+              {
+                eventId: 1,
+                endDate: `${year}-00-00`,
+                dDay: 1,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 1',
+                recruitStatus: RecruitStatus.Upcoming,
+              },
+              {
+                eventId: 2,
+                endDate: `${year}-00-00`,
+                dDay: 2,
+                eventType: EventType.Training,
+                name: '테스트 이벤트 2',
+                recruitStatus: RecruitStatus.Open,
+              },
+              {
+                eventId: 3,
+                endDate: `${year}-00-00`,
+                dDay: 3,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 3',
+                recruitStatus: RecruitStatus.Open,
+              },
+              {
+                eventId: 4,
+                endDate: `${year}-00-00`,
+                dDay: 4,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 4',
+                recruitStatus: RecruitStatus.Upcoming,
+              },
+              {
+                eventId: 5,
+                endDate: `${year}-00-00`,
+                dDay: 123,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 5',
+                recruitStatus: RecruitStatus.Upcoming,
+              },
+            ],
+          });
+        case EventSort.End:
+          return HttpResponse.json({
+            items: [
+              {
+                eventId: 1,
+                endDate: `${year}-00-00`,
+                dDay: 1,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 1',
+                recruitStatus: RecruitStatus.Close,
+              },
+              {
+                eventId: 2,
+                endDate: `${year}-00-00`,
+                dDay: 2,
+                eventType: EventType.Training,
+                name: '테스트 이벤트 2',
+                recruitStatus: RecruitStatus.Close,
+              },
+              {
+                eventId: 3,
+                endDate: `${year}-00-00`,
+                dDay: 3,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 3',
+                recruitStatus: RecruitStatus.Close,
+              },
+              {
+                eventId: 4,
+                endDate: `${year}-00-00`,
+                dDay: 4,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 4',
+                recruitStatus: RecruitStatus.Close,
+              },
+              {
+                eventId: 5,
+                endDate: `${year}-00-00`,
+                dDay: 123,
+                eventType: EventType.Competition,
+                name: '테스트 이벤트 5',
+                recruitStatus: RecruitStatus.Close,
+              },
+            ],
+          });
+      }
+    },
+  ),
 ];

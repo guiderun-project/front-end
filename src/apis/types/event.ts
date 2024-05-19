@@ -88,9 +88,8 @@ export type EventPopupGetResponse = {
 };
 
 export type MyEventGetRequest = {
-  sort: 'OPEN' | 'END';
+  sort: EventSort;
   year: number;
-  month: number;
 };
 
 export type MyEventItemType = {
@@ -99,7 +98,7 @@ export type MyEventItemType = {
   name: string;
   dDay: number;
   endDate: string;
-  recruitStatus: EventSort.Open | EventSort.End;
+  recruitStatus: RecruitStatus;
 };
 
 export type MyEventGetResponse = {
