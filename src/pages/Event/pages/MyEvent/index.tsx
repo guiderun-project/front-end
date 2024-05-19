@@ -13,15 +13,15 @@ import {
   SelectChangeEvent,
   CircularProgress,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Link, useSearchParams } from 'react-router-dom';
 
+import eventApi from '@/apis/requests/event';
 import allEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
+import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventSort } from '@/types/sort';
-import { useQuery } from '@tanstack/react-query';
-import eventApi from '@/apis/requests/event';
-import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
 
 const MyEvent: React.FC = () => {
   const [selelectedYear, setSelectedYear] = React.useState(
