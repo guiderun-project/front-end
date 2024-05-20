@@ -152,8 +152,18 @@ export type AllEventCountGetResponse = {
   count: number;
 };
 
+export type SearchEventCountGetRequest = {
+  title: string;
+};
+
+export type SearchEventCountGetResponse = {
+  count: number;
+};
+
 export type SearchEventGetRequest = {
   title: string;
+  limit: number;
+  start: number;
 };
 
 export type SearchEventItemType = {
