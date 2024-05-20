@@ -6,6 +6,8 @@ import { baseURL } from '@/apis/axios';
 import {
   EventPopupGetResponse,
   MyEventGetResponse,
+  SearchEventCountGetResponse,
+  SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
@@ -150,6 +152,38 @@ export const eventHandlers: HttpHandler[] = [
             ],
           });
       }
+    },
+  ),
+
+  //searchEventCountGet
+  http.get<NoneType, NoneType, SearchEventCountGetResponse>(
+    baseURL + '/event/search/count',
+    () => {
+      return HttpResponse.json({ count: 40 });
+    },
+  ),
+
+  //searchEventGet
+  http.get<NoneType, NoneType, SearchEventGetResponse>(
+    baseURL + '/event/search',
+    ({ request }) => {
+      const url = new URL(request.url);
+
+      const limit = Number(url.searchParams.get('limit'));
+
+      return HttpResponse.json({
+        items: new Array(limit)
+          .fill({
+            eventId: 1,
+            name: '테스트 이벤트 1',
+            endDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          })
+          .map((event, idx) => {
+            return { ...event, eventId: idx, name: `테스트 이벤트 ${idx}` };
+          }),
+      });
     },
   ),
 ];
