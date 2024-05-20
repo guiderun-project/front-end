@@ -1,8 +1,27 @@
+import useDebounce from '@/hooks/useDebounce';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, Stack, TextField } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { useSearchParams } from 'react-router-dom';
 
 const EventSearch: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const debounce = useDebounce();
+
+  const handleSearchValueChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setSearchParams({ search: e.target.value });
+  };
+
+  const handleDebounceSearchValueChange = debounce(
+    handleSearchValueChange,
+    500,
+  );
+  //
+  //
+  //
+
   return (
     <>
       <Helmet>
@@ -20,6 +39,7 @@ const EventSearch: React.FC = () => {
               </InputAdornment>
             ),
           }}
+          onChange={handleDebounceSearchValueChange}
         />
       </Stack>
     </>
