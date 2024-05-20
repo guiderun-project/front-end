@@ -1,9 +1,13 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { NoneType } from '../handlers';
+
 import { baseURL } from '@/apis/axios';
 import {
   EventPopupGetResponse,
   MyEventGetResponse,
+  SearchEventCountGetResponse,
+  SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
@@ -14,7 +18,7 @@ import { EventSort } from '@/types/sort';
 
 export const eventHandlers: HttpHandler[] = [
   //eventPopupGet
-  http.get<{ eventId: string }, Record<string, never>, EventPopupGetResponse>(
+  http.get<{ eventId: string }, NoneType, EventPopupGetResponse>(
     baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
@@ -35,21 +39,20 @@ export const eventHandlers: HttpHandler[] = [
   ),
 
   // upcomingEventDdayGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    UpcomingEventDdayGetResponse
-  >(baseURL + '/event/dday', () => {
-    return HttpResponse.json({
-      eventItems: [
-        { dDay: 12, name: 'JTBC 마라톤' },
-        { dDay: 22, name: '옥스팜 트레일워커' },
-      ],
-    });
-  }),
+  http.get<NoneType, NoneType, UpcomingEventDdayGetResponse>(
+    baseURL + '/event/dday',
+    () => {
+      return HttpResponse.json({
+        eventItems: [
+          { dDay: 12, name: 'JTBC 마라톤' },
+          { dDay: 22, name: '옥스팜 트레일워커' },
+        ],
+      });
+    },
+  ),
 
   //myEventGet
-  http.get<Record<string, never>, Record<string, never>, MyEventGetResponse>(
+  http.get<NoneType, NoneType, MyEventGetResponse>(
     baseURL + '/event/my',
     ({ request }) => {
       const url = new URL(request.url);
@@ -149,6 +152,38 @@ export const eventHandlers: HttpHandler[] = [
             ],
           });
       }
+    },
+  ),
+
+  //searchEventCountGet
+  http.get<NoneType, NoneType, SearchEventCountGetResponse>(
+    baseURL + '/event/search/count',
+    () => {
+      return HttpResponse.json({ count: 40 });
+    },
+  ),
+
+  //searchEventGet
+  http.get<NoneType, NoneType, SearchEventGetResponse>(
+    baseURL + '/event/search',
+    ({ request }) => {
+      const url = new URL(request.url);
+
+      const limit = Number(url.searchParams.get('limit'));
+
+      return HttpResponse.json({
+        items: new Array(limit)
+          .fill({
+            eventId: 1,
+            name: '테스트 이벤트 1',
+            endDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          })
+          .map((event, idx) => {
+            return { ...event, eventId: idx, name: `테스트 이벤트 ${idx}` };
+          }),
+      });
     },
   ),
 ];

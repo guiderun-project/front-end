@@ -4,6 +4,10 @@ import {
   EventPopupGetResponse,
   MyEventGetRequest,
   MyEventGetResponse,
+  SearchEventCountGetRequest,
+  SearchEventCountGetResponse,
+  SearchEventGetRequest,
+  SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '../types/event';
 
@@ -27,6 +31,20 @@ class EventApi {
   myEventGet = async ({ year, sort }: MyEventGetRequest) => {
     return await axiosInstanceWithToken
       .get<MyEventGetResponse>(`/event/my?sort=${sort}&year=${year}`)
+      .then((res) => res.data.items);
+  };
+
+  searchEventCountGet = async ({ title }: SearchEventCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<SearchEventCountGetResponse>(`/event/search/count?title=${title}`)
+      .then((res) => res.data.count);
+  };
+
+  searchEventGet = async ({ title, limit, start }: SearchEventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<SearchEventGetResponse>(
+        `/event/search?title=${title}&limit=${limit}&start=${start}`,
+      )
       .then((res) => res.data.items);
   };
 }
