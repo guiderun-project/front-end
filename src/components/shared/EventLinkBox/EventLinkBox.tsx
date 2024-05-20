@@ -17,9 +17,9 @@ export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  dDay: number;
   endDate: string;
   recruitStatus: RecruitStatus;
+  dDay?: number;
   isApply?: boolean;
 };
 
@@ -69,6 +69,9 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
    *
    */
   const renderText = () => {
+    if (!dDay) {
+      return endDate?.replace(/-/g, '.');
+    }
     switch (recruitStatus) {
       case RecruitStatus.Open:
       case RecruitStatus.Upcoming:
