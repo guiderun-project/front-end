@@ -1,5 +1,9 @@
 import { axiosInstanceWithToken } from '../axios';
 import {
+  EventCalendarDetailGetRequest,
+  EventCalendarDetailGetResponse,
+  EventCalendarGetResponse,
+  EventCalenderGetRequest,
   EventPopupGetRequest,
   EventPopupGetResponse,
   MyEventGetRequest,
@@ -44,6 +48,26 @@ class EventApi {
     return await axiosInstanceWithToken
       .get<SearchEventGetResponse>(
         `/event/search?title=${title}&limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  eventCalendatGet = async ({ month, year }: EventCalenderGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCalendarGetResponse>(
+        `/event/calendar?year=${year}&month=${month}`,
+      )
+      .then((res) => res.data.result);
+  };
+
+  eventCalendarDetailGet = async ({
+    day,
+    month,
+    year,
+  }: EventCalendarDetailGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCalendarDetailGetResponse>(
+        `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
       )
       .then((res) => res.data.items);
   };
