@@ -187,7 +187,7 @@ export type UpcomingEventDdayGetResponse = {
   eventItems: UpcomingEventDdayType[];
 };
 
-export type EventCalenderGetRequest = {
+export type EventCalendarGetRequest = {
   year: number;
   month: number;
 };

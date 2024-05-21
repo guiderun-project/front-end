@@ -3,7 +3,7 @@ import {
   EventCalendarDetailGetRequest,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
-  EventCalenderGetRequest,
+  EventCalendarGetRequest,
   EventPopupGetRequest,
   EventPopupGetResponse,
   MyEventGetRequest,
@@ -52,7 +52,7 @@ class EventApi {
       .then((res) => res.data.items);
   };
 
-  eventCalendatGet = async ({ month, year }: EventCalenderGetRequest) => {
+  eventCalendarGet = async ({ month, year }: EventCalendarGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventCalendarGetResponse>(
         `/event/calendar?year=${year}&month=${month}`,
