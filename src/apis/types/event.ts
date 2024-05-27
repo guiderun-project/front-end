@@ -202,6 +202,14 @@ export type EventCalendarGetResponse = {
   result: EventCalendarResultType[];
 };
 
+export type CalendarEventItemType = {
+  eventId: number;
+  eventType: EventType;
+  name: string;
+  startDate: string;
+  recruitStatus: RecruitStatus;
+};
+
 export type EventCalendarDetailGetRequest = {
   year: number;
   month: number;
@@ -209,5 +217,5 @@ export type EventCalendarDetailGetRequest = {
 };
 
 export type EventCalendarDetailGetResponse = {
-  items: EventItemType[];
+  items: CalendarEventItemType[];
 };

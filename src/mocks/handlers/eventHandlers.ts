@@ -214,14 +214,14 @@ export const eventHandlers: HttpHandler[] = [
           {
             eventId: 1,
             name: '테스트 이벤트 1',
-            endDate: '00-00-00',
+            startDate: '00-00-00',
             eventType: EventType.Competition,
             recruitStatus: RecruitStatus.Open,
           },
           {
             eventId: 2,
             name: '테스트 이벤트 2',
-            endDate: '00-00-00',
+            startDate: '00-00-00',
             eventType: EventType.Training,
             recruitStatus: RecruitStatus.Upcoming,
           },
