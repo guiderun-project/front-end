@@ -1,11 +1,35 @@
 import { BROWSER_PATH } from '@/constants/path';
 import SearchIcon from '@mui/icons-material/Search';
 import TodayIcon from '@mui/icons-material/Today';
-import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import {
+  IconButton,
+  Stack,
+  Tab,
+  Tabs,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+//
+//
+//
+
+enum EventTypeEnum {
+  Upcoming = 'upcoming',
+  Close = 'close',
+  My = 'my',
+}
+
+//
+//
+//
 
 const AllEvent: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const type = searchParams.get('type') ?? EventTypeEnum.Upcoming;
 
   return (
     <Stack gap="2.5rem">
@@ -43,6 +67,40 @@ const AllEvent: React.FC = () => {
           </Tooltip>
         </Stack>
       </Stack>
+      <Tabs
+        variant="fullWidth"
+        value={type}
+        onChange={(_, newValue) =>
+          setSearchParams({
+            type: newValue,
+          })
+        }
+      >
+        <Tab
+          role="tab"
+          id="tab-upcoming-event"
+          value={EventTypeEnum.Upcoming}
+          label="예정 이벤트"
+          aria-selected={type === EventTypeEnum.Upcoming}
+          aria-controls="tabpanel-upcoming-event"
+        />
+        <Tab
+          role="tab"
+          id="tab-close-event"
+          value={EventTypeEnum.Close}
+          label="지난 이벤트"
+          aria-selected={type === EventTypeEnum.Close}
+          aria-controls="tabpanel-close-event"
+        />
+        <Tab
+          role="tab"
+          id="tab-my-event"
+          value={EventTypeEnum.My}
+          label="나의 이벤트"
+          aria-selected={type === EventTypeEnum.My}
+          aria-controls="tabpanel-my-event"
+        />
+      </Tabs>
     </Stack>
   );
 };
