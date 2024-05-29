@@ -1,5 +1,7 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { NoneType } from '../handlers';
+
 import { baseURL } from '@/apis/axios';
 import {
   AccessTokenGetResponse,
@@ -29,16 +31,15 @@ const SIGN_UP_DATA: SignupPostResponse = {
 
 export const authHandlers: HttpHandler[] = [
   //kakaoAuthPost
-  http.post<
-    Record<string, never>,
-    Record<string, never>,
-    KakaoAuthPostResponse
-  >(baseURL + '/oauth/login/kakao', () => {
-    return HttpResponse.json({ accessToken: '123', isExist: true });
-  }),
+  http.post<NoneType, NoneType, KakaoAuthPostResponse>(
+    baseURL + '/oauth/login/kakao',
+    () => {
+      return HttpResponse.json({ accessToken: '123', isExist: true });
+    },
+  ),
 
   //viSignupPost
-  http.post<Record<string, never>, ViSignupPostRequest, SignupPostResponse>(
+  http.post<NoneType, ViSignupPostRequest, SignupPostResponse>(
     baseURL + '/signup/vi',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
@@ -46,7 +47,7 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   //guideSignupPost
-  http.post<Record<string, never>, GuideSignupPostRequest, SignupPostResponse>(
+  http.post<NoneType, GuideSignupPostRequest, SignupPostResponse>(
     baseURL + '/signup/guide',
     () => {
       return HttpResponse.json(SIGN_UP_DATA);
@@ -54,25 +55,23 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   //accessTokenGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    AccessTokenGetResponse
-  >(baseURL + '/oauth/login/reissue', () => {
-    return HttpResponse.json({ accessToken: '123' });
-  }),
+  http.get<NoneType, NoneType, AccessTokenGetResponse>(
+    baseURL + '/oauth/login/reissue',
+    () => {
+      return HttpResponse.json({ accessToken: '123' });
+    },
+  ),
 
   //checkDuplicatedPost
-  http.post<
-    Record<string, never>,
-    CheckDuplicatedPostRequest,
-    CheckDuplicatedPostResponse
-  >(baseURL + '/signup/duplicated', () => {
-    return HttpResponse.json({ isUnique: true });
-  }),
+  http.post<NoneType, CheckDuplicatedPostRequest, CheckDuplicatedPostResponse>(
+    baseURL + '/signup/duplicated',
+    () => {
+      return HttpResponse.json({ isUnique: true });
+    },
+  ),
 
   //loginPost
-  http.post<Record<string, never>, LoginPostRequest, LoginPostResponse>(
+  http.post<NoneType, LoginPostRequest, LoginPostResponse>(
     baseURL + '/login',
     () => {
       return HttpResponse.json({ accessToken: '123' });
@@ -81,7 +80,7 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   // getCertificationTokenPasswordPost
-  http.post<Record<string, never>, GetCertificationTokenPasswordPostRequest>(
+  http.post<NoneType, GetCertificationTokenPasswordPostRequest>(
     baseURL + '/sms/password',
     () => {
       return HttpResponse.json();
@@ -89,7 +88,7 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   // getCertificationTokenIdPost
-  http.post<Record<string, never>, GetCertificationTokenIdPostRequest>(
+  http.post<NoneType, GetCertificationTokenIdPostRequest>(
     baseURL + '/sms/accountId',
     () => {
       return HttpResponse.json();
@@ -98,7 +97,7 @@ export const authHandlers: HttpHandler[] = [
 
   //checkCertificationTokenPost
   http.post<
-    Record<string, never>,
+    NoneType,
     CheckCertificationTokenPostRequest,
     CheckCertificationTokenPostResponse
   >(baseURL + '/sms/token', () => {
@@ -106,7 +105,7 @@ export const authHandlers: HttpHandler[] = [
   }),
 
   // renewalPasswordPatch
-  http.patch<Record<string, never>, RenewalPasswordPatchRequest>(
+  http.patch<NoneType, RenewalPasswordPatchRequest>(
     baseURL + '/new-password',
     () => {
       return HttpResponse.json();
@@ -114,7 +113,7 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   //getUserIdPost
-  http.post<Record<string, never>, GetUserIdPostRequest, GetUserIdPostResponse>(
+  http.post<NoneType, GetUserIdPostRequest, GetUserIdPostResponse>(
     baseURL + '/accountId',
     () => {
       return HttpResponse.json({

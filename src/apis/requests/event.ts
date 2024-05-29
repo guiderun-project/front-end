@@ -1,9 +1,17 @@
 import { axiosInstanceWithToken } from '../axios';
 import {
+  EventCalendarDetailGetRequest,
+  EventCalendarDetailGetResponse,
+  EventCalendarGetResponse,
+  EventCalendarGetRequest,
   EventPopupGetRequest,
   EventPopupGetResponse,
   MyEventGetRequest,
   MyEventGetResponse,
+  SearchEventCountGetRequest,
+  SearchEventCountGetResponse,
+  SearchEventGetRequest,
+  SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '../types/event';
 
@@ -27,6 +35,40 @@ class EventApi {
   myEventGet = async ({ year, sort }: MyEventGetRequest) => {
     return await axiosInstanceWithToken
       .get<MyEventGetResponse>(`/event/my?sort=${sort}&year=${year}`)
+      .then((res) => res.data.items);
+  };
+
+  searchEventCountGet = async ({ title }: SearchEventCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<SearchEventCountGetResponse>(`/event/search/count?title=${title}`)
+      .then((res) => res.data.count);
+  };
+
+  searchEventGet = async ({ title, limit, start }: SearchEventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<SearchEventGetResponse>(
+        `/event/search?title=${title}&limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  eventCalendarGet = async ({ month, year }: EventCalendarGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCalendarGetResponse>(
+        `/event/calendar?year=${year}&month=${month}`,
+      )
+      .then((res) => res.data.result);
+  };
+
+  eventCalendarDetailGet = async ({
+    day,
+    month,
+    year,
+  }: EventCalendarDetailGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCalendarDetailGetResponse>(
+        `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
+      )
       .then((res) => res.data.items);
   };
 }

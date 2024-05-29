@@ -1,5 +1,7 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { NoneType } from '../handlers';
+
 import { baseURL } from '@/apis/axios';
 import {
   AdminApproveUserPostResponse,
@@ -263,44 +265,40 @@ const GUIDE_APPLY_DATA: AdminGuideApplyGetResponse = {
 
 export const adminHandlers: HttpHandler[] = [
   //adminUserListGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    AdminUserListGetResponse
-  >(baseURL + '/admin/user-list', () => {
-    return HttpResponse.json({
-      limit: 5,
-      start: 0,
-      items: USER_LIST_DATA,
-    });
-  }),
+  http.get<NoneType, NoneType, AdminUserListGetResponse>(
+    baseURL + '/admin/user-list',
+    () => {
+      return HttpResponse.json({
+        limit: 5,
+        start: 0,
+        items: USER_LIST_DATA,
+      });
+    },
+  ),
 
   //adminUserListCountGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    AdminUserListCountGetResponse
-  >(baseURL + '/admin/user-list/count', () => {
-    return HttpResponse.json({ count: 30 });
-  }),
+  http.get<NoneType, NoneType, AdminUserListCountGetResponse>(
+    baseURL + '/admin/user-list/count',
+    () => {
+      return HttpResponse.json({ count: 30 });
+    },
+  ),
 
   //adminViApplyGet
-  http.get<
-    AdminViApplyGetRequest,
-    Record<string, never>,
-    AdminViApplyGetResponse
-  >(baseURL + '/admin/apply/vi/:userId', () => {
-    return HttpResponse.json(VI_APPLY_DATA);
-  }),
+  http.get<AdminViApplyGetRequest, NoneType, AdminViApplyGetResponse>(
+    baseURL + '/admin/apply/vi/:userId',
+    () => {
+      return HttpResponse.json(VI_APPLY_DATA);
+    },
+  ),
 
   //adminGuideApplyGet
-  http.get<
-    AdminGuideApplyGetRequest,
-    Record<string, never>,
-    AdminGuideApplyGetResponse
-  >(baseURL + '/admin/apply/guide/:userId', () => {
-    return HttpResponse.json(GUIDE_APPLY_DATA);
-  }),
+  http.get<AdminGuideApplyGetRequest, NoneType, AdminGuideApplyGetResponse>(
+    baseURL + '/admin/apply/guide/:userId',
+    () => {
+      return HttpResponse.json(GUIDE_APPLY_DATA);
+    },
+  ),
 
   //adminApproveUserPost
   http.post<
@@ -312,47 +310,42 @@ export const adminHandlers: HttpHandler[] = [
   }),
 
   //adminEventListGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    AdminEventListGetResponse
-  >(baseURL + '/admin/event-list', () => {
-    return HttpResponse.json({ items: EVENT_LIST_DATA });
-  }),
+  http.get<NoneType, NoneType, AdminEventListGetResponse>(
+    baseURL + '/admin/event-list',
+    () => {
+      return HttpResponse.json({ items: EVENT_LIST_DATA });
+    },
+  ),
 
   //adminEventListCountGet
-  http.get<
-    Record<string, never>,
-    Record<string, never>,
-    AdminEventListCountGetResponse
-  >(baseURL + '/admin/event-list/count', () => {
-    return HttpResponse.json({ count: 30 });
-  }),
+  http.get<NoneType, NoneType, AdminEventListCountGetResponse>(
+    baseURL + '/admin/event-list/count',
+    () => {
+      return HttpResponse.json({ count: 30 });
+    },
+  ),
 
   //adminEventHistoryGet
-  http.get<
-    { userId: string },
-    Record<string, never>,
-    AdminEventHistoryGetResponse
-  >(baseURL + '/admin/:userId/event-list', () => {
-    return HttpResponse.json({ items: EVENT_HISTORY_DATA });
-  }),
+  http.get<{ userId: string }, NoneType, AdminEventHistoryGetResponse>(
+    baseURL + '/admin/:userId/event-list',
+    () => {
+      return HttpResponse.json({ items: EVENT_HISTORY_DATA });
+    },
+  ),
 
   //adminEventHistoryCountGet
-  http.get<
-    { userId: string },
-    Record<string, never>,
-    AdminEventHistoryCountGetResponse
-  >(baseURL + '/admin/:userId/event-list/count', () => {
-    return HttpResponse.json({ count: 40 });
-  }),
+  http.get<{ userId: string }, NoneType, AdminEventHistoryCountGetResponse>(
+    baseURL + '/admin/:userId/event-list/count',
+    () => {
+      return HttpResponse.json({ count: 40 });
+    },
+  ),
 
   //adminEventTotalCountGet
-  http.get<
-    { userId: string },
-    Record<string, never>,
-    AdminEventTotalCountGetResponse
-  >(baseURL + '/admin/:userId/event-type/count', () => {
-    return HttpResponse.json({ competition: 10, training: 10 });
-  }),
+  http.get<{ userId: string }, NoneType, AdminEventTotalCountGetResponse>(
+    baseURL + '/admin/:userId/event-type/count',
+    () => {
+      return HttpResponse.json({ competition: 10, training: 10 });
+    },
+  ),
 ];
