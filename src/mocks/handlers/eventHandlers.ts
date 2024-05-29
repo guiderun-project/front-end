@@ -208,7 +208,13 @@ export const eventHandlers: HttpHandler[] = [
   //eventCalendarDetailGet
   http.get<NoneType, NoneType, EventCalendarDetailGetResponse>(
     baseURL + '/event/calendar/detail',
-    () => {
+    ({ request }) => {
+      const url = new URL(request.url);
+      const day = Number(url.searchParams.get('day'));
+      if (![1, 4, 14, 25].includes(day)) {
+        return HttpResponse.json({ items: [] });
+      }
+
       return HttpResponse.json({
         items: [
           {
