@@ -17,8 +17,9 @@ export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  endDate: string;
   recruitStatus: RecruitStatus;
+  endDate?: string;
+  startDate?: string;
   dDay?: number;
   isApply?: boolean;
 };
@@ -50,7 +51,15 @@ const StyledLink = styled(Link)`
 //
 
 const EventLinkBox: React.FC<EventLinkBoxProps> = ({
-  eventData: { eventId, name, eventType, endDate, dDay, recruitStatus },
+  eventData: {
+    eventId,
+    name,
+    eventType,
+    endDate,
+    startDate,
+    dDay,
+    recruitStatus,
+  },
 }) => {
   const getColor = () => {
     switch (recruitStatus) {
@@ -70,7 +79,9 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
    */
   const renderText = () => {
     if (!dDay) {
-      return endDate?.replace(/-/g, '.');
+      return endDate
+        ? endDate.replace(/-/g, '.')
+        : startDate?.replace(/-/g, '.');
     }
     switch (recruitStatus) {
       case RecruitStatus.Open:
@@ -78,7 +89,9 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
         return `D-${dDay}`;
       case RecruitStatus.End:
       case RecruitStatus.Close:
-        return endDate?.replace(/-/g, '.');
+        return endDate
+          ? endDate.replace(/-/g, '.')
+          : startDate?.replace(/-/g, '.');
     }
   };
 

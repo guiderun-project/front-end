@@ -4,6 +4,8 @@ import { NoneType } from '../handlers';
 
 import { baseURL } from '@/apis/axios';
 import {
+  EventCalendarDetailGetResponse,
+  EventCalendarGetResponse,
   EventPopupGetResponse,
   MyEventGetResponse,
   SearchEventCountGetResponse,
@@ -183,6 +185,53 @@ export const eventHandlers: HttpHandler[] = [
           .map((event, idx) => {
             return { ...event, eventId: idx, name: `테스트 이벤트 ${idx}` };
           }),
+      });
+    },
+  ),
+
+  //eventCalendatGet
+  http.get<NoneType, NoneType, EventCalendarGetResponse>(
+    baseURL + '/event/calendar',
+    () => {
+      return HttpResponse.json({
+        result: [
+          { day: 1, competition: false, training: true },
+          { day: 4, competition: true, training: true },
+          { day: 14, competition: true, training: true },
+          { day: 22, competition: false, training: false },
+          { day: 25, competition: true, training: false },
+        ],
+      });
+    },
+  ),
+
+  //eventCalendarDetailGet
+  http.get<NoneType, NoneType, EventCalendarDetailGetResponse>(
+    baseURL + '/event/calendar/detail',
+    ({ request }) => {
+      const url = new URL(request.url);
+      const day = Number(url.searchParams.get('day'));
+      if (![1, 4, 14, 25].includes(day)) {
+        return HttpResponse.json({ items: [] });
+      }
+
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            name: '테스트 이벤트 1',
+            startDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 2,
+            name: '테스트 이벤트 2',
+            startDate: '00-00-00',
+            eventType: EventType.Training,
+            recruitStatus: RecruitStatus.Upcoming,
+          },
+        ],
       });
     },
   ),
