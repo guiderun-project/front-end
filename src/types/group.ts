@@ -29,6 +29,7 @@ export enum DisabilityEnum {
 export enum EventType {
   Training = 'TRAINING',
   Competition = 'COMPETITION',
+  TOTAL = 'TOTAL',
 }
 
 /**

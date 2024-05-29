@@ -4,6 +4,8 @@ import { NoneType } from '../handlers';
 
 import { baseURL } from '@/apis/axios';
 import {
+  AllEventCountGetResponse,
+  AllEventGetResponse,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
   EventPopupGetResponse,
@@ -227,6 +229,65 @@ export const eventHandlers: HttpHandler[] = [
           {
             eventId: 2,
             name: '테스트 이벤트 2',
+            startDate: '00-00-00',
+            eventType: EventType.Training,
+            recruitStatus: RecruitStatus.Upcoming,
+          },
+        ],
+      });
+    },
+  ),
+
+  http.get<NoneType, NoneType, AllEventCountGetResponse>(
+    baseURL + '/event/all/count',
+    () => {
+      return HttpResponse.json({ count: 30 });
+    },
+  ),
+
+  http.get<NoneType, NoneType, AllEventGetResponse>(
+    baseURL + '/event/all',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            name: '테스트 이벤트 1',
+            startDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 2,
+            name: '테스트 이벤트 2',
+            startDate: '00-00-00',
+            eventType: EventType.Training,
+            recruitStatus: RecruitStatus.Upcoming,
+          },
+          {
+            eventId: 3,
+            name: '테스트 이벤트 3',
+            startDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 4,
+            name: '테스트 이벤트 4',
+            startDate: '00-00-00',
+            eventType: EventType.Training,
+            recruitStatus: RecruitStatus.Upcoming,
+          },
+          {
+            eventId: 5,
+            name: '테스트 이벤트 5',
+            startDate: '00-00-00',
+            eventType: EventType.Competition,
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 6,
+            name: '테스트 이벤트 6',
             startDate: '00-00-00',
             eventType: EventType.Training,
             recruitStatus: RecruitStatus.Upcoming,

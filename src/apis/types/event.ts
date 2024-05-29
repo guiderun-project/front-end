@@ -1,5 +1,5 @@
 import { EventType, RecruitStatus } from '@/types/group';
-import { EventKind, EventSort } from '@/types/sort';
+import { EventSort } from '@/types/sort';
 
 export type EventPostRequest = {
   recruitStartDate: string;
@@ -127,14 +127,14 @@ export type AllEventGetRequest = {
   start: number;
   sort: EventSort;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventItemType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
@@ -145,7 +145,7 @@ export type AllEventGetResponse = {
 export type AllEventCountGetRequest = {
   sort: EventSort;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventCountGetResponse = {
