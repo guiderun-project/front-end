@@ -1,16 +1,18 @@
-import { EventLinkBox, LinkButton } from '@/components/shared';
-import { CircularProgress, IconButton, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+
+import styled from '@emotion/styled';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CircleIcon from '@mui/icons-material/Circle';
+import { IconButton, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
+
+import eventApi from '@/apis/requests/event';
 import AllEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
+import { EventLinkBox, LinkButton } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-import { useQuery } from '@tanstack/react-query';
-import eventApi from '@/apis/requests/event';
-import styled from '@emotion/styled';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import CircleIcon from '@mui/icons-material/Circle';
 
 //
 //
@@ -121,7 +123,7 @@ const EventCalendar: React.FC = () => {
     };
   }>({});
 
-  const { data: eventCalendarData, isLoading } = useQuery({
+  const { data: eventCalendarData } = useQuery({
     queryKey: ['eventCalendarGet', year, month],
     queryFn: () => eventApi.eventCalendarGet({ month, year }),
   });
