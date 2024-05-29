@@ -1,4 +1,5 @@
 import { BROWSER_PATH } from '@/constants/path';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import TodayIcon from '@mui/icons-material/Today';
 import {
@@ -10,6 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import AllEventClosePanel from './panels/AllEventClosePanel';
+import AllEventMyPanel from './panels/AllEventMyPanel';
+import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
 
 //
 //
@@ -30,6 +35,27 @@ const AllEvent: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const type = searchParams.get('type') ?? EventTypeEnum.Upcoming;
+
+  /**
+   *
+   */
+  const renderPanel = () => {
+    switch (type) {
+      case EventTypeEnum.Upcoming:
+        return <AllEventUpcomingPanel />;
+      case EventTypeEnum.Close:
+        return <AllEventClosePanel />;
+      case EventTypeEnum.My:
+        return <AllEventMyPanel />;
+      default:
+        return (
+          <Stack alignItems="center" gap="1.25rem" padding="2rem 0">
+            <ErrorOutlineIcon fontSize="large" />
+            <Typography fontWeight={700}>잘못된 접근입니다.</Typography>
+          </Stack>
+        );
+    }
+  };
 
   return (
     <Stack gap="2.5rem">
@@ -67,40 +93,43 @@ const AllEvent: React.FC = () => {
           </Tooltip>
         </Stack>
       </Stack>
-      <Tabs
-        variant="fullWidth"
-        value={type}
-        onChange={(_, newValue) =>
-          setSearchParams({
-            type: newValue,
-          })
-        }
-      >
-        <Tab
-          role="tab"
-          id="tab-upcoming-event"
-          value={EventTypeEnum.Upcoming}
-          label="예정 이벤트"
-          aria-selected={type === EventTypeEnum.Upcoming}
-          aria-controls="tabpanel-upcoming-event"
-        />
-        <Tab
-          role="tab"
-          id="tab-close-event"
-          value={EventTypeEnum.Close}
-          label="지난 이벤트"
-          aria-selected={type === EventTypeEnum.Close}
-          aria-controls="tabpanel-close-event"
-        />
-        <Tab
-          role="tab"
-          id="tab-my-event"
-          value={EventTypeEnum.My}
-          label="나의 이벤트"
-          aria-selected={type === EventTypeEnum.My}
-          aria-controls="tabpanel-my-event"
-        />
-      </Tabs>
+      <Stack>
+        <Tabs
+          variant="fullWidth"
+          value={type}
+          onChange={(_, newValue) =>
+            setSearchParams({
+              type: newValue,
+            })
+          }
+        >
+          <Tab
+            role="tab"
+            id="tab-upcoming-event"
+            value={EventTypeEnum.Upcoming}
+            label="예정 이벤트"
+            aria-selected={type === EventTypeEnum.Upcoming}
+            aria-controls="tabpanel-upcoming-event"
+          />
+          <Tab
+            role="tab"
+            id="tab-close-event"
+            value={EventTypeEnum.Close}
+            label="지난 이벤트"
+            aria-selected={type === EventTypeEnum.Close}
+            aria-controls="tabpanel-close-event"
+          />
+          <Tab
+            role="tab"
+            id="tab-my-event"
+            value={EventTypeEnum.My}
+            label="나의 이벤트"
+            aria-selected={type === EventTypeEnum.My}
+            aria-controls="tabpanel-my-event"
+          />
+        </Tabs>
+        {renderPanel()}
+      </Stack>
     </Stack>
   );
 };
