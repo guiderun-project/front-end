@@ -106,19 +106,12 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: BROWSER_PATH.MAIN,
             element: <MainRoot />,
             children: [
               {
                 path: BROWSER_PATH.MAIN,
                 element: <Main />,
               },
-            ],
-          },
-          {
-            path: BROWSER_PATH.EVENT.MAIN,
-            element: <MainRoot />,
-            children: [
               {
                 path: BROWSER_PATH.EVENT.ALL,
                 element: <AllEvent />,
