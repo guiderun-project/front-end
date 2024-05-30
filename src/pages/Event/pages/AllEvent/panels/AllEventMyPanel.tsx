@@ -30,7 +30,12 @@ const AllEventMyPanel: React.FC = () => {
     isLoading: isCountGetLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['allEventCountGet', selectedEventStatus, selectedEventType],
+    queryKey: [
+      'allEventCountGet',
+      EventKind.My,
+      selectedEventStatus,
+      selectedEventType,
+    ],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.My,
@@ -40,7 +45,13 @@ const AllEventMyPanel: React.FC = () => {
   });
 
   const { data: eventListData, isLoading } = useQuery({
-    queryKey: ['allEventGet', selectedEventStatus, selectedEventType, page],
+    queryKey: [
+      'allEventGet',
+      EventKind.My,
+      selectedEventStatus,
+      selectedEventType,
+      page,
+    ],
     queryFn: () =>
       eventApi.allEventGet({
         sort: EventKind.My,

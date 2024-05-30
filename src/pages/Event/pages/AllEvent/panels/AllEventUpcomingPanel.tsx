@@ -50,7 +50,12 @@ const AllEventUpcomingPanel: React.FC = () => {
     isLoading: isCountGetLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['allEventCountGet', selectedEventStatus, selectedEventType],
+    queryKey: [
+      'allEventCountGet',
+      EventKind.Upcoming,
+      selectedEventStatus,
+      selectedEventType,
+    ],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.Upcoming,
@@ -60,7 +65,13 @@ const AllEventUpcomingPanel: React.FC = () => {
   });
 
   const { data: eventListData, isLoading } = useQuery({
-    queryKey: ['allEventGet', selectedEventStatus, selectedEventType, page],
+    queryKey: [
+      'allEventGet',
+      EventKind.Upcoming,
+      selectedEventStatus,
+      selectedEventType,
+      page,
+    ],
     queryFn: () =>
       eventApi.allEventGet({
         sort: EventKind.Upcoming,

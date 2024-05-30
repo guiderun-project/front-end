@@ -28,7 +28,7 @@ const AllEventClosePanel: React.FC = () => {
     isLoading: isCountGetLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['allEventCountGet', selectedEventType],
+    queryKey: ['allEventCountGet', EventKind.End, selectedEventType],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.End,
@@ -38,7 +38,7 @@ const AllEventClosePanel: React.FC = () => {
   });
 
   const { data: eventListData, isLoading } = useQuery({
-    queryKey: ['allEventGet', selectedEventType, page],
+    queryKey: ['allEventGet', EventKind.End, selectedEventType, page],
     queryFn: () =>
       eventApi.allEventGet({
         sort: EventKind.End,
