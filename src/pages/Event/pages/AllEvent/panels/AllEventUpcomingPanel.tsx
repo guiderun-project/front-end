@@ -1,7 +1,6 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import FolderOffOutlinedIcon from '@mui/icons-material/FolderOffOutlined';
 import {
   CircularProgress,
   FormControl,
@@ -10,9 +9,10 @@ import {
   Pagination,
   Select,
   Stack,
-  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+
+import EmptyEvent from '../components/EmptyEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventLinkBox } from '@/components/shared';
@@ -23,13 +23,13 @@ import { EventKind } from '@/types/sort';
 //
 //
 
-const MAX_EVENT_LENGTH = 6;
+export const MAX_EVENT_LENGTH = 6;
 
 //
 //
 //
 
-const StyledMenuItem = styled(MenuItem)`
+export const StyledMenuItem = styled(MenuItem)`
   font-size: 0.75rem;
   font-weight: 700;
 `;
@@ -171,10 +171,7 @@ const AllEventUpcomingPanel: React.FC = () => {
               ))}
             </Stack>
           ) : (
-            <Stack alignItems="center" justifyContent="center" gap="2rem">
-              <FolderOffOutlinedIcon fontSize="large" />
-              <Typography>이벤트가 존재하지 않습니다</Typography>
-            </Stack>
+            <EmptyEvent />
           )}
           {eventCount ? (
             <Stack alignItems="center">
