@@ -67,6 +67,7 @@ const Main: React.FC = () => {
   } = useQuery({
     queryKey: ['partnerListCountGet'],
     queryFn: () => infoApi.partnerListCountGet({ userId }),
+    enabled: Boolean(userId),
   });
   const { data: partnerListData, isLoading: isPartnerListGetLoading } =
     useQuery({
