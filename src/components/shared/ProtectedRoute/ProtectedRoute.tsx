@@ -6,9 +6,9 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
+import Loading from '@/pages/Loading';
 import { RootState } from '@/store/index';
 import { setUserInfo } from '@/store/reducer/user';
-import Loading from '@/pages/Loading';
 
 const ProtectedRoute: React.FC = () => {
   const location = useLocation();
