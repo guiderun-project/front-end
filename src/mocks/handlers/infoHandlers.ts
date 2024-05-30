@@ -1,10 +1,15 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 
+import { NoneType } from '../handlers';
+
 import { baseURL } from '@/apis/axios';
 import {
   EventHistoryCountGetResponse,
   EventHistoryGetResponse,
   MyPageGetResponse,
+  PartnerListCountGetRequest,
+  PartnerListCountGetResponse,
+  PartnerListGetResponse,
   PermissionGetResponse,
   PermissionPatchRequest,
   PermissionPatchResponse,
@@ -27,13 +32,14 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { PartnerSort } from '@/types/sort';
 
 //You can add HTTP handler by msw DOCS
 //https://mswjs.io/docs/network-behavior/rest
 
 export const infoHandlers: HttpHandler[] = [
   //myPageGet
-  http.get<Record<string, never>, Record<string, never>, MyPageGetResponse>(
+  http.get<NoneType, NoneType, MyPageGetResponse>(
     baseURL + '/user/mypage',
     () => {
       return HttpResponse.json({
@@ -50,7 +56,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   //userInfoGet
-  http.get<Record<string, never>, Record<string, never>, UserInfoGetResponse>(
+  http.get<NoneType, NoneType, UserInfoGetResponse>(
     baseURL + '/user/personal',
     () => {
       return HttpResponse.json({
@@ -68,7 +74,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // personalInfoGet
-  http.get<{ userId: string }, Record<string, never>, PersonalInfoGetResponse>(
+  http.get<{ userId: string }, NoneType, PersonalInfoGetResponse>(
     baseURL + '/user/personal/:userId',
     () => {
       return HttpResponse.json({
@@ -86,43 +92,41 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   //personalInfoPatch
-  http.patch<
-    Record<string, never>,
-    PersonalInfoPatchRequest,
-    PersonalInfoPatchResponse
-  >(baseURL + '/user/personal', async ({ request }) => {
-    const newInfo = await request.json();
-    return HttpResponse.json({
-      ...newInfo,
-      role: RoleEnum.Admin,
-      type: DisabilityEnum.GUIDE,
-    });
-  }),
+  http.patch<NoneType, PersonalInfoPatchRequest, PersonalInfoPatchResponse>(
+    baseURL + '/user/personal',
+    async ({ request }) => {
+      const newInfo = await request.json();
+      return HttpResponse.json({
+        ...newInfo,
+        role: RoleEnum.Admin,
+        type: DisabilityEnum.GUIDE,
+      });
+    },
+  ),
 
   //runningSpecGuideGet
-  http.get<
-    { userId: string },
-    Record<string, never>,
-    RunningSpecGuideGetResponse
-  >(baseURL + '/user/running/guide/:userId', () => {
-    return HttpResponse.json({
-      detailRecord: '1시간',
-      guidingPace: RunningGroup.A,
-      hopePrefs: '테스트',
-      howToKnow: ['guide.1'],
-      isGuideExp: true,
-      motive: '테스트',
-      recordDegree: RunningGroup.A,
-      runningPlace: '테스트 장소',
-      viCount: '10회',
-      viName: '테스트',
-      viRecord: '테스트',
-    });
-  }),
+  http.get<{ userId: string }, NoneType, RunningSpecGuideGetResponse>(
+    baseURL + '/user/running/guide/:userId',
+    () => {
+      return HttpResponse.json({
+        detailRecord: '1시간',
+        guidingPace: RunningGroup.A,
+        hopePrefs: '테스트',
+        howToKnow: ['guide.1'],
+        isGuideExp: true,
+        motive: '테스트',
+        recordDegree: RunningGroup.A,
+        runningPlace: '테스트 장소',
+        viCount: '10회',
+        viName: '테스트',
+        viRecord: '테스트',
+      });
+    },
+  ),
 
   // runningSpecGuidePatch
   http.patch<
-    Record<string, never>,
+    NoneType,
     RunningSpecGuidePatchRequest,
     RunningSpecGuidePatchResponse
   >(baseURL + '/user/running/guide', async ({ request }) => {
@@ -131,7 +135,7 @@ export const infoHandlers: HttpHandler[] = [
   }),
 
   // runningSpecViGet
-  http.get<{ userId: string }, Record<string, never>, RunningSpecViGetResponse>(
+  http.get<{ userId: string }, NoneType, RunningSpecViGetResponse>(
     baseURL + '/user/running/vi/:userId',
     () => {
       return HttpResponse.json({
@@ -148,17 +152,16 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // runningSpecViPatch
-  http.patch<
-    Record<string, never>,
-    RunningSpecViPatchRequest,
-    runningSpecViPatchResponse
-  >(baseURL + '/user/running/vi', async ({ request }) => {
-    const newSpec = await request.json();
-    return HttpResponse.json(newSpec);
-  }),
+  http.patch<NoneType, RunningSpecViPatchRequest, runningSpecViPatchResponse>(
+    baseURL + '/user/running/vi',
+    async ({ request }) => {
+      const newSpec = await request.json();
+      return HttpResponse.json(newSpec);
+    },
+  ),
 
   //permissionGet
-  http.get<{ userId: string }, Record<string, never>, PermissionGetResponse>(
+  http.get<{ userId: string }, NoneType, PermissionGetResponse>(
     baseURL + '/user/permission/:userId',
     () => {
       return HttpResponse.json({ portraitRights: true, privacy: true });
@@ -166,23 +169,112 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   //permissionPatch
-  http.patch<
-    Record<string, never>,
-    PermissionPatchRequest,
-    PermissionPatchResponse
-  >(baseURL + '/user/permission', async ({ request }) => {
-    const newPermission = await request.json();
-    return HttpResponse.json(newPermission);
-  }),
+  http.patch<NoneType, PermissionPatchRequest, PermissionPatchResponse>(
+    baseURL + '/user/permission',
+    async ({ request }) => {
+      const newPermission = await request.json();
+      return HttpResponse.json(newPermission);
+    },
+  ),
 
   //TODO: profileGet
 
-  //TODO: partnerListGet
+  // partnerListGet
+  http.get<{ userId: string }, NoneType, PartnerListGetResponse>(
+    baseURL + '/user/partner-list/:userId',
+    ({ request }) => {
+      const url = new URL(request.url);
 
-  //TODO: partnerListCountGet
+      const limit = Number(url.searchParams.get('limit'));
+      if (limit === 2) {
+        return HttpResponse.json({
+          limit: 2,
+          sort: PartnerSort.Recent,
+          start: 0,
+          items: [
+            {
+              userId: '1e12kdsn1',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.C,
+              role: RoleEnum.User,
+              img: '',
+              contestCnt: 25,
+              isLiked: true,
+              trainingCnt: 10,
+              like: 123,
+              name: '배두리',
+            },
+            {
+              userId: '1sfdsfq3345413',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/2.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '이재건',
+            },
+          ],
+        });
+      }
+      return HttpResponse.json({
+        limit: 2,
+        sort: PartnerSort.Recent,
+        start: 0,
+        items: [
+          {
+            userId: '1e12kdsn1',
+            type: DisabilityEnum.GUIDE,
+            recordDegree: RunningGroup.C,
+            role: RoleEnum.User,
+            img: '',
+            contestCnt: 25,
+            isLiked: true,
+            trainingCnt: 10,
+            like: 123,
+            name: '배두리',
+          },
+          {
+            userId: '1sfdsfq3345413',
+            type: DisabilityEnum.GUIDE,
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            img: 'https://mui.com/static/images/avatar/2.jpg',
+            contestCnt: 1,
+            isLiked: false,
+            trainingCnt: 4,
+            like: 10,
+            name: '이재건',
+          },
+          {
+            userId: '1sfdsfq3345413asdsad',
+            type: DisabilityEnum.GUIDE,
+            recordDegree: RunningGroup.C,
+            role: RoleEnum.User,
+            img: 'https://mui.com/static/images/avatar/1.jpg',
+            contestCnt: 1,
+            isLiked: true,
+            trainingCnt: 4,
+            like: 1,
+            name: '조재석',
+          },
+        ],
+      });
+    },
+  ),
+
+  // partnerListCountGet
+  http.get<PartnerListCountGetRequest, NoneType, PartnerListCountGetResponse>(
+    baseURL + '/user/partner-list/count/:userId',
+    () => {
+      return HttpResponse.json({ count: 50 });
+    },
+  ),
 
   //eventHistoryGet
-  http.get<{ userId: string }, Record<string, never>, EventHistoryGetResponse>(
+  http.get<{ userId: string }, NoneType, EventHistoryGetResponse>(
     baseURL + '/user/event-history/:userId',
     () => {
       return HttpResponse.json({
@@ -266,11 +358,10 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // eventHistoryCountGet
-  http.get<
-    { userId: string },
-    Record<string, never>,
-    EventHistoryCountGetResponse
-  >(baseURL + '/user/event-history/count/:userId', () => {
-    return HttpResponse.json({ count: 37 });
-  }),
+  http.get<{ userId: string }, NoneType, EventHistoryCountGetResponse>(
+    baseURL + '/user/event-history/count/:userId',
+    () => {
+      return HttpResponse.json({ count: 37 });
+    },
+  ),
 ];

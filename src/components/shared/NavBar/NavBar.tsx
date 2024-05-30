@@ -76,19 +76,8 @@ const NavBar: React.FC = () => {
       {NAV_LINK_LIST.map((navItem) =>
         navItem?.limit ? (
           navItem.limit === role ? (
-            <Tooltip title={navItem.alt}>
-              <Link
-                key={`${navItem.alt}-nav`}
-                to={navItem.disabled ? '' : navItem.link}
-                onClick={(e) => {
-                  if (navItem.disabled) {
-                    e.preventDefault();
-                    alert(
-                      '페이지 준비중입니다. 빠른 시일 내에 공개 예정입니다.',
-                    );
-                  }
-                }}
-              >
+            <Tooltip key={`${navItem.alt}-nav`} title={navItem.alt}>
+              <Link to={navItem.link}>
                 <Box
                   component="img"
                   width="1.4375rem"
@@ -99,17 +88,8 @@ const NavBar: React.FC = () => {
             </Tooltip>
           ) : null
         ) : (
-          <Tooltip title={navItem.alt}>
-            <Link
-              key={`${navItem.alt}-nav`}
-              to={navItem.disabled ? '' : navItem.link}
-              onClick={(e) => {
-                if (navItem.disabled) {
-                  e.preventDefault();
-                  alert('페이지 준비중입니다. 빠른 시일 내에 공개 예정입니다.');
-                }
-              }}
-            >
+          <Tooltip key={`${navItem.alt}-nav`} title={navItem.alt}>
+            <Link to={navItem.link}>
               <Box
                 component="img"
                 width="1.4375rem"

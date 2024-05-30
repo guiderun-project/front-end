@@ -88,9 +88,8 @@ export type EventPopupGetResponse = {
 };
 
 export type MyEventGetRequest = {
-  sort: 'OPEN' | 'END';
+  sort: EventSort;
   year: number;
-  month: number;
 };
 
 export type MyEventItemType = {
@@ -99,7 +98,7 @@ export type MyEventItemType = {
   name: string;
   dDay: number;
   endDate: string;
-  recruitStatus: EventSort.Open | EventSort.End;
+  recruitStatus: RecruitStatus;
 };
 
 export type MyEventGetResponse = {
@@ -126,16 +125,16 @@ export type UpcomingEventGetResponse = {
 export type AllEventGetRequest = {
   limit: number;
   start: number;
-  sort: EventSort;
+  sort: EventKind;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventItemType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
@@ -144,20 +143,30 @@ export type AllEventGetResponse = {
 };
 
 export type AllEventCountGetRequest = {
-  sort: EventSort;
+  sort: EventKind;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventCountGetResponse = {
   count: number;
 };
 
-export type SearchEventGetRequest = {
+export type SearchEventCountGetRequest = {
   title: string;
 };
 
-export type SearchEventItemType = {
+export type SearchEventCountGetResponse = {
+  count: number;
+};
+
+export type SearchEventGetRequest = {
+  title: string;
+  limit: number;
+  start: number;
+};
+
+export type EventItemType = {
   eventId: number;
   eventType: EventType;
   name: string;
@@ -166,32 +175,47 @@ export type SearchEventItemType = {
 };
 
 export type SearchEventGetResponse = {
-  items: SearchEventItemType[];
+  items: EventItemType[];
 };
 
-export type CalendarGetRequest = {
+type UpcomingEventDdayType = {
+  name: string;
+  dDay: number;
+};
+
+export type UpcomingEventDdayGetResponse = {
+  eventItems: UpcomingEventDdayType[];
+};
+
+export type EventCalendarGetRequest = {
   year: number;
   month: number;
 };
 
-export type CalendarResultType = {
+type EventCalendarResultType = {
   day: number;
   competition: boolean;
   training: boolean;
 };
 
-export type CalendarGetResponse = {
-  result: CalendarResultType[];
+export type EventCalendarGetResponse = {
+  result: EventCalendarResultType[];
 };
 
-export type DetailCalendarGetRequest = {
+export type CalendarEventItemType = {
+  eventId: number;
+  eventType: EventType;
+  name: string;
+  startDate: string;
+  recruitStatus: RecruitStatus;
+};
+
+export type EventCalendarDetailGetRequest = {
   year: number;
   month: number;
   day: number;
 };
 
-export type DetailCalendarItemType = SearchEventItemType;
-
-export type DetailCalendarGetResponse = {
-  items: DetailCalendarItemType[];
+export type EventCalendarDetailGetResponse = {
+  items: CalendarEventItemType[];
 };
