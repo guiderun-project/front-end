@@ -13,9 +13,35 @@ import {
   SearchEventGetRequest,
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
+  AllEventCountGetRequest,
+  AllEventCountGetResponse,
+  AllEventGetRequest,
+  AllEventGetResponse,
 } from '../types/event';
 
 class EventApi {
+  allEventCountGet = async ({ kind, sort, type }: AllEventCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AllEventCountGetResponse>(
+        `/event/all/count?sort=${sort}&type=${type}&kind=${kind}`,
+      )
+      .then((res) => res.data.count);
+  };
+
+  allEventGet = async ({
+    start = 0,
+    limit = 6,
+    kind,
+    sort,
+    type,
+  }: AllEventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AllEventGetResponse>(
+        `/event/all?start=${start}&limit=${limit}&kind=${kind}&sort=${sort}&type=${type}`,
+      )
+      .then((res) => res.data.items);
+  };
+
   eventPopupGet = async ({ eventId }: EventPopupGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventPopupGetResponse>(`/event/pop/${eventId}`)

@@ -125,16 +125,16 @@ export type UpcomingEventGetResponse = {
 export type AllEventGetRequest = {
   limit: number;
   start: number;
-  sort: EventSort;
+  sort: EventKind;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventItemType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
@@ -143,9 +143,9 @@ export type AllEventGetResponse = {
 };
 
 export type AllEventCountGetRequest = {
-  sort: EventSort;
+  sort: EventKind;
   type: EventType;
-  kind: EventKind;
+  kind: RecruitStatus;
 };
 
 export type AllEventCountGetResponse = {
