@@ -1,4 +1,3 @@
-import { BROWSER_PATH } from '@/constants/path';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import TodayIcon from '@mui/icons-material/Today';
@@ -15,6 +14,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import AllEventClosePanel from './panels/AllEventClosePanel';
 import AllEventMyPanel from './panels/AllEventMyPanel';
 import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
+
+import { BROWSER_PATH } from '@/constants/path';
 
 //
 //
