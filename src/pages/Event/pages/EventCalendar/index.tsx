@@ -108,6 +108,15 @@ const StyledCalendarTd = styled.td<{ date: number; startdate: number }>`
   }
 `;
 
+const StyledEventListContainer = styled.div`
+  z-index: 111;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d9d9d9;
+  border-radius: 1rem;
+  overflow: hidden;
+`;
+
 //
 //
 //
@@ -277,11 +286,11 @@ const EventCalendar: React.FC = () => {
       return null;
     }
     return (
-      <Stack border="1px solid #D9D9D9" borderRadius="1rem">
+      <StyledEventListContainer>
         {eventList.map((event) => (
           <EventLinkBox key={event.eventId} eventData={event} />
         ))}
-      </Stack>
+      </StyledEventListContainer>
     );
   };
 
