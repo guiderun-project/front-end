@@ -18,6 +18,7 @@ export type EventDataType = {
   eventType: EventType;
   name: string;
   recruitStatus: RecruitStatus;
+  date?: string;
   endDate?: string;
   startDate?: string;
   dDay?: number;
@@ -55,6 +56,7 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
     eventId,
     name,
     eventType,
+    date,
     endDate,
     startDate,
     dDay,
@@ -79,9 +81,15 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
    */
   const renderText = () => {
     if (!dDay) {
-      return endDate
-        ? endDate.replace(/-/g, '.')
-        : startDate?.replace(/-/g, '.');
+      if (date) {
+        return date.replace(/-/g, '.');
+      }
+      if (endDate) {
+        endDate.replace(/-/g, '.');
+      }
+      if (startDate) {
+        startDate?.replace(/-/g, '.');
+      }
     }
     switch (recruitStatus) {
       case RecruitStatus.Open:
