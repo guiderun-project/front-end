@@ -19,6 +19,8 @@ import type {
   PersonalInfoPatchResponse,
   ProfileGetRequest,
   ProfileGetResponse,
+  ProfileImagePostRequest,
+  ProfileImagePostResponse,
   RunningSpecGuideGetRequest,
   RunningSpecGuideGetResponse,
   RunningSpecGuidePatchRequest,
@@ -30,6 +32,7 @@ import type {
   UserInfoGetResponse,
 } from '../types/info';
 
+import { RecruitStatus } from '@/types/group';
 import { EventSort, PartnerSort } from '@/types/sort';
 
 class InfoApi {
@@ -155,13 +158,14 @@ class InfoApi {
 
   eventHistoryGet = async ({
     userId,
-    sort = EventSort.Total,
+    sort = RecruitStatus.All,
     limit = 3,
     start = 0,
+    year = new Date().getFullYear(),
   }: EventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryGetResponse>(
-        `/user/event-history/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
+        `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}&year=${year}`,
       )
       .then((res) => res.data);
   };
@@ -170,11 +174,17 @@ class InfoApi {
     userId,
     sort = EventSort.Total,
   }: EventHistoryCountGetRequest) => {
-    return axiosInstanceWithToken
+    return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
         `/user/event-history/count/${userId}?sort=${sort}`,
       )
       .then((res) => res.data.count);
+  };
+
+  profileImagePost = async ({ image }: ProfileImagePostRequest) => {
+    return await axiosInstanceWithToken
+      .post<ProfileImagePostResponse>('/user/img', image)
+      .then((res) => res.data.img);
   };
 }
 

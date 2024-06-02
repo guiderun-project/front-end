@@ -1,40 +1,37 @@
 import React from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import InfoIcon from '@mui/icons-material/Info';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import {
   Box,
+  Button,
   CircularProgress,
-  Pagination,
   Stack,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import {
-  DetailEventModal,
   DisabilityChip,
-  EventChip,
+  EventLinkBox,
   GenderChip,
   GroupChip,
-  NavBar,
-  PageLayout,
+  TextLink,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { RecruitStatus } from '@/types/group';
+import { updateInfo } from '@/store/reducer/user';
 
 //
 //
 //
-
+//TODO: LinkBox로 대체하기
 export const StyledEventButton = styled.button`
   border: 0;
   outline: 0;
@@ -52,58 +49,78 @@ export const StyledEventButton = styled.button`
   border-bottom: 1px solid #c2c7cf;
 `;
 
-//
-//
-//
-
-const MAX_EVENT_LENGTH = 5;
+const StyledImageLabel = styled.label<{ img: string }>`
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+  ${({ img }) => {
+    if (img.length) {
+      return css`
+        background: url(${img}) no-repeat center center;
+        background-size: 5rem;
+      `;
+    } else {
+      return css`
+        background-color: #8d8d8d;
+      `;
+    }
+  }}
+  border-radius: 1000000000rem;
+  cursor: pointer;
+`;
 
 //
 //
 //
 
 const Mypage: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
-  const [selectedEvent, setSelectedEvent] = React.useState(-1);
-  const [page, setPage] = React.useState(1);
   const userData = useSelector((state: RootState) => state.user);
-  const { data: eventCount, isLoading: countLoading } = useQuery({
-    queryKey: ['eventHistoryCountGet', userData.userId],
-    queryFn: () => infoApi.eventHistoryCountGet({ userId: userData.userId }),
-    enabled: !!userData.userId,
-  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { data: eventList, isLoading } = useQuery({
-    queryKey: ['eventHistoryGet', eventCount, userData.userId, page],
+    queryKey: ['eventHistoryGet', userData.userId],
     queryFn: () =>
       infoApi.eventHistoryGet({
         userId: userData.userId,
-        start: startIndex,
-        limit: MAX_EVENT_LENGTH,
       }),
-    enabled: (eventCount ?? 0) > 0,
   });
 
-  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
-  const startIndex = (page - 1) * MAX_EVENT_LENGTH;
-
-  const getColor = (recruitStatus: RecruitStatus) => {
-    switch (recruitStatus) {
-      case RecruitStatus.Open:
-        return '#DE1313';
-      case RecruitStatus.Close:
-        return '#42474E';
-      case RecruitStatus.Upcoming:
-      default:
-        return '#3586FF';
-    }
-  };
+  const { mutate } = useMutation({
+    mutationKey: [],
+    mutationFn: (image: FormData) => infoApi.profileImagePost({ image }),
+    onSuccess: (data) => {
+      dispatch(updateInfo({ img: data }));
+      alert('프로필 사진이 업로드되었습니다.');
+    },
+    onError: (error) => {
+      if (error.response?.data) {
+        const errorData = error.response.data;
+        alert(errorData.message);
+      } else {
+        alert('에러가 발생했습니다.');
+      }
+    },
+  });
 
   /**
    *
    */
-  const handleEventDetailOpen = (eventId: number) => {
-    setSelectedEvent(eventId);
-    setOpen(true);
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (
+      e.target.files &&
+      window.confirm('프로필 사진을 업로드 하시겠습니까?')
+    ) {
+      const uploadFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('files', uploadFile);
+      mutate(formData);
+    }
   };
 
   /**
@@ -111,48 +128,50 @@ const Mypage: React.FC = () => {
    */
   const renderTeamInfo = () => {
     return (
-      <Box display="flex" alignItems="flex-end" justifyContent="space-between">
-        <Stack component="h1" gap="0.325rem">
-          <Typography component="span" fontSize="2rem">
-            {userData.name} 님은
-          </Typography>
-          <Typography
-            component="span"
-            fontSize="1.5rem"
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Typography component="span" fontSize="1.5rem" fontWeight={700}>
-              Team
-            </Typography>
-            <GroupChip group={userData.recordDegree} type="avatar" />
-            입니다
-          </Typography>
-        </Stack>
-        <Link
-          to={`${BROWSER_PATH.INFO}?type=spec`}
-          style={{
-            textDecoration: 'none',
-            color: '#333',
-            fontSize: '0.875rem',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            component="span"
-            fontSize="0.875rem"
-            fontWeight={500}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="flex-start"
+        gap="1.5rem"
+      >
+        <StyledImageLabel img={userData.img}>
+          <CameraAltOutlinedIcon
             sx={{
-              textDecoration: 'underline',
-              textUnderlinePosition: 'under',
+              fontSize: '1.75rem',
+              color: '#fff',
             }}
-          >
-            {`러닝스펙 업데이트 `}
-          </Typography>
-          <KeyboardArrowRightIcon fontSize="small" aria-hidden />
-        </Link>
+          />
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleProfileImageChange}
+          />
+        </StyledImageLabel>
+        <Stack gap="1rem" alignItems="flex-start">
+          <Stack component="h1" gap="0.325rem">
+            <Typography component="span" fontSize="2rem">
+              {userData.name} 님은
+            </Typography>
+            <Typography
+              component="span"
+              fontSize="1.5rem"
+              display="flex"
+              alignItems="center"
+              gap="0.5rem"
+            >
+              <Typography component="span" fontSize="1.5rem" fontWeight={700}>
+                Team
+              </Typography>
+              <GroupChip group={userData.recordDegree} type="avatar" />
+              입니다
+            </Typography>
+          </Stack>
+          <TextLink
+            to={`${BROWSER_PATH.INFO}?type=spec`}
+            label={`러닝스펙 업데이트 `}
+          />
+        </Stack>
       </Box>
     );
   };
@@ -172,29 +191,10 @@ const Mypage: React.FC = () => {
             <DisabilityChip component="chip" type={userData.type} />
             <GenderChip type={userData.gender} />
           </Box>
-          <Link
+          <TextLink
             to={`${BROWSER_PATH.INFO}?type=info`}
-            style={{
-              textDecoration: 'none',
-              color: '#333',
-              fontSize: '0.875rem',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              component="span"
-              fontSize="0.875rem"
-              fontWeight={500}
-              sx={{
-                textDecoration: 'underline',
-                textUnderlinePosition: 'under',
-              }}
-            >
-              {`개인 인적사항 더보기 `}
-            </Typography>
-            <KeyboardArrowRightIcon fontSize="small" aria-hidden />
-          </Link>
+            label={`개인 인적사항 더보기 `}
+          />
         </Stack>
       </Box>
     );
@@ -206,17 +206,24 @@ const Mypage: React.FC = () => {
   const renderMyEvent = () => {
     return (
       <Stack gap="2rem">
-        <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
-          내가 참여한 이벤트
-        </Typography>
-        {isLoading || countLoading ? (
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
+            내가 참여한 이벤트
+          </Typography>
+          <TextLink to={''} label="참여 이벤트 더보기" />
+        </Stack>
+        {isLoading ? (
           <Stack justifyContent="center" alignItems="center">
             <CircularProgress
               size="2rem"
               aria-label="데이터를 가지고 오는 중"
             />
           </Stack>
-        ) : maxPage === 0 ? (
+        ) : !eventList?.items.length ? (
           <Stack justifyContent="center" alignItems="center" gap="2rem">
             <InfoIcon aria-label="알림" />
             <Typography fontWeight={700} fontSize="1.25rem">
@@ -226,57 +233,29 @@ const Mypage: React.FC = () => {
         ) : (
           <Stack>
             {eventList?.items.map((event) => (
-              <StyledEventButton
-                key={event.eventId}
-                onClick={() => handleEventDetailOpen(event.eventId)}
-              >
-                <EventChip type={event.eventType} variant="full" />
-                <Stack gap="0.25rem" alignItems="flex-start">
-                  <Typography
-                    fontWeight={500}
-                    whiteSpace="normal"
-                    textAlign="left"
-                  >
-                    {event.name}
-                  </Typography>
-                  <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
-                    {event.date.replace(/-/g, '.')}
-                  </Typography>
-                </Stack>
-                <Typography
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  gap="0.625rem"
-                  fontSize="0.6875rem"
-                >
-                  <span
-                    style={{
-                      color: getColor(event.recruitStatus),
-                      fontWeight: 500,
-                    }}
-                  >
-                    <FormattedMessage
-                      id={`common.status.${event.recruitStatus}`}
-                    />
-                  </span>
-                  <ArrowRightIcon fontSize="small" />
-                </Typography>
-              </StyledEventButton>
+              <EventLinkBox key={event.eventId} eventData={event} />
             ))}
           </Stack>
         )}
-        {maxPage > 1 && (
-          <Pagination
-            page={page}
-            onChange={(_, selectedPage) => setPage(selectedPage)}
-            count={maxPage}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          />
-        )}
+      </Stack>
+    );
+  };
+
+  /**
+   *
+   */
+  const Navigation: React.FC<{
+    title: string;
+    buttonLabel: string;
+    to: string;
+    newTabs?: boolean;
+  }> = ({ newTabs, title, buttonLabel, to }) => {
+    return (
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography component="h2" fontSize="1.0625rem" fontWeight={700}>
+          {title}
+        </Typography>
+        <TextLink newTabs={newTabs} to={to} label={buttonLabel} />
       </Stack>
     );
   };
@@ -290,22 +269,34 @@ const Mypage: React.FC = () => {
       <Helmet>
         <title>마이 페이지 - Guide run Project</title>
       </Helmet>
-      <PageLayout>
-        <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
-          {/* 이름, 팀 */}
-          {renderTeamInfo()}
-          {/* 기본정보 */}
-          {renderInfo()}
-          {/* 내가 참여한 이벤트 */}
-          {renderMyEvent()}
+      <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
+        {/* 이름, 팀 */}
+        {renderTeamInfo()}
+        {/* 기본정보 */}
+        {renderInfo()}
+        {/* 내가 참여한 이벤트 */}
+        {renderMyEvent()}
+        <Navigation
+          newTabs
+          title="1:1 문의하기"
+          buttonLabel="문의하러 바로 가기"
+          to="https://open.kakao.com/o/sB89yqNf"
+        />
+        {/* TODO: 탈퇴 */}
+        <Navigation title="탈퇴하기" buttonLabel="탈퇴하러 가기" to="" />
+        <Stack alignItems="center">
+          <Button
+            fullWidth
+            size="large"
+            variant="outlined"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            되돌아가기
+          </Button>
         </Stack>
-        <NavBar />
-      </PageLayout>
-      <DetailEventModal
-        eventId={selectedEvent}
-        isOpen={open}
-        onModalClose={() => setOpen(false)}
-      />
+      </Stack>
     </>
   );
 };

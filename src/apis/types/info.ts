@@ -30,6 +30,7 @@ export type UserInfoGetResponse = {
   recordDegree: RunningGroup;
   age: number;
   snsId: string | null;
+  img: string;
 };
 
 export type PersonalInfoGetRequest = {
@@ -210,23 +211,21 @@ export type PartnerListCountGetResponse = {
 
 export type EventHistoryGetRequest = {
   userId: string;
-  sort?: EventSort;
+  sort?: RecruitStatus;
   limit?: number;
   start?: number;
+  year?: number;
 };
 
 export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
 export type EventHistoryGetResponse = {
-  sort: string;
-  limit: number;
-  start: number;
   items: EventDataType[];
 };
 
@@ -237,4 +236,12 @@ export type EventHistoryCountGetRequest = {
 
 export type EventHistoryCountGetResponse = {
   count: number;
+};
+
+export type ProfileImagePostRequest = {
+  image: FormData;
+};
+
+export type ProfileImagePostResponse = {
+  img: string;
 };
