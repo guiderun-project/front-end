@@ -30,6 +30,7 @@ export type UserInfoGetResponse = {
   recordDegree: RunningGroup;
   age: number;
   snsId: string | null;
+  img: string;
 };
 
 export type PersonalInfoGetRequest = {

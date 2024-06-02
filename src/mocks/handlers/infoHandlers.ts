@@ -69,6 +69,7 @@ export const infoHandlers: HttpHandler[] = [
         snsId: 'guide_run',
         type: DisabilityEnum.GUIDE,
         userId: '123',
+        img: 'https://mui.com/static/images/avatar/2.jpg',
       });
     },
   ),
