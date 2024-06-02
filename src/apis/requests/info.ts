@@ -32,8 +32,8 @@ import type {
   UserInfoGetResponse,
 } from '../types/info';
 
-import { EventSort, PartnerSort } from '@/types/sort';
 import { RecruitStatus } from '@/types/group';
+import { EventSort, PartnerSort } from '@/types/sort';
 
 class InfoApi {
   /**

@@ -223,7 +223,7 @@ const Mypage: React.FC = () => {
               aria-label="데이터를 가지고 오는 중"
             />
           </Stack>
-        ) : !Boolean(eventList?.items.length) ? (
+        ) : !eventList?.items.length ? (
           <Stack justifyContent="center" alignItems="center" gap="2rem">
             <InfoIcon aria-label="알림" />
             <Typography fontWeight={700} fontSize="1.25rem">
