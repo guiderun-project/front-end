@@ -180,10 +180,9 @@ class InfoApi {
   };
 
   profileImagePost = async ({ image }: ProfileImagePostRequest) => {
-    return await axiosInstanceWithToken.post<ProfileImagePostResponse>(
-      '/user/img',
-      image,
-    );
+    return await axiosInstanceWithToken
+      .post<ProfileImagePostResponse>('/user/img', image)
+      .then((res) => res.data.img);
   };
 }
 
