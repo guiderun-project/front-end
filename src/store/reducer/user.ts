@@ -18,6 +18,7 @@ const initialState: UserInfoGetResponse = {
   role: RoleEnum.New,
   snsId: '',
   type: DisabilityEnum.GUIDE,
+  img: '',
 };
 
 export const userSlice = createSlice({
