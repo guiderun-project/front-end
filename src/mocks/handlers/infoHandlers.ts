@@ -277,79 +277,106 @@ export const infoHandlers: HttpHandler[] = [
   //eventHistoryGet
   http.get<{ userId: string }, NoneType, EventHistoryGetResponse>(
     baseURL + '/user/event-history/:userId',
-    () => {
+    ({ request }) => {
+      const url = new URL(request.url);
+
+      const limit = Number(url.searchParams.get('limit'));
+      if (limit === 3) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+          ],
+        });
+      }
       return HttpResponse.json({
-        start: 0,
-        sort: 'total',
-        limit: 10,
         items: [
           {
             name: '테스트1',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 1,
             eventType: EventType.Competition,
           },
           {
             name: '테스트2',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 2,
             eventType: EventType.Competition,
           },
           {
             name: '테스트3',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 3,
             eventType: EventType.Training,
           },
           {
             name: '테스트4',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 4,
             eventType: EventType.Competition,
           },
           {
             name: '테스트5',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 5,
             eventType: EventType.Training,
           },
           {
             name: '테스트6',
             recruitStatus: RecruitStatus.Upcoming,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 6,
             eventType: EventType.Competition,
           },
           {
             name: '테스트7',
             recruitStatus: RecruitStatus.Close,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 7,
             eventType: EventType.Competition,
           },
           {
             name: '테스트8',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 8,
             eventType: EventType.Training,
           },
           {
             name: '테스트9',
             recruitStatus: RecruitStatus.Open,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 9,
             eventType: EventType.Competition,
           },
           {
             name: '테스트10',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 10,
             eventType: EventType.Training,
           },

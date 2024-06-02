@@ -211,23 +211,21 @@ export type PartnerListCountGetResponse = {
 
 export type EventHistoryGetRequest = {
   userId: string;
-  sort?: EventSort;
+  sort?: RecruitStatus;
   limit?: number;
   start?: number;
+  year?: number;
 };
 
 export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
 export type EventHistoryGetResponse = {
-  sort: string;
-  limit: number;
-  start: number;
   items: EventDataType[];
 };
 
