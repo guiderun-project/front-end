@@ -19,6 +19,8 @@ import type {
   PersonalInfoPatchResponse,
   ProfileGetRequest,
   ProfileGetResponse,
+  ProfileImagePostRequest,
+  ProfileImagePostResponse,
   RunningSpecGuideGetRequest,
   RunningSpecGuideGetResponse,
   RunningSpecGuidePatchRequest,
@@ -170,11 +172,18 @@ class InfoApi {
     userId,
     sort = EventSort.Total,
   }: EventHistoryCountGetRequest) => {
-    return axiosInstanceWithToken
+    return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
         `/user/event-history/count/${userId}?sort=${sort}`,
       )
       .then((res) => res.data.count);
+  };
+
+  profileImagePost = async ({ image }: ProfileImagePostRequest) => {
+    return await axiosInstanceWithToken.post<ProfileImagePostResponse>(
+      '/user/img',
+      image,
+    );
   };
 }
 

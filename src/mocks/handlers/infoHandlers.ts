@@ -69,7 +69,7 @@ export const infoHandlers: HttpHandler[] = [
         snsId: 'guide_run',
         type: DisabilityEnum.GUIDE,
         userId: '123',
-        img: 'https://mui.com/static/images/avatar/2.jpg',
+        img: '', //상황에 따라 https://mui.com/static/images/avatar/2.jpg 를 추가함
       });
     },
   ),
@@ -365,4 +365,24 @@ export const infoHandlers: HttpHandler[] = [
       return HttpResponse.json({ count: 37 });
     },
   ),
+
+  //profileImagePost
+  http.post(baseURL + '/user/img', async ({ request }) => {
+    const data = await request.formData();
+    const file = data.get('file');
+
+    if (!file) {
+      return new HttpResponse('Missing document', { status: 400 });
+    }
+
+    if (!(file instanceof File)) {
+      return new HttpResponse('Uploaded document is not a File', {
+        status: 400,
+      });
+    }
+
+    return HttpResponse.json({
+      img: 'https://mui.com/static/images/avatar/2.jpg',
+    });
+  }),
 ];

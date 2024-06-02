@@ -239,3 +239,11 @@ export type EventHistoryCountGetRequest = {
 export type EventHistoryCountGetResponse = {
   count: number;
 };
+
+export type ProfileImagePostRequest = {
+  image: FormData;
+};
+
+export type ProfileImagePostResponse = {
+  img: string;
+};
