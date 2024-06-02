@@ -367,7 +367,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   //profileImagePost
-  http.post(baseURL + '/user/img', async ({ request }) => {
+  http.post(baseURL + '/user/img', async () => {
     return HttpResponse.json({
       img: 'https://mui.com/static/images/avatar/2.jpg',
     });
