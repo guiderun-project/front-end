@@ -13,3 +13,4 @@ export * from './NotFound';
 export * from './PageLayout';
 export * from './PartnerBox';
 export * from './ProtectedRoute';
+export * from './TextLink';
