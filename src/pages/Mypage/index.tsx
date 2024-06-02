@@ -1,7 +1,9 @@
 import React from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import InfoIcon from '@mui/icons-material/Info';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import {
@@ -11,10 +13,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
@@ -29,6 +31,7 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { updateInfo } from '@/store/reducer/user';
 import { RecruitStatus } from '@/types/group';
 
 //
@@ -52,6 +55,29 @@ export const StyledEventButton = styled.button`
   border-bottom: 1px solid #c2c7cf;
 `;
 
+const StyledImageLabel = styled.label<{ img: string }>`
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+  ${({ img }) => {
+    if (img.length) {
+      return css`
+        background: url(${img}) no-repeat center center;
+        background-size: 5rem;
+      `;
+    } else {
+      return css`
+        background-color: #8d8d8d;
+      `;
+    }
+  }}
+  border-radius: 1000000000rem;
+  cursor: pointer;
+`;
+
 //
 //
 //
@@ -66,7 +92,10 @@ const Mypage: React.FC = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(-1);
   const [page, setPage] = React.useState(1);
+
   const userData = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
   const { data: eventCount, isLoading: countLoading } = useQuery({
     queryKey: ['eventHistoryCountGet', userData.userId],
     queryFn: () => infoApi.eventHistoryCountGet({ userId: userData.userId }),
@@ -81,6 +110,23 @@ const Mypage: React.FC = () => {
         limit: MAX_EVENT_LENGTH,
       }),
     enabled: (eventCount ?? 0) > 0,
+  });
+
+  const { mutate } = useMutation({
+    mutationKey: [],
+    mutationFn: (image: FormData) => infoApi.profileImagePost({ image }),
+    onSuccess: (data) => {
+      dispatch(updateInfo({ img: data }));
+      alert('프로필 사진이 업로드되었습니다.');
+    },
+    onError: (error) => {
+      if (error.response?.data) {
+        const errorData = error.response.data;
+        alert(errorData.message);
+      } else {
+        alert('에러가 발생했습니다.');
+      }
+    },
   });
 
   const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LENGTH);
@@ -109,50 +155,88 @@ const Mypage: React.FC = () => {
   /**
    *
    */
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (
+      e.target.files &&
+      window.confirm('프로필 사진을 업로드 하시겠습니까?')
+    ) {
+      const uploadFile = e.target.files[0];
+      const formData = new FormData();
+      formData.append('files', uploadFile);
+      mutate(formData);
+    }
+  };
+
+  /**
+   *
+   */
   const renderTeamInfo = () => {
     return (
-      <Box display="flex" alignItems="flex-end" justifyContent="space-between">
-        <Stack component="h1" gap="0.325rem">
-          <Typography component="span" fontSize="2rem">
-            {userData.name} 님은
-          </Typography>
-          <Typography
-            component="span"
-            fontSize="1.5rem"
-            display="flex"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Typography component="span" fontSize="1.5rem" fontWeight={700}>
-              Team
-            </Typography>
-            <GroupChip group={userData.recordDegree} type="avatar" />
-            입니다
-          </Typography>
-        </Stack>
-        <Link
-          to={`${BROWSER_PATH.INFO}?type=spec`}
-          style={{
-            textDecoration: 'none',
-            color: '#333',
-            fontSize: '0.875rem',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            component="span"
-            fontSize="0.875rem"
-            fontWeight={500}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="flex-start"
+        gap="1.5rem"
+      >
+        <StyledImageLabel img={userData.img}>
+          <CameraAltOutlinedIcon
             sx={{
-              textDecoration: 'underline',
-              textUnderlinePosition: 'under',
+              fontSize: '1.75rem',
+              color: '#fff',
+            }}
+          />
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={handleProfileImageChange}
+          />
+        </StyledImageLabel>
+        <Stack gap="1rem" alignItems="flex-start">
+          <Stack component="h1" gap="0.325rem">
+            <Typography component="span" fontSize="2rem">
+              {userData.name} 님은
+            </Typography>
+            <Typography
+              component="span"
+              fontSize="1.5rem"
+              display="flex"
+              alignItems="center"
+              gap="0.5rem"
+            >
+              <Typography component="span" fontSize="1.5rem" fontWeight={700}>
+                Team
+              </Typography>
+              <GroupChip group={userData.recordDegree} type="avatar" />
+              입니다
+            </Typography>
+          </Stack>
+          <Link
+            to={`${BROWSER_PATH.INFO}?type=spec`}
+            style={{
+              textDecoration: 'none',
+              color: '#333',
+              fontSize: '0.875rem',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            {`러닝스펙 업데이트 `}
-          </Typography>
-          <KeyboardArrowRightIcon fontSize="small" aria-hidden />
-        </Link>
+            <Typography
+              component="span"
+              fontSize="0.875rem"
+              fontWeight={500}
+              sx={{
+                textDecoration: 'underline',
+                textUnderlinePosition: 'under',
+              }}
+            >
+              {`러닝스펙 업데이트 `}
+            </Typography>
+            <KeyboardArrowRightIcon fontSize="small" aria-hidden />
+          </Link>
+        </Stack>
       </Box>
     );
   };
