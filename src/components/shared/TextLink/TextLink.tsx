@@ -9,15 +9,17 @@ import { Link } from 'react-router-dom';
 interface TextLinkProps {
   to: string;
   label: string;
+  newTabs?: boolean;
 }
 
 //
 //
 //
 
-const TextLink: React.FC<TextLinkProps> = ({ to, label }) => {
+const TextLink: React.FC<TextLinkProps> = ({ newTabs = false, to, label }) => {
   return (
     <Link
+      target={newTabs ? '_blank' : '_self'}
       to={to}
       style={{
         textDecoration: 'none',
