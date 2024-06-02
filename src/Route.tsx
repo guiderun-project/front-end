@@ -5,7 +5,12 @@ import { useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
-import { ErrorBoundary, PageLayout, ProtectedRoute } from './components/shared';
+import {
+  ErrorBoundary,
+  NavBar,
+  PageLayout,
+  ProtectedRoute,
+} from './components/shared';
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
@@ -154,7 +159,12 @@ const router = createBrowserRouter([
           },
           {
             path: BROWSER_PATH.MYPAGE,
-            element: <Mypage />,
+            element: (
+              <PageLayout>
+                <Mypage />
+                <NavBar />
+              </PageLayout>
+            ),
           },
           {
             path: BROWSER_PATH.INFO,
