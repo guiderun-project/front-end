@@ -231,6 +231,7 @@ export type EventHistoryGetResponse = {
 
 export type EventHistoryCountGetRequest = {
   userId: string;
+  year?: number;
   sort?: RecruitStatus;
 };
 

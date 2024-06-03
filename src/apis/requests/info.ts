@@ -173,10 +173,11 @@ class InfoApi {
   eventHistoryCountGet = async ({
     userId,
     sort = RecruitStatus.All,
+    year = new Date().getFullYear(),
   }: EventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}`,
+        `/user/event-history/count/${userId}?sort=${sort}&year=${year}`,
       )
       .then((res) => res.data.count);
   };

@@ -1,21 +1,25 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import InfoIcon from '@mui/icons-material/Info';
 import {
+  CircularProgress,
   Stack,
   Typography,
   SelectChangeEvent,
   Select,
   MenuItem,
+  Pagination,
 } from '@mui/material';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
 import eventApi from '@/apis/requests/event';
-import { EventChip } from '@/components/shared';
+import { EventChip, EventLinkBox } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { EventType, RecruitStatus } from '@/types/group';
+import infoApi from '@/apis/requests/info';
 
 //
 //
@@ -42,6 +46,10 @@ const EVENT_FILTER_LIST = [
   { name: '종료', value: RecruitStatus.End },
 ];
 
+const MAX_EVENT_LIST_LENGTH = 5;
+
+const MAX_PARTNER_LIST_LENGTH = 4;
+
 //
 //
 //
@@ -53,13 +61,50 @@ const EventHistory: React.FC = () => {
   const [selectedEventFilter, setSelectedEventFilter] = React.useState(
     RecruitStatus.All,
   );
+  const [page, setPage] = React.useState(1);
 
-  const username = useSelector((state: RootState) => state.user.name);
+  const { name, userId } = useSelector((state: RootState) => state.user);
   const {
     data: { contestCnt, trainingCnt },
   } = useSuspenseQuery({
     queryKey: ['eventTypeCountGet'],
     queryFn: () => eventApi.eventTypeCountGet(),
+  });
+
+  const {
+    data: eventCount,
+    isLoading: isEventListCountLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: ['eventHistoryCountGet', userId, selectedEventFilter],
+    queryFn: () =>
+      infoApi.eventHistoryCountGet({
+        userId,
+        sort: selectedEventFilter,
+        year: selectedYear,
+      }),
+  });
+
+  const maxPage = Math.ceil((eventCount ?? 0) / MAX_EVENT_LIST_LENGTH);
+  const startIndex = (page - 1) * MAX_EVENT_LIST_LENGTH;
+
+  const { data: eventList, isLoading: isEventListLoading } = useQuery({
+    queryKey: [
+      'eventHistoryGet',
+      selectedEventFilter,
+      startIndex,
+      selectedYear,
+      isSuccess,
+    ],
+    queryFn: () =>
+      infoApi.eventHistoryGet({
+        userId,
+        start: startIndex,
+        limit: MAX_EVENT_LIST_LENGTH,
+        sort: selectedEventFilter,
+        year: selectedYear,
+      }),
+    enabled: isSuccess,
   });
 
   /**
@@ -132,6 +177,7 @@ const EventHistory: React.FC = () => {
           </Select>
         </Stack>
         <Stack>
+          {/* 이벤트 필터 */}
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -169,6 +215,40 @@ const EventHistory: React.FC = () => {
               ))}
             </Select>
           </Stack>
+          {/* 이벤트 리스트 */}
+          <Stack gap="2rem">
+            <Stack>
+              {isEventListCountLoading || isEventListLoading ? (
+                <Stack justifyContent="center" alignItems="center">
+                  <CircularProgress
+                    size="2rem"
+                    aria-label="데이터를 가지고 오는 중"
+                  />
+                </Stack>
+              ) : !eventList?.items.length ? (
+                <Stack justifyContent="center" alignItems="center" gap="2rem">
+                  <InfoIcon aria-label="알림" />
+                  <Typography fontWeight={700} fontSize="1.25rem">
+                    참여한 이벤트가 존재하지 않습니다.
+                  </Typography>
+                </Stack>
+              ) : (
+                eventList.items.map((event) => (
+                  <EventLinkBox key={event.eventId} eventData={event} />
+                ))
+              )}
+            </Stack>
+            {maxPage > 1 && (
+              <Stack direction="row" justifyContent="center">
+                <Pagination
+                  size="small"
+                  page={page}
+                  count={maxPage}
+                  onChange={(_, value) => setPage(value)}
+                />
+              </Stack>
+            )}
+          </Stack>
         </Stack>
       </Stack>
     );
@@ -191,7 +271,7 @@ const EventHistory: React.FC = () => {
             gap="0.5rem"
           >
             <Typography component="span" fontSize="2rem">
-              {username}님의
+              {name}님의
             </Typography>
             <Typography component="span" fontSize="1.5rem">
               이벤트 히스토리

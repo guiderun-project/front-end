@@ -308,6 +308,47 @@ export const infoHandlers: HttpHandler[] = [
           ],
         });
       }
+      if (limit === 5) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+            {
+              name: '테스트4',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 4,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트5',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 5,
+              eventType: EventType.Training,
+            },
+          ],
+        });
+      }
       return HttpResponse.json({
         items: [
           {
