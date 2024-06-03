@@ -1,5 +1,13 @@
+import React from 'react';
+
 import styled from '@emotion/styled';
-import { Stack, Typography } from '@mui/material';
+import {
+  Stack,
+  Typography,
+  SelectChangeEvent,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
@@ -7,7 +15,8 @@ import { useSelector } from 'react-redux';
 import eventApi from '@/apis/requests/event';
 import { EventChip } from '@/components/shared';
 import { RootState } from '@/store/index';
-import { EventType } from '@/types/group';
+import { EventType, RecruitStatus } from '@/types/group';
+
 //
 //
 //
@@ -25,11 +34,26 @@ const StyledCountContainer = styled.div`
   border-radius: 1rem;
 `;
 
+const EVENT_FILTER_LIST = [
+  { name: '최근 순', value: RecruitStatus.All },
+  { name: '모집 마감', value: RecruitStatus.Close },
+  { name: '모집 중', value: RecruitStatus.Open },
+  { name: '모집 대기중', value: RecruitStatus.Upcoming },
+  { name: '종료', value: RecruitStatus.End },
+];
+
 //
 //
 //
 
 const EventHistory: React.FC = () => {
+  const [selectedYear, setSelectedYear] = React.useState(
+    new Date().getFullYear(),
+  );
+  const [selectedEventFilter, setSelectedEventFilter] = React.useState(
+    RecruitStatus.All,
+  );
+
   const username = useSelector((state: RootState) => state.user.name);
   const {
     data: { contestCnt, trainingCnt },
@@ -37,6 +61,122 @@ const EventHistory: React.FC = () => {
     queryKey: ['eventTypeCountGet'],
     queryFn: () => eventApi.eventTypeCountGet(),
   });
+
+  /**
+   *
+   */
+  const handleDateChange = (e: SelectChangeEvent) => {
+    setSelectedYear(Number(e.target.value));
+  };
+
+  /**
+   *
+   */
+  const handleEventFilterChange = (e: SelectChangeEvent) => {
+    setSelectedEventFilter(e.target.value as RecruitStatus);
+  };
+
+  /**
+   *
+   */
+  const renderEventCount = () => {
+    return (
+      <StyledCountContainer aria-label="이벤트 참여 횟수">
+        <Stack direction="row" alignItems="center" gap="0.5rem">
+          <EventChip variant="full" type={EventType.Training} />
+          <Typography fontSize="0.9375rem">
+            <span style={{ color: '#FF4040' }}>{trainingCnt}</span>회
+          </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center" gap="0.5rem">
+          <EventChip variant="full" type={EventType.Competition} />
+          <Typography fontSize="0.9375rem">
+            <span style={{ color: '#FF4040' }}>{contestCnt}</span>회
+          </Typography>
+        </Stack>
+      </StyledCountContainer>
+    );
+  };
+
+  /**
+   *
+   */
+  const renderEventList = () => {
+    return (
+      <Stack gap="1.5rem">
+        <Stack alignItems="flex-start">
+          <Select
+            value={`${selectedYear}`}
+            aria-label="연도 선택"
+            onChange={handleDateChange}
+            sx={{
+              boxShadow: 'none',
+              '.MuiOutlinedInput-notchedOutline': { border: 0 },
+              fontWeight: 700,
+              fontSize: '1.5rem',
+            }}
+          >
+            {new Array(3).fill(0).map((_, idx) => (
+              <MenuItem
+                value={idx + 2022}
+                selected={idx + 2022 === selectedYear}
+                aria-selected={idx + 2022 === selectedYear}
+                sx={{
+                  fontWeight: 700,
+                  fontSize: '1.5rem',
+                }}
+              >
+                {idx + 2022}년
+              </MenuItem>
+            ))}
+          </Select>
+        </Stack>
+        <Stack>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            padding="0.5rem"
+          >
+            <Typography component="h2" fontWeight={700} fontSize="1.0625rem">
+              참여 이벤트
+            </Typography>
+            <Select
+              size="small"
+              value={selectedEventFilter}
+              aria-label="이벤트 필터"
+              onChange={handleEventFilterChange}
+              sx={{
+                boxShadow: 'none',
+                '.MuiOutlinedInput-notchedOutline': { border: 0 },
+                fontWeight: 700,
+                fontSize: '0.75rem',
+              }}
+            >
+              {EVENT_FILTER_LIST.map((filter) => (
+                <MenuItem
+                  key={filter.value}
+                  value={filter.value}
+                  selected={selectedEventFilter === filter.value}
+                  aria-selected={selectedEventFilter === filter.value}
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '0.75rem',
+                  }}
+                >
+                  {filter.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Stack>
+        </Stack>
+      </Stack>
+    );
+  };
+
+  //
+  //
+  //
   return (
     <>
       <Helmet>
@@ -57,20 +197,10 @@ const EventHistory: React.FC = () => {
               이벤트 히스토리
             </Typography>
           </Stack>
-          <StyledCountContainer>
-            <Stack direction="row" alignItems="center" gap="0.5rem">
-              <EventChip variant="full" type={EventType.Training} />
-              <Typography fontSize="0.9375rem">
-                <span style={{ color: '#FF4040' }}>{trainingCnt}</span>회
-              </Typography>
-            </Stack>
-            <Stack direction="row" alignItems="center" gap="0.5rem">
-              <EventChip variant="full" type={EventType.Competition} />
-              <Typography fontSize="0.9375rem">
-                <span style={{ color: '#FF4040' }}>{contestCnt}</span>회
-              </Typography>
-            </Stack>
-          </StyledCountContainer>
+          {/* 이벤트 참여 횟수 */}
+          {renderEventCount()}
+          {/* 이벤트 목록 */}
+          {renderEventList()}
         </Stack>
       </Stack>
     </>
