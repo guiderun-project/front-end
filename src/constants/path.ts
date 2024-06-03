@@ -11,6 +11,7 @@ export const BROWSER_PATH = {
     MY: '/event/my',
     CALENDAR: '/event/calendar',
     SEARCH: '/event/search',
+    HISTORY: '/event/history',
   },
   CALENDAR: '/calender',
   SEARCH: '/search',
