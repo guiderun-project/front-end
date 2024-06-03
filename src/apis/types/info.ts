@@ -231,7 +231,7 @@ export type EventHistoryGetResponse = {
 
 export type EventHistoryCountGetRequest = {
   userId: string;
-  sort?: EventSort;
+  sort?: RecruitStatus;
 };
 
 export type EventHistoryCountGetResponse = {

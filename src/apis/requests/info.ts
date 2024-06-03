@@ -172,7 +172,7 @@ class InfoApi {
 
   eventHistoryCountGet = async ({
     userId,
-    sort = EventSort.Total,
+    sort = RecruitStatus.All,
   }: EventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
