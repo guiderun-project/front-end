@@ -53,7 +53,7 @@ export const theme = createTheme({
     MuiButton: {
       variants: [
         {
-          props: { variant: 'chip', color: 'primary' },
+          props: { variant: 'chip' },
           style: {
             backgroundColor: '#111',
             color: '#FFF',

@@ -3,6 +3,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   Box,
@@ -205,7 +206,7 @@ const Mypage: React.FC = () => {
    */
   const renderMyEvent = () => {
     return (
-      <Stack gap="2rem">
+      <Stack gap="2.5rem">
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -237,6 +238,12 @@ const Mypage: React.FC = () => {
             ))}
           </Stack>
         )}
+        <Stack direction="row" justifyContent="center">
+          <Button fullWidth variant="chip" size="large">
+            이벤트 만들기
+            <ChevronRightIcon />
+          </Button>
+        </Stack>
       </Stack>
     );
   };

@@ -88,22 +88,8 @@ const Main: React.FC = () => {
         </Typography>
         {/* TODO 이벤트 생성 페이지 구현 및 연결 */}
         <Stack direction="row" justifyContent="center">
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            color="primary"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              borderRadius: '1000000px',
-            }}
-          >
-            <Typography fontSize="0.9375rem" fontWeight={600}>
-              이벤트 만들기
-            </Typography>
+          <Button fullWidth variant="chip" size="large">
+            이벤트 만들기
             <ChevronRightIcon />
           </Button>
         </Stack>
