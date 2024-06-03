@@ -85,10 +85,10 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
         return date.replace(/-/g, '.');
       }
       if (endDate) {
-        endDate.replace(/-/g, '.');
+        return endDate.replace(/-/g, '.');
       }
       if (startDate) {
-        startDate?.replace(/-/g, '.');
+        return startDate?.replace(/-/g, '.');
       }
     }
     switch (recruitStatus) {
