@@ -220,6 +220,64 @@ export const infoHandlers: HttpHandler[] = [
           ],
         });
       }
+
+      if (limit === 4) {
+        return HttpResponse.json({
+          limit: 2,
+          sort: PartnerSort.Recent,
+          start: 0,
+          items: [
+            {
+              userId: '1e12kdsn1',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.C,
+              role: RoleEnum.User,
+              img: '',
+              contestCnt: 25,
+              isLiked: true,
+              trainingCnt: 10,
+              like: 123,
+              name: '배두리',
+            },
+            {
+              userId: '1sfdsfq3345413',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/2.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '이재건',
+            },
+            {
+              userId: '1sfdsfqdasdasda13',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/4.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '조재석',
+            },
+            {
+              userId: '1sfdasdasd13',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/3.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '장지은',
+            },
+          ],
+        });
+      }
       return HttpResponse.json({
         limit: 2,
         sort: PartnerSort.Recent,
@@ -267,7 +325,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // partnerListCountGet
-  http.get<PartnerListCountGetRequest, NoneType, PartnerListCountGetResponse>(
+  http.get<{ userId: string }, NoneType, PartnerListCountGetResponse>(
     baseURL + '/user/partner-list/count/:userId',
     () => {
       return HttpResponse.json({ count: 50 });
@@ -304,6 +362,40 @@ export const infoHandlers: HttpHandler[] = [
               startDate: '2000-00-00',
               eventId: 3,
               eventType: EventType.Training,
+            },
+          ],
+        });
+      }
+      if (limit === 4) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+            {
+              name: '테스트4',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 4,
+              eventType: EventType.Competition,
             },
           ],
         });
