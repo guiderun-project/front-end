@@ -33,7 +33,7 @@ import type {
 } from '../types/info';
 
 import { RecruitStatus } from '@/types/group';
-import { EventSort, PartnerSort } from '@/types/sort';
+import { PartnerSort } from '@/types/sort';
 
 class InfoApi {
   /**

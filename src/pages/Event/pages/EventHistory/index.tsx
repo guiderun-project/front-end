@@ -16,10 +16,10 @@ import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
 import eventApi from '@/apis/requests/event';
+import infoApi from '@/apis/requests/info';
 import { EventChip, EventLinkBox, PartnerBox } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { EventType, RecruitStatus } from '@/types/group';
-import infoApi from '@/apis/requests/info';
 import { PartnerSort } from '@/types/sort';
 
 //

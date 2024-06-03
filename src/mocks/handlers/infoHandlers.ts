@@ -7,7 +7,6 @@ import {
   EventHistoryCountGetResponse,
   EventHistoryGetResponse,
   MyPageGetResponse,
-  PartnerListCountGetRequest,
   PartnerListCountGetResponse,
   PartnerListGetResponse,
   PermissionGetResponse,

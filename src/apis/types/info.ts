@@ -6,7 +6,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { EventSort, PartnerSort } from '@/types/sort';
+import { PartnerSort } from '@/types/sort';
 
 export type MyPageGetResponse = {
   role: RoleEnum;
