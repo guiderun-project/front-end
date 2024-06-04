@@ -17,6 +17,7 @@ import {
   AllEventCountGetResponse,
   AllEventGetRequest,
   AllEventGetResponse,
+  EventTypeCountGetResponse,
 } from '../types/event';
 
 class EventApi {
@@ -96,6 +97,12 @@ class EventApi {
         `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
       )
       .then((res) => res.data.items);
+  };
+
+  eventTypeCountGet = async () => {
+    return await axiosInstanceWithToken
+      .get<EventTypeCountGetResponse>('/user/event-type/count')
+      .then((res) => res.data);
   };
 }
 

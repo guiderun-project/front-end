@@ -6,7 +6,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { EventSort, PartnerSort } from '@/types/sort';
+import { PartnerSort } from '@/types/sort';
 
 export type MyPageGetResponse = {
   role: RoleEnum;
@@ -231,7 +231,8 @@ export type EventHistoryGetResponse = {
 
 export type EventHistoryCountGetRequest = {
   userId: string;
-  sort?: EventSort;
+  year?: number;
+  sort?: RecruitStatus;
 };
 
 export type EventHistoryCountGetResponse = {

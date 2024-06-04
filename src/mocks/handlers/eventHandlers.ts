@@ -9,6 +9,7 @@ import {
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
   EventPopupGetResponse,
+  EventTypeCountGetResponse,
   MyEventGetResponse,
   SearchEventCountGetResponse,
   SearchEventGetResponse,
@@ -293,6 +294,18 @@ export const eventHandlers: HttpHandler[] = [
             recruitStatus: RecruitStatus.Upcoming,
           },
         ],
+      });
+    },
+  ),
+
+  //eventTypeCountGet
+  http.get<NoneType, NoneType, EventTypeCountGetResponse>(
+    baseURL + '/user/event-type/count',
+    () => {
+      return HttpResponse.json({
+        totalCnt: 15,
+        contestCnt: 10,
+        trainingCnt: 5,
       });
     },
   ),

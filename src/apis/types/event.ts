@@ -219,3 +219,9 @@ export type EventCalendarDetailGetRequest = {
 export type EventCalendarDetailGetResponse = {
   items: CalendarEventItemType[];
 };
+
+export type EventTypeCountGetResponse = {
+  totalCnt: number;
+  trainingCnt: number; //훈련 참여 수
+  contestCnt: number; //대회 참여 수
+};

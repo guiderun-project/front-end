@@ -33,7 +33,7 @@ import type {
 } from '../types/info';
 
 import { RecruitStatus } from '@/types/group';
-import { EventSort, PartnerSort } from '@/types/sort';
+import { PartnerSort } from '@/types/sort';
 
 class InfoApi {
   /**
@@ -172,11 +172,12 @@ class InfoApi {
 
   eventHistoryCountGet = async ({
     userId,
-    sort = EventSort.Total,
+    sort = RecruitStatus.All,
+    year = new Date().getFullYear(),
   }: EventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}`,
+        `/user/event-history/count/${userId}?sort=${sort}&year=${year}`,
       )
       .then((res) => res.data.count);
   };

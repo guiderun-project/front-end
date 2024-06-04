@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import {
@@ -19,6 +19,7 @@ import AdminEvent from './pages/Admin/AdminEvent';
 import AdminUser from './pages/Admin/AdminUser';
 import AllEvent from './pages/Event/pages/AllEvent';
 import EventCalendar from './pages/Event/pages/EventCalendar';
+import EventHistory from './pages/Event/pages/EventHistory';
 import EventSearch from './pages/Event/pages/EventSearch';
 import MyEvent from './pages/Event/pages/MyEvent';
 import FindIdPassword from './pages/FindIdPassword';
@@ -39,46 +40,6 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorBoundary />,
     children: [
-      // {
-      //   path: BROWSER_PATH.MAIN,
-      //   element: <MainRoot />,
-      //   children: [
-      //     {
-      //       path: '/',
-      //       element: <Main />,
-      //     },
-      //     {
-      //       path: BROWSER_PATH.EVENT.ALL,
-      //       element: <AllEvent />,
-      //     },
-      //     {
-      //       path: BROWSER_PATH.EVENT.MY,
-      //       element: <MyEvent />,
-      //     },
-      //     {
-      //       path: BROWSER_PATH.EVENT.UPCOMING,
-      //       element: <UpcomingEvent />,
-      //     },
-      //     {
-      //       path: BROWSER_PATH.CALENDAR,
-      //       element: <Calendar />,
-      //     },
-      //     {
-      //       path: BROWSER_PATH.SEARCH,
-      //       element: <Search />,
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: BROWSER_PATH.EVENT.MAIN,
-      //   element: <DetailEvent />,
-      //   children: [
-      //     {
-      //       path: `${BROWSER_PATH.EVENT.MAIN}/:eventId`,
-      //       element: <DetailEvent />,
-      //     },
-      //   ],
-      // },
       {
         path: BROWSER_PATH.INTRO,
         element: (
@@ -158,13 +119,22 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: BROWSER_PATH.MYPAGE,
             element: (
               <PageLayout>
-                <Mypage />
+                <Outlet />
                 <NavBar />
               </PageLayout>
             ),
+            children: [
+              {
+                path: BROWSER_PATH.MYPAGE,
+                element: <Mypage />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.HISTORY,
+                element: <EventHistory />,
+              },
+            ],
           },
           {
             path: BROWSER_PATH.INFO,

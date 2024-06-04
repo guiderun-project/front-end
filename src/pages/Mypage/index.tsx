@@ -215,7 +215,10 @@ const Mypage: React.FC = () => {
           <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
             내가 참여한 이벤트
           </Typography>
-          <TextLink to={''} label="참여 이벤트 더보기" />
+          <TextLink
+            to={BROWSER_PATH.EVENT.HISTORY}
+            label="참여 이벤트 더보기"
+          />
         </Stack>
         {isLoading ? (
           <Stack justifyContent="center" alignItems="center">

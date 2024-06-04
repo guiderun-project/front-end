@@ -158,10 +158,9 @@ const Main: React.FC = () => {
             {partnerListData?.map((partner) => (
               <PartnerBox key={partner.userId} partnerData={partner} />
             ))}
-            {/* TODO 파트너 리스트 더보기 링크 연결 */}
             {partnerCount && partnerCount > 2 ? (
               <StyledPartnerListButton
-                to={BROWSER_PATH.MAIN}
+                to={BROWSER_PATH.EVENT.HISTORY}
                 aria-label="파트너 목록 더보기"
               >
                 <ArrowForwardIcon />
