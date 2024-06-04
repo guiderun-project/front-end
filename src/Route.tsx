@@ -34,6 +34,7 @@ import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
 import { RootState } from './store';
+import { Stack } from '@mui/material';
 
 const router = createBrowserRouter([
   {
@@ -121,7 +122,9 @@ const router = createBrowserRouter([
           {
             element: (
               <PageLayout>
-                <Outlet />
+                <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
+                  <Outlet />
+                </Stack>
                 <NavBar />
               </PageLayout>
             ),
