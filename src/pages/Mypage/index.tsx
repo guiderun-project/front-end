@@ -71,6 +71,17 @@ const StyledImageLabel = styled.label<{ img: string }>`
   }}
   border-radius: 1000000000rem;
   cursor: pointer;
+
+  & .hide-element {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
 `;
 
 //
@@ -135,18 +146,20 @@ const Mypage: React.FC = () => {
         justifyContent="flex-start"
         gap="1.5rem"
       >
-        <StyledImageLabel img={userData.img}>
+        <StyledImageLabel img={userData.img} aria-label="프로필 사진 업로드">
           <CameraAltOutlinedIcon
+            aria-hidden
             sx={{
               fontSize: '1.75rem',
               color: '#fff',
             }}
           />
           <input
+            className="hide-element"
             type="file"
             accept="image/*"
-            style={{ display: 'none' }}
             onChange={handleProfileImageChange}
+            aria-label="프로필 사진 업로드"
           />
         </StyledImageLabel>
         <Stack gap="1rem" alignItems="flex-start">
@@ -279,33 +292,31 @@ const Mypage: React.FC = () => {
       <Helmet>
         <title>마이 페이지 - Guide run Project</title>
       </Helmet>
-      <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
-        {/* 이름, 팀 */}
-        {renderTeamInfo()}
-        {/* 기본정보 */}
-        {renderInfo()}
-        {/* 내가 참여한 이벤트 */}
-        {renderMyEvent()}
-        <Navigation
-          newTabs
-          title="1:1 문의하기"
-          buttonLabel="문의하러 바로 가기"
-          to="https://open.kakao.com/o/sB89yqNf"
-        />
-        {/* TODO: 탈퇴 */}
-        <Navigation title="탈퇴하기" buttonLabel="탈퇴하러 가기" to="" />
-        <Stack alignItems="center">
-          <Button
-            fullWidth
-            size="large"
-            variant="outlined"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            되돌아가기
-          </Button>
-        </Stack>
+      {/* 이름, 팀 */}
+      {renderTeamInfo()}
+      {/* 기본정보 */}
+      {renderInfo()}
+      {/* 내가 참여한 이벤트 */}
+      {renderMyEvent()}
+      <Navigation
+        newTabs
+        title="1:1 문의하기"
+        buttonLabel="문의하러 바로 가기"
+        to="https://open.kakao.com/o/sB89yqNf"
+      />
+      {/* TODO: 탈퇴 */}
+      <Navigation title="탈퇴하기" buttonLabel="탈퇴하러 가기" to="" />
+      <Stack alignItems="center">
+        <Button
+          fullWidth
+          size="large"
+          variant="outlined"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          되돌아가기
+        </Button>
       </Stack>
     </>
   );
