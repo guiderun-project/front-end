@@ -18,6 +18,8 @@ import {
   AllEventGetRequest,
   AllEventGetResponse,
   EventTypeCountGetResponse,
+  NewEventPostRequest,
+  NewEventPostResponse,
 } from '../types/event';
 
 class EventApi {
@@ -102,6 +104,12 @@ class EventApi {
   eventTypeCountGet = async () => {
     return await axiosInstanceWithToken
       .get<EventTypeCountGetResponse>('/user/event-type/count')
+      .then((res) => res.data);
+  };
+
+  newEventPost = async (body: NewEventPostRequest) => {
+    return await axiosInstanceWithToken
+      .post<NewEventPostResponse>('/event', body)
       .then((res) => res.data);
   };
 }

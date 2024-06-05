@@ -11,6 +11,8 @@ import {
   EventPopupGetResponse,
   EventTypeCountGetResponse,
   MyEventGetResponse,
+  NewEventPostRequest,
+  NewEventPostResponse,
   SearchEventCountGetResponse,
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
@@ -306,6 +308,17 @@ export const eventHandlers: HttpHandler[] = [
         totalCnt: 15,
         contestCnt: 10,
         trainingCnt: 5,
+      });
+    },
+  ),
+
+  //newEventPost
+  http.post<NoneType, NewEventPostRequest, NewEventPostResponse>(
+    baseURL + '/event',
+    () => {
+      return HttpResponse.json({
+        eventId: 123,
+        isApprove: false,
       });
     },
   ),
