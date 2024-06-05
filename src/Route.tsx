@@ -22,6 +22,7 @@ import EventCalendar from './pages/Event/pages/EventCalendar';
 import EventHistory from './pages/Event/pages/EventHistory';
 import EventSearch from './pages/Event/pages/EventSearch';
 import MyEvent from './pages/Event/pages/MyEvent';
+import NewEvent from './pages/Event/pages/NewEvent';
 import FindIdPassword from './pages/FindIdPassword';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
@@ -136,6 +137,10 @@ const router = createBrowserRouter([
               {
                 path: BROWSER_PATH.EVENT.HISTORY,
                 element: <EventHistory />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.NEW,
+                element: <NewEvent />,
               },
             ],
           },
