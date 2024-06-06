@@ -13,7 +13,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
@@ -59,6 +59,7 @@ const StyledPartnerListButton = styled(Link)`
 
 const Main: React.FC = () => {
   const userId = useSelector((state: RootState) => state.user.userId);
+  const navigate = useNavigate();
 
   const {
     data: partnerCount,
@@ -86,9 +87,13 @@ const Main: React.FC = () => {
         <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           이벤트
         </Typography>
-        {/* TODO 이벤트 생성 페이지 구현 및 연결 */}
         <Stack direction="row" justifyContent="center">
-          <Button fullWidth variant="chip" size="large">
+          <Button
+            fullWidth
+            variant="chip"
+            size="large"
+            onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
+          >
             이벤트 만들기
             <ChevronRightIcon />
           </Button>

@@ -255,7 +255,12 @@ const Mypage: React.FC = () => {
           </Stack>
         )}
         <Stack direction="row" justifyContent="center">
-          <Button fullWidth variant="chip" size="large">
+          <Button
+            fullWidth
+            variant="chip"
+            size="large"
+            onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
+          >
             이벤트 만들기
             <ChevronRightIcon />
           </Button>
