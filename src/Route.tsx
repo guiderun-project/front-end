@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import { Stack } from '@mui/material';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
@@ -22,6 +23,7 @@ import EventCalendar from './pages/Event/pages/EventCalendar';
 import EventHistory from './pages/Event/pages/EventHistory';
 import EventSearch from './pages/Event/pages/EventSearch';
 import MyEvent from './pages/Event/pages/MyEvent';
+import NewEvent from './pages/Event/pages/NewEvent';
 import FindIdPassword from './pages/FindIdPassword';
 import Info from './pages/Info';
 import Intro from './pages/Intro';
@@ -121,7 +123,9 @@ const router = createBrowserRouter([
           {
             element: (
               <PageLayout>
-                <Outlet />
+                <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
+                  <Outlet />
+                </Stack>
                 <NavBar />
               </PageLayout>
             ),
@@ -133,6 +137,10 @@ const router = createBrowserRouter([
               {
                 path: BROWSER_PATH.EVENT.HISTORY,
                 element: <EventHistory />,
+              },
+              {
+                path: BROWSER_PATH.EVENT.NEW,
+                element: <NewEvent />,
               },
             ],
           },

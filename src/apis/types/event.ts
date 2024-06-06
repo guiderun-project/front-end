@@ -225,3 +225,24 @@ export type EventTypeCountGetResponse = {
   trainingCnt: number; //훈련 참여 수
   contestCnt: number; //대회 참여 수
 };
+
+export type EventFormType = {
+  recruitStartDate: string; //모집 시작일
+  recruitEndDate: string; //모집 마감일
+  name: string; ///이벤트 제목
+  eventType: string; // 대회,훈련 구분
+  date: string; //이벤트 시작일
+  startTime: string; //시작 시간
+  endTime: string; //끝나는 시간
+  minNumV: number; //시각장애 러너 모집 희망 인원
+  minNumG: number; //가이드 러너 모집 희망 인원
+  place: string; //이벤트 장소
+  content: string; //이벤트 상세 내용
+};
+
+export type NewEventPostRequest = EventFormType;
+
+export type NewEventPostResponse = {
+  eventId: number;
+  isApprove: boolean;
+};

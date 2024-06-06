@@ -401,28 +401,23 @@ const EventHistory: React.FC = () => {
       <Helmet>
         <title>이벤트 히스토리 - Guide run project</title>
       </Helmet>
-      <Stack padding="5rem 0" gap="3.75rem">
-        <Stack gap="2.5rem">
-          <Stack
-            component="h1"
-            direction="row"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Typography component="span" fontSize="2rem">
-              {name}님의
-            </Typography>
-            <Typography component="span" fontSize="1.5rem">
-              이벤트 히스토리
-            </Typography>
-          </Stack>
-          {/* 이벤트 참여 횟수 */}
-          {renderEventCount()}
-          {/* 이벤트 목록 */}
-          {renderEventList()}
-          {/* 함께 뛴 파트너 */}
-          {renderPartner()}
+      <Stack gap="2.5rem">
+        <Stack component="h1" direction="row" alignItems="center" gap="0.5rem">
+          <Typography component="span" fontSize="2rem">
+            {name}님의
+          </Typography>
+          <Typography component="span" fontSize="1.5rem">
+            이벤트 히스토리
+          </Typography>
         </Stack>
+        {/* 이벤트 참여 횟수 */}
+        {renderEventCount()}
+      </Stack>
+      <Stack gap="2.5rem">
+        {/* 이벤트 목록 */}
+        {renderEventList()}
+        {/* 함께 뛴 파트너 */}
+        {renderPartner()}
       </Stack>
     </>
   );
