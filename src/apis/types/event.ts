@@ -227,17 +227,17 @@ export type EventTypeCountGetResponse = {
 };
 
 export type EventFormType = {
-  recruitStartDate: String; //모집 시작일
-  recruitEndDate: String; //모집 마감일
-  name: String; ///이벤트 제목
-  eventType: String; // 대회,훈련 구분
-  date: String; //이벤트 시작일
-  startTime: String; //시작 시간
-  endTime: String; //끝나는 시간
+  recruitStartDate: string; //모집 시작일
+  recruitEndDate: string; //모집 마감일
+  name: string; ///이벤트 제목
+  eventType: string; // 대회,훈련 구분
+  date: string; //이벤트 시작일
+  startTime: string; //시작 시간
+  endTime: string; //끝나는 시간
   minNumV: number; //시각장애 러너 모집 희망 인원
   minNumG: number; //가이드 러너 모집 희망 인원
-  place: String; //이벤트 장소
-  content: String; //이벤트 상세 내용
+  place: string; //이벤트 장소
+  content: string; //이벤트 상세 내용
 };
 
 export type NewEventPostRequest = EventFormType;

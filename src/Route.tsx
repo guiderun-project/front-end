@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 
+import { Stack } from '@mui/material';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
@@ -35,7 +36,6 @@ import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Signup from './pages/Signup';
 import { RootState } from './store';
-import { Stack } from '@mui/material';
 
 const router = createBrowserRouter([
   {
