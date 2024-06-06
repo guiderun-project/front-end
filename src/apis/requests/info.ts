@@ -4,6 +4,7 @@ import type {
   EventHistoryCountGetResponse,
   EventHistoryGetRequest,
   EventHistoryGetResponse,
+  LikePostRequest,
   MyPageGetResponse,
   PartnerListCountGetRequest,
   PartnerListCountGetResponse,
@@ -190,6 +191,12 @@ class InfoApi {
     return await axiosInstanceWithToken
       .post<ProfileImagePostResponse>('/user/img', image)
       .then((res) => res.data.img);
+  };
+
+  likePost = async ({ userId }: LikePostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/user/like/${userId}`)
+      .then((res) => res.data);
   };
 }
 

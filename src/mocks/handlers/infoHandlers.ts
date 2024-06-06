@@ -6,6 +6,7 @@ import { baseURL } from '@/apis/axios';
 import {
   EventHistoryCountGetResponse,
   EventHistoryGetResponse,
+  LikePostRequest,
   MyPageGetResponse,
   PartnerListCountGetResponse,
   PartnerListGetResponse,
@@ -536,5 +537,10 @@ export const infoHandlers: HttpHandler[] = [
     return HttpResponse.json({
       img: 'https://mui.com/static/images/avatar/2.jpg',
     });
+  }),
+
+  //likePost
+  http.post<LikePostRequest>(baseURL + '/user/like/:userId', () => {
+    return HttpResponse.json();
   }),
 ];

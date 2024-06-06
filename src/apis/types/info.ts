@@ -252,3 +252,7 @@ export type ProfileImagePostRequest = {
 export type ProfileImagePostResponse = {
   img: string;
 };
+
+export type LikePostRequest = {
+  userId: string;
+};
