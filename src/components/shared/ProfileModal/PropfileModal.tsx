@@ -11,7 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
@@ -19,6 +19,7 @@ import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
 
 import infoApi from '@/apis/requests/info';
+import { PersonalInfoGetResponse } from '@/apis/types/info';
 
 interface ProfileModalProps extends DialogProps {
   userid: string;
@@ -27,6 +28,8 @@ interface ProfileModalProps extends DialogProps {
 
 const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
+
+  const queryClient = useQueryClient();
 
   const { data: userData, isLoading: isUserDataLoading } = useQuery({
     queryKey: ['personalInfoGet', userid],
@@ -37,6 +40,43 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     queryKey: ['eventHistoryGet'],
     queryFn: () => infoApi.eventHistoryGet({ userId: userid }),
   });
+
+  const { mutate } = useMutation({
+    mutationKey: ['likePost', userid],
+    mutationFn: () => infoApi.likePost({ userId: userid }),
+    onMutate: async () => {
+      await queryClient.cancelQueries({
+        queryKey: ['personalInfoGet', userid],
+      });
+
+      const previous = queryClient.getQueryData(['personalInfoGet', userid]);
+
+      queryClient.setQueryData(
+        ['personalInfoGet', userid],
+        (old: PersonalInfoGetResponse) => ({
+          ...old,
+          like: old.like + 1,
+          isLiked: !old.isLiked,
+        }),
+      );
+
+      return { previous };
+    },
+    onError: (_, __, context) => {
+      queryClient.setQueryData(['personalInfoGet', userid], context?.previous);
+      alert('에러가 발생했습니다. 다시 시도해주세요.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['personalInfoGet', userid] });
+    },
+  });
+
+  /**
+   *
+   */
+  const handleLikeClick = () => {
+    mutate();
+  };
 
   /**
    *
@@ -87,7 +127,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             alignItems="center"
             gap="0.25rem"
           >
-            <IconButton size="small">
+            <IconButton size="small" onClick={handleLikeClick}>
               {userData.isLiked ? (
                 <FavoriteIcon
                   fontSize="small"
