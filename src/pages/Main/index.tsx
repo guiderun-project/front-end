@@ -129,8 +129,7 @@ const Main: React.FC = () => {
             최근 나의 파트너
           </Typography>
           <Link
-            //TODO 마이페이지 구현 후 함께 뛴 파트너 파트로 이동
-            to={BROWSER_PATH.EVENT.MAIN}
+            to={BROWSER_PATH.EVENT.HISTORY}
             style={{
               textDecoration: 'none',
             }}
