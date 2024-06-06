@@ -38,6 +38,7 @@ export type PersonalInfoGetRequest = {
 };
 
 export type PersonalInfoGetResponse = {
+  userId: string;
   name: string;
   type: DisabilityEnum;
   role: RoleEnum;
@@ -47,6 +48,11 @@ export type PersonalInfoGetResponse = {
   snsId: string;
   isOpenNumber: boolean;
   isOpenSns: boolean;
+  img: string;
+  isLiked: boolean; ///좋아요 눌렀는지 유무
+  like: number; //좋아요 수
+  recordDegree: RunningGroup; //러닝 기록 등급
+  detailRecord: string; //상세 기록
 };
 
 export type PersonalInfoPatchRequest = Omit<
@@ -245,4 +251,8 @@ export type ProfileImagePostRequest = {
 
 export type ProfileImagePostResponse = {
   img: string;
+};
+
+export type LikePostRequest = {
+  userId: string;
 };

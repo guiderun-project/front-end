@@ -4,6 +4,7 @@ import type {
   EventHistoryCountGetResponse,
   EventHistoryGetRequest,
   EventHistoryGetResponse,
+  LikePostRequest,
   MyPageGetResponse,
   PartnerListCountGetRequest,
   PartnerListCountGetResponse,
@@ -161,11 +162,13 @@ class InfoApi {
     sort = RecruitStatus.All,
     limit = 3,
     start = 0,
-    year = new Date().getFullYear(),
+    year,
   }: EventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryGetResponse>(
-        `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}&year=${year}`,
+        `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
+          year ? `&year=${year}` : null
+        }`,
       )
       .then((res) => res.data);
   };
@@ -173,11 +176,13 @@ class InfoApi {
   eventHistoryCountGet = async ({
     userId,
     sort = RecruitStatus.All,
-    year = new Date().getFullYear(),
+    year,
   }: EventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}&year=${year}`,
+        `/user/event-history/count/${userId}?sort=${sort}${
+          year ? `&year=${year}` : ''
+        }`,
       )
       .then((res) => res.data.count);
   };
@@ -186,6 +191,12 @@ class InfoApi {
     return await axiosInstanceWithToken
       .post<ProfileImagePostResponse>('/user/img', image)
       .then((res) => res.data.img);
+  };
+
+  likePost = async ({ userId }: LikePostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/user/like/${userId}`)
+      .then((res) => res.data);
   };
 }
 
