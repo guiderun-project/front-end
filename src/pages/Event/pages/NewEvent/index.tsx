@@ -92,7 +92,7 @@ const NewEvent: React.FC = () => {
         <title>이벤트 생성 - Guide run Project</title>
       </Helmet>
       <Typography component="h1" fontSize="2rem">
-        이벤트 수정하기
+        이벤트 만들기
       </Typography>
       <Stack
         id="new-event"
