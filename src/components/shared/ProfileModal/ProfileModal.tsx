@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
@@ -20,6 +21,7 @@ import { GroupChip } from '../GroupChip';
 
 import infoApi from '@/apis/requests/info';
 import { PersonalInfoGetResponse } from '@/apis/types/info';
+import { BROWSER_PATH } from '@/constants/path';
 
 interface ProfileModalProps extends DialogProps {
   userid: string;
@@ -29,6 +31,7 @@ interface ProfileModalProps extends DialogProps {
 const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
 
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data: userData, isLoading: isUserDataLoading } = useQuery({
@@ -289,6 +292,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           sx={{
             width: '15.9375rem',
           }}
+          onClick={() => navigate(`${BROWSER_PATH.PROFILE}/${userid}`)}
         >
           프로필 더 자세히 보기
         </Button>
