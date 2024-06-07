@@ -7,7 +7,7 @@ import { Avatar, Stack, Typography } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 import GroupChip from '../GroupChip/GroupChip';
-import ProfileModal from '../ProfileModal/PropfileModal';
+import { ProfileModal } from '../ProfileModal';
 
 import { PartnerDataType } from '@/apis/types/info';
 

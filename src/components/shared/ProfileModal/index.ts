@@ -1,1 +1,1 @@
-export { default as PropfileModal } from './PropfileModal';
+export { default as ProfileModal } from './ProfileModal';
