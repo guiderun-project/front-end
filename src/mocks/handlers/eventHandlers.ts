@@ -9,6 +9,7 @@ import {
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
   EventPopupGetResponse,
+  EventTypeCountGetRequest,
   EventTypeCountGetResponse,
   MyEventGetResponse,
   NewEventPostRequest,
@@ -301,8 +302,8 @@ export const eventHandlers: HttpHandler[] = [
   ),
 
   //eventTypeCountGet
-  http.get<NoneType, NoneType, EventTypeCountGetResponse>(
-    baseURL + '/user/event-type/count',
+  http.get<EventTypeCountGetRequest, NoneType, EventTypeCountGetResponse>(
+    baseURL + '/user/event-type/count/:userId',
     () => {
       return HttpResponse.json({
         totalCnt: 15,
