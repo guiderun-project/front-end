@@ -20,7 +20,7 @@ import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
 
 import infoApi from '@/apis/requests/info';
-import { PersonalInfoGetResponse } from '@/apis/types/info';
+import { UserProfileGetResponse } from '@/apis/types/info';
 import { BROWSER_PATH } from '@/constants/path';
 
 interface ProfileModalProps extends DialogProps {
@@ -35,8 +35,8 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const queryClient = useQueryClient();
 
   const { data: userData, isLoading: isUserDataLoading } = useQuery({
-    queryKey: ['personalInfoGet', userid],
-    queryFn: () => infoApi.personalInfoGet({ userId: userid }),
+    queryKey: ['userProfileGet', userid],
+    queryFn: () => infoApi.userProfileGet({ userId: userid }),
   });
 
   const { data: eventList, isLoading: isEventListLoading } = useQuery({
@@ -49,14 +49,14 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     mutationFn: () => infoApi.likePost({ userId: userid }),
     onMutate: async () => {
       await queryClient.cancelQueries({
-        queryKey: ['personalInfoGet', userid],
+        queryKey: ['userProfileGet', userid],
       });
 
-      const previous = queryClient.getQueryData(['personalInfoGet', userid]);
+      const previous = queryClient.getQueryData(['userProfileGet', userid]);
 
       queryClient.setQueryData(
-        ['personalInfoGet', userid],
-        (old: PersonalInfoGetResponse) => ({
+        ['userProfileGet', userid],
+        (old: UserProfileGetResponse) => ({
           ...old,
           like: old.like + 1,
           isLiked: !old.isLiked,
@@ -66,11 +66,11 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
       return { previous };
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(['personalInfoGet', userid], context?.previous);
+      queryClient.setQueryData(['userProfileGet', userid], context?.previous);
       alert('에러가 발생했습니다. 다시 시도해주세요.');
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['personalInfoGet', userid] });
+      queryClient.invalidateQueries({ queryKey: ['userProfileGet', userid] });
     },
   });
 
