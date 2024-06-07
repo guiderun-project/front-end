@@ -24,6 +24,7 @@ export const BROWSER_PATH = {
   INFO: '/info',
   LOGIN: '/login',
   FIND_ID_PASSWORD: '/find-id-password',
+  PROFILE: '/profile',
 };
 
 // const API_PATH = {

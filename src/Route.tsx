@@ -34,6 +34,7 @@ import MainRoot from './pages/Main/MainRoot';
 import Mypage from './pages/Mypage';
 import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
+import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import { RootState } from './store';
 
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
               {
                 path: BROWSER_PATH.INFO,
                 element: <Info />,
+              },
+              {
+                path: `${BROWSER_PATH.PROFILE}/:userId`,
+                element: <Profile />,
               },
             ],
           },
