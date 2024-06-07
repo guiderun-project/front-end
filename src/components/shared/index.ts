@@ -4,6 +4,7 @@ export * from './DisabilityChip';
 export * from './ErrorBoundary';
 export * from './EventChip';
 export * from './EventCount';
+export * from './EventHistoryList';
 export * from './EventLinkBox';
 export * from './EventStatus';
 export * from './GenderChip';
