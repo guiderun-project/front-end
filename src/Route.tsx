@@ -142,11 +142,11 @@ const router = createBrowserRouter([
                 path: BROWSER_PATH.EVENT.NEW,
                 element: <NewEvent />,
               },
+              {
+                path: BROWSER_PATH.INFO,
+                element: <Info />,
+              },
             ],
-          },
-          {
-            path: BROWSER_PATH.INFO,
-            element: <Info />,
           },
         ],
       },
