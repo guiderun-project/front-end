@@ -3,6 +3,7 @@ export * from './DetailEventModal';
 export * from './DisabilityChip';
 export * from './ErrorBoundary';
 export * from './EventChip';
+export * from './EventCount';
 export * from './EventLinkBox';
 export * from './EventStatus';
 export * from './GenderChip';
