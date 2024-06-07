@@ -40,7 +40,11 @@ const useLike = ({ userId }: UseLikeParams) => {
     },
   });
 
-  return method;
+  const handleLike = () => {
+    method.mutate();
+  };
+
+  return { ...method, handleLike };
 };
 
 export default useLike;
