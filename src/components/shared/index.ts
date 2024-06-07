@@ -14,6 +14,7 @@ export * from './NavBar';
 export * from './NotFound';
 export * from './PageLayout';
 export * from './PartnerBox';
+export * from './PartnerList';
 export * from './ProfileModal';
 export * from './ProtectedRoute';
 export * from './TextLink';
