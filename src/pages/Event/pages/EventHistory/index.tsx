@@ -84,7 +84,7 @@ const EventHistory: React.FC = () => {
     data: { contestCnt, trainingCnt, totalCnt },
   } = useSuspenseQuery({
     queryKey: ['eventTypeCountGet'],
-    queryFn: () => eventApi.eventTypeCountGet(),
+    queryFn: () => eventApi.eventTypeCountGet({ userId }),
   });
 
   const {
