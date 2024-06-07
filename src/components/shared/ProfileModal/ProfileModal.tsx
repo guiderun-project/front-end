@@ -18,6 +18,7 @@ import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
 import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
+import { ProfileImage } from '../ProfileImage';
 
 import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH } from '@/constants/path';
@@ -71,18 +72,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           alignItems="center"
           gap="1rem"
         >
-          {userData?.img ? (
-            <Avatar
-              alt={userData?.name}
-              src={userData?.img}
-              sx={{ width: 80, height: 80 }}
-            />
-          ) : (
-            <Avatar
-              alt={userData?.name}
-              sx={{ bgcolor: '#D9D9D9', width: 80, height: 80 }}
-            ></Avatar>
-          )}
+          <ProfileImage img={userData.img} size={80} />
           <Stack gap="0.5rem" paddingRight="1rem">
             <Stack direction="row" gap="0.5rem" alignItems="center">
               <DisabilityChip component="chip" type={userData.type} />
