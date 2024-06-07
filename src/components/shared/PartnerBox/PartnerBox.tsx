@@ -3,14 +3,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Avatar, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 import GroupChip from '../GroupChip/GroupChip';
-import ProfileModal from '../ProfileModal/PropfileModal';
+import { ProfileImage } from '../ProfileImage';
+import { ProfileModal } from '../ProfileModal';
 
 import { PartnerDataType } from '@/apis/types/info';
-
 //
 //
 //
@@ -69,14 +69,7 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
   return (
     <>
       <StyledContainer onClick={() => setOpen(true)}>
-        {img ? (
-          <Avatar alt={name} src={img} sx={{ width: 60, height: 60 }} />
-        ) : (
-          <Avatar
-            alt={name}
-            sx={{ bgcolor: '#D9D9D9', width: 60, height: 60 }}
-          ></Avatar>
-        )}
+        <ProfileImage img={img} size={60} />
         <Stack
           boxSizing="border-box"
           alignItems="center"

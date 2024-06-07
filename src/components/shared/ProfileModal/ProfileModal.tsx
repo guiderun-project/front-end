@@ -1,8 +1,5 @@
 import { ClearOutlined } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
-  Avatar,
   Button,
   CircularProgress,
   Dialog,
@@ -11,15 +8,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
 import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
+import { LikeButton } from '../LikeButton';
+import { ProfileImage } from '../ProfileImage';
 
 import infoApi from '@/apis/requests/info';
-import { PersonalInfoGetResponse } from '@/apis/types/info';
+import { BROWSER_PATH } from '@/constants/path';
 
 interface ProfileModalProps extends DialogProps {
   userid: string;
@@ -29,54 +29,17 @@ interface ProfileModalProps extends DialogProps {
 const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
 
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: userData, isLoading: isUserDataLoading } = useQuery({
-    queryKey: ['personalInfoGet', userid],
-    queryFn: () => infoApi.personalInfoGet({ userId: userid }),
+    queryKey: ['userProfileGet', userid],
+    queryFn: () => infoApi.userProfileGet({ userId: userid }),
   });
 
   const { data: eventList, isLoading: isEventListLoading } = useQuery({
     queryKey: ['eventHistoryGet'],
     queryFn: () => infoApi.eventHistoryGet({ userId: userid }),
   });
-
-  const { mutate } = useMutation({
-    mutationKey: ['likePost', userid],
-    mutationFn: () => infoApi.likePost({ userId: userid }),
-    onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: ['personalInfoGet', userid],
-      });
-
-      const previous = queryClient.getQueryData(['personalInfoGet', userid]);
-
-      queryClient.setQueryData(
-        ['personalInfoGet', userid],
-        (old: PersonalInfoGetResponse) => ({
-          ...old,
-          like: old.like + 1,
-          isLiked: !old.isLiked,
-        }),
-      );
-
-      return { previous };
-    },
-    onError: (_, __, context) => {
-      queryClient.setQueryData(['personalInfoGet', userid], context?.previous);
-      alert('에러가 발생했습니다. 다시 시도해주세요.');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['personalInfoGet', userid] });
-    },
-  });
-
-  /**
-   *
-   */
-  const handleLikeClick = () => {
-    mutate();
-  };
 
   /**
    *
@@ -97,18 +60,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           alignItems="center"
           gap="1rem"
         >
-          {userData?.img ? (
-            <Avatar
-              alt={userData?.name}
-              src={userData?.img}
-              sx={{ width: 80, height: 80 }}
-            />
-          ) : (
-            <Avatar
-              alt={userData?.name}
-              sx={{ bgcolor: '#D9D9D9', width: 80, height: 80 }}
-            ></Avatar>
-          )}
+          <ProfileImage img={userData.img} size={80} />
           <Stack gap="0.5rem" paddingRight="1rem">
             <Stack direction="row" gap="0.5rem" alignItems="center">
               <DisabilityChip component="chip" type={userData.type} />
@@ -127,27 +79,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             alignItems="center"
             gap="0.25rem"
           >
-            <IconButton size="small" onClick={handleLikeClick}>
-              {userData.isLiked ? (
-                <FavoriteIcon
-                  fontSize="small"
-                  aria-label={`${name}님의 인기도`}
-                  aria-selected={userData.isLiked}
-                  sx={{
-                    color: 'red',
-                  }}
-                />
-              ) : (
-                <FavoriteBorderIcon
-                  fontSize="small"
-                  aria-label={`${name}님의 인기도`}
-                  aria-selected={userData.isLiked}
-                  sx={{
-                    color: '#666',
-                  }}
-                />
-              )}
-            </IconButton>
+            <LikeButton userid={userid} />
             <Typography fontSize="0.75rem" color="#666">
               {userData.like}
             </Typography>
@@ -289,6 +221,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           sx={{
             width: '15.9375rem',
           }}
+          onClick={() => navigate(`${BROWSER_PATH.PROFILE}/${userid}`)}
         >
           프로필 더 자세히 보기
         </Button>

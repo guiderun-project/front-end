@@ -18,8 +18,8 @@ import type {
   PersonalInfoGetResponse,
   PersonalInfoPatchRequest,
   PersonalInfoPatchResponse,
-  ProfileGetRequest,
-  ProfileGetResponse,
+  UserProfileGetRequest,
+  UserProfileGetResponse,
   ProfileImagePostRequest,
   ProfileImagePostResponse,
   RunningSpecGuideGetRequest,
@@ -122,9 +122,9 @@ class InfoApi {
    * @returns 사용자 기초 정보를 반환
    */
 
-  profileGet = async ({ userId }: ProfileGetRequest) => {
+  userProfileGet = async ({ userId }: UserProfileGetRequest) => {
     return await axiosInstanceWithToken
-      .get<ProfileGetResponse>(`/user/profile/${userId}`)
+      .get<UserProfileGetResponse>(`/user/profile/${userId}`)
       .then((res) => res.data);
   };
 
@@ -167,7 +167,7 @@ class InfoApi {
     return await axiosInstanceWithToken
       .get<EventHistoryGetResponse>(
         `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
-          year ? `&year=${year}` : null
+          year ? `&year=${year}` : ''
         }`,
       )
       .then((res) => res.data);

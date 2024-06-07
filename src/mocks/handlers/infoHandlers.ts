@@ -16,6 +16,8 @@ import {
   PersonalInfoGetResponse,
   PersonalInfoPatchRequest,
   PersonalInfoPatchResponse,
+  UserProfileGetRequest,
+  UserProfileGetResponse,
   RunningSpecGuideGetResponse,
   RunningSpecGuidePatchRequest,
   RunningSpecGuidePatchResponse,
@@ -184,7 +186,29 @@ export const infoHandlers: HttpHandler[] = [
     },
   ),
 
-  //TODO: profileGet
+  // userProfileGet
+  http.get<UserProfileGetRequest, NoneType, UserProfileGetResponse>(
+    baseURL + '/user/profile/:userId',
+    () => {
+      return HttpResponse.json({
+        userId: '123',
+        age: 20,
+        gender: GenderEnum.M,
+        isOpenNumber: true,
+        isOpenSns: true,
+        name: '홍길동',
+        phoneNumber: '01234567890',
+        role: RoleEnum.Admin,
+        snsId: 'test',
+        type: DisabilityEnum.GUIDE,
+        img: '',
+        recordDegree: RunningGroup.A, //러닝 기록 등급
+        detailRecord: '5분 30초', //상세 기록
+        like: 999,
+        isLiked: false,
+      });
+    },
+  ),
 
   // partnerListGet
   http.get<{ userId: string }, NoneType, PartnerListGetResponse>(
