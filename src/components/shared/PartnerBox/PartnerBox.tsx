@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Avatar, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 import GroupChip from '../GroupChip/GroupChip';

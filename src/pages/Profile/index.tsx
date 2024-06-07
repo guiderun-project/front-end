@@ -42,11 +42,7 @@ const Profile: React.FC = () => {
     return <Navigate to={BROWSER_PATH.MAIN} replace />;
   }
 
-  const {
-    data: userData,
-    isLoading: isUserDataLoading,
-    isError,
-  } = useQuery({
+  const { data: userData, isError } = useQuery({
     queryKey: ['userProfileGet', userId],
     queryFn: () => infoApi.userProfileGet({ userId }),
   });

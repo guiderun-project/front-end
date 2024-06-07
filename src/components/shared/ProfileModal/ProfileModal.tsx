@@ -20,7 +20,6 @@ import { ProfileImage } from '../ProfileImage';
 
 import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH } from '@/constants/path';
-import useLike from '@/hooks/useLike';
 
 interface ProfileModalProps extends DialogProps {
   userid: string;
@@ -41,8 +40,6 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     queryKey: ['eventHistoryGet'],
     queryFn: () => infoApi.eventHistoryGet({ userId: userid }),
   });
-
-  const { handleLike } = useLike({ userId: userid });
 
   /**
    *
