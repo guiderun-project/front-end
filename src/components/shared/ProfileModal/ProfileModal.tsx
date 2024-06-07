@@ -1,8 +1,5 @@
 import { ClearOutlined } from '@mui/icons-material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
-  Avatar,
   Button,
   CircularProgress,
   Dialog,
@@ -11,13 +8,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
 import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
+import { LikeButton } from '../LikeButton';
 import { ProfileImage } from '../ProfileImage';
 
 import infoApi from '@/apis/requests/info';
@@ -33,7 +31,6 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
 
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { data: userData, isLoading: isUserDataLoading } = useQuery({
     queryKey: ['userProfileGet', userid],
@@ -45,13 +42,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     queryFn: () => infoApi.eventHistoryGet({ userId: userid }),
   });
 
-  const { mutate } = useLike({ userId: userid });
-  /**
-   *
-   */
-  const handleLikeClick = () => {
-    mutate();
-  };
+  const { handleLike } = useLike({ userId: userid });
 
   /**
    *
@@ -91,27 +82,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             alignItems="center"
             gap="0.25rem"
           >
-            <IconButton size="small" onClick={handleLikeClick}>
-              {userData.isLiked ? (
-                <FavoriteIcon
-                  fontSize="small"
-                  aria-label={`${name}님의 인기도`}
-                  aria-selected={userData.isLiked}
-                  sx={{
-                    color: 'red',
-                  }}
-                />
-              ) : (
-                <FavoriteBorderIcon
-                  fontSize="small"
-                  aria-label={`${name}님의 인기도`}
-                  aria-selected={userData.isLiked}
-                  sx={{
-                    color: '#666',
-                  }}
-                />
-              )}
-            </IconButton>
+            <LikeButton userid={userid} />
             <Typography fontSize="0.75rem" color="#666">
               {userData.like}
             </Typography>
