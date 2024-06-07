@@ -11,7 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { DisabilityChip } from '../DisabilityChip';
@@ -20,8 +20,8 @@ import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
 
 import infoApi from '@/apis/requests/info';
-import { UserProfileGetResponse } from '@/apis/types/info';
 import { BROWSER_PATH } from '@/constants/path';
+import useLike from '@/hooks/useLike';
 
 interface ProfileModalProps extends DialogProps {
   userid: string;
@@ -44,36 +44,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     queryFn: () => infoApi.eventHistoryGet({ userId: userid }),
   });
 
-  const { mutate } = useMutation({
-    mutationKey: ['likePost', userid],
-    mutationFn: () => infoApi.likePost({ userId: userid }),
-    onMutate: async () => {
-      await queryClient.cancelQueries({
-        queryKey: ['userProfileGet', userid],
-      });
-
-      const previous = queryClient.getQueryData(['userProfileGet', userid]);
-
-      queryClient.setQueryData(
-        ['userProfileGet', userid],
-        (old: UserProfileGetResponse) => ({
-          ...old,
-          like: old.like + 1,
-          isLiked: !old.isLiked,
-        }),
-      );
-
-      return { previous };
-    },
-    onError: (_, __, context) => {
-      queryClient.setQueryData(['userProfileGet', userid], context?.previous);
-      alert('에러가 발생했습니다. 다시 시도해주세요.');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['userProfileGet', userid] });
-    },
-  });
-
+  const { mutate } = useLike({ userId: userid });
   /**
    *
    */
