@@ -167,7 +167,7 @@ class InfoApi {
     return await axiosInstanceWithToken
       .get<EventHistoryGetResponse>(
         `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
-          year ? `&year=${year}` : null
+          year ? `&year=${year}` : ''
         }`,
       )
       .then((res) => res.data);

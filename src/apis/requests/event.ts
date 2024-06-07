@@ -104,7 +104,7 @@ class EventApi {
 
   eventTypeCountGet = async ({ userId }: EventTypeCountGetRequest) => {
     return await axiosInstanceWithToken
-      .get<EventTypeCountGetResponse>('/user/event-type/count')
+      .get<EventTypeCountGetResponse>(`/user/event-type/count/${userId}`)
       .then((res) => res.data);
   };
 
