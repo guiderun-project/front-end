@@ -187,7 +187,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // userProfileGet
-  http.patch<UserProfileGetRequest, NoneType, UserProfileGetResponse>(
+  http.get<UserProfileGetRequest, NoneType, UserProfileGetResponse>(
     baseURL + '/user/profile/:userId',
     () => {
       return HttpResponse.json({
