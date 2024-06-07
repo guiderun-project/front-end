@@ -1,11 +1,20 @@
 import styled from '@emotion/styled';
-import { Stack, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
-import { EventCount } from '@/components/shared';
+import {
+  DisabilityChip,
+  EventCount,
+  EventHistoryList,
+  GenderChip,
+  GroupChip,
+  LikeButton,
+  PartnerList,
+  ProfileImage,
+} from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 //
@@ -42,53 +51,120 @@ const Profile: React.FC = () => {
     queryFn: () => infoApi.userProfileGet({ userId }),
   });
 
-  const { data: partnerListCount, isSuccess } = useQuery({
-    queryKey: [],
-    queryFn: () => infoApi.partnerListCountGet({ userId }),
-  });
-
-  const {} = useQuery({
-    queryKey: [],
-    queryFn: () => infoApi.partnerListGet({ userId }),
-  });
-
-  const {} = useQuery({
-    queryKey: [],
-    queryFn: () => infoApi.eventHistoryCountGet({ userId }),
-  });
-
-  const {} = useQuery({
-    queryKey: [],
-    queryFn: () => infoApi.eventHistoryGet({ userId }),
-  });
-
-  const {} = useMutation({
-    mutationKey: [],
-    mutationFn: () => infoApi.likePost({ userId }),
-  });
-
   /**
    *
    */
   const renderProfileInfo = () => {
-    return <></>;
+    if (userData) {
+      return (
+        <Stack direction="row" gap="2rem" alignItems="center">
+          <Stack alignItems="center">
+            <ProfileImage img={userData?.img} size={80} />
+            <Stack direction="row" alignItems="center">
+              <Typography fontSize="0.75rem" color="#666">
+                {userData?.like}
+              </Typography>
+              <LikeButton userid={userId} />
+            </Stack>
+          </Stack>
+          <Stack gap="0.5rem">
+            <Stack direction="row" gap="0.5rem">
+              <DisabilityChip component="chip" type={userData.type} />
+              <GenderChip type={userData.gender} />
+            </Stack>
+            <Stack direction="row" gap="0.5rem" alignItems="center">
+              <Typography fontSize="1.5rem" fontWeight={700}>
+                {userData.name}
+              </Typography>
+              <GroupChip type="avatar" group={userData.recordDegree} />
+            </Stack>
+          </Stack>
+        </Stack>
+      );
+    }
+    return (
+      <Stack alignItems="center">
+        <CircularProgress />
+      </Stack>
+    );
   };
 
   /**
    *
    */
   const renderProfileDetail = () => {
-    return <></>;
-  };
-
-  /**
-   *
-   */
-  const renderEventCount = () => {
-    return <></>;
-  };
-
-  const renderPartner = () => {
+    const UserDataContainer: React.FC<{
+      title: string;
+      content: React.ReactElement;
+    }> = ({ title, content }) => {
+      return (
+        <Stack
+          direction="row"
+          alignItems="center"
+          gap="0.5rem"
+          padding="0.5rem"
+        >
+          <Typography
+            component="h3"
+            fontSize="1.0625rem"
+            fontWeight={700}
+            width="4.375rem"
+          >
+            {title}
+          </Typography>
+          {content}
+        </Stack>
+      );
+    };
+    if (userData) {
+      return (
+        <Stack gap="1rem">
+          <UserDataContainer
+            title="개인 기록"
+            content={
+              <Typography>
+                Team <GroupChip type="text" group={userData.recordDegree} /> |{' '}
+                {userData.detailRecord}
+              </Typography>
+            }
+          />
+          <UserDataContainer
+            title="전화번호"
+            content={
+              userData.isOpenNumber ? (
+                <Typography>{userData.phoneNumber}</Typography>
+              ) : (
+                <Typography color="#808080">비공개</Typography>
+              )
+            }
+          />
+          <UserDataContainer
+            title="나이"
+            content={<Typography>{userData.age}대</Typography>}
+          />
+          <UserDataContainer
+            title="SNS"
+            content={
+              userData.isOpenSns ? (
+                <Typography
+                  component="a"
+                  href={`https://www.instagram.com/${userData.snsId}`}
+                  target="_blank"
+                  sx={{
+                    color: '#333',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {userData.snsId}
+                </Typography>
+              ) : (
+                <Typography color="#808080">비공개</Typography>
+              )
+            }
+          />
+        </Stack>
+      );
+    }
     return <></>;
   };
 
@@ -118,9 +194,11 @@ const Profile: React.FC = () => {
       {renderProfileInfo()}
       <Stack gap="2rem">
         {renderProfileDetail()}
+        <Divider />
         <EventCount userid={userId} />
+        <EventHistoryList userid={userId} length={5} />
       </Stack>
-      {renderPartner()}
+      <PartnerList userid={userId} length={4} />
     </>
   );
 };
