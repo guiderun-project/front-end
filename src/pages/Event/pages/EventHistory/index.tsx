@@ -11,33 +11,15 @@ import {
   MenuItem,
   Pagination,
 } from '@mui/material';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
-import eventApi from '@/apis/requests/event';
 import infoApi from '@/apis/requests/info';
-import { EventChip, EventLinkBox, PartnerBox } from '@/components/shared';
+import { EventCount, EventLinkBox, PartnerBox } from '@/components/shared';
 import { RootState } from '@/store/index';
-import { EventType, RecruitStatus } from '@/types/group';
+import { RecruitStatus } from '@/types/group';
 import { PartnerSort } from '@/types/sort';
-
-//
-//
-//
-
-const StyledCountContainer = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 0.625rem;
-  box-shadow: 0px 2px 4px 0px #0000001a;
-  background-color: #fff;
-  border-radius: 1rem;
-`;
 
 const StyledPartnerListGrid = styled.div`
   display: grid;
@@ -80,12 +62,6 @@ const EventHistory: React.FC = () => {
   const [partnerPage, setPartnerPage] = React.useState(1);
 
   const { name, userId } = useSelector((state: RootState) => state.user);
-  const {
-    data: { contestCnt, trainingCnt, totalCnt },
-  } = useSuspenseQuery({
-    queryKey: ['eventTypeCountGet'],
-    queryFn: () => eventApi.eventTypeCountGet({ userId }),
-  });
 
   const {
     data: eventCount,
@@ -173,32 +149,6 @@ const EventHistory: React.FC = () => {
    */
   const handlePartnerFilterChange = (e: SelectChangeEvent) => {
     setSelectedPartnerFilter(e.target.value as PartnerSort);
-  };
-
-  /**
-   *
-   */
-  const renderEventCount = () => {
-    return (
-      <StyledCountContainer aria-label="이벤트 참여 횟수">
-        <Typography>
-          <span style={{ fontSize: '1.25rem' }}>총</span>{' '}
-          <span style={{ color: '#FF4040' }}>{totalCnt}</span>회
-        </Typography>
-        <Stack direction="row" alignItems="center" gap="0.5rem">
-          <EventChip variant="full" type={EventType.Training} />
-          <Typography fontSize="0.9375rem">
-            <span style={{ color: '#FF4040' }}>{trainingCnt}</span>회
-          </Typography>
-        </Stack>
-        <Stack direction="row" alignItems="center" gap="0.5rem">
-          <EventChip variant="full" type={EventType.Competition} />
-          <Typography fontSize="0.9375rem">
-            <span style={{ color: '#FF4040' }}>{contestCnt}</span>회
-          </Typography>
-        </Stack>
-      </StyledCountContainer>
-    );
   };
 
   /**
@@ -411,7 +361,7 @@ const EventHistory: React.FC = () => {
           </Typography>
         </Stack>
         {/* 이벤트 참여 횟수 */}
-        {renderEventCount()}
+        <EventCount userid={userId} />
       </Stack>
       <Stack gap="2.5rem">
         {/* 이벤트 목록 */}

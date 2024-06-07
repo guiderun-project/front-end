@@ -12,7 +12,7 @@ import { EventType } from '@/types/group';
 //
 
 interface EventCountProps {
-  userId: string;
+  userid: string;
 }
 
 //
@@ -36,10 +36,10 @@ const StyledCountContainer = styled.div`
 //
 //
 
-const EventCount: React.FC<EventCountProps> = ({ userId }) => {
+const EventCount: React.FC<EventCountProps> = ({ userid }) => {
   const { data: eventTypeCount, isLoading } = useQuery({
     queryKey: ['eventTypeCountGet'],
-    queryFn: () => eventApi.eventTypeCountGet({ userId }),
+    queryFn: () => eventApi.eventTypeCountGet({ userId: userid }),
   });
 
   if (isLoading) {

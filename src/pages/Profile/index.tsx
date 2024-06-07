@@ -4,8 +4,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
-import eventApi from '@/apis/requests/event';
 import infoApi from '@/apis/requests/info';
+import { EventCount } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 //
@@ -40,11 +40,6 @@ const Profile: React.FC = () => {
   } = useQuery({
     queryKey: ['userProfileGet', userId],
     queryFn: () => infoApi.userProfileGet({ userId }),
-  });
-
-  const { data: eventTypeCount } = useQuery({
-    queryKey: ['eventTypeCountGet', userId],
-    queryFn: () => eventApi.eventTypeCountGet({ userId }),
   });
 
   const { data: partnerListCount, isSuccess } = useQuery({
@@ -123,7 +118,7 @@ const Profile: React.FC = () => {
       {renderProfileInfo()}
       <Stack gap="2rem">
         {renderProfileDetail()}
-        {renderEventCount()}
+        <EventCount userid={userId} />
       </Stack>
       {renderPartner()}
     </>
