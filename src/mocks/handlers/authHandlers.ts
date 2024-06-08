@@ -20,6 +20,7 @@ import {
   RenewalPasswordPatchRequest,
   SignupPostResponse,
   ViSignupPostRequest,
+  WithdrawDeleteRequest,
 } from '@/apis/types/auth';
 import { RoleEnum } from '@/types/group';
 
@@ -124,7 +125,10 @@ export const authHandlers: HttpHandler[] = [
   ),
 
   //withdrawDelete
-  http.delete(baseURL + '/withdrawal', () => {
-    return HttpResponse.json({}, { status: 204 });
-  }),
+  http.delete<NoneType, { data: WithdrawDeleteRequest }>(
+    baseURL + '/withdrawal',
+    () => {
+      return HttpResponse.json({});
+    },
+  ),
 ];
