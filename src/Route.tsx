@@ -36,6 +36,7 @@ import NotFound from './pages/NotFound';
 import Oauth from './pages/Oauth';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
+import Withdraw from './pages/Withdraw';
 import { RootState } from './store';
 
 const router = createBrowserRouter([
@@ -150,6 +151,10 @@ const router = createBrowserRouter([
               {
                 path: `${BROWSER_PATH.PROFILE}/:userId`,
                 element: <Profile />,
+              },
+              {
+                path: `${BROWSER_PATH.WITHDRAW}`,
+                element: <Withdraw />,
               },
             ],
           },
