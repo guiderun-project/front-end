@@ -122,4 +122,9 @@ export const authHandlers: HttpHandler[] = [
       });
     },
   ),
+
+  //withdrawDelete
+  http.delete(baseURL + '/withdrawal', () => {
+    return HttpResponse.json({}, { status: 204 });
+  }),
 ];
