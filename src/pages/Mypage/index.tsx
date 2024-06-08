@@ -309,8 +309,11 @@ const Mypage: React.FC = () => {
         buttonLabel="문의하러 바로 가기"
         to="https://open.kakao.com/o/sB89yqNf"
       />
-      {/* TODO: 탈퇴 */}
-      <Navigation title="탈퇴하기" buttonLabel="탈퇴하러 가기" to="" />
+      <Navigation
+        title="탈퇴하기"
+        buttonLabel="탈퇴하러 가기"
+        to={BROWSER_PATH.WITHDRAW}
+      />
       <Stack alignItems="center">
         <Button
           fullWidth
