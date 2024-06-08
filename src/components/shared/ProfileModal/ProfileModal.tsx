@@ -188,6 +188,9 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           background: '#F8F9FF',
         },
         '.MuiPaper-root': {
+          '&::-webkit-scrollbar ': {
+            display: 'none',
+          },
           maxHeight: '70vh',
           padding: '5rem 1.25rem',
           gap: '2.5rem',

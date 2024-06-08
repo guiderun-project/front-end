@@ -17,6 +17,7 @@ import {
   RenewalPasswordPatchRequest,
   SignupPostResponse,
   ViSignupPostRequest,
+  WithdrawDeleteRequest,
 } from '../types/auth';
 
 class AuthApi {
@@ -90,6 +91,12 @@ class AuthApi {
     return axiosInstance
       .post<GetUserIdPostResponse>('/accountId', token)
       .then((res) => res.data);
+  };
+
+  withdrawDelete = async (data: WithdrawDeleteRequest) => {
+    return await axiosInstanceWithToken
+      .delete('/withdrawal', { data })
+      .then((res) => res);
   };
 }
 
