@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styled from '@emotion/styled';
 import {
   Button,
@@ -16,8 +17,8 @@ import { useNavigate } from 'react-router-dom';
 
 import authApi from '@/apis/requests/auth';
 import { WithdrawDeleteRequest } from '@/apis/types/auth';
-import { RootState } from '@/store/index';
 import { BROWSER_PATH } from '@/constants/path';
+import { RootState } from '@/store/index';
 import { resetAccessToken } from '@/store/reducer/auth';
 import { resetUserInfo } from '@/store/reducer/user';
 
