@@ -28,7 +28,12 @@ const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
   //
 
   return (
-    <Typography fontSize="0.75rem" fontWeight={700} color={getTextColor()}>
+    <Typography
+      component="span"
+      fontSize="0.75rem"
+      fontWeight={700}
+      color={getTextColor()}
+    >
       <FormattedMessage id={`common.status.${status}`} />
     </Typography>
   );

@@ -1,4 +1,10 @@
-import { EventType, RecruitStatus } from '@/types/group';
+import {
+  DisabilityEnum,
+  EventStatus,
+  EventType,
+  RecruitStatus,
+  RunningGroup,
+} from '@/types/group';
 import { EventKind, EventSort } from '@/types/sort';
 
 export type EventPostRequest = {
@@ -76,15 +82,27 @@ export type EventPopupGetResponse = {
   eventId: number; //이벤트 아이디
   type: EventType; //대회인지 훈련인지
   name: string; //제목
+  organizer: string; //주최자 이름
+  organizerType: DisabilityEnum; //주최자 장애유무
+  organizerRecord: RunningGroup; //주최자 러닝등급
   recruitStatus: RecruitStatus; //이벤트 모집 상태
+  status: EventStatus; //이벤트 상태
   date: string; //이벤트 시작일
   startTime: string; //"HH : MM"
   endTime: string; //"HH : MM"
-  viCnt: number; //모집된 vi 수
-  guideCnt: number; //모집된 guide 수
+  recruitVi: number; //모집 예정인 vi 수
+  recruitGuide: number; //모집 예정인 guide 수
+  viCnt: number; //모집된=참여한 vi 수
+  guideCnt: number; //모집된=참여한 guide 수
   place: string; //달리는 장소
   content: string; //이벤트 내용
-  updatedAt: string; //수정일
+  updatedAt: string;
+
+  isApply: boolean; //신청 여부
+  hasPartner: boolean; //파트너 존재 여부
+  partnerName: string; //파트너 이름
+  partnerRecord: RunningGroup; //파트너 러닝등급
+  partnerType: DisabilityEnum; //파트너 타입(가이드인지 vi인지)
 };
 
 export type MyEventGetRequest = {

@@ -14,6 +14,7 @@ import {
   LikeButton,
   PartnerList,
   ProfileImage,
+  TitleContentRow,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
@@ -89,33 +90,10 @@ const Profile: React.FC = () => {
    *
    */
   const renderProfileDetail = () => {
-    const UserDataContainer: React.FC<{
-      title: string;
-      content: React.ReactElement;
-    }> = ({ title, content }) => {
-      return (
-        <Stack
-          direction="row"
-          alignItems="center"
-          gap="0.5rem"
-          padding="0.5rem"
-        >
-          <Typography
-            component="h3"
-            fontSize="1.0625rem"
-            fontWeight={700}
-            width="4.375rem"
-          >
-            {title}
-          </Typography>
-          {content}
-        </Stack>
-      );
-    };
     if (userData) {
       return (
         <Stack gap="1rem">
-          <UserDataContainer
+          <TitleContentRow
             title="개인 기록"
             content={
               <Typography>
@@ -124,7 +102,7 @@ const Profile: React.FC = () => {
               </Typography>
             }
           />
-          <UserDataContainer
+          <TitleContentRow
             title="전화번호"
             content={
               userData.isOpenNumber ? (
@@ -134,11 +112,11 @@ const Profile: React.FC = () => {
               )
             }
           />
-          <UserDataContainer
+          <TitleContentRow
             title="나이"
             content={<Typography>{userData.age}대</Typography>}
           />
-          <UserDataContainer
+          <TitleContentRow
             title="SNS"
             content={
               userData.isOpenSns ? (
