@@ -49,14 +49,24 @@ const EventModal: React.FC<EventModalProps> = ({
   const renderTitle = () => {
     if (eventData) {
       return (
-        <DialogTitle display="flex" gap="0.5rem" alignItems="center">
+        <DialogTitle
+          component="h1"
+          display="flex"
+          gap="0.5rem"
+          alignItems="center"
+        >
           <EventChip variant="full" type={eventData.type} />
-          <Typography id="modal-title" fontSize="1.25rem" fontWeight={700}>
+          <Typography
+            component="span"
+            id="modal-title"
+            fontSize="1.25rem"
+            fontWeight={700}
+          >
             {eventData.name}
             <Stack direction="row" gap="0.5rem" alignItems="center">
               <EventStatus status={eventData.recruitStatus} />
               {eventData.updatedAt ? (
-                <Typography fontSize="0.625rem">
+                <Typography component="span" fontSize="0.625rem">
                   {eventData.updatedAt} 수정
                 </Typography>
               ) : null}
@@ -99,7 +109,7 @@ const EventModal: React.FC<EventModalProps> = ({
           <TitleContentRow
             title="일시"
             content={
-              <Typography display="flex" gap="0.5rem">
+              <Typography component="span" display="flex" gap="0.5rem">
                 {eventData.date.replace(/-/g, '.')}
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {eventData.startTime}~{eventData.endTime}
