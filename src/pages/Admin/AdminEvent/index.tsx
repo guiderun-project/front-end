@@ -23,7 +23,7 @@ import { StyledCollapsBox } from '../AdminUser';
 
 import adminApi from '@/apis/requests/admin';
 import { EventListItemType } from '@/apis/types/admin';
-import { DetailEventModal, GroupChip } from '@/components/shared';
+import { EventModal, GroupChip } from '@/components/shared';
 
 //
 //
@@ -316,7 +316,7 @@ const AdminEvent: React.FC = () => {
           />
         </Stack>
       )}
-      <DetailEventModal
+      <EventModal
         eventId={selectedEvent}
         isOpen={isDialogOpen}
         onModalClose={() => setIsDialogOpen(false)}

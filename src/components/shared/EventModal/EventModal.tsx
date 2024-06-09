@@ -17,13 +17,13 @@ import { EventStatus } from '../EventStatus';
 
 import eventApi from '@/apis/requests/event';
 
-interface DetailEventModalProps {
+interface EventModalProps {
   eventId: number;
   isOpen: boolean;
   onModalClose: () => void;
 }
 
-const DetailEventModal: React.FC<DetailEventModalProps> = ({
+const EventModal: React.FC<EventModalProps> = ({
   eventId,
   isOpen,
   onModalClose,
@@ -157,4 +157,4 @@ const DetailEventModal: React.FC<DetailEventModalProps> = ({
   );
 };
 
-export default DetailEventModal;
+export default EventModal;

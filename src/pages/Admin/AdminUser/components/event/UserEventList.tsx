@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FormattedMessage } from 'react-intl';
 
 import adminApi from '@/apis/requests/admin';
-import { DetailEventModal, EventChip } from '@/components/shared';
+import { EventModal, EventChip } from '@/components/shared';
 import { StyledEventButton } from '@/pages/Mypage';
 import { RecruitStatus } from '@/types/group';
 
@@ -193,7 +193,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
           onChange={(_, value) => setPage(value)}
         />
       )}
-      <DetailEventModal
+      <EventModal
         eventId={selectedEvent}
         isOpen={open}
         onModalClose={() => setOpen(false)}

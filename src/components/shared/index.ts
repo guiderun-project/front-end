@@ -1,5 +1,5 @@
 export * from './Chip';
-export * from './DetailEventModal';
+export * from './EventModal';
 export * from './DisabilityChip';
 export * from './ErrorBoundary';
 export * from './EventChip';
