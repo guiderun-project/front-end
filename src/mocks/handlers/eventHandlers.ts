@@ -6,8 +6,11 @@ import { baseURL } from '@/apis/axios';
 import {
   AllEventCountGetResponse,
   AllEventGetResponse,
+  EditEventPatchResponse,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
+  EventFormType,
+  EventGetResponse,
   EventPopupGetResponse,
   EventTypeCountGetRequest,
   EventTypeCountGetResponse,
@@ -31,6 +34,42 @@ import { EventSort } from '@/types/sort';
 //https://mswjs.io/docs/network-behavior/rest
 
 export const eventHandlers: HttpHandler[] = [
+  //eventGet
+  http.get<{ eventId: string }, NoneType, EventGetResponse>(
+    baseURL + `/event/:eventId`,
+    () => {
+      return HttpResponse.json({
+        checkOrganizer: true,
+        created_at: '0000-00-00',
+        date: '2222-22-22',
+        details: '테스트용 이벤트 상세 내용',
+        startTime: '01:00',
+        endTime: '10:00',
+        eventId: 1,
+        minNumG: 10,
+        minNumV: 10,
+        name: '테스트 이벤트',
+        NumG: 11,
+        NumV: 12,
+        oragnizerType: DisabilityEnum.GUIDE,
+        organizer: '홍길동',
+        organizerId: '123',
+        organizerPace: RunningGroup.A,
+        partner: '고길동',
+        partnerPace: RunningGroup.A,
+        partnerType: DisabilityEnum.VI,
+        place: '잠실 보조 경기장',
+        recruitEndDate: '2024-06-12',
+        recruitStartDate: '2024-06-12',
+        recruitStatus: RecruitStatus.Open,
+        status: EventStatus.Open,
+        submit: false,
+        type: EventType.Competition,
+        updated_at: '0000-00-00',
+      });
+    },
+  ),
+
   //eventPopupGet
   http.get<{ eventId: string }, NoneType, EventPopupGetResponse>(
     baseURL + '/event/pop/:eventId',
@@ -338,6 +377,15 @@ export const eventHandlers: HttpHandler[] = [
         eventId: 123,
         isApprove: false,
       });
+    },
+  ),
+
+  http.patch<{ eventId: string }, EventFormType, EditEventPatchResponse>(
+    baseURL + '/event/:eventId',
+    async ({ request }) => {
+      const body = await request.json();
+
+      return HttpResponse.json(body);
     },
   ),
 ];
