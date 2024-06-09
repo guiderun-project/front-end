@@ -21,9 +21,19 @@ import {
   NewEventPostRequest,
   NewEventPostResponse,
   EventTypeCountGetRequest,
+  EventGetRequest,
+  EventGetResponse,
+  EditEventPatchResponse,
+  EditEventPatchRequest,
 } from '../types/event';
 
 class EventApi {
+  eventGet = async ({ eventId }: EventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventGetResponse>(`/event/${eventId}`)
+      .then((res) => res.data);
+  };
+
   allEventCountGet = async ({ kind, sort, type }: AllEventCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<AllEventCountGetResponse>(
@@ -111,6 +121,18 @@ class EventApi {
   newEventPost = async (body: NewEventPostRequest) => {
     return await axiosInstanceWithToken
       .post<NewEventPostResponse>('/event', body)
+      .then((res) => res.data);
+  };
+
+  editEventPatch = async ({
+    eventId,
+    EditEventPatchRequestBody,
+  }: EditEventPatchRequest) => {
+    return await axiosInstanceWithToken
+      .patch<EditEventPatchResponse>(
+        `/event/${eventId}`,
+        EditEventPatchRequestBody,
+      )
       .then((res) => res.data);
   };
 }

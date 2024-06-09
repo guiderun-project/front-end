@@ -130,7 +130,12 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
     <>
       <StyledContainer onClick={() => setOpen(true)}>
         <EventChip type={eventType} variant="full" />
-        <Stack gap="0.25rem" overflow="hidden" textOverflow="ellipsis">
+        <Stack
+          gap="0.25rem"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          alignItems="flex-start"
+        >
           <Typography fontWeight={500} noWrap>
             {name}
           </Typography>

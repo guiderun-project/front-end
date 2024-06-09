@@ -13,6 +13,7 @@ import { setUserInfo } from '@/store/reducer/user';
 const ProtectedRoute: React.FC = () => {
   const location = useLocation();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const userId = useSelector((state: RootState) => state.user.userId);
   const dispatch = useDispatch();
 
   const { data, isLoading } = useQuery({
@@ -31,7 +32,7 @@ const ProtectedRoute: React.FC = () => {
     window.localStorage.setItem(PREV_PATH_KEY, location.pathname);
   }, [location]);
 
-  if (isLoading) {
+  if (isLoading || !userId) {
     return <Loading />;
   }
 
