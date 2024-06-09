@@ -83,7 +83,7 @@ export type EventPopupGetResponse = {
   type: EventType; //대회인지 훈련인지
   name: string; //제목
   organizer: string; //주최자 이름
-  organizerType: EventType; //주최자 장애유무
+  organizerType: DisabilityEnum; //주최자 장애유무
   organizerRecord: RunningGroup; //주최자 러닝등급
   recruitStatus: RecruitStatus; //이벤트 모집 상태
   status: EventStatus; //이벤트 상태
@@ -96,6 +96,7 @@ export type EventPopupGetResponse = {
   guideCnt: number; //모집된=참여한 guide 수
   place: string; //달리는 장소
   content: string; //이벤트 내용
+  updatedAt: string;
 
   isApply: boolean; //신청 여부
   hasPartner: boolean; //파트너 존재 여부
