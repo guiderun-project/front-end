@@ -18,7 +18,13 @@ import {
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
-import { EventType, RecruitStatus } from '@/types/group';
+import {
+  DisabilityEnum,
+  EventStatus,
+  EventType,
+  RecruitStatus,
+  RunningGroup,
+} from '@/types/group';
 import { EventSort } from '@/types/sort';
 
 //You can add HTTP handler by msw DOCS
@@ -35,13 +41,24 @@ export const eventHandlers: HttpHandler[] = [
         startTime: '00:00',
         endTime: '00:00',
         eventId: Number(params.eventId),
-        viCnt: 22,
-        guideCnt: 10,
         name: '테스트 훈련',
         place: '테스트 장소',
         recruitStatus: RecruitStatus.End,
         type: EventType.Training,
         updatedAt: '0000-00-00',
+        hasPartner: true,
+        isApply: true,
+        organizer: '홍길동',
+        organizerRecord: RunningGroup.A,
+        organizerType: EventType.Competition,
+        partnerName: '고길동',
+        partnerRecord: RunningGroup.B,
+        partnerType: DisabilityEnum.VI,
+        recruitGuide: 22,
+        recruitVi: 22,
+        guideCnt: 22,
+        viCnt: 22,
+        status: EventStatus.Open,
       });
     },
   ),
