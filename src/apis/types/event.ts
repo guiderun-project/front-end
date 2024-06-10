@@ -292,3 +292,7 @@ export type EditEventPatchRequest = {
 };
 
 export type EditEventPatchResponse = EventFormType;
+
+export type CloseEventPatchRequest = {
+  eventId: number;
+};

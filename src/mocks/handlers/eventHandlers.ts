@@ -344,6 +344,11 @@ export const eventHandlers: HttpHandler[] = [
     },
   ),
 
+  //closeEventPatch
+  http.patch<{ eventId: string }>(baseURL + '/event/close/:eventId', () => {
+    return HttpResponse.json();
+  }),
+
   //editEventPatch
   http.patch<{ eventId: string }, EventFormType, EditEventPatchResponse>(
     baseURL + '/event/:eventId',
