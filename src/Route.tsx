@@ -74,6 +74,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: BROWSER_PATH.SIGNUP,
+        element: (
+          <PageLayout>
+            <Signup />
+          </PageLayout>
+        ),
+      },
+      {
         element: <ProtectedRoute />,
         children: [
           {
@@ -100,14 +108,6 @@ const router = createBrowserRouter([
                 element: <EventSearch />,
               },
             ],
-          },
-          {
-            path: BROWSER_PATH.SIGNUP,
-            element: (
-              <PageLayout>
-                <Signup />
-              </PageLayout>
-            ),
           },
           {
             path: BROWSER_PATH.ADMIN.MAIN,

@@ -75,6 +75,8 @@ export type SignupPostResponse = {
 
 export type AccessTokenGetResponse = {
   accessToken: string;
+
+  isExist: boolean;
 };
 
 export type CheckDuplicatedPostRequest = {

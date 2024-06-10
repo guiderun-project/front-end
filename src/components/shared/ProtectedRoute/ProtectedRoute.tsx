@@ -32,7 +32,7 @@ const ProtectedRoute: React.FC = () => {
     window.localStorage.setItem(PREV_PATH_KEY, location.pathname);
   }, [location]);
 
-  if (isLoading || !userId) {
+  if (isLoading || (accessToken && !userId)) {
     return <Loading />;
   }
 
