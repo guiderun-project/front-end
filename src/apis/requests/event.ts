@@ -25,6 +25,7 @@ import {
   EventGetResponse,
   EditEventPatchResponse,
   EditEventPatchRequest,
+  CloseEventPatchRequest,
 } from '../types/event';
 
 class EventApi {
@@ -133,6 +134,12 @@ class EventApi {
         `/event/${eventId}`,
         EditEventPatchRequestBody,
       )
+      .then((res) => res.data);
+  };
+
+  closeEventPatch = async ({ eventId }: CloseEventPatchRequest) => {
+    return await axiosInstanceWithToken
+      .patch(`/event/close/${eventId}`)
       .then((res) => res.data);
   };
 }
