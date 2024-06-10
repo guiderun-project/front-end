@@ -58,7 +58,7 @@ const StyledImageLabel = styled.label<{ img: string }>`
   justify-content: center;
   margin: 0.5rem;
   ${({ img }) => {
-    if (img.length) {
+    if (img?.length) {
       return css`
         background: url(${img}) no-repeat center center;
         background-size: 5rem;
@@ -240,7 +240,7 @@ const Mypage: React.FC = () => {
               aria-label="데이터를 가지고 오는 중"
             />
           </Stack>
-        ) : !eventList?.items.length ? (
+        ) : !eventList?.items?.length ? (
           <Stack justifyContent="center" alignItems="center" gap="2rem">
             <InfoIcon aria-label="알림" />
             <Typography fontWeight={700} fontSize="1.25rem">
