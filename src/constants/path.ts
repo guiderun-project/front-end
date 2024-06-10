@@ -1,5 +1,5 @@
 export const BROWSER_PATH = {
-  MAIN: '',
+  MAIN: '/',
   ADMIN: {
     MAIN: '/admin',
     USER: '/admin',
@@ -9,15 +9,24 @@ export const BROWSER_PATH = {
     MAIN: '/event',
     ALL: '/event/all',
     MY: '/event/my',
-    UPCOMING: '/event/upcoming',
+    CALENDAR: '/event/calendar',
+    SEARCH: '/event/search',
+    HISTORY: '/event/history',
+    NEW: '/event/new',
+    EDIT: '/event/edit',
+    DETAIL: '',
   },
   CALENDAR: '/calender',
   SEARCH: '/search',
   INTRO: '/intro',
   OAUTH: '/oauth',
   SIGNUP: '/signup',
-  MYPAGE: '/',
+  MYPAGE: '/my',
   INFO: '/info',
+  LOGIN: '/login',
+  FIND_ID_PASSWORD: '/find-id-password',
+  PROFILE: '/profile',
+  WITHDRAW: '/withdraw',
 };
 
 // const API_PATH = {

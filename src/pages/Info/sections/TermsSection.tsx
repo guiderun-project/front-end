@@ -13,7 +13,7 @@ import TermsDetail from '../components/TermsDetail';
 import TermsEdit from '../components/TermsEdit';
 
 import infoApi from '@/apis/requests/info';
-import { permissionGetResponse } from '@/apis/types/info';
+import { PermissionGetResponse } from '@/apis/types/info';
 import { NotFound } from '@/components/shared';
 import { RootState } from '@/store/index';
 
@@ -21,7 +21,7 @@ import { RootState } from '@/store/index';
 //
 //
 
-export const TERMS_DATA: permissionGetResponse = {
+export const TERMS_DATA: PermissionGetResponse = {
   privacy: true,
   portraitRights: false,
 };
