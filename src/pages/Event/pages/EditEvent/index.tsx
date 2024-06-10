@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   Button,
+  CircularProgress,
   InputAdornment,
   MenuItem,
   Select,
@@ -23,7 +24,7 @@ import { DisabilityChip, GroupChip } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
-import { EventType } from '@/types/group';
+import { EventType, RecruitStatus } from '@/types/group';
 
 const EditEvent: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -48,6 +49,20 @@ const EditEvent: React.FC = () => {
     },
     onError: () => {
       alert('이벤트 수정이 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const { mutate: closeEvent, isPending } = useMutation({
+    mutationKey: ['closeEventPatch', eventId],
+    mutationFn: () => eventApi.closeEventPatch({ eventId: eventData.eventId }),
+    onSuccess: () => {
+      alert(
+        '이벤트 모집 마감 처리 되었습니다. 이벤트 상세페이지로 이동합니다.',
+      );
+      navigate(BROWSER_PATH.EVENT.DETAIL);
+    },
+    onError: () => {
+      alert('마감 처리가 실패했습니다. 다시 시도해주세요.');
     },
   });
 
@@ -359,6 +374,23 @@ const EditEvent: React.FC = () => {
             />
           )}
         />
+        {eventData.recruitStatus === RecruitStatus.Open ? (
+          <Stack alignItems="center">
+            <Button
+              fullWidth
+              variant="chip"
+              size="large"
+              disabled={isPending}
+              onClick={() => closeEvent()}
+            >
+              {!isPending ? (
+                '지금 모집 마감'
+              ) : (
+                <CircularProgress size={20} sx={{ color: '#fff' }} />
+              )}
+            </Button>
+          </Stack>
+        ) : null}
         <Controller
           control={control}
           name="content"

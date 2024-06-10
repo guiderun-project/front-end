@@ -6,7 +6,6 @@ import { baseURL } from '@/apis/axios';
 import {
   AllEventCountGetResponse,
   AllEventGetResponse,
-  CloseEventPatchRequest,
   EditEventPatchResponse,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
