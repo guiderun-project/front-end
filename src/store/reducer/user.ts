@@ -18,6 +18,7 @@ const initialState: UserInfoGetResponse = {
   role: RoleEnum.New,
   snsId: '',
   type: DisabilityEnum.GUIDE,
+  img: '',
 };
 
 export const userSlice = createSlice({
@@ -45,5 +46,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserInfo, updateInfo } = userSlice.actions;
+export const { setUserInfo, updateInfo, resetUserInfo } = userSlice.actions;
 export default userSlice.reducer;

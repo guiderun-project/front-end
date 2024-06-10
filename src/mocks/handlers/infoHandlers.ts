@@ -6,8 +6,8 @@ import { baseURL } from '@/apis/axios';
 import {
   EventHistoryCountGetResponse,
   EventHistoryGetResponse,
+  LikePostRequest,
   MyPageGetResponse,
-  PartnerListCountGetRequest,
   PartnerListCountGetResponse,
   PartnerListGetResponse,
   PermissionGetResponse,
@@ -16,6 +16,8 @@ import {
   PersonalInfoGetResponse,
   PersonalInfoPatchRequest,
   PersonalInfoPatchResponse,
+  UserProfileGetRequest,
+  UserProfileGetResponse,
   RunningSpecGuideGetResponse,
   RunningSpecGuidePatchRequest,
   RunningSpecGuidePatchResponse,
@@ -69,6 +71,7 @@ export const infoHandlers: HttpHandler[] = [
         snsId: 'guide_run',
         type: DisabilityEnum.GUIDE,
         userId: '123',
+        img: '', //상황에 따라 https://mui.com/static/images/avatar/2.jpg 를 추가함
       });
     },
   ),
@@ -78,6 +81,7 @@ export const infoHandlers: HttpHandler[] = [
     baseURL + '/user/personal/:userId',
     () => {
       return HttpResponse.json({
+        userId: '123',
         age: 20,
         gender: GenderEnum.M,
         isOpenNumber: true,
@@ -87,6 +91,11 @@ export const infoHandlers: HttpHandler[] = [
         role: RoleEnum.Admin,
         snsId: 'test',
         type: DisabilityEnum.GUIDE,
+        img: '',
+        recordDegree: RunningGroup.A, //러닝 기록 등급
+        detailRecord: '5분 30초', //상세 기록
+        like: 999,
+        isLiked: false,
       });
     },
   ),
@@ -177,7 +186,29 @@ export const infoHandlers: HttpHandler[] = [
     },
   ),
 
-  //TODO: profileGet
+  // userProfileGet
+  http.get<UserProfileGetRequest, NoneType, UserProfileGetResponse>(
+    baseURL + '/user/profile/:userId',
+    () => {
+      return HttpResponse.json({
+        userId: '123',
+        age: 20,
+        gender: GenderEnum.M,
+        isOpenNumber: true,
+        isOpenSns: true,
+        name: '홍길동',
+        phoneNumber: '01234567890',
+        role: RoleEnum.Admin,
+        snsId: 'test',
+        type: DisabilityEnum.GUIDE,
+        img: '',
+        recordDegree: RunningGroup.A, //러닝 기록 등급
+        detailRecord: '5분 30초', //상세 기록
+        like: 999,
+        isLiked: false,
+      });
+    },
+  ),
 
   // partnerListGet
   http.get<{ userId: string }, NoneType, PartnerListGetResponse>(
@@ -215,6 +246,64 @@ export const infoHandlers: HttpHandler[] = [
               trainingCnt: 4,
               like: 10,
               name: '이재건',
+            },
+          ],
+        });
+      }
+
+      if (limit === 4) {
+        return HttpResponse.json({
+          limit: 2,
+          sort: PartnerSort.Recent,
+          start: 0,
+          items: [
+            {
+              userId: '1e12kdsn1',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.C,
+              role: RoleEnum.User,
+              img: '',
+              contestCnt: 25,
+              isLiked: true,
+              trainingCnt: 10,
+              like: 123,
+              name: '배두리',
+            },
+            {
+              userId: '1sfdsfq3345413',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/2.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '이재건',
+            },
+            {
+              userId: '1sfdsfqdasdasda13',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/4.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '조재석',
+            },
+            {
+              userId: '1sfdasdasd13',
+              type: DisabilityEnum.GUIDE,
+              recordDegree: RunningGroup.A,
+              role: RoleEnum.User,
+              img: 'https://mui.com/static/images/avatar/3.jpg',
+              contestCnt: 1,
+              isLiked: false,
+              trainingCnt: 4,
+              like: 10,
+              name: '장지은',
             },
           ],
         });
@@ -266,7 +355,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // partnerListCountGet
-  http.get<PartnerListCountGetRequest, NoneType, PartnerListCountGetResponse>(
+  http.get<{ userId: string }, NoneType, PartnerListCountGetResponse>(
     baseURL + '/user/partner-list/count/:userId',
     () => {
       return HttpResponse.json({ count: 50 });
@@ -276,79 +365,181 @@ export const infoHandlers: HttpHandler[] = [
   //eventHistoryGet
   http.get<{ userId: string }, NoneType, EventHistoryGetResponse>(
     baseURL + '/user/event-history/:userId',
-    () => {
+    ({ request }) => {
+      const url = new URL(request.url);
+
+      const limit = Number(url.searchParams.get('limit'));
+      if (limit === 3) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+          ],
+        });
+      }
+      if (limit === 4) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+            {
+              name: '테스트4',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 4,
+              eventType: EventType.Competition,
+            },
+          ],
+        });
+      }
+      if (limit === 5) {
+        return HttpResponse.json({
+          items: [
+            {
+              name: '테스트1',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 1,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트2',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 2,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트3',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 3,
+              eventType: EventType.Training,
+            },
+            {
+              name: '테스트4',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 4,
+              eventType: EventType.Competition,
+            },
+            {
+              name: '테스트5',
+              recruitStatus: RecruitStatus.End,
+              startDate: '2000-00-00',
+              eventId: 5,
+              eventType: EventType.Training,
+            },
+          ],
+        });
+      }
       return HttpResponse.json({
-        start: 0,
-        sort: 'total',
-        limit: 10,
         items: [
           {
             name: '테스트1',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 1,
             eventType: EventType.Competition,
           },
           {
             name: '테스트2',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 2,
             eventType: EventType.Competition,
           },
           {
             name: '테스트3',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 3,
             eventType: EventType.Training,
           },
           {
             name: '테스트4',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 4,
             eventType: EventType.Competition,
           },
           {
             name: '테스트5',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 5,
             eventType: EventType.Training,
           },
           {
             name: '테스트6',
             recruitStatus: RecruitStatus.Upcoming,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 6,
             eventType: EventType.Competition,
           },
           {
             name: '테스트7',
             recruitStatus: RecruitStatus.Close,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 7,
             eventType: EventType.Competition,
           },
           {
             name: '테스트8',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 8,
             eventType: EventType.Training,
           },
           {
             name: '테스트9',
             recruitStatus: RecruitStatus.Open,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 9,
             eventType: EventType.Competition,
           },
           {
             name: '테스트10',
             recruitStatus: RecruitStatus.End,
-            date: '2000-00-00',
+            startDate: '2000-00-00',
             eventId: 10,
             eventType: EventType.Training,
           },
@@ -364,4 +555,16 @@ export const infoHandlers: HttpHandler[] = [
       return HttpResponse.json({ count: 37 });
     },
   ),
+
+  //profileImagePost
+  http.post(baseURL + '/user/img', async () => {
+    return HttpResponse.json({
+      img: 'https://mui.com/static/images/avatar/2.jpg',
+    });
+  }),
+
+  //likePost
+  http.post<LikePostRequest>(baseURL + '/user/like/:userId', () => {
+    return HttpResponse.json();
+  }),
 ];

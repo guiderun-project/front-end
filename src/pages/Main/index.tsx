@@ -13,7 +13,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
@@ -59,6 +59,7 @@ const StyledPartnerListButton = styled(Link)`
 
 const Main: React.FC = () => {
   const userId = useSelector((state: RootState) => state.user.userId);
+  const navigate = useNavigate();
 
   const {
     data: partnerCount,
@@ -86,24 +87,14 @@ const Main: React.FC = () => {
         <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           이벤트
         </Typography>
-        {/* TODO 이벤트 생성 페이지 구현 및 연결 */}
         <Stack direction="row" justifyContent="center">
           <Button
             fullWidth
-            variant="contained"
+            variant="chip"
             size="large"
-            color="primary"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              borderRadius: '1000000px',
-            }}
+            onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
           >
-            <Typography fontSize="0.9375rem" fontWeight={600}>
-              이벤트 만들기
-            </Typography>
+            이벤트 만들기
             <ChevronRightIcon />
           </Button>
         </Stack>
@@ -138,8 +129,7 @@ const Main: React.FC = () => {
             최근 나의 파트너
           </Typography>
           <Link
-            //TODO 마이페이지 구현 후 함께 뛴 파트너 파트로 이동
-            to={BROWSER_PATH.EVENT.MAIN}
+            to={BROWSER_PATH.EVENT.HISTORY}
             style={{
               textDecoration: 'none',
             }}
@@ -172,10 +162,9 @@ const Main: React.FC = () => {
             {partnerListData?.map((partner) => (
               <PartnerBox key={partner.userId} partnerData={partner} />
             ))}
-            {/* TODO 파트너 리스트 더보기 링크 연결 */}
             {partnerCount && partnerCount > 2 ? (
               <StyledPartnerListButton
-                to={BROWSER_PATH.MAIN}
+                to={BROWSER_PATH.EVENT.HISTORY}
                 aria-label="파트너 목록 더보기"
               >
                 <ArrowForwardIcon />

@@ -13,30 +13,8 @@ import InfoDetail from '../components/InfoDetail';
 import InfoEdit from '../components/InfoEdit';
 
 import infoApi from '@/apis/requests/info';
-import { PersonalInfoGetResponse } from '@/apis/types/info';
 import { NotFound } from '@/components/shared';
 import { RootState } from '@/store/index';
-import { DisabilityEnum, GenderEnum, RoleEnum } from '@/types/group';
-
-//
-//
-//
-
-export const INFO_DATA: PersonalInfoGetResponse = {
-  name: '홍길동',
-  type: DisabilityEnum.GUIDE,
-  role: RoleEnum.User,
-  gender: GenderEnum.M,
-  phoneNumber: '01012345678',
-  age: 20,
-  snsId: 'guide_run_ko',
-  isOpenNumber: false,
-  isOpenSns: false,
-};
-
-//
-//
-//
 
 const InfoSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();

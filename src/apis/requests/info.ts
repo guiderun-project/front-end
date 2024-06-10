@@ -4,6 +4,7 @@ import type {
   EventHistoryCountGetResponse,
   EventHistoryGetRequest,
   EventHistoryGetResponse,
+  LikePostRequest,
   MyPageGetResponse,
   PartnerListCountGetRequest,
   PartnerListCountGetResponse,
@@ -17,8 +18,10 @@ import type {
   PersonalInfoGetResponse,
   PersonalInfoPatchRequest,
   PersonalInfoPatchResponse,
-  ProfileGetRequest,
-  ProfileGetResponse,
+  UserProfileGetRequest,
+  UserProfileGetResponse,
+  ProfileImagePostRequest,
+  ProfileImagePostResponse,
   RunningSpecGuideGetRequest,
   RunningSpecGuideGetResponse,
   RunningSpecGuidePatchRequest,
@@ -30,7 +33,8 @@ import type {
   UserInfoGetResponse,
 } from '../types/info';
 
-import { EventSort, PartnerSort } from '@/types/sort';
+import { RecruitStatus } from '@/types/group';
+import { PartnerSort } from '@/types/sort';
 
 class InfoApi {
   /**
@@ -118,9 +122,9 @@ class InfoApi {
    * @returns 사용자 기초 정보를 반환
    */
 
-  profileGet = async ({ userId }: ProfileGetRequest) => {
+  userProfileGet = async ({ userId }: UserProfileGetRequest) => {
     return await axiosInstanceWithToken
-      .get<ProfileGetResponse>(`/user/profile/${userId}`)
+      .get<UserProfileGetResponse>(`/user/profile/${userId}`)
       .then((res) => res.data);
   };
 
@@ -155,26 +159,44 @@ class InfoApi {
 
   eventHistoryGet = async ({
     userId,
-    sort = EventSort.Total,
+    sort = RecruitStatus.All,
     limit = 3,
     start = 0,
+    year,
   }: EventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventHistoryGetResponse>(
-        `/user/event-history/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
+        `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
+          year ? `&year=${year}` : ''
+        }`,
       )
       .then((res) => res.data);
   };
 
   eventHistoryCountGet = async ({
     userId,
-    sort = EventSort.Total,
+    sort = RecruitStatus.All,
+    year,
   }: EventHistoryCountGetRequest) => {
-    return axiosInstanceWithToken
+    return await axiosInstanceWithToken
       .get<EventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}`,
+        `/user/event-history/count/${userId}?sort=${sort}${
+          year ? `&year=${year}` : ''
+        }`,
       )
       .then((res) => res.data.count);
+  };
+
+  profileImagePost = async ({ image }: ProfileImagePostRequest) => {
+    return await axiosInstanceWithToken
+      .post<ProfileImagePostResponse>('/user/img', image)
+      .then((res) => res.data.img);
+  };
+
+  likePost = async ({ userId }: LikePostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/user/like/${userId}`)
+      .then((res) => res.data);
   };
 }
 

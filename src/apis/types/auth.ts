@@ -124,3 +124,7 @@ export type GetUserIdPostResponse = {
   accountId: string;
   createdAt: string;
 };
+
+export type WithdrawDeleteRequest = {
+  reasons: string[];
+};

@@ -52,7 +52,7 @@ const EventChip: React.FC<EventChipProps> = ({ variant, type }) => {
         height: length,
         bgcolor: getBgColor(),
         fontSize: '0.625rem',
-        fontWeight: 700,
+        fontWeight: 500,
         textAlign: 'center',
       }}
     >

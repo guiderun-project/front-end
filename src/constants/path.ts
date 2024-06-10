@@ -11,6 +11,10 @@ export const BROWSER_PATH = {
     MY: '/event/my',
     CALENDAR: '/event/calendar',
     SEARCH: '/event/search',
+    HISTORY: '/event/history',
+    NEW: '/event/new',
+    EDIT: '/event/edit',
+    DETAIL: '',
   },
   CALENDAR: '/calender',
   SEARCH: '/search',
@@ -21,6 +25,8 @@ export const BROWSER_PATH = {
   INFO: '/info',
   LOGIN: '/login',
   FIND_ID_PASSWORD: '/find-id-password',
+  PROFILE: '/profile',
+  WITHDRAW: '/withdraw',
 };
 
 // const API_PATH = {

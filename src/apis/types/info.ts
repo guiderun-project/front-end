@@ -6,7 +6,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { EventSort, PartnerSort } from '@/types/sort';
+import { PartnerSort } from '@/types/sort';
 
 export type MyPageGetResponse = {
   role: RoleEnum;
@@ -30,6 +30,7 @@ export type UserInfoGetResponse = {
   recordDegree: RunningGroup;
   age: number;
   snsId: string | null;
+  img: string;
 };
 
 export type PersonalInfoGetRequest = {
@@ -37,6 +38,7 @@ export type PersonalInfoGetRequest = {
 };
 
 export type PersonalInfoGetResponse = {
+  userId: string;
   name: string;
   type: DisabilityEnum;
   role: RoleEnum;
@@ -46,6 +48,7 @@ export type PersonalInfoGetResponse = {
   snsId: string;
   isOpenNumber: boolean;
   isOpenSns: boolean;
+  img: string;
 };
 
 export type PersonalInfoPatchRequest = Omit<
@@ -152,25 +155,28 @@ export type PermissionPatchResponse = {
   portraitRights: boolean;
 };
 
-export type ProfileGetRequest = {
+export type UserProfileGetRequest = {
   userId: string;
 };
 
-export type ProfileGetResponse = {
+export type UserProfileGetResponse = {
   userId: string;
-  role: RoleEnum;
-  type: DisabilityEnum;
-  recordDegree: RunningGroup;
-  detailRecord: string | null;
-  phoneNumber: string;
-  isOpenNumber: boolean;
-  age: number;
-  snsId: string;
-  isOpenSns: boolean;
+  name: string;
+  role: RoleEnum; //권한
+  type: DisabilityEnum; //vi인지 guide인지
+  gender: GenderEnum;
+  recordDegree: RunningGroup; //러닝 기록 등급
+  detailRecord: string; //상세 기록
+  phoneNumber: string; //전화번호
+  isOpenNumber: boolean; //전화번호 공개 여부
+  age: number; //나이
+  snsId: string; //sns 계정
+  isOpenSns: boolean; //sns 공개 여부
 
-  totalEvent: number;
-  trainingCnt: number;
-  contestCnt: number;
+  //2차 때 추가된 부분
+  isLiked: boolean; ///좋아요 눌렀는지 유무
+  like: number; //좋아요 수
+  img: string; //이미지 링크
 };
 
 export type PartnerListGetRequest = {
@@ -210,31 +216,42 @@ export type PartnerListCountGetResponse = {
 
 export type EventHistoryGetRequest = {
   userId: string;
-  sort?: EventSort;
+  sort?: RecruitStatus;
   limit?: number;
   start?: number;
+  year?: number;
 };
 
 export type EventDataType = {
   eventId: number;
   eventType: EventType;
   name: string;
-  date: string;
+  startDate: string;
   recruitStatus: RecruitStatus;
 };
 
 export type EventHistoryGetResponse = {
-  sort: string;
-  limit: number;
-  start: number;
   items: EventDataType[];
 };
 
 export type EventHistoryCountGetRequest = {
   userId: string;
-  sort?: EventSort;
+  year?: number;
+  sort?: RecruitStatus;
 };
 
 export type EventHistoryCountGetResponse = {
   count: number;
+};
+
+export type ProfileImagePostRequest = {
+  image: FormData;
+};
+
+export type ProfileImagePostResponse = {
+  img: string;
+};
+
+export type LikePostRequest = {
+  userId: string;
 };
