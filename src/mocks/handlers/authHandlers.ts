@@ -59,7 +59,7 @@ export const authHandlers: HttpHandler[] = [
   http.get<NoneType, NoneType, AccessTokenGetResponse>(
     baseURL + '/oauth/login/reissue',
     () => {
-      return HttpResponse.json({ accessToken: '123' });
+      return HttpResponse.json({ accessToken: '123', isExist: true });
     },
   ),
 
