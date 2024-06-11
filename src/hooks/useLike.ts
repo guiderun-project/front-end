@@ -24,7 +24,7 @@ const useLike = ({ userId }: UseLikeParams) => {
         ['userProfileGet', userId],
         (old: UserProfileGetResponse) => ({
           ...old,
-          like: old.like + 1,
+          like: old.isLiked ? old.like - 1 : old.like + 1,
           isLiked: !old.isLiked,
         }),
       );

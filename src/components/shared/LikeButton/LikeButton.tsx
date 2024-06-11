@@ -20,7 +20,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ userid }) => {
   const { handleLike } = useLike({ userId: userid });
   if (userData) {
     return (
-      <IconButton size="small" onClick={handleLike}>
+      <IconButton size="small" onClick={handleLike} aria-label="좋아요">
         {userData.isLiked ? (
           <FavoriteIcon
             fontSize="small"
