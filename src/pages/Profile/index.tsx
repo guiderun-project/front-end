@@ -15,6 +15,7 @@ import {
   PartnerList,
   ProfileImage,
   TitleContentRow,
+  TitleHeader,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
@@ -160,11 +161,7 @@ const Profile: React.FC = () => {
       <Helmet>
         <title>{`${userData?.name}의 프로필 - Guide run Project`}</title>
       </Helmet>
-      <StyledTitleContainer>
-        <Typography component="h1" fontSize="0.75rem" fontWeight={500}>
-          개인 프로필 상세
-        </Typography>
-      </StyledTitleContainer>
+      <TitleHeader title="개인 프로필 상세" />
       {renderProfileInfo()}
       <Stack gap="2rem">
         {renderProfileDetail()}

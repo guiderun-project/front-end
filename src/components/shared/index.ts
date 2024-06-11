@@ -21,3 +21,4 @@ export * from './ProfileModal';
 export * from './ProtectedRoute';
 export * from './TextLink';
 export * from './TitleContentRow';
+export * from './TitleHeader';
