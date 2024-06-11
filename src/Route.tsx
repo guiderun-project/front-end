@@ -19,6 +19,7 @@ import Admin from './pages/Admin';
 import AdminEvent from './pages/Admin/AdminEvent';
 import AdminUser from './pages/Admin/AdminUser';
 import AllEvent from './pages/Event/pages/AllEvent';
+import EventDetail from './pages/Event/pages/EventDetail';
 import EditEvent from './pages/Event/pages/EditEvent';
 import EventCalendar from './pages/Event/pages/EventCalendar';
 import EventHistory from './pages/Event/pages/EventHistory';
@@ -160,6 +161,10 @@ const router = createBrowserRouter([
               {
                 path: `${BROWSER_PATH.EVENT.EDIT}/:eventId`,
                 element: <EditEvent />,
+              },
+              {
+                path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`,
+                element: <EventDetail />,
               },
             ],
           },
