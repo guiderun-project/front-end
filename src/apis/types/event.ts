@@ -296,3 +296,12 @@ export type EditEventPatchResponse = EventFormType;
 export type CloseEventPatchRequest = {
   eventId: number;
 };
+
+export type EventLikeCountGetRequest = {
+  eventId: number;
+};
+
+export type EventLikeCountGetResponse = {
+  likes: number;
+  isLiked: boolean;
+};

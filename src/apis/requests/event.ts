@@ -26,6 +26,8 @@ import {
   EditEventPatchResponse,
   EditEventPatchRequest,
   CloseEventPatchRequest,
+  EventLikeCountGetRequest,
+  EventLikeCountGetResponse,
 } from '../types/event';
 
 class EventApi {
@@ -140,6 +142,12 @@ class EventApi {
   closeEventPatch = async ({ eventId }: CloseEventPatchRequest) => {
     return await axiosInstanceWithToken
       .patch(`/event/close/${eventId}`)
+      .then((res) => res.data);
+  };
+
+  eventLikeCountGet = async ({ eventId }: EventLikeCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventLikeCountGetResponse>(`/event/${eventId}/likes/count`)
       .then((res) => res.data);
   };
 }

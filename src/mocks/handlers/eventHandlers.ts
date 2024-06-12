@@ -11,6 +11,7 @@ import {
   EventCalendarGetResponse,
   EventFormType,
   EventGetResponse,
+  EventLikeCountGetResponse,
   EventPopupGetResponse,
   EventTypeCountGetRequest,
   EventTypeCountGetResponse,
@@ -392,6 +393,13 @@ export const eventHandlers: HttpHandler[] = [
         type: EventType.Competition,
         updated_at: '0000-00-00',
       });
+    },
+  ),
+
+  http.get<{ eventId: string }, NoneType, EventLikeCountGetResponse>(
+    baseURL + '/event/:eventId/likes/count',
+    () => {
+      return HttpResponse.json({ likes: 500, isLiked: true });
     },
   ),
 ];
