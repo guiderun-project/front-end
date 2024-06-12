@@ -30,6 +30,20 @@ import {
   EventLikeCountGetResponse,
   EventLikePostResponse,
   EventLikePoseRequest,
+  EventCommentCountGetRequest,
+  EventCommentCountGetResponse,
+  EventCommentGetRequest,
+  EventCommentGetResponse,
+  EventCommentLikeCountGetRequest,
+  EventCommentLikeCountGetResponse,
+  EventCommentLikePostRequest,
+  EventCommentLikePostResponse,
+  EventCommentPostRequest,
+  EventCommentPostResponse,
+  EventCommentPatchRequest,
+  EventCommentPatchResponse,
+  EventCommentDeleteRequest,
+  EventCommentDeleteResponse,
 } from '../types/event';
 
 class EventApi {
@@ -157,6 +171,76 @@ class EventApi {
     return await axiosInstanceWithToken
       .post<EventLikePostResponse>(`/event/${eventId}/likes`)
       .then((res) => res.data.likes);
+  };
+
+  eventCommentCountGet = async ({ eventId }: EventCommentCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCommentCountGetResponse>(`/event/${eventId}/comments/count`)
+      .then((res) => res.data.count);
+  };
+
+  eventCommentGet = async ({
+    eventId,
+    limit = 4,
+    start = 0,
+  }: EventCommentGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCommentGetResponse>(
+        `/event/${eventId}/comments?limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.comments);
+  };
+
+  eventCommentLikeCountGet = async ({
+    commentId,
+  }: EventCommentLikeCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventCommentLikeCountGetResponse>(
+        `/event/comment/${commentId}/likes/count`,
+      )
+      .then((res) => res.data);
+  };
+
+  eventCommentLikePost = async ({ commentId }: EventCommentLikePostRequest) => {
+    return await axiosInstanceWithToken
+      .post<EventCommentLikePostResponse>(
+        `/event/comment/${commentId}/likes/count`,
+      )
+      .then((res) => res.data.likes);
+  };
+
+  eventCommentPost = async ({
+    eventId,
+    EventCommentPostBody,
+  }: EventCommentPostRequest) => {
+    return await axiosInstanceWithToken
+      .post<EventCommentPostResponse>(
+        `/event/${eventId}/comments`,
+        EventCommentPostBody,
+      )
+      .then((res) => res.data.commentId);
+  };
+
+  eventCommentPatch = async ({
+    eventId,
+    commentId,
+    EventCommentPatchBody,
+  }: EventCommentPatchRequest) => {
+    return await axiosInstanceWithToken
+      .patch<EventCommentPatchResponse>(
+        `/event/${eventId}/${commentId}`,
+        EventCommentPatchBody,
+      )
+      .then((res) => res.data.commentId);
+  };
+
+  eventCommentDelete = async ({
+    commentId,
+    eventId,
+  }: EventCommentDeleteRequest) => {
+    return await axiosInstanceWithToken
+      .delete<EventCommentDeleteResponse>(`/event/${eventId}/${commentId}`)
+      .then((res) => res.data.commentId);
   };
 }
 
