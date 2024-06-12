@@ -20,7 +20,7 @@ const MatchingStandardAccordion: React.FC = () => {
         },
       }}
     >
-      <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+      <AccordionSummary expandIcon={<ArrowDropDownIcon />} sx={{ padding: 0 }}>
         <Typography fontWeight={700} fontSize="1.0625rem">
           매칭 기준
         </Typography>
