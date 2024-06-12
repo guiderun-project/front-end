@@ -490,7 +490,7 @@ export const eventHandlers: HttpHandler[] = [
 
   // eventCommentLikePost
   http.post<{ conmmentId: string }, NoneType, EventCommentLikePostResponse>(
-    baseURL + '/event/comment/:commentId/likes/count',
+    baseURL + '/event/comment/:commentId/likes',
     () => {
       return HttpResponse.json({ likes: 13 });
     },

@@ -203,9 +203,7 @@ class EventApi {
 
   eventCommentLikePost = async ({ commentId }: EventCommentLikePostRequest) => {
     return await axiosInstanceWithToken
-      .post<EventCommentLikePostResponse>(
-        `/event/comment/${commentId}/likes/count`,
-      )
+      .post<EventCommentLikePostResponse>(`/event/comment/${commentId}/likes`)
       .then((res) => res.data.likes);
   };
 
