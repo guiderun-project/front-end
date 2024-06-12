@@ -21,7 +21,7 @@ const StyledContentBox = styled.section`
   justify-content: center;
   gap: 2.5rem;
   width: 100%;
-  padding: 1.5rem 0%.5;
+  padding: 1.5rem 0.5rem;
   border: 1px solid #ccc;
   border-radius: 1rem;
   background-color: #fff;
