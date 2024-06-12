@@ -12,6 +12,7 @@ import {
   EventFormType,
   EventGetResponse,
   EventLikeCountGetResponse,
+  EventLikePostResponse,
   EventPopupGetResponse,
   EventTypeCountGetRequest,
   EventTypeCountGetResponse,
@@ -397,6 +398,15 @@ export const eventHandlers: HttpHandler[] = [
     },
   ),
 
+  //eventLikePost
+  http.post<{ eventId: string }, NoneType, EventLikePostResponse>(
+    baseURL + '/event/:eventId/likes',
+    () => {
+      return HttpResponse.json({ likes: 501 });
+    },
+  ),
+
+  //eventLikeCountGet
   http.get<{ eventId: string }, NoneType, EventLikeCountGetResponse>(
     baseURL + '/event/:eventId/likes/count',
     () => {

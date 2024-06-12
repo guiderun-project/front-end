@@ -28,6 +28,8 @@ import {
   CloseEventPatchRequest,
   EventLikeCountGetRequest,
   EventLikeCountGetResponse,
+  EventLikePostResponse,
+  EventLikePoseRequest,
 } from '../types/event';
 
 class EventApi {
@@ -149,6 +151,12 @@ class EventApi {
     return await axiosInstanceWithToken
       .get<EventLikeCountGetResponse>(`/event/${eventId}/likes/count`)
       .then((res) => res.data);
+  };
+
+  eventLikePost = async ({ eventId }: EventLikePoseRequest) => {
+    return await axiosInstanceWithToken
+      .post<EventLikePostResponse>(`/event/${eventId}/likes`)
+      .then((res) => res.data.likes);
   };
 }
 

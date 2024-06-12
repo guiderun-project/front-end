@@ -305,3 +305,11 @@ export type EventLikeCountGetResponse = {
   likes: number;
   isLiked: boolean;
 };
+
+export type EventLikePoseRequest = {
+  eventId: number;
+};
+
+export type EventLikePostResponse = {
+  likes: number;
+};
