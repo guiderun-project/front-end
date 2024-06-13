@@ -296,3 +296,97 @@ export type EditEventPatchResponse = EventFormType;
 export type CloseEventPatchRequest = {
   eventId: number;
 };
+
+export type EventLikeCountGetRequest = {
+  eventId: number;
+};
+
+export type EventLikeCountGetResponse = {
+  likes: number;
+  isLiked: boolean;
+};
+
+export type EventLikePoseRequest = {
+  eventId: number;
+};
+
+export type EventLikePostResponse = {
+  likes: number;
+};
+
+export type EventCommentCountGetRequest = {
+  eventId: number;
+};
+
+export type EventCommentCountGetResponse = {
+  count: number;
+};
+
+export type EventCommentGetRequest = {
+  eventId: number;
+  start?: number;
+  limit?: number;
+};
+
+export type EventCommentType = {
+  commentId: number;
+  userId: string; //작성자 id
+  name: string; //작성자 이름
+  type: DisabilityEnum; // 작성자가 vi인지 guide 인지
+  content: string; //댓글 내용
+  createdAt: string; // 생성 시간으로 보낼지 .. 5시간전 1일전 이렇게 보낼지..
+  likes: number;
+};
+
+export type EventCommentGetResponse = {
+  comments: EventCommentType[];
+};
+
+export type EventCommentLikeCountGetRequest = {
+  commentId: number;
+};
+
+export type EventCommentLikeCountGetResponse = {
+  likes: number;
+  isLiked: boolean;
+};
+
+export type EventCommentLikePostRequest = {
+  commentId: number;
+};
+
+export type EventCommentLikePostResponse = {
+  likes: number;
+};
+
+export type EventCommentPostRequest = {
+  eventId: number;
+  EventCommentPostBody: {
+    content: string;
+  };
+};
+
+export type EventCommentPostResponse = {
+  commentId: number;
+};
+
+export type EventCommentDeleteRequest = {
+  eventId: number;
+  commentId: number;
+};
+
+export type EventCommentDeleteResponse = {
+  commentId: number;
+};
+
+export type EventCommentPatchRequest = {
+  eventId: number;
+  commentId: number;
+  EventCommentPatchBody: {
+    content: string;
+  };
+};
+
+export type EventCommentPatchResponse = {
+  commentId: number;
+};

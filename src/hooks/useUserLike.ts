@@ -7,7 +7,7 @@ interface UseLikeParams {
   userId: string;
 }
 
-const useLike = ({ userId }: UseLikeParams) => {
+const useUserLike = ({ userId }: UseLikeParams) => {
   const queryClient = useQueryClient();
 
   const method = useMutation({
@@ -24,7 +24,7 @@ const useLike = ({ userId }: UseLikeParams) => {
         ['userProfileGet', userId],
         (old: UserProfileGetResponse) => ({
           ...old,
-          like: old.like + 1,
+          like: old.isLiked ? old.like - 1 : old.like + 1,
           isLiked: !old.isLiked,
         }),
       );
@@ -47,4 +47,4 @@ const useLike = ({ userId }: UseLikeParams) => {
   return { ...method, handleLike };
 };
 
-export default useLike;
+export default useUserLike;

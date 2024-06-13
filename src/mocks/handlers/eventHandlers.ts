@@ -9,8 +9,17 @@ import {
   EditEventPatchResponse,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
+  EventCommentCountGetResponse,
+  EventCommentDeleteResponse,
+  EventCommentGetResponse,
+  EventCommentLikeCountGetResponse,
+  EventCommentLikePostResponse,
+  EventCommentPatchResponse,
+  EventCommentPostResponse,
   EventFormType,
   EventGetResponse,
+  EventLikeCountGetResponse,
+  EventLikePostResponse,
   EventPopupGetResponse,
   EventTypeCountGetRequest,
   EventTypeCountGetResponse,
@@ -381,17 +390,135 @@ export const eventHandlers: HttpHandler[] = [
         organizerId: '123',
         organizerPace: RunningGroup.A,
         partner: '고길동',
+        // partner: null,
         partnerPace: RunningGroup.A,
         partnerType: DisabilityEnum.VI,
         place: '잠실 보조 경기장',
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
-        recruitStatus: RecruitStatus.Open,
-        status: EventStatus.Open,
-        submit: false,
+        recruitStatus: RecruitStatus.End,
+        status: EventStatus.End,
+        submit: true,
         type: EventType.Competition,
         updated_at: '0000-00-00',
       });
     },
   ),
+
+  //eventLikePost
+  http.post<{ eventId: string }, NoneType, EventLikePostResponse>(
+    baseURL + '/event/:eventId/likes',
+    () => {
+      return HttpResponse.json({ likes: 501 });
+    },
+  ),
+
+  //eventLikeCountGet
+  http.get<{ eventId: string }, NoneType, EventLikeCountGetResponse>(
+    baseURL + '/event/:eventId/likes/count',
+    () => {
+      return HttpResponse.json({ likes: 500, isLiked: true });
+    },
+  ),
+
+  //eventCommentCountGet
+  http.get<{ eventId: string }, NoneType, EventCommentCountGetResponse>(
+    baseURL + '/event/:eventId/comments/count',
+    () => {
+      return HttpResponse.json({
+        count: 30,
+      });
+    },
+  ),
+
+  // eventCommentGet
+  http.get<{ eventId: string }, NoneType, EventCommentGetResponse>(
+    baseURL + '/event/:eventId/comments',
+    () => {
+      return HttpResponse.json({
+        comments: [
+          {
+            commentId: 324,
+            content: '너무 좋은1',
+            createdAt: '2000-01-01',
+            likes: 22,
+            name: '홍길동',
+            type: DisabilityEnum.GUIDE,
+            userId: '123',
+          },
+          {
+            commentId: 3324224,
+            content:
+              '너무 좋은2 기이이이이이이이이이이 이이이이이이이이 이이이이이이이 이이이이이이이이이이이 이이이이f 이이이이이이이인 문장',
+            createdAt: '2000-01-02',
+            likes: 22,
+            name: '사오정',
+            type: DisabilityEnum.VI,
+            userId: '1233',
+          },
+          {
+            commentId: 3223424,
+            content: '너무3',
+            createdAt: '2000-01-03',
+            likes: 424,
+            name: '손오공',
+            type: DisabilityEnum.VI,
+            userId: '123',
+          },
+          {
+            commentId: 3472324,
+            content:
+              '너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4',
+            createdAt: '2000-01-04',
+            likes: 22,
+            name: '저팔께',
+            type: DisabilityEnum.GUIDE,
+            userId: '123432',
+          },
+        ],
+      });
+    },
+  ),
+
+  // eventCommentLikeCountGet
+  http.get<{ conmmentId: string }, NoneType, EventCommentLikeCountGetResponse>(
+    baseURL + '/event/comment/:commentId/likes/count',
+    () => {
+      return HttpResponse.json({ isLiked: true, likes: 12 });
+    },
+  ),
+
+  // eventCommentLikePost
+  http.post<{ conmmentId: string }, NoneType, EventCommentLikePostResponse>(
+    baseURL + '/event/comment/:commentId/likes',
+    () => {
+      return HttpResponse.json({ likes: 13 });
+    },
+  ),
+
+  // eventCommentPost
+  http.post<{ eventId: string }, { content: string }, EventCommentPostResponse>(
+    baseURL + '/event/:eventId/comments',
+    () => {
+      return HttpResponse.json({ commentId: 13123 });
+    },
+  ),
+
+  // eventCommentPatch
+  http.patch<
+    { eventId: string; commentId: string },
+    { content: string },
+    EventCommentPatchResponse
+  >(baseURL + '/event/:eventId/:commentId', () => {
+    return HttpResponse.json({ commentId: 23141 });
+  }),
+
+  // eventCommentDelete
+  http.delete<
+    { commentId: string; eventId: string },
+    NoneType,
+    EventCommentDeleteResponse
+  >(baseURL + '/event/:eventId/:commentId', () => {
+    return HttpResponse.json({ commentId: 34311 });
+  }),
 ];
