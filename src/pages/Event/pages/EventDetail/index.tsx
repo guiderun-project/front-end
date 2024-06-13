@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -26,6 +28,7 @@ import eventApi from '@/apis/requests/event';
 import {
   DisabilityChip,
   EventChip,
+  EventModal,
   EventStatus,
   GroupChip,
   TextLink,
@@ -38,6 +41,7 @@ import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 
 const EventDetail: React.FC = () => {
+  const [openModal, setOpenModal] = React.useState(false);
   const { userId } = useSelector((state: RootState) => state.user);
   const { eventId } = useParams<{ eventId: string }>();
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
@@ -126,7 +130,6 @@ const EventDetail: React.FC = () => {
                     <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
                   )}
                 </IconButton>
-                {/* TODO 이벤트 좋아요 로직 구현 */}
                 <Typography fontSize="0.625rem">
                   좋아요 {eventLike?.likes ?? 0}
                 </Typography>
@@ -328,7 +331,7 @@ const EventDetail: React.FC = () => {
             fullWidth
             size="large"
             variant="contained"
-            onClick={() => null}
+            onClick={() => setOpenModal(true)}
           >
             이벤트 참여 결과 보러가기
           </Button>
@@ -413,6 +416,11 @@ const EventDetail: React.FC = () => {
       {eventData?.status === EventStatusType.End ? (
         <EventCommentSection eventId={Number(eventId)} />
       ) : null}
+      <EventModal
+        eventId={Number(eventId)}
+        isOpen={openModal}
+        onModalClose={() => setOpenModal(false)}
+      />
     </>
   );
 };
