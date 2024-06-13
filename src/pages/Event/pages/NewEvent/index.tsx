@@ -259,7 +259,10 @@ const NewEvent: React.FC = () => {
                     label="시각장애러너"
                     autoComplete="off"
                     type="number"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    inputMode="numeric"
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10))
+                    }
                     inputProps={{ min: 0 }}
                     InputProps={{
                       endAdornment: (
@@ -280,7 +283,10 @@ const NewEvent: React.FC = () => {
                     label="가이드러너"
                     autoComplete="off"
                     type="number"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    inputMode="numeric"
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10))
+                    }
                     inputProps={{ min: 0 }}
                     InputProps={{
                       endAdornment: (
