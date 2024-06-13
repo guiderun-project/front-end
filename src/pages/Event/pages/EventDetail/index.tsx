@@ -15,7 +15,7 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -47,6 +47,8 @@ const EventDetail: React.FC = () => {
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
   const navigate = useNavigate();
 
+  const queryClient = useQueryClient();
+
   const {
     data: eventData,
     isLoading,
@@ -61,6 +63,21 @@ const EventDetail: React.FC = () => {
     queryKey: ['eventLikeCountGet', Number(eventId)],
     queryFn: () => eventApi.eventLikeCountGet({ eventId: Number(eventId) }),
     enabled: Boolean(eventId),
+  });
+
+  const { mutate: closeEvent } = useMutation({
+    mutationKey: ['closeEventPatch', eventId],
+    mutationFn: () =>
+      eventApi.closeEventPatch({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('이벤트 모집 마감 처리 되었습니다');
+    },
+    onError: () => {
+      alert('마감 처리가 실패했습니다. 다시 시도해주세요.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet', eventId] });
+    },
   });
 
   const isOwner = eventData?.organizerId === userId;
@@ -305,7 +322,7 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => null}
+              onClick={() => closeEvent()}
             >
               지금 모집 마감
             </Button>
