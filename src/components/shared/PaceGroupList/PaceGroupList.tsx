@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import { GroupChip } from '../GroupChip';
+
 import { RunningGroup } from '@/types/group';
 
 //

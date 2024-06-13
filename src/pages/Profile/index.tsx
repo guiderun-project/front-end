@@ -19,24 +19,6 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
-//
-//
-//
-
-const StyledTitleContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding-top: 1.875rem;
-  display: flex;
-  justify-content: center;
-`;
-
-//
-//
-//
-
 const Profile: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
 
