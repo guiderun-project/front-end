@@ -7,6 +7,9 @@ import {
   AllEventCountGetResponse,
   AllEventGetResponse,
   EditEventPatchResponse,
+  EventApplyGetResponse,
+  EventApplyPatchResponse,
+  EventApplyType,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
   EventCommentCountGetResponse,
@@ -501,6 +504,38 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + '/event/:eventId/comments',
     () => {
       return HttpResponse.json({ commentId: 13123 });
+    },
+  ),
+
+  // eventApplyGet
+  http.get<
+    { eventId: string; userId: string },
+    NoneType,
+    EventApplyGetResponse
+  >(baseURL + '/event/:eventId/form/:userId', () => {
+    return HttpResponse.json({
+      detail: '심장 터지도록 뛰고 싶어요!',
+      group: RunningGroup.A,
+      name: '홍길동',
+      pace: RunningGroup.B,
+      partner: '고길동',
+      type: DisabilityEnum.GUIDE,
+    });
+  }),
+
+  // eventApplyPatch
+  http.patch<{ eventId: string }, EventApplyType, EventApplyPatchResponse>(
+    baseURL + '/event/:eventId/form',
+    () => {
+      return HttpResponse.json({ requestId: 12343456543234 });
+    },
+  ),
+
+  // eventApplyPost
+  http.post<{ eventId: string }, EventApplyType, EventApplyPatchResponse>(
+    baseURL + '/event/:eventId/form',
+    () => {
+      return HttpResponse.json({ requestId: 12343456543234 });
     },
   ),
 
