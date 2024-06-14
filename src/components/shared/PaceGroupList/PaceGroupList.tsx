@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { GroupChip } from '../GroupChip';
 
@@ -33,7 +33,6 @@ const StyledContentBox = styled.section`
 //
 
 const PaceGroupList: React.FC = () => {
-  const intl = useIntl();
   return (
     <StyledContentBox>
       <Stack gap="1.5rem">
