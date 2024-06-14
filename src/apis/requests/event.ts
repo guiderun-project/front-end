@@ -44,6 +44,12 @@ import {
   EventCommentPatchResponse,
   EventCommentDeleteRequest,
   EventCommentDeleteResponse,
+  EventApplyGetRequest,
+  EventApplyGetResponse,
+  EventApplyPatchRequest,
+  EventApplyPatchResponse,
+  EventApplyPostRequest,
+  EventApplyPostResponse,
 } from '../types/event';
 
 class EventApi {
@@ -239,6 +245,36 @@ class EventApi {
     return await axiosInstanceWithToken
       .delete<EventCommentDeleteResponse>(`/event/${eventId}/${commentId}`)
       .then((res) => res.data.commentId);
+  };
+
+  eventApplyGet = async ({ eventId, userId }: EventApplyGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventApplyGetResponse>(`/event/${eventId}/form/${userId}`)
+      .then((res) => res.data);
+  };
+
+  eventApplyPatch = async ({
+    eventId,
+    EventApplyPatchRequestBody,
+  }: EventApplyPatchRequest) => {
+    return await axiosInstanceWithToken
+      .patch<EventApplyPatchResponse>(
+        `/event/${eventId}/form`,
+        EventApplyPatchRequestBody,
+      )
+      .then((res) => res.data.requestId);
+  };
+
+  eventApplyPost = async ({
+    EventApplyPostRequestBody,
+    eventId,
+  }: EventApplyPostRequest) => {
+    return await axiosInstanceWithToken
+      .post<EventApplyPostResponse>(
+        `/event/${eventId}/form`,
+        EventApplyPostRequestBody,
+      )
+      .then((res) => res.data.requestId);
   };
 }
 

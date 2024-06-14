@@ -1,3 +1,5 @@
+import React from 'react';
+
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -13,7 +15,7 @@ import {
   Typography,
   IconButton,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -26,6 +28,7 @@ import eventApi from '@/apis/requests/event';
 import {
   DisabilityChip,
   EventChip,
+  EventModal,
   EventStatus,
   GroupChip,
   TextLink,
@@ -38,10 +41,13 @@ import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 
 const EventDetail: React.FC = () => {
+  const [openModal, setOpenModal] = React.useState(false);
   const { userId } = useSelector((state: RootState) => state.user);
   const { eventId } = useParams<{ eventId: string }>();
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
 
   const {
     data: eventData,
@@ -57,6 +63,21 @@ const EventDetail: React.FC = () => {
     queryKey: ['eventLikeCountGet', Number(eventId)],
     queryFn: () => eventApi.eventLikeCountGet({ eventId: Number(eventId) }),
     enabled: Boolean(eventId),
+  });
+
+  const { mutate: closeEvent } = useMutation({
+    mutationKey: ['closeEventPatch', eventId],
+    mutationFn: () =>
+      eventApi.closeEventPatch({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('이벤트 모집 마감 처리 되었습니다');
+    },
+    onError: () => {
+      alert('마감 처리가 실패했습니다. 다시 시도해주세요.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet', eventId] });
+    },
   });
 
   const isOwner = eventData?.organizerId === userId;
@@ -126,7 +147,6 @@ const EventDetail: React.FC = () => {
                     <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
                   )}
                 </IconButton>
-                {/* TODO 이벤트 좋아요 로직 구현 */}
                 <Typography fontSize="0.625rem">
                   좋아요 {eventLike?.likes ?? 0}
                 </Typography>
@@ -243,7 +263,10 @@ const EventDetail: React.FC = () => {
                         <GroupChip type="text" group={eventData.partnerPace} />
                       </Stack>
                       {eventData.status !== EventStatusType.End && (
-                        <TextLink label="신청내용 수정 혹은 취소" to="" />
+                        <TextLink
+                          label="신청내용 조회"
+                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
+                        />
                       )}
                     </Stack>
                   ) : (
@@ -262,7 +285,10 @@ const EventDetail: React.FC = () => {
                         대기중
                       </Typography>
                       {eventData.status !== EventStatusType.End && (
-                        <TextLink label="신청내용 수정 혹은 취소" to="" />
+                        <TextLink
+                          label="신청내용 조회"
+                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
+                        />
                       )}
                     </Stack>
                   )
@@ -302,7 +328,7 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => null}
+              onClick={() => closeEvent()}
             >
               지금 모집 마감
             </Button>
@@ -315,7 +341,7 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => null}
+              onClick={() => navigate(`${BROWSER_PATH.EVENT.APPLY}/${eventId}`)}
             >
               이벤트 참여 신청 하러가기
             </Button>
@@ -328,7 +354,7 @@ const EventDetail: React.FC = () => {
             fullWidth
             size="large"
             variant="contained"
-            onClick={() => null}
+            onClick={() => setOpenModal(true)}
           >
             이벤트 참여 결과 보러가기
           </Button>
@@ -413,6 +439,11 @@ const EventDetail: React.FC = () => {
       {eventData?.status === EventStatusType.End ? (
         <EventCommentSection eventId={Number(eventId)} />
       ) : null}
+      <EventModal
+        eventId={Number(eventId)}
+        isOpen={openModal}
+        onModalClose={() => setOpenModal(false)}
+      />
     </>
   );
 };

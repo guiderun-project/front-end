@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { GroupChip } from '../GroupChip';
 
@@ -33,15 +33,9 @@ const StyledContentBox = styled.section`
 //
 
 const PaceGroupList: React.FC = () => {
-  const intl = useIntl();
   return (
-    <StyledContentBox
-      aria-lable={intl.formatMessage({ id: 'teamingCriteria.title' })}
-    >
-      <Stack
-        gap="1.5rem"
-        aria-lable={intl.formatMessage({ id: 'teamingCriteria.vi' })}
-      >
+    <StyledContentBox>
+      <Stack gap="1.5rem">
         <Typography component="h3" fontWeight={800}>
           <FormattedMessage id="common.vi" />
         </Typography>
@@ -100,10 +94,7 @@ const PaceGroupList: React.FC = () => {
           </StyledRunGroupBox>
         </Stack>
       </Stack>
-      <Stack
-        gap="1.5rem"
-        aria-lable={intl.formatMessage({ id: 'teamingCriteria.guide' })}
-      >
+      <Stack gap="1.5rem">
         <Typography component="h3" fontWeight={800}>
           <FormattedMessage id="common.guide" />
         </Typography>

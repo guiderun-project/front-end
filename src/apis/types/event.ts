@@ -390,3 +390,41 @@ export type EventCommentPatchRequest = {
 export type EventCommentPatchResponse = {
   commentId: number;
 };
+
+export type EventApplyType = {
+  group: RunningGroup; //원하는 페이스 그룹
+  partner: string; //원하는 파트너
+  detail: string; //상세 설명
+};
+
+export type EventApplyPostRequest = {
+  eventId: number;
+  EventApplyPostRequestBody: EventApplyType;
+};
+
+export type EventApplyPostResponse = {
+  requestId: number;
+};
+
+export type EventApplyPatchRequest = {
+  eventId: number;
+  EventApplyPatchRequestBody: EventApplyType;
+};
+
+export type EventApplyPatchResponse = {
+  requestId: number;
+};
+
+export type EventApplyGetRequest = {
+  eventId: number;
+  userId: string;
+};
+
+export type EventApplyGetResponse = {
+  type: DisabilityEnum; //VI, GUIDE 둘 가능
+  name: string;
+  pace: RunningGroup; // 이름 옆에 등급
+  group: RunningGroup;
+  partner: string;
+  detail: string;
+};

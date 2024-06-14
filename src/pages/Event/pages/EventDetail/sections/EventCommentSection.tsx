@@ -52,7 +52,7 @@ const EventCommentSection: React.FC<EventCommentSectionProps> = ({
   const startIndex = (page - 1) * MAX_COMMENT_LENGTH;
 
   const { data: commentList } = useQuery({
-    queryKey: ['eventCommentGet', eventId],
+    queryKey: ['eventCommentGet', eventId, startIndex],
     queryFn: () => eventApi.eventCommentGet({ eventId, start: startIndex }),
     enabled: Boolean(commentCount),
   });
