@@ -335,7 +335,7 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => null}
+              onClick={() => navigate(`${BROWSER_PATH.EVENT.APPLY}/${eventId}`)}
             >
               이벤트 참여 신청 하러가기
             </Button>
