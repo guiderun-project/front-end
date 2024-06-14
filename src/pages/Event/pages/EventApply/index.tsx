@@ -234,7 +234,7 @@ const EventApply: React.FC = () => {
   }
 
   if (isSuccess) {
-    return <SuccessApply />;
+    return <SuccessApply eventId={Number(eventId)} />;
   }
 
   //

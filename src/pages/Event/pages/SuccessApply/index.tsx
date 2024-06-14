@@ -4,7 +4,18 @@ import { Link } from 'react-router-dom';
 import { TitleHeader } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
-const SuccessApply: React.FC = () => {
+//
+//
+//
+interface SuccessApplyProps {
+  eventId: number;
+}
+
+//
+//
+//
+
+const SuccessApply: React.FC<SuccessApplyProps> = ({ eventId }) => {
   return (
     <>
       <TitleHeader title="참여 여부 조사" />
@@ -31,8 +42,7 @@ const SuccessApply: React.FC = () => {
             size="large"
             variant="contained"
             component={Link}
-            // TODO 제출 정보확인
-            to={''}
+            to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
           >
             내가 제출한 정보 확인하기
           </Button>
