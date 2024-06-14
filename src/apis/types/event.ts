@@ -417,7 +417,7 @@ export type EventApplyPatchResponse = {
 
 export type EventApplyGetRequest = {
   eventId: number;
-  userId: number;
+  userId: string;
 };
 
 export type EventApplyGetResponse = {
