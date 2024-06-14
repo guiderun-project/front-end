@@ -263,7 +263,10 @@ const EventDetail: React.FC = () => {
                         <GroupChip type="text" group={eventData.partnerPace} />
                       </Stack>
                       {eventData.status !== EventStatusType.End && (
-                        <TextLink label="신청내용 수정 혹은 취소" to="" />
+                        <TextLink
+                          label="신청내용 조회"
+                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
+                        />
                       )}
                     </Stack>
                   ) : (
@@ -282,7 +285,10 @@ const EventDetail: React.FC = () => {
                         대기중
                       </Typography>
                       {eventData.status !== EventStatusType.End && (
-                        <TextLink label="신청내용 수정 혹은 취소" to="" />
+                        <TextLink
+                          label="신청내용 조회"
+                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
+                        />
                       )}
                     </Stack>
                   )

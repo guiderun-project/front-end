@@ -50,7 +50,7 @@ const StyledForm = styled.form`
 //
 //
 
-const GROUP_SELECT = [
+export const GROUP_SELECT = [
   { value: RunningGroup.A, label: '시각장애러너 A (~50분)' },
   { value: RunningGroup.B, label: '시각장애러너 B (51~56분)' },
   { value: RunningGroup.C, label: '시각장애러너 C (57~65분)' },
