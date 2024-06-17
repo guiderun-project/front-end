@@ -489,12 +489,14 @@ export type EventNotMatchingCountGetResponse = {
   guide: number;
 };
 
+export type ApplyUserAttendType = ApplyUserType & { isAttened: boolean };
+
 export type EventNotMatchingGetRequest = {
   eventId: number;
 };
 
 export type EventNotMatchingGetResponse = {
-  notMatch: ApplyUserType[];
+  notMatch: ApplyUserAttendType[];
 };
 
 export type EventMatchedViCountGetRequest = {
@@ -510,7 +512,7 @@ export type EventMatchedViGetRequest = {
 };
 
 export type EventMatchedViGetResponse = {
-  vi: ApplyUserType[];
+  vi: ApplyUserAttendType[];
 };
 
 export type EventMatchedGuideCountGetRequest = {
@@ -528,5 +530,5 @@ export type EventMatchedGuideGetRequest = {
 };
 
 export type EventMatchedGuideGetResponse = {
-  guide: ApplyUserType[];
+  guide: ApplyUserAttendType[];
 };
