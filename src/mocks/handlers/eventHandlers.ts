@@ -7,6 +7,7 @@ import {
   AllEventCountGetResponse,
   AllEventGetResponse,
   EditEventPatchResponse,
+  EventApplyAllGetResponse,
   EventApplyCountGetResponse,
   EventApplyGetResponse,
   EventApplyPatchResponse,
@@ -565,6 +566,60 @@ export const eventHandlers: HttpHandler[] = [
   >(baseURL + '/event/:eventId/:commentId', () => {
     return HttpResponse.json({ commentId: 34311 });
   }),
+
+  //eventApplyAllGet
+  http.get<{ eventId: string }, NoneType, EventApplyAllGetResponse>(
+    baseURL + '/event/:eventId/forms/all',
+    () => {
+      return HttpResponse.json({
+        guide: [
+          { name: '가이드1', type: DisabilityEnum.GUIDE, userId: '13vbf42' },
+          { name: '가이드2', type: DisabilityEnum.GUIDE, userId: '15ghtfv6' },
+          { name: '가이드3', type: DisabilityEnum.GUIDE, userId: 'vbbxdv1' },
+          {
+            name: '가이드4',
+            type: DisabilityEnum.GUIDE,
+            userId: 'jrgsgdfgdyr1',
+          },
+          {
+            name: '가이드5',
+            type: DisabilityEnum.GUIDE,
+            userId: '1dfgdfgerervsd',
+          },
+          {
+            name: '가이드6',
+            type: DisabilityEnum.GUIDE,
+            userId: '1663dfgdf4r',
+          },
+          {
+            name: '가이드7',
+            type: DisabilityEnum.GUIDE,
+            userId: '1njsfdfgdfg',
+          },
+          { name: '가이드8', type: DisabilityEnum.GUIDE, userId: '16dfgdfwef' },
+          {
+            name: '가이드9',
+            type: DisabilityEnum.GUIDE,
+            userId: '1fbdfh5dfgdfg',
+          },
+          {
+            name: '가이드10',
+            type: DisabilityEnum.GUIDE,
+            userId: '1gdfgrtadasda4',
+          },
+        ],
+        vi: [
+          { name: 'VI1', type: DisabilityEnum.VI, userId: '1312sdfs31' },
+          { name: 'VI2', type: DisabilityEnum.VI, userId: '1312fsdsfsd31' },
+          { name: 'VI3', type: DisabilityEnum.VI, userId: '131sf2bv31' },
+          { name: 'VI4', type: DisabilityEnum.VI, userId: '13sdfsdfssfs1231' },
+          { name: 'VI5', type: DisabilityEnum.VI, userId: '1sdf31ghgfcg231' },
+          { name: 'VI6', type: DisabilityEnum.VI, userId: '1312sdffvbhfs31' },
+          { name: 'VI7', type: DisabilityEnum.VI, userId: '131sfssdfs2fdcv31' },
+        ],
+      });
+    },
+  ),
 
   // eventApplyCountGet
   http.get<{ eventId: string }, NoneType, EventApplyCountGetResponse>(

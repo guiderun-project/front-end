@@ -532,3 +532,12 @@ export type EventMatchedGuideGetRequest = {
 export type EventMatchedGuideGetResponse = {
   guide: ApplyUserAttendType[];
 };
+
+export type EventApplyAllGetRequest = {
+  eventId: number;
+};
+
+export type EventApplyAllGetResponse = {
+  vi: ApplyUserType[];
+  guide: ApplyUserType[];
+};

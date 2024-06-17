@@ -71,6 +71,8 @@ import {
   EventMatchedGuideCountGetResponse,
   EventMatchedGuideGetRequest,
   EventMatchedGuideGetResponse,
+  EventApplyAllGetRequest,
+  EventApplyAllGetResponse,
 } from '../types/event';
 
 class EventApi {
@@ -386,6 +388,12 @@ class EventApi {
   }: EventMatchedGuideGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventMatchedGuideGetResponse>(`/event/${eventId}/match/${viId}`)
+      .then((res) => res.data);
+  };
+
+  eventApplyAllGet = async ({ eventId }: EventApplyAllGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventApplyAllGetResponse>(`/event/${eventId}/forms/all`)
       .then((res) => res.data);
   };
 }
