@@ -576,7 +576,7 @@ export const eventHandlers: HttpHandler[] = [
 
   // eventApplyStatusGet
   http.get<{ eventId: string }, NoneType, EventApplyStatusGetResponse>(
-    baseURL + '/event/:eventId:/forms',
+    baseURL + '/event/:eventId/forms',
     () => {
       return HttpResponse.json({
         attend: [
