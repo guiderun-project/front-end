@@ -107,7 +107,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
   const renderNotice = () => {
     return (
       <Stack gap="1rem">
-        <Typography fontSize="1.5rem" fontWeight={700}>
+        <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           유의사항
         </Typography>
         <Stack
