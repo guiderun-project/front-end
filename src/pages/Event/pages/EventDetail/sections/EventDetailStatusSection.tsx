@@ -1,4 +1,10 @@
-import { Stack, Typography } from '@mui/material';
+import React from 'react';
+
+import { Stack, Tab, Tabs, Typography } from '@mui/material';
+
+import EventApplyPanel from '../panels/EventApplyPanel';
+import EventAttendPanel from '../panels/EventAttendPanel';
+import EventMatchingPanel from '../panels/EventMatchingPanel';
 
 import { EventGetResponse } from '@/apis/types/event';
 
@@ -10,6 +16,12 @@ interface EventDetailStatusSectionProps {
   eventData: EventGetResponse;
   eventId: number;
   isOwner: boolean;
+}
+
+enum EventTabEnum {
+  Attend = 'attend',
+  Matching = 'matching',
+  Apply = 'apply',
 }
 
 //
@@ -27,21 +39,66 @@ const NOTICE_LIST = [
 //
 //
 
-const EventDetailStatusSection: React.FC<
-  EventDetailStatusSectionProps
-> = () => {
+const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
+  isOwner,
+}) => {
+  const [selectedTab, setSelectedTab] = React.useState<EventTabEnum>(
+    EventTabEnum.Attend,
+  );
   /**
    *
    */
   const renderTabs = () => {
-    return <>Tabs</>;
+    return (
+      <Tabs
+        centered
+        role="tablist"
+        variant="fullWidth"
+        value={selectedTab}
+        onChange={(_, newValue) => setSelectedTab(newValue)}
+      >
+        <Tab
+          role="tab"
+          id="tab-attend"
+          value={EventTabEnum.Attend}
+          label="참가 희망인원"
+          aria-selected={EventTabEnum.Attend === selectedTab}
+          aria-controls="tabpanel-attend"
+        />
+        <Tab
+          role="tab"
+          id="tab-matching"
+          value={EventTabEnum.Matching}
+          label="매칭 현황"
+          aria-selected={EventTabEnum.Matching === selectedTab}
+          aria-controls="tabpanel-matching"
+        />
+        {isOwner ? (
+          <Tab
+            role="tab"
+            id="tab-apply"
+            value={EventTabEnum.Apply}
+            label="신청 명단"
+            aria-selected={EventTabEnum.Apply === selectedTab}
+            aria-controls="tabpanel-attend"
+          />
+        ) : null}
+      </Tabs>
+    );
   };
 
   /**
    *
    */
   const renderPanel = () => {
-    return <>panel</>;
+    switch (selectedTab) {
+      case EventTabEnum.Attend:
+        return <EventAttendPanel />;
+      case EventTabEnum.Matching:
+        return <EventMatchingPanel />;
+      case EventTabEnum.Apply:
+        return <EventApplyPanel />;
+    }
   };
 
   /**
