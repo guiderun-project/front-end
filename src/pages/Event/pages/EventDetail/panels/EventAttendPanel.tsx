@@ -40,7 +40,7 @@ const StyledCountBox = styled.div`
   border-radius: 1rem;
 `;
 
-const StyledApplyUserBox = styled.div`
+export const StyledApplyUserBox = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -52,7 +52,7 @@ const StyledApplyUserBox = styled.div`
   border-radius: 1rem;
 `;
 
-const StyledUserListBox = styled.div`
+export const StyledUserListBox = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
