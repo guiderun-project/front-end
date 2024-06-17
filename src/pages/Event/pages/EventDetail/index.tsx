@@ -259,6 +259,7 @@ const EventDetail: React.FC = () => {
         case EventPageSectionEnum.Status:
           return (
             <EventDetailStatusSection
+              isOwner={isOwner}
               eventId={Number(eventId)}
               eventData={eventData}
             />
@@ -370,11 +371,11 @@ const EventDetail: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>이벤트 상세</title>
+        <title>이벤트 상세 - Guide run Project</title>
       </Helmet>
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHeader()}
-      <Stack gap="1.5rem">
+      <Stack gap="2rem">
         {renderTitle()}
         {renderContent()}
       </Stack>
