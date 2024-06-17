@@ -18,9 +18,9 @@ import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
+import EventCommentSection from './sections/EventCommentSection';
 import EventDetailContentSection from './sections/EventDetailContentSection';
 import EventDetailStatusSection from './sections/EventDetailStatusSection';
-import EventCommentSection from './sections/EventCommentSection';
 
 import eventApi from '@/apis/requests/event';
 import {

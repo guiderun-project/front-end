@@ -1,3 +1,4 @@
+export * from './ApplyUserChip';
 export * from './Chip';
 export * from './EventModal';
 export * from './DisabilityChip';

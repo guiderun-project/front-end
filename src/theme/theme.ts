@@ -20,6 +20,11 @@ declare module '@mui/material' {
   interface ButtonPropsVariantOverrides {
     chip: true;
   }
+
+  interface ChipPropsColorOverrides {
+    vi: true;
+    guide: true;
+  }
 }
 
 export const theme = createTheme({

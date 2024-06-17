@@ -93,7 +93,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
   const renderPanel = () => {
     switch (selectedTab) {
       case EventTabEnum.Attend:
-        return <EventAttendPanel />;
+        return <EventAttendPanel isOwner={isOwner} />;
       case EventTabEnum.Matching:
         return <EventMatchingPanel />;
       case EventTabEnum.Apply:
