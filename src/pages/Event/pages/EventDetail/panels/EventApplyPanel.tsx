@@ -98,7 +98,6 @@ const EventApplyPanel: React.FC = () => {
               // TODO 한 번 클릭 시 데이터가 나타나지 않습니다
               <Tooltip
                 arrow
-                disableHoverListener
                 key={user.userId}
                 title={
                   isApplyDetailLoading ? (
