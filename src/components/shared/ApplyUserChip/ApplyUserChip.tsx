@@ -1,5 +1,5 @@
 import DoneIcon from '@mui/icons-material/Done';
-import { Chip } from '@mui/material';
+import { Chip, ChipProps } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 
@@ -9,7 +9,7 @@ import { DisabilityEnum } from '@/types/group';
 //
 //
 
-interface ApplyUserChipProps {
+interface ApplyUserChipProps extends ChipProps {
   type: DisabilityEnum;
   name: string;
   isAttendMode?: boolean;
@@ -21,15 +21,22 @@ interface ApplyUserChipProps {
 //
 //
 
-const ApplyUserChip: React.FC<ApplyUserChipProps> = ({
-  type,
-  name,
-  isAttendMode = false,
-  isAttend = false,
-  onAttend = () => null,
-}) => {
+const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
+  const {
+    type,
+    name,
+    isAttendMode = false,
+    isAttend = false,
+    onAttend = () => null,
+  } = props;
+
+  //
+  //
+  //
+
   return (
     <Chip
+      {...props}
       avatar={
         <DisabilityChip
           component="avartar"

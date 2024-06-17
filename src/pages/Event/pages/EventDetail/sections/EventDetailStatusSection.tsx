@@ -43,7 +43,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
   isOwner,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState<EventTabEnum>(
-    EventTabEnum.Attend,
+    EventTabEnum.Apply,
   );
   /**
    *
@@ -80,7 +80,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
             value={EventTabEnum.Apply}
             label="신청 명단"
             aria-selected={EventTabEnum.Apply === selectedTab}
-            aria-controls="tabpanel-attend"
+            aria-controls="tabpanel-apply"
           />
         ) : null}
       </Tabs>
@@ -95,7 +95,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
       case EventTabEnum.Attend:
         return <EventAttendPanel isOwner={isOwner} />;
       case EventTabEnum.Matching:
-        return <EventMatchingPanel />;
+        return <EventMatchingPanel isOwner={isOwner} />;
       case EventTabEnum.Apply:
         return <EventApplyPanel />;
     }
