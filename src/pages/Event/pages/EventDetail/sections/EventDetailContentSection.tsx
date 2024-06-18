@@ -52,7 +52,8 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
         content={<Typography>{eventData.place}</Typography>}
       />
       {eventData.status === EventStatusType.End ||
-      eventData.recruitStatus === RecruitStatus.Close ? (
+      eventData.recruitStatus === RecruitStatus.Close ||
+      eventData.recruitStatus === RecruitStatus.End ? (
         <RecruitCountBox
           title="참여 인원"
           viNum={eventData.NumV}
