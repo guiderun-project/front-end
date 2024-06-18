@@ -122,7 +122,10 @@ const EventModal: React.FC<EventModalProps> = ({
           />
           <TitleContentRow
             title={
-              eventData.status === EventStatusType.End ? '참여인원' : '모집인원'
+              eventData.status === EventStatusType.End ||
+              eventData.recruitStatus === RecruitStatus.End
+                ? '참여인원'
+                : '모집인원'
             }
             alignItems="flex-start"
             content={
@@ -135,7 +138,8 @@ const EventModal: React.FC<EventModalProps> = ({
                     }}
                   >
                     {` ${
-                      eventData.status === EventStatusType.End
+                      eventData.status === EventStatusType.End ||
+                      eventData.recruitStatus === RecruitStatus.End
                         ? eventData.viCnt
                         : eventData.recruitVi
                     }`}
@@ -150,7 +154,8 @@ const EventModal: React.FC<EventModalProps> = ({
                     }}
                   >
                     {` ${
-                      eventData.status === EventStatusType.End
+                      eventData.status === EventStatusType.End ||
+                      eventData.recruitStatus === RecruitStatus.End
                         ? eventData.guideCnt
                         : eventData.recruitGuide
                     }`}
