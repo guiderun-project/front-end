@@ -50,6 +50,29 @@ import {
   EventApplyPatchResponse,
   EventApplyPostRequest,
   EventApplyPostResponse,
+  EventApplyCountGetRequest,
+  EventApplyCountGetResponse,
+  EventApplyStatusGetRequest,
+  EventApplyStatusGetResponse,
+  EventAttendPostRequest,
+  EventAttendStatusCountGetRequest,
+  EventAttendStatusCountGetResponse,
+  EventMatchingPostRequest,
+  EventMatchingDeleteRequest,
+  EventNotMatchingCountGetRequest,
+  EventNotMatchingCountGetResponse,
+  EventNotMatchingGetRequest,
+  EventNotMatchingGetResponse,
+  EventMatchedViCountGetRequest,
+  EventMatchedViCountGetResponse,
+  EventMatchedViGetRequest,
+  EventMatchedViGetResponse,
+  EventMatchedGuideCountGetRequest,
+  EventMatchedGuideCountGetResponse,
+  EventMatchedGuideGetRequest,
+  EventMatchedGuideGetResponse,
+  EventApplyAllGetRequest,
+  EventApplyAllGetResponse,
 } from '../types/event';
 
 class EventApi {
@@ -275,6 +298,103 @@ class EventApi {
         EventApplyPostRequestBody,
       )
       .then((res) => res.data.requestId);
+  };
+
+  eventApplyCountGet = async ({ eventId }: EventApplyCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventApplyCountGetResponse>(`/event/${eventId}/forms/count`)
+      .then((res) => res.data);
+  };
+
+  eventApplyStatusGet = async ({ eventId }: EventApplyStatusGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventApplyStatusGetResponse>(`/event/${eventId}/forms`)
+      .then((res) => res.data);
+  };
+
+  eventAttendPost = async ({ eventId, userId }: EventAttendPostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/event/${eventId}/attend/${userId}`)
+      .then((res) => res.data);
+  };
+
+  eventAttendStatusCountGet = async ({
+    eventId,
+  }: EventAttendStatusCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventAttendStatusCountGetResponse>(`/event/${eventId}/attend/count`)
+      .then((res) => res.data);
+  };
+
+  eventMatchingPost = async ({
+    eventId,
+    userId,
+    viId,
+  }: EventMatchingPostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/event/${eventId}/match/${viId}/${userId}`)
+      .then((res) => res.data);
+  };
+
+  eventMatchingDelete = async ({
+    eventId,
+    userId,
+    viId,
+  }: EventMatchingDeleteRequest) => {
+    return await axiosInstanceWithToken
+      .delete(`/event/${eventId}/match/${viId}/${userId}`)
+      .then((res) => res.data);
+  };
+
+  eventNotMatchingCountGet = async ({
+    eventId,
+  }: EventNotMatchingCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventNotMatchingCountGetResponse>(
+        `/event/${eventId}/match/not/count`,
+      )
+      .then((res) => res.data);
+  };
+  eventNotMatchingGet = async ({ eventId }: EventNotMatchingGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventNotMatchingGetResponse>(`/event/${eventId}/match/list`)
+      .then((res) => res.data);
+  };
+  eventMatchedViCountGet = async ({
+    eventId,
+  }: EventMatchedViCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventMatchedViCountGetResponse>(`/event/${eventId}/match/vi/count`)
+      .then((res) => res.data);
+  };
+  eventMatchedViGet = async ({ eventId }: EventMatchedViGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventMatchedViGetResponse>(`/event/${eventId}/match/vi/list`)
+      .then((res) => res.data);
+  };
+  eventMatchedGuideCountGet = async ({
+    eventId,
+    viId,
+  }: EventMatchedGuideCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventMatchedGuideCountGetResponse>(
+        `/event/${eventId}/match/${viId}/count`,
+      )
+      .then((res) => res.data);
+  };
+  eventMatchedGuideGet = async ({
+    eventId,
+    viId,
+  }: EventMatchedGuideGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventMatchedGuideGetResponse>(`/event/${eventId}/match/${viId}`)
+      .then((res) => res.data);
+  };
+
+  eventApplyAllGet = async ({ eventId }: EventApplyAllGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<EventApplyAllGetResponse>(`/event/${eventId}/forms/all`)
+      .then((res) => res.data);
   };
 }
 

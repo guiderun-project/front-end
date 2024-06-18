@@ -6,11 +6,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import {
-  Box,
   Button,
   Chip,
   CircularProgress,
-  Divider,
   Stack,
   Typography,
   IconButton,
@@ -18,21 +16,18 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import EventCommentSection from './sections/EventCommentSection';
-import MatchingStandardAccordion from '../../components/MatchingStandardAccordion';
-import RecruitCountBox from '../../components/RecruitCountBox';
+import EventDetailContentSection from './sections/EventDetailContentSection';
+import EventDetailStatusSection from './sections/EventDetailStatusSection';
 
 import eventApi from '@/apis/requests/event';
 import {
-  DisabilityChip,
   EventChip,
   EventModal,
   EventStatus,
-  GroupChip,
   TextLink,
-  TitleContentRow,
   TitleHeader,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
@@ -40,12 +35,26 @@ import useEventLike from '@/hooks/useEventLike';
 import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 
+//
+//
+//
+
+enum EventPageSectionEnum {
+  Detail = 'detail',
+  Status = 'status',
+}
+
+//
+//
+//
+
 const EventDetail: React.FC = () => {
   const [openModal, setOpenModal] = React.useState(false);
   const { userId } = useSelector((state: RootState) => state.user);
   const { eventId } = useParams<{ eventId: string }>();
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const queryClient = useQueryClient();
 
@@ -81,6 +90,7 @@ const EventDetail: React.FC = () => {
   });
 
   const isOwner = eventData?.organizerId === userId;
+  const section = searchParams.get('section') ?? EventPageSectionEnum.Detail;
 
   /**
    *
@@ -164,155 +174,105 @@ const EventDetail: React.FC = () => {
   /**
    *
    */
-  const renderDetail = () => {
+  const renderTitle = () => {
+    if (section === EventPageSectionEnum.Status) {
+      return (
+        <Stack
+          direction="row-reverse"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
+            신청 현황
+          </Typography>
+          <Chip
+            component="button"
+            clickable
+            variant="outlined"
+            onClick={() => {
+              setSearchParams({
+                section: EventPageSectionEnum.Detail,
+              });
+            }}
+            label={
+              <Stack direction="row" alignItems="center" gap="0.25rem">
+                <Typography fontSize="0.9375rem" fontWeight={600}>
+                  훈련 상세 내용
+                </Typography>
+                <ChevronRightIcon fontSize="small" aria-hidden />
+              </Stack>
+            }
+            sx={{
+              height: '2.5rem',
+              width: '9.4375rem',
+              color: '#000',
+              borderRadius: '11111111rem',
+            }}
+          />
+        </Stack>
+      );
+    }
+    return (
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
+          훈련 상세 내용
+        </Typography>
+        <Chip
+          component="button"
+          clickable
+          variant="outlined"
+          onClick={() => {
+            setSearchParams({
+              section: EventPageSectionEnum.Status,
+            });
+          }}
+          label={
+            <Stack direction="row" alignItems="center" gap="0.25rem">
+              <Typography fontSize="0.9375rem" fontWeight={600}>
+                신청 현황
+              </Typography>
+              <ChevronRightIcon fontSize="small" aria-hidden />
+            </Stack>
+          }
+          sx={{
+            height: '2.5rem',
+            width: '7.625rem',
+            color: '#000',
+            borderRadius: '11111111rem',
+          }}
+        />
+      </Stack>
+    );
+  };
+
+  /**
+   *
+   */
+  const renderContent = () => {
     if (isLoading) {
       <Stack alignItems="center">
         <CircularProgress size={20} />
       </Stack>;
     }
-    if (eventData) {
-      return (
-        <Stack gap="1.5rem">
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
-              훈련 상세 내용
-            </Typography>
-            <Chip
-              component="button"
-              clickable
-              variant="outlined"
-              label={
-                <Stack direction="row" alignItems="center" gap="0.25rem">
-                  <Typography fontSize="0.9375rem" fontWeight={600}>
-                    신청 현황
-                  </Typography>
-                  <ChevronRightIcon fontSize="small" aria-hidden />
-                </Stack>
-              }
-              sx={{
-                height: '2.5rem',
-                width: '7.625rem',
-                color: '#000',
-                borderRadius: '11111111rem',
-              }}
+    if (eventData && eventId) {
+      switch (section) {
+        case EventPageSectionEnum.Status:
+          return (
+            <EventDetailStatusSection
+              isOwner={isOwner}
+              eventId={Number(eventId)}
+              eventData={eventData}
             />
-          </Stack>
-          <Stack gap="1rem">
-            <TitleContentRow
-              title="주최자"
-              content={
-                <Stack direction="row" alignItems="center" gap="0.25rem">
-                  <DisabilityChip
-                    component="chip"
-                    type={eventData.oragnizerType}
-                  />
-                  <Typography fontWeight={600}>
-                    {eventData.organizer}
-                  </Typography>
-                  <GroupChip type="text" group={eventData.organizerPace} />
-                </Stack>
-              }
+          );
+        case EventPageSectionEnum.Detail:
+        default:
+          return (
+            <EventDetailContentSection
+              eventId={Number(eventId)}
+              eventData={eventData}
             />
-            <TitleContentRow
-              title="일시"
-              content={
-                <Typography component="span" display="flex" gap="0.5rem">
-                  {eventData.date.replace(/-/g, '.')}
-                  <Divider orientation="vertical" variant="middle" flexItem />
-                  {eventData.startTime}~{eventData.endTime}
-                </Typography>
-              }
-            />
-            <TitleContentRow
-              title="장소"
-              content={<Typography>{eventData.place}</Typography>}
-            />
-            {eventData.status === EventStatusType.End ||
-            eventData.recruitStatus === RecruitStatus.Close ? (
-              <RecruitCountBox
-                title="참여 인원"
-                viNum={eventData.NumV}
-                guideNum={eventData.NumG}
-              />
-            ) : (
-              <RecruitCountBox
-                title="모집 인원"
-                viNum={eventData.minNumV}
-                guideNum={eventData.minNumG}
-              />
-            )}
-            {eventData.submit ? (
-              <TitleContentRow
-                title="내 파트너"
-                alignItems="flex-start"
-                content={
-                  eventData.partner ? (
-                    <Stack gap="0.5rem">
-                      <Stack direction="row" gap="0.25rem" alignItems="center">
-                        <DisabilityChip
-                          component="chip"
-                          type={eventData.partnerType}
-                        />
-                        <Typography component="span" fontSize="0.9375rem">
-                          {eventData.partner}
-                        </Typography>
-                        <GroupChip type="text" group={eventData.partnerPace} />
-                      </Stack>
-                      {eventData.status !== EventStatusType.End && (
-                        <TextLink
-                          label="신청내용 조회"
-                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
-                        />
-                      )}
-                    </Stack>
-                  ) : (
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      width="14.8125rem"
-                    >
-                      <Typography
-                        component="span"
-                        fontSize="0.75rem"
-                        fontWeight={700}
-                        color="#4BABB8"
-                      >
-                        대기중
-                      </Typography>
-                      {eventData.status !== EventStatusType.End && (
-                        <TextLink
-                          label="신청내용 조회"
-                          to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
-                        />
-                      )}
-                    </Stack>
-                  )
-                }
-              />
-            ) : null}
-            <Stack paddingTop="0.625rem" gap="0.5rem">
-              <Typography component="h3" fontWeight={700}>
-                훈련 상세
-              </Typography>
-              <Box
-                padding="1rem"
-                border="1px solid #D9D9D9"
-                borderRadius="0.5rem"
-              >
-                <Typography fontSize="0.8125rem" lineHeight="1.25rem">
-                  {eventData.details}
-                </Typography>
-              </Box>
-            </Stack>
-            <MatchingStandardAccordion />
-          </Stack>
-        </Stack>
-      );
+          );
+      }
     }
   };
 
@@ -368,6 +328,18 @@ const EventDetail: React.FC = () => {
     }
   };
 
+  /**
+   *
+   */
+  const renderComment = () => {
+    if (
+      eventData?.status === EventStatusType.End &&
+      section !== EventPageSectionEnum.Status
+    ) {
+      return <EventCommentSection eventId={Number(eventId)} />;
+    }
+  };
+
   //
   //
   //
@@ -399,11 +371,14 @@ const EventDetail: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>이벤트 상세</title>
+        <title>이벤트 상세 - Guide run Project</title>
       </Helmet>
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHeader()}
-      {renderDetail()}
+      <Stack gap="2rem">
+        {renderTitle()}
+        {renderContent()}
+      </Stack>
       <Stack gap="1.5rem" alignItems="center">
         <Chip
           clickable
@@ -436,9 +411,7 @@ const EventDetail: React.FC = () => {
         />
         {renderEventActionButton()}
       </Stack>
-      {eventData?.status === EventStatusType.End ? (
-        <EventCommentSection eventId={Number(eventId)} />
-      ) : null}
+      {renderComment()}
       <EventModal
         eventId={Number(eventId)}
         isOpen={openModal}
