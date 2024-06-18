@@ -228,7 +228,7 @@ const EventModal: React.FC<EventModalProps> = ({
             <Button
               fullWidth
               component={Link}
-              to={`${BROWSER_PATH.EVENT}/${eventId}`}
+              to={`${BROWSER_PATH.EVENT.MAIN}/${eventId}`}
               variant="chip"
               size="large"
             >
