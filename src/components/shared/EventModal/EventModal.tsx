@@ -24,7 +24,7 @@ import { TitleContentRow } from '../TitleContentRow';
 
 import eventApi from '@/apis/requests/event';
 import { BROWSER_PATH } from '@/constants/path';
-import { RecruitStatus } from '@/types/group';
+import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 
 interface EventModalProps {
   eventId: number;
@@ -121,7 +121,9 @@ const EventModal: React.FC<EventModalProps> = ({
             content={<Typography>{eventData.place}</Typography>}
           />
           <TitleContentRow
-            title="모집인원"
+            title={
+              eventData.status === EventStatusType.End ? '참여인원' : '모집인원'
+            }
             alignItems="flex-start"
             content={
               <Typography display="flex" flexDirection="column" gap="0.5rem">
@@ -132,7 +134,11 @@ const EventModal: React.FC<EventModalProps> = ({
                       color: '#DE1313',
                     }}
                   >
-                    {` ${eventData.recruitVi}`}
+                    {` ${
+                      eventData.status === EventStatusType.End
+                        ? eventData.viCnt
+                        : eventData.recruitVi
+                    }`}
                   </span>
                   명
                 </span>
@@ -143,7 +149,11 @@ const EventModal: React.FC<EventModalProps> = ({
                       color: '#DE1313',
                     }}
                   >
-                    {` ${eventData.recruitGuide}`}
+                    {` ${
+                      eventData.status === EventStatusType.End
+                        ? eventData.guideCnt
+                        : eventData.recruitGuide
+                    }`}
                   </span>
                   명
                 </span>
@@ -218,7 +228,7 @@ const EventModal: React.FC<EventModalProps> = ({
             <Button
               fullWidth
               component={Link}
-              to={`${BROWSER_PATH.EVENT}/${eventId}`}
+              to={`${BROWSER_PATH.EVENT.MAIN}/${eventId}`}
               variant="chip"
               size="large"
             >

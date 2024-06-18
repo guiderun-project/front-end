@@ -1,3 +1,4 @@
+export * from './ApplyUserChip';
 export * from './Chip';
 export * from './EventModal';
 export * from './DisabilityChip';
@@ -13,6 +14,7 @@ export * from './LikeButton';
 export * from './LinkButton';
 export * from './NavBar';
 export * from './NotFound';
+export * from './PaceGroupList';
 export * from './PageLayout';
 export * from './PartnerBox';
 export * from './PartnerList';
@@ -21,3 +23,4 @@ export * from './ProfileModal';
 export * from './ProtectedRoute';
 export * from './TextLink';
 export * from './TitleContentRow';
+export * from './TitleHeader';
