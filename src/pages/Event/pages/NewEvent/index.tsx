@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Button,
   InputAdornment,
@@ -21,7 +23,6 @@ import { DisabilityChip, GroupChip } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventType } from '@/types/group';
-import React from 'react';
 
 const NewEvent: React.FC = () => {
   const userData = useSelector((state: RootState) => state.user);
@@ -208,7 +209,7 @@ const NewEvent: React.FC = () => {
               message: '시작 시간보다 늦어야 합니다.',
             },
           }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <InputBox
               title="종료 시간"
               inputElement={
