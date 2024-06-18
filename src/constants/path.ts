@@ -7,6 +7,7 @@ export const BROWSER_PATH = {
   },
   EVENT: {
     MAIN: '/event',
+    DETAIL: '/event',
     ALL: '/event/all',
     MY: '/event/my',
     CALENDAR: '/event/calendar',
@@ -14,7 +15,9 @@ export const BROWSER_PATH = {
     HISTORY: '/event/history',
     NEW: '/event/new',
     EDIT: '/event/edit',
-    DETAIL: '',
+    APPLY: '/event/apply',
+    APPLY_EDIT: '/event/apply/edit',
+    APPLY_DETAIL: '/event/apply/detail',
   },
   CALENDAR: '/calender',
   SEARCH: '/search',

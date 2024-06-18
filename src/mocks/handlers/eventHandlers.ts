@@ -7,10 +7,32 @@ import {
   AllEventCountGetResponse,
   AllEventGetResponse,
   EditEventPatchResponse,
+  EventApplyAllGetResponse,
+  EventApplyCountGetResponse,
+  EventApplyGetResponse,
+  EventApplyPatchResponse,
+  EventApplyStatusGetResponse,
+  EventApplyType,
+  EventAttendStatusCountGetResponse,
   EventCalendarDetailGetResponse,
   EventCalendarGetResponse,
+  EventCommentCountGetResponse,
+  EventCommentDeleteResponse,
+  EventCommentGetResponse,
+  EventCommentLikeCountGetResponse,
+  EventCommentLikePostResponse,
+  EventCommentPatchResponse,
+  EventCommentPostResponse,
   EventFormType,
   EventGetResponse,
+  EventLikeCountGetResponse,
+  EventLikePostResponse,
+  EventMatchedGuideCountGetResponse,
+  EventMatchedGuideGetResponse,
+  EventMatchedViCountGetResponse,
+  EventMatchedViGetResponse,
+  EventNotMatchingCountGetResponse,
+  EventNotMatchingGetResponse,
   EventPopupGetResponse,
   EventTypeCountGetRequest,
   EventTypeCountGetResponse,
@@ -381,17 +403,554 @@ export const eventHandlers: HttpHandler[] = [
         organizerId: '123',
         organizerPace: RunningGroup.A,
         partner: '고길동',
+        // partner: null,
         partnerPace: RunningGroup.A,
         partnerType: DisabilityEnum.VI,
         place: '잠실 보조 경기장',
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
-        recruitStatus: RecruitStatus.Open,
-        status: EventStatus.Open,
-        submit: false,
+        recruitStatus: RecruitStatus.End,
+        status: EventStatus.End,
+        submit: true,
         type: EventType.Competition,
         updated_at: '0000-00-00',
       });
     },
   ),
+
+  //eventLikePost
+  http.post<{ eventId: string }, NoneType, EventLikePostResponse>(
+    baseURL + '/event/:eventId/likes',
+    () => {
+      return HttpResponse.json({ likes: 501 });
+    },
+  ),
+
+  //eventLikeCountGet
+  http.get<{ eventId: string }, NoneType, EventLikeCountGetResponse>(
+    baseURL + '/event/:eventId/likes/count',
+    () => {
+      return HttpResponse.json({ likes: 500, isLiked: true });
+    },
+  ),
+
+  //eventCommentCountGet
+  http.get<{ eventId: string }, NoneType, EventCommentCountGetResponse>(
+    baseURL + '/event/:eventId/comments/count',
+    () => {
+      return HttpResponse.json({
+        count: 30,
+      });
+    },
+  ),
+
+  // eventCommentGet
+  http.get<{ eventId: string }, NoneType, EventCommentGetResponse>(
+    baseURL + '/event/:eventId/comments',
+    () => {
+      return HttpResponse.json({
+        comments: [
+          {
+            commentId: 324,
+            content: '너무 좋은1',
+            createdAt: '2000-01-01',
+            likes: 22,
+            name: '홍길동',
+            type: DisabilityEnum.GUIDE,
+            userId: '123',
+          },
+          {
+            commentId: 3324224,
+            content:
+              '너무 좋은2 기이이이이이이이이이이 이이이이이이이이 이이이이이이이 이이이이이이이이이이이 이이이이f 이이이이이이이인 문장',
+            createdAt: '2000-01-02',
+            likes: 22,
+            name: '사오정',
+            type: DisabilityEnum.VI,
+            userId: '1233',
+          },
+          {
+            commentId: 3223424,
+            content: '너무3',
+            createdAt: '2000-01-03',
+            likes: 424,
+            name: '손오공',
+            type: DisabilityEnum.VI,
+            userId: '123',
+          },
+          {
+            commentId: 3472324,
+            content:
+              '너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4너무좋은4',
+            createdAt: '2000-01-04',
+            likes: 22,
+            name: '저팔께',
+            type: DisabilityEnum.GUIDE,
+            userId: '123432',
+          },
+        ],
+      });
+    },
+  ),
+
+  // eventCommentLikeCountGet
+  http.get<{ conmmentId: string }, NoneType, EventCommentLikeCountGetResponse>(
+    baseURL + '/event/comment/:commentId/likes/count',
+    () => {
+      return HttpResponse.json({ isLiked: true, likes: 12 });
+    },
+  ),
+
+  // eventCommentLikePost
+  http.post<{ conmmentId: string }, NoneType, EventCommentLikePostResponse>(
+    baseURL + '/event/comment/:commentId/likes',
+    () => {
+      return HttpResponse.json({ likes: 13 });
+    },
+  ),
+
+  // eventCommentPost
+  http.post<{ eventId: string }, { content: string }, EventCommentPostResponse>(
+    baseURL + '/event/:eventId/comments',
+    () => {
+      return HttpResponse.json({ commentId: 13123 });
+    },
+  ),
+
+  // eventApplyGet
+  http.get<
+    { eventId: string; userId: string },
+    NoneType,
+    EventApplyGetResponse
+  >(baseURL + '/event/:eventId/form/:userId', () => {
+    return HttpResponse.json({
+      detail: '심장 터지도록 뛰고 싶어요!',
+      group: RunningGroup.A,
+      name: '홍길동',
+      pace: RunningGroup.B,
+      partner: '고길동',
+      type: DisabilityEnum.GUIDE,
+    });
+  }),
+
+  // eventApplyPatch
+  http.patch<{ eventId: string }, EventApplyType, EventApplyPatchResponse>(
+    baseURL + '/event/:eventId/form',
+    () => {
+      return HttpResponse.json({ requestId: 12343456543234 });
+    },
+  ),
+
+  // eventApplyPost
+  http.post<{ eventId: string }, EventApplyType, EventApplyPatchResponse>(
+    baseURL + '/event/:eventId/form',
+    () => {
+      return HttpResponse.json({ requestId: 12343456543234 });
+    },
+  ),
+
+  // eventCommentPatch
+  http.patch<
+    { eventId: string; commentId: string },
+    { content: string },
+    EventCommentPatchResponse
+  >(baseURL + '/event/:eventId/:commentId', () => {
+    return HttpResponse.json({ commentId: 23141 });
+  }),
+
+  // eventCommentDelete
+  http.delete<
+    { commentId: string; eventId: string },
+    NoneType,
+    EventCommentDeleteResponse
+  >(baseURL + '/event/:eventId/:commentId', () => {
+    return HttpResponse.json({ commentId: 34311 });
+  }),
+
+  //eventApplyAllGet
+  http.get<{ eventId: string }, NoneType, EventApplyAllGetResponse>(
+    baseURL + '/event/:eventId/forms/all',
+    () => {
+      return HttpResponse.json({
+        guide: [
+          { name: '가이드1', type: DisabilityEnum.GUIDE, userId: '13vbf42' },
+          { name: '가이드2', type: DisabilityEnum.GUIDE, userId: '15ghtfv6' },
+          { name: '가이드3', type: DisabilityEnum.GUIDE, userId: 'vbbxdv1' },
+          {
+            name: '가이드4',
+            type: DisabilityEnum.GUIDE,
+            userId: 'jrgsgdfgdyr1',
+          },
+          {
+            name: '가이드5',
+            type: DisabilityEnum.GUIDE,
+            userId: '1dfgdfgerervsd',
+          },
+          {
+            name: '가이드6',
+            type: DisabilityEnum.GUIDE,
+            userId: '1663dfgdf4r',
+          },
+          {
+            name: '가이드7',
+            type: DisabilityEnum.GUIDE,
+            userId: '1njsfdfgdfg',
+          },
+          { name: '가이드8', type: DisabilityEnum.GUIDE, userId: '16dfgdfwef' },
+          {
+            name: '가이드9',
+            type: DisabilityEnum.GUIDE,
+            userId: '1fbdfh5dfgdfg',
+          },
+          {
+            name: '가이드10',
+            type: DisabilityEnum.GUIDE,
+            userId: '1gdfgrtadasda4',
+          },
+        ],
+        vi: [
+          { name: 'VI1', type: DisabilityEnum.VI, userId: '1312sdfs31' },
+          { name: 'VI2', type: DisabilityEnum.VI, userId: '1312fsdsfsd31' },
+          { name: 'VI3', type: DisabilityEnum.VI, userId: '131sf2bv31' },
+          { name: 'VI4', type: DisabilityEnum.VI, userId: '13sdfsdfssfs1231' },
+          { name: 'VI5', type: DisabilityEnum.VI, userId: '1sdf31ghgfcg231' },
+          { name: 'VI6', type: DisabilityEnum.VI, userId: '1312sdffvbhfs31' },
+          { name: 'VI7', type: DisabilityEnum.VI, userId: '131sfssdfs2fdcv31' },
+        ],
+      });
+    },
+  ),
+
+  // eventApplyCountGet
+  http.get<{ eventId: string }, NoneType, EventApplyCountGetResponse>(
+    baseURL + '/event/:eventId/forms/count',
+    () => {
+      return HttpResponse.json({ count: 20, guide: 15, vi: 15 });
+    },
+  ),
+
+  // eventApplyStatusGet
+  http.get<{ eventId: string }, NoneType, EventApplyStatusGetResponse>(
+    baseURL + '/event/:eventId/forms',
+    () => {
+      return HttpResponse.json({
+        attend: [
+          { name: 'VI1', type: DisabilityEnum.VI, userId: '1312sdfs31' },
+          { name: 'VI2', type: DisabilityEnum.VI, userId: '1312fsdsfsd31' },
+          { name: 'VI3', type: DisabilityEnum.VI, userId: '131sf2bv31' },
+          { name: 'VI4', type: DisabilityEnum.VI, userId: '13sdfsdfssfs1231' },
+          { name: 'VI5', type: DisabilityEnum.VI, userId: '1sdf31ghgfcg231' },
+          { name: 'VI6', type: DisabilityEnum.VI, userId: '1312sdffvbhfs31' },
+          { name: 'VI7', type: DisabilityEnum.VI, userId: '131sfssdfs2fdcv31' },
+          { name: '가이드1', type: DisabilityEnum.GUIDE, userId: '13vbf42' },
+          { name: '가이드2', type: DisabilityEnum.GUIDE, userId: '15ghtfv6' },
+          { name: '가이드3', type: DisabilityEnum.GUIDE, userId: 'vbbxdv1' },
+          {
+            name: '가이드4',
+            type: DisabilityEnum.GUIDE,
+            userId: 'jrgsgdfgdyr1',
+          },
+          {
+            name: '가이드5',
+            type: DisabilityEnum.GUIDE,
+            userId: '1dfgdfgerervsd',
+          },
+          {
+            name: '가이드6',
+            type: DisabilityEnum.GUIDE,
+            userId: '1663dfgdf4r',
+          },
+          {
+            name: '가이드7',
+            type: DisabilityEnum.GUIDE,
+            userId: '1njsfdfgdfg',
+          },
+          { name: '가이드8', type: DisabilityEnum.GUIDE, userId: '16dfgdfwef' },
+          {
+            name: '가이드9',
+            type: DisabilityEnum.GUIDE,
+            userId: '1fbdfh5dfgdfg',
+          },
+          {
+            name: '가이드10',
+            type: DisabilityEnum.GUIDE,
+            userId: '1gdfgrtadasda4',
+          },
+        ],
+        notAttend: [
+          { name: 'VI1', type: DisabilityEnum.VI, userId: '131231' },
+          { name: 'VI2', type: DisabilityEnum.VI, userId: '1312fsd31' },
+          { name: 'VI3', type: DisabilityEnum.VI, userId: '131sf231' },
+          { name: 'VI4', type: DisabilityEnum.VI, userId: '13sdfsdfs1231' },
+          { name: 'VI5', type: DisabilityEnum.VI, userId: '1sdf31231' },
+          { name: 'VI6', type: DisabilityEnum.VI, userId: '1312sdfs31' },
+          { name: 'VI7', type: DisabilityEnum.VI, userId: '131sfssdfs231' },
+          { name: '가이드1', type: DisabilityEnum.GUIDE, userId: '1342' },
+          { name: '가이드2', type: DisabilityEnum.GUIDE, userId: '156' },
+          { name: '가이드3', type: DisabilityEnum.GUIDE, userId: 'vdv1' },
+          { name: '가이드4', type: DisabilityEnum.GUIDE, userId: 'jrgsyr1' },
+          { name: '가이드5', type: DisabilityEnum.GUIDE, userId: '1erervsd' },
+          { name: '가이드6', type: DisabilityEnum.GUIDE, userId: '16634r' },
+          { name: '가이드7', type: DisabilityEnum.GUIDE, userId: '1njsfg' },
+          { name: '가이드8', type: DisabilityEnum.GUIDE, userId: '16wef' },
+          { name: '가이드9', type: DisabilityEnum.GUIDE, userId: '1fbdfh5' },
+          { name: '가이드10', type: DisabilityEnum.GUIDE, userId: '1gdfgrt4' },
+        ],
+      });
+    },
+  ),
+
+  // eventAttendPost
+  http.post<{ eventId: string; userId: string }>(
+    baseURL + '/event/:eventId/attend/:userId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  // eventAttendStatusCountGet
+  http.get<{ eventId: string }, NoneType, EventAttendStatusCountGetResponse>(
+    baseURL + '/event/:eventId/attend/count',
+    () => {
+      return HttpResponse.json({ attend: 10, notAttend: 10 });
+    },
+  ),
+
+  // eventMatchingPost
+  http.post<{ eventId: string; userId: string; viId: string }>(
+    baseURL + '/event/:eventId/match/:viId/:userId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  // eventMatchingDelete
+  http.delete<{ eventId: string; userId: string; viId: string }>(
+    baseURL + '/event/:eventId/match/:viId/:userId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  // eventNotMatchingCountGet
+  http.get<{ eventId: string }, NoneType, EventNotMatchingCountGetResponse>(
+    baseURL + '/event/:eventId/match/not/count',
+    () => {
+      return HttpResponse.json({ guide: 10, vi: 10 });
+    },
+  ),
+
+  // eventNotMatchingGet
+  http.get<{ eventId: string }, NoneType, EventNotMatchingGetResponse>(
+    baseURL + '/event/:eventId/match/list',
+    () => {
+      return HttpResponse.json({
+        notMatch: [
+          {
+            name: 'VI1',
+            type: DisabilityEnum.VI,
+            userId: '1312sdfs31',
+            isAttened: false,
+          },
+          {
+            name: 'VI2',
+            type: DisabilityEnum.VI,
+            userId: '1312fsdsfsd31',
+            isAttened: false,
+          },
+          {
+            name: 'VI3',
+            type: DisabilityEnum.VI,
+            userId: '131sf2bv31',
+            isAttened: true,
+          },
+          {
+            name: 'VI4',
+            type: DisabilityEnum.VI,
+            userId: '13sdfsdfssfs1231',
+            isAttened: false,
+          },
+          {
+            name: 'VI5',
+            type: DisabilityEnum.VI,
+            userId: '1sdf31ghgfcg231',
+            isAttened: false,
+          },
+          {
+            name: 'VI6',
+            type: DisabilityEnum.VI,
+            userId: '1312sdffvbhfs31',
+            isAttened: true,
+          },
+          {
+            name: 'VI7',
+            type: DisabilityEnum.VI,
+            userId: '131sfssdfs2fdcv31',
+            isAttened: false,
+          },
+          {
+            name: '가이드1',
+            type: DisabilityEnum.GUIDE,
+            userId: '13vbf42',
+            isAttened: true,
+          },
+          {
+            name: '가이드2',
+            type: DisabilityEnum.GUIDE,
+            userId: '15ghtfv6',
+            isAttened: true,
+          },
+          {
+            name: '가이드3',
+            type: DisabilityEnum.GUIDE,
+            userId: 'vbbxdv1',
+            isAttened: false,
+          },
+          {
+            name: '가이드4',
+            type: DisabilityEnum.GUIDE,
+
+            userId: 'jrgsgdfgdyr1',
+            isAttened: false,
+          },
+          {
+            name: '가이드5',
+            type: DisabilityEnum.GUIDE,
+            userId: '1dfgdfgerervsd',
+            isAttened: true,
+          },
+          {
+            name: '가이드6',
+            type: DisabilityEnum.GUIDE,
+            userId: '1663dfgdf4r',
+            isAttened: false,
+          },
+          {
+            name: '가이드7',
+            type: DisabilityEnum.GUIDE,
+            userId: '1njsfdfgdfg',
+            isAttened: false,
+          },
+          {
+            name: '가이드8',
+            type: DisabilityEnum.GUIDE,
+            userId: '16dfgdfwef',
+            isAttened: false,
+          },
+          {
+            name: '가이드9',
+            type: DisabilityEnum.GUIDE,
+            userId: '1fbdfh5dfgdfg',
+            isAttened: false,
+          },
+          {
+            name: '가이드10',
+            type: DisabilityEnum.GUIDE,
+            userId: '1gdfgrtadasda4',
+            isAttened: true,
+          },
+        ],
+      });
+    },
+  ),
+
+  // eventMatchedViCountGet
+  http.get<{ eventId: string }, NoneType, EventMatchedViCountGetResponse>(
+    baseURL + '/event/:eventId/match/vi/count',
+    () => {
+      return HttpResponse.json({ vi: 20 });
+    },
+  ),
+
+  // eventMatchedViGet
+  http.get<{ eventId: string }, NoneType, EventMatchedViGetResponse>(
+    baseURL + '/event/:eventId/match/vi/list',
+    () => {
+      return HttpResponse.json({
+        vi: [
+          {
+            name: 'VI1',
+            type: DisabilityEnum.VI,
+            userId: '1312sdfs31',
+            isAttened: false,
+          },
+          {
+            name: 'VI2',
+            type: DisabilityEnum.VI,
+            userId: '1312fsdsfsd31',
+            isAttened: true,
+          },
+          {
+            name: 'VI3',
+            type: DisabilityEnum.VI,
+            userId: '131sf2bv31',
+            isAttened: false,
+          },
+          {
+            name: 'VI4',
+            type: DisabilityEnum.VI,
+            userId: '13sdfsdfssfs1231',
+            isAttened: false,
+          },
+          {
+            name: 'VI5',
+            type: DisabilityEnum.VI,
+            userId: '1sdf31ghgfcg231',
+            isAttened: true,
+          },
+          {
+            name: 'VI6',
+            type: DisabilityEnum.VI,
+            userId: '1312sdffvbhfs31',
+            isAttened: false,
+          },
+          {
+            name: 'VI7',
+            type: DisabilityEnum.VI,
+            userId: '131sfssdfs2fdcv31',
+            isAttened: true,
+          },
+        ],
+      });
+    },
+  ),
+
+  // eventMatchedGuideCountGet
+  http.get<
+    { eventId: string; viId: string },
+    NoneType,
+    EventMatchedGuideCountGetResponse
+  >(baseURL + '/event/:eventId/match/:viId/count', () => {
+    return HttpResponse.json({ guide: 3 });
+  }),
+
+  // eventMatchedGuideGet
+  http.get<
+    { eventId: string; viId: string },
+    NoneType,
+    EventMatchedGuideGetResponse
+  >(baseURL + '/event/:eventId/match/:viId', () => {
+    return HttpResponse.json({
+      guide: [
+        {
+          name: '가이드1',
+          type: DisabilityEnum.GUIDE,
+          userId: '13vbf42',
+          isAttened: true,
+        },
+        {
+          name: '가이드2',
+          type: DisabilityEnum.GUIDE,
+          userId: '15ghtfv6',
+          isAttened: false,
+        },
+        {
+          name: '가이드3',
+          type: DisabilityEnum.GUIDE,
+          userId: 'vbbxdv1',
+          isAttened: false,
+        },
+      ],
+    });
+  }),
 ];

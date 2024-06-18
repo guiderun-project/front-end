@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { CircularProgress, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 
 const StyledContainer = styled.div`
   width: 100vw;
@@ -15,9 +14,6 @@ const StyledContainer = styled.div`
 const Loading: React.FC = () => {
   return (
     <StyledContainer>
-      <Helmet>
-        <title>Loading - Guide run Project</title>
-      </Helmet>
       <CircularProgress size="3rem" />
       <Typography
         role="alert"

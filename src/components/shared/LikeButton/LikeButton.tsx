@@ -4,7 +4,7 @@ import { CircularProgress, IconButton } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { UserProfileGetResponse } from '@/apis/types/info';
-import useLike from '@/hooks/useLike';
+import useUserLike from '@/hooks/useUserLike';
 
 interface LikeButtonProps {
   userid: string;
@@ -17,10 +17,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ userid }) => {
     userid,
   ]);
 
-  const { handleLike } = useLike({ userId: userid });
+  const { handleLike } = useUserLike({ userId: userid });
   if (userData) {
     return (
-      <IconButton size="small" onClick={handleLike}>
+      <IconButton size="small" onClick={handleLike} aria-label="좋아요">
         {userData.isLiked ? (
           <FavoriteIcon
             fontSize="small"

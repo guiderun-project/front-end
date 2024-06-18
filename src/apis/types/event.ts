@@ -296,3 +296,248 @@ export type EditEventPatchResponse = EventFormType;
 export type CloseEventPatchRequest = {
   eventId: number;
 };
+
+export type EventLikeCountGetRequest = {
+  eventId: number;
+};
+
+export type EventLikeCountGetResponse = {
+  likes: number;
+  isLiked: boolean;
+};
+
+export type EventLikePoseRequest = {
+  eventId: number;
+};
+
+export type EventLikePostResponse = {
+  likes: number;
+};
+
+export type EventCommentCountGetRequest = {
+  eventId: number;
+};
+
+export type EventCommentCountGetResponse = {
+  count: number;
+};
+
+export type EventCommentGetRequest = {
+  eventId: number;
+  start?: number;
+  limit?: number;
+};
+
+export type EventCommentType = {
+  commentId: number;
+  userId: string; //작성자 id
+  name: string; //작성자 이름
+  type: DisabilityEnum; // 작성자가 vi인지 guide 인지
+  content: string; //댓글 내용
+  createdAt: string; // 생성 시간으로 보낼지 .. 5시간전 1일전 이렇게 보낼지..
+  likes: number;
+};
+
+export type EventCommentGetResponse = {
+  comments: EventCommentType[];
+};
+
+export type EventCommentLikeCountGetRequest = {
+  commentId: number;
+};
+
+export type EventCommentLikeCountGetResponse = {
+  likes: number;
+  isLiked: boolean;
+};
+
+export type EventCommentLikePostRequest = {
+  commentId: number;
+};
+
+export type EventCommentLikePostResponse = {
+  likes: number;
+};
+
+export type EventCommentPostRequest = {
+  eventId: number;
+  EventCommentPostBody: {
+    content: string;
+  };
+};
+
+export type EventCommentPostResponse = {
+  commentId: number;
+};
+
+export type EventCommentDeleteRequest = {
+  eventId: number;
+  commentId: number;
+};
+
+export type EventCommentDeleteResponse = {
+  commentId: number;
+};
+
+export type EventCommentPatchRequest = {
+  eventId: number;
+  commentId: number;
+  EventCommentPatchBody: {
+    content: string;
+  };
+};
+
+export type EventCommentPatchResponse = {
+  commentId: number;
+};
+
+export type EventApplyType = {
+  group: RunningGroup; //원하는 페이스 그룹
+  partner: string; //원하는 파트너
+  detail: string; //상세 설명
+};
+
+export type EventApplyPostRequest = {
+  eventId: number;
+  EventApplyPostRequestBody: EventApplyType;
+};
+
+export type EventApplyPostResponse = {
+  requestId: number;
+};
+
+export type EventApplyPatchRequest = {
+  eventId: number;
+  EventApplyPatchRequestBody: EventApplyType;
+};
+
+export type EventApplyPatchResponse = {
+  requestId: number;
+};
+
+export type EventApplyGetRequest = {
+  eventId: number;
+  userId: string;
+};
+
+export type EventApplyGetResponse = {
+  type: DisabilityEnum; //VI, GUIDE 둘 가능
+  name: string;
+  pace: RunningGroup; // 이름 옆에 등급
+  group: RunningGroup;
+  partner: string;
+  detail: string;
+};
+
+export type EventApplyCountGetRequest = {
+  eventId: number;
+};
+
+export type EventApplyCountGetResponse = {
+  count: number; //총 신청자 수
+  vi: number; //vi 신청자 수
+  guide: number; //guide 신청자 수
+};
+
+export type EventApplyStatusGetRequest = {
+  eventId: number;
+};
+
+export type ApplyUserType = {
+  userId: string;
+  type: DisabilityEnum;
+  name: string;
+};
+
+export type EventApplyStatusGetResponse = {
+  attend: ApplyUserType[];
+  notAttend: ApplyUserType[];
+};
+
+export type EventAttendPostRequest = {
+  eventId: number;
+  userId: string;
+};
+
+export type EventAttendStatusCountGetRequest = {
+  eventId: number;
+};
+
+export type EventAttendStatusCountGetResponse = {
+  attend: number;
+  notAttend: number;
+};
+
+export type EventMatchingPostRequest = {
+  eventId: number;
+  viId: string;
+  userId: string;
+};
+
+export type EventMatchingDeleteRequest = {
+  eventId: number;
+  viId: string;
+  userId: string;
+};
+
+export type EventNotMatchingCountGetRequest = {
+  eventId: number;
+};
+
+export type EventNotMatchingCountGetResponse = {
+  vi: number;
+  guide: number;
+};
+
+export type ApplyUserAttendType = ApplyUserType & { isAttened: boolean };
+
+export type EventNotMatchingGetRequest = {
+  eventId: number;
+};
+
+export type EventNotMatchingGetResponse = {
+  notMatch: ApplyUserAttendType[];
+};
+
+export type EventMatchedViCountGetRequest = {
+  eventId: number;
+};
+
+export type EventMatchedViCountGetResponse = {
+  vi: number;
+};
+
+export type EventMatchedViGetRequest = {
+  eventId: number;
+};
+
+export type EventMatchedViGetResponse = {
+  vi: ApplyUserAttendType[];
+};
+
+export type EventMatchedGuideCountGetRequest = {
+  eventId: number;
+  viId: string;
+};
+
+export type EventMatchedGuideCountGetResponse = {
+  guide: number;
+};
+
+export type EventMatchedGuideGetRequest = {
+  eventId: number;
+  viId: string;
+};
+
+export type EventMatchedGuideGetResponse = {
+  guide: ApplyUserAttendType[];
+};
+
+export type EventApplyAllGetRequest = {
+  eventId: number;
+};
+
+export type EventApplyAllGetResponse = {
+  vi: ApplyUserType[];
+  guide: ApplyUserType[];
+};
