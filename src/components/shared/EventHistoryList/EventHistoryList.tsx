@@ -35,7 +35,6 @@ const EVENT_FILTER_LIST = [
   { name: '최근 순', value: RecruitStatus.All },
   { name: '모집 마감', value: RecruitStatus.Close },
   { name: '모집 중', value: RecruitStatus.Open },
-  { name: '모집 대기중', value: RecruitStatus.Upcoming },
   { name: '종료', value: RecruitStatus.End },
 ];
 
