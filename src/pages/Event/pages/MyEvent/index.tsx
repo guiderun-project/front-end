@@ -67,7 +67,7 @@ const MyEvent: React.FC = () => {
           {getMyEventTitle()}
         </Typography>
         <Link
-          to={`${BROWSER_PATH.EVENT.ALL}?sort=MY`}
+          to={`${BROWSER_PATH.EVENT.ALL}?sort=my`}
           style={{
             textDecoration: 'none',
             color: '#666',
