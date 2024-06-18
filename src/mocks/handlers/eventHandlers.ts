@@ -864,7 +864,7 @@ export const eventHandlers: HttpHandler[] = [
 
   // eventMatchedViGet
   http.get<{ eventId: string }, NoneType, EventMatchedViGetResponse>(
-    baseURL + '/event/:eventId/match/vi',
+    baseURL + '/event/:eventId/match/vi/list',
     () => {
       return HttpResponse.json({
         vi: [
