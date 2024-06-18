@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Button,
   InputAdornment,
@@ -30,26 +32,27 @@ const NewEvent: React.FC = () => {
     new Date().getMonth() + 1,
   ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
 
-  const { control, handleSubmit, watch } = useForm<NewEventPostRequest>({
-    defaultValues: {
-      date: today,
-      recruitStartDate: today,
-      content: '',
-      minNumG: 0,
-      minNumV: 0,
-      startTime: '00:00',
-      eventType: EventType.Competition,
-      name: '',
-      place: '',
-    },
-  });
+  const { control, handleSubmit, watch, setValue } =
+    useForm<NewEventPostRequest>({
+      defaultValues: {
+        date: today,
+        recruitStartDate: today,
+        content: '',
+        minNumG: 0,
+        minNumV: 0,
+        startTime: '00:00',
+        eventType: EventType.Competition,
+        name: '',
+        place: '',
+      },
+    });
 
   const { mutate } = useMutation({
     mutationKey: ['newEventPost'],
     mutationFn: (data: NewEventPostRequest) => eventApi.newEventPost(data),
-    onSuccess: () => {
+    onSuccess: (data) => {
       alert('이벤트가 등록되었습니다. ');
-      navigate(BROWSER_PATH.EVENT.DETAIL);
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${data.eventId}`);
     },
     onError: () => {
       alert('이벤트 등록이 실패했습니다. 다시 시도해주세요.');
@@ -82,6 +85,13 @@ const NewEvent: React.FC = () => {
     if (newHours >= 24) newHours = newHours - 24;
     return `${String(newHours).padStart(2, '0')}:${minutes}`;
   };
+
+  //
+  //
+  //
+  React.useEffect(() => {
+    setValue('endTime', addOneHour(watch('startTime')));
+  }, [watch('startTime')]);
 
   //
   //
@@ -193,25 +203,19 @@ const NewEvent: React.FC = () => {
         <Controller
           control={control}
           name="endTime"
-          defaultValue={addOneHour(watch('startTime'))}
           rules={{
             min: {
               value: watch('startTime'),
               message: '시작 시간보다 늦어야 합니다.',
             },
           }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <InputBox
               title="종료 시간"
               inputElement={
                 <TextField
                   {...field}
                   type="time"
-                  value={
-                    fieldState.isDirty
-                      ? field.value
-                      : addOneHour(watch('startTime'))
-                  }
                   inputProps={{ step: 1800, min: watch('startTime') }}
                 />
               }
