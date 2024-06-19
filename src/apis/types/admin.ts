@@ -49,6 +49,29 @@ export type AdminViApplyGetRequest = {
   userId: string;
 };
 
+export type AdminUserSearchGetRequest = {
+  limit: number;
+  start: number;
+  text: string;
+  time?: 0 | 1;
+  type?: 0 | 1;
+  gender?: 0 | 1;
+  team?: 0 | 1;
+  approval?: 0 | 1;
+};
+
+export type AdminUserSearchGetResponse = {
+  items: UserListItemType[];
+};
+
+export type AdminUserSearchCountGetRequest = {
+  text: string;
+};
+
+export type AdminUserSearchCountGetResponse = {
+  count: number;
+};
+
 export type AdminViApplyGetResponse = {
   //인적사항
   phoneNumber: string; //전화번호

@@ -20,6 +20,10 @@ import {
   AdminUserListCountGetResponse,
   AdminUserListGetRequest,
   AdminUserListGetResponse,
+  AdminUserSearchCountGetRequest,
+  AdminUserSearchCountGetResponse,
+  AdminUserSearchGetRequest,
+  AdminUserSearchGetResponse,
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
 } from '../types/admin';
@@ -50,6 +54,39 @@ class AdminApi {
   adminUserListCountGet = async () => {
     return await axiosInstanceWithToken
       .get<AdminUserListCountGetResponse>(`/admin/user-list/count`)
+      .then((res) => res.data.count);
+  };
+
+  adminUserSearchGet = async ({
+    limit,
+    start,
+    text,
+    approval,
+    gender,
+    team,
+    time,
+    type,
+  }: AdminUserSearchGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminUserSearchGetResponse>(
+        `/admin/search/user?text=${text}&limit=${limit}&start=${start}${
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+          typeof team === 'number' ? `&name_team=${team}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}${
+          typeof type === 'number' ? `&approval=${type}` : ''
+        }`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  adminUserSearchCountGet = async ({
+    text,
+  }: AdminUserSearchCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminUserSearchCountGetResponse>(
+        `/admin/search/user/count?text=${text}`,
+      )
       .then((res) => res.data.count);
   };
 

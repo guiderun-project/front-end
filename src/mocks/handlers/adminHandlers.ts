@@ -16,6 +16,8 @@ import {
   AdminNewUserGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetResponse,
+  AdminUserSearchCountGetResponse,
+  AdminUserSearchGetResponse,
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
   EventHistoryItemType,
@@ -483,6 +485,22 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/user-list/count',
     () => {
       return HttpResponse.json({ count: 30 });
+    },
+  ),
+
+  //adminUserSearchGet
+  http.get<NoneType, NoneType, AdminUserSearchGetResponse>(
+    baseURL + '/admin/search/user',
+    () => {
+      return HttpResponse.json({ items: USER_LIST_DATA.slice(0, 5) });
+    },
+  ),
+
+  //adminUserSearchCountGet
+  http.get<NoneType, NoneType, AdminUserSearchCountGetResponse>(
+    baseURL + '/admin/search/user/count',
+    () => {
+      return HttpResponse.json({ count: 20 });
     },
   ),
 
