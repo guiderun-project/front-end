@@ -19,14 +19,15 @@ import {
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 
-import UserEventTabPanel from './event/UserEventTabpanel';
-import UserInfoTabpanel from './Info/UserInfoTabpanel';
+import UserEventTabPanel from '../panels/event/UserEventTabpanel';
+import UserInfoTabpanel from '../panels/Info/UserInfoTabpanel';
 
 import adminApi from '@/apis/requests/admin';
 import { UserListItemType } from '@/apis/types/admin';
-import { DisabilityChip, GenderChip } from '@/components/shared';
+import { DisabilityChip, GenderChip, ProfileImage } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RoleEnum, RunningGroup } from '@/types/group';
+import ApproveStatus from './ApprroveStatus';
 
 interface UserDetailDialogProps extends DialogProps {
   userData: UserListItemType;
@@ -77,11 +78,12 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
               recordDegree: team,
             });
             alert(`${userData.name}님이 거절되었습니다.`);
+          } catch (err) {
+            alert('오류가 발생했습니다.');
+          } finally {
             queryClient.invalidateQueries({
               queryKey: ['adminUserListGet'],
             });
-          } catch (err) {
-            alert('오류가 발생했습니다.');
           }
         }
         setIsActiveConfirm(false);
@@ -101,50 +103,6 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   /**
    *
    */
-  const renderApproveStatus = (status: RoleEnum) => {
-    switch (status) {
-      case RoleEnum.Reject:
-        return (
-          <Typography
-            component="span"
-            fontSize="0.75rem"
-            lineHeight="2.5rem"
-            fontWeight={700}
-            color="#DE1313"
-          >
-            거절
-          </Typography>
-        );
-      case RoleEnum.Wait:
-        return (
-          <Typography
-            component="span"
-            fontSize="0.75rem"
-            lineHeight="2.5rem"
-            fontWeight={700}
-            color="#4BABB8"
-          >
-            대기중
-          </Typography>
-        );
-      default:
-        return (
-          <Typography
-            component="span"
-            fontSize="0.75rem"
-            lineHeight="2.5rem"
-            fontWeight={700}
-            color="#0156D6"
-          >
-            승인
-          </Typography>
-        );
-    }
-  };
-
-  /**
-   *
-   */
   const renderInfo = () => {
     return (
       <Stack
@@ -153,15 +111,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
         gap="1rem"
         justifyContent="center"
       >
-        <Box
-          width="5rem"
-          height="5rem"
-          borderRadius="100rem"
-          aria-hidden
-          sx={{
-            backgroundColor: '#D9D9D9',
-          }}
-        ></Box>
+        <ProfileImage size={80} img={userData.img} />
         <Stack gap="1rem" alignItems="flex-start">
           <Box display="flex" alignItems="center" gap="0.5rem">
             <DisabilityChip component="chip" type={userData.type} />
@@ -247,7 +197,7 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                 />
               )}
             </Stack>
-            {renderApproveStatus(userData.role)}
+            <ApproveStatus status={userData.role} />
           </Box>
         </Stack>
       </Stack>
