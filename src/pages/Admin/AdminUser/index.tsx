@@ -1,8 +1,8 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import SearchIcon from '@mui/icons-material/Search';
 import {
-  Box,
   CircularProgress,
   Pagination,
   Paper,
@@ -14,14 +14,21 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
+  TextField,
   Typography,
 } from '@mui/material';
-import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
+import {
+  useSuspenseQuery,
+  useQuery,
+  keepPreviousData,
+} from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import UserTableRow from './components/UserTableRow';
 
 import adminApi from '@/apis/requests/admin';
+import { InputAdornment } from '@mui/material';
+import useDebounce from '@/hooks/useDebounce';
 
 //
 //
@@ -47,6 +54,14 @@ const TABLE_HEAD: { key: keyof FilterType; name: string }[] = [
   { key: 'approval', name: '승인여부' },
 ];
 
+const INITIAL_FILTER = {
+  approval: undefined,
+  gender: undefined,
+  team: undefined,
+  time: undefined,
+  type: undefined,
+};
+
 const MAX_USER_LENGTH = 10;
 
 //
@@ -67,13 +82,13 @@ export const StyledCollapsBox = styled.div`
 
 const AdminUser: React.FC = () => {
   const [page, setPage] = React.useState(1);
-  const [filter, setFilter] = React.useState<FilterType>({
-    approval: undefined,
-    gender: undefined,
-    team: undefined,
-    time: undefined,
-    type: undefined,
-  });
+  const [searchPage, setSearchPage] = React.useState(1);
+  const [search, setSearch] = React.useState('');
+  const [filter, setFilter] = React.useState<FilterType>(INITIAL_FILTER);
+
+  const searchMode = search.length > 0;
+
+  const debounce = useDebounce();
 
   const { data: userCount } = useSuspenseQuery({
     queryKey: ['adminUserListCountGet', 'adminUserListGet'],
@@ -83,7 +98,7 @@ const AdminUser: React.FC = () => {
   const maxPage = Math.ceil(userCount / MAX_USER_LENGTH);
   const startIndex = (page - 1) * MAX_USER_LENGTH;
 
-  const { data: userList } = useQuery({
+  const { data: userList, isLoading: isUserGetLoading } = useQuery({
     queryKey: ['adminUserListGet', startIndex, filter],
     queryFn: () =>
       adminApi.adminUserListGet({
@@ -91,7 +106,42 @@ const AdminUser: React.FC = () => {
         start: startIndex,
         ...filter,
       }),
+    placeholderData: keepPreviousData,
+    enabled: !searchMode,
   });
+
+  const { data: searchCount, isSuccess: isSearchCountGetSuccess } = useQuery({
+    queryKey: ['adminUserSearchCountGet', search],
+    queryFn: () => adminApi.adminUserSearchCountGet({ text: search }),
+    enabled: Boolean(search.length),
+  });
+
+  const maxSearchPage = Math.ceil((searchCount ?? 0) / MAX_USER_LENGTH);
+  const startSearchIndex = (page - 1) * MAX_USER_LENGTH;
+
+  const { data: searchData } = useQuery({
+    queryKey: ['adminUserSearchGet', search, filter, startSearchIndex],
+    queryFn: () =>
+      adminApi.adminUserSearchGet({
+        ...filter,
+        text: search,
+        limit: MAX_USER_LENGTH,
+        start: startSearchIndex,
+      }),
+    placeholderData: keepPreviousData,
+    enabled: Boolean(search.length) && isSearchCountGetSuccess,
+  });
+
+  /**
+   *
+   */
+  const handleSearchChange = debounce(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setSearch(e.target.value);
+      setFilter(INITIAL_FILTER);
+    },
+    300,
+  );
 
   /**
    *
@@ -104,28 +154,23 @@ const AdminUser: React.FC = () => {
     setFilter((prev) => ({ ...prev, [selectedFilter]: 1 }));
   };
 
-  //
-  //
-  //
+  /**
+   *
+   */
+  const renderTable = () => {
+    if (isUserGetLoading) {
+      return (
+        <Stack alignItems="center" justifyContent="center">
+          <CircularProgress />
+        </Stack>
+      );
+    }
 
-  return (
-    <Stack
-      boxSizing="border-box"
-      padding="2.5rem"
-      paddingTop="4.5rem"
-      gap="1.5rem"
-      width="100%"
-      maxWidth="31.875rem"
-    >
-      <Helmet>
-        <title>회원 관리 - Admin - Guide run project</title>
-      </Helmet>
-      <Box>
-        <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
-          회원 관리
-        </Typography>
-      </Box>
-      {userCount > 0 ? (
+    if (
+      (searchMode && (searchCount ?? 0) > 0) ||
+      (!searchMode && (userCount ?? 0) > 0)
+    ) {
+      return (
         <TableContainer component={Paper}>
           <Table aria-label="회원 정보 테이블" sx={{ boxSizing: 'border-box' }}>
             <caption style={{ display: 'none' }}>
@@ -159,24 +204,50 @@ const AdminUser: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList ? (
-                userList.map((user) => (
-                  <UserTableRow key={user.userId} userData={user} />
-                ))
-              ) : (
-                <CircularProgress />
-              )}
+              {searchMode
+                ? searchData
+                  ? searchData.map((user) => (
+                      <UserTableRow key={user.userId} userData={user} />
+                    ))
+                  : null
+                : userList
+                  ? userList.map((user) => (
+                      <UserTableRow key={user.userId} userData={user} />
+                    ))
+                  : null}
             </TableBody>
           </Table>
         </TableContainer>
-      ) : (
-        <Stack alignItems="center" justifyContent="center">
-          <Typography fontSize="1.5rem" fontWeight={700}>
-            정보가 존재하지 않습니다.
-          </Typography>
+      );
+    }
+
+    // return (
+    //   <Stack alignItems="center" justifyContent="center">
+    //     <Typography fontSize="1.5rem" fontWeight={700}>
+    //       정보가 존재하지 않습니다.
+    //     </Typography>
+    //   </Stack>
+    // );
+  };
+
+  /**
+   *
+   */
+  const renderPagination = () => {
+    if (searchMode && maxSearchPage > 1) {
+      return (
+        <Stack direction="row" justifyContent="center">
+          <Pagination
+            size="small"
+            page={searchPage}
+            count={maxPage}
+            onChange={(_, value) => setSearchPage(value)}
+          />
         </Stack>
-      )}
-      {maxPage > 1 && (
+      );
+    }
+    if (maxPage > 1) {
+      return (
         <Stack direction="row" justifyContent="center">
           <Pagination
             size="small"
@@ -185,7 +256,51 @@ const AdminUser: React.FC = () => {
             onChange={(_, value) => setPage(value)}
           />
         </Stack>
-      )}
+      );
+    }
+  };
+
+  //
+  //
+  //
+
+  return (
+    <Stack
+      boxSizing="border-box"
+      padding="2.5rem"
+      paddingTop="4.5rem"
+      gap="1.5rem"
+      width="100%"
+      maxWidth="31.875rem"
+    >
+      <Helmet>
+        <title>회원 관리 - Admin - Guide run project</title>
+      </Helmet>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
+          회원 관리
+        </Typography>
+        <TextField
+          fullWidth
+          size="medium"
+          variant="standard"
+          placeholder="회원 검색"
+          onChange={handleSearchChange}
+          InputProps={{
+            style: { padding: '0.75rem' },
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          sx={{
+            maxWidth: '15rem',
+          }}
+        />
+      </Stack>
+      {renderTable()}
+      {renderPagination()}
     </Stack>
   );
 };
