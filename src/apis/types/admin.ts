@@ -9,6 +9,7 @@ import {
 
 export type UserListItemType = {
   userId: string;
+  img: string;
   role: RoleEnum; //유저 권한
   type: DisabilityEnum; //vi인지 guide인지
   name: string;
@@ -27,6 +28,11 @@ export type UserListItemType = {
 export type AdminUserListGetRequest = {
   limit: number;
   start: number;
+  time?: 0 | 1;
+  type?: 0 | 1;
+  gender?: 0 | 1;
+  team?: 0 | 1;
+  approval?: 0 | 1;
 };
 
 export type AdminUserListGetResponse = {

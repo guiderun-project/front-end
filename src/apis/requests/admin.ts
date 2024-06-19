@@ -25,10 +25,24 @@ import {
 } from '../types/admin';
 
 class AdminApi {
-  adminUserListGet = async ({ limit, start }: AdminUserListGetRequest) => {
+  adminUserListGet = async ({
+    limit,
+    start,
+    approval,
+    gender,
+    team,
+    time,
+    type,
+  }: AdminUserListGetRequest) => {
     return await axiosInstanceWithToken
       .get<AdminUserListGetResponse>(
-        `/admin/user-list?limit=${limit}&start=${start}`,
+        `/admin/user-list?limit=${limit}&start=${start}${
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+          typeof team === 'number' ? `&name_team=${team}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}${
+          typeof type === 'number' ? `&approval=${type}` : ''
+        }`,
       )
       .then((res) => res.data.items);
   };

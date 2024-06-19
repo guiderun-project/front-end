@@ -56,6 +56,7 @@ export type UserDataType = {
 //
 
 const INITIAL_USER_DATA: UserListItemType = {
+  img: '',
   age: 0,
   competitionCnt: 0,
   gender: GenderEnum.M,
