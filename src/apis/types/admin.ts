@@ -6,6 +6,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { PartnerDataType } from './info';
 
 export type UserListItemType = {
   userId: string;
@@ -168,4 +169,40 @@ export type AdminEventTotalCountGetRequest = {
 export type AdminEventTotalCountGetResponse = {
   training: number;
   competition: number;
+};
+
+//어드민 메인 페이지
+export type AdminNewUserGetRequest = {
+  limit?: number;
+  start?: number;
+};
+
+export type AdminNewUserGetResponse = {
+  items: {
+    userId: string;
+    img: string;
+    role: RoleEnum; //권한
+    type: DisabilityEnum; //vi인지 guide인지
+    name: string;
+    trainingCnt: number; //훈련 참여 수
+    contestCnt: number; //대회 참여
+    like: number; //좋아요 수
+    recordDegree: RunningGroup;
+  }[];
+};
+
+export type AdminCurrentEventGetRequest = {
+  limit?: number;
+  start?: number;
+};
+
+export type CurrentEventType = {
+  eventId: number; //이벤트 id
+  eventType: EventType; //훈련인지 대회인지
+  name: string;
+  recruitStatus: RecruitStatus; //모집 상태
+};
+
+export type AdminCurrentEventGetResponse = {
+  items: CurrentEventType[];
 };

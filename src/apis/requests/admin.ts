@@ -2,6 +2,8 @@ import { axiosInstanceWithToken } from '../axios';
 import {
   AdminApproveUserPostRequest,
   AdminApproveUserPostResponse,
+  AdminCurrentEventGetRequest,
+  AdminCurrentEventGetResponse,
   AdminEventHistoryCountGetRequest,
   AdminEventHistoryCountGetResponse,
   AdminEventHistoryGetRequest,
@@ -13,6 +15,8 @@ import {
   AdminEventTotalCountGetResponse,
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
+  AdminNewUserGetRequest,
+  AdminNewUserGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetRequest,
   AdminUserListGetResponse,
@@ -106,6 +110,28 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminEventTotalCountGetResponse>(`/admin/${userId}/event-type/count`)
       .then((res) => res.data);
+  };
+
+  adminNewUserGet = async ({
+    limit = 6,
+    start = 0,
+  }: AdminNewUserGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminNewUserGetResponse>(
+        `/admin/new-user?limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  adminCurrentEventGet = async ({
+    limit = 4,
+    start = 0,
+  }: AdminCurrentEventGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminCurrentEventGetResponse>(
+        `/admin/current-event?limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
   };
 }
 

@@ -5,6 +5,7 @@ import { NoneType } from '../handlers';
 import { baseURL } from '@/apis/axios';
 import {
   AdminApproveUserPostResponse,
+  AdminCurrentEventGetResponse,
   AdminEventHistoryCountGetResponse,
   AdminEventHistoryGetResponse,
   AdminEventListCountGetResponse,
@@ -12,6 +13,7 @@ import {
   AdminEventTotalCountGetResponse,
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
+  AdminNewUserGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetResponse,
   AdminViApplyGetRequest,
@@ -264,6 +266,117 @@ const GUIDE_APPLY_DATA: AdminGuideApplyGetResponse = {
 //
 
 export const adminHandlers: HttpHandler[] = [
+  //adminNewUserGet
+  http.get<NoneType, NoneType, AdminNewUserGetResponse>(
+    baseURL + '/admin/new-user',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자1',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfdsfs232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자2',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122sdfdsf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자3',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '1sdfsdf2232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자4',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122fdssdf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자5',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfsd232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자6',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122dfsdf32',
+            recordDegree: RunningGroup.A,
+          },
+        ],
+      });
+    },
+  ),
+  //adminCurrentEventGet
+  http.get<NoneType, NoneType, AdminCurrentEventGetResponse>(
+    baseURL + '/admin/current-event',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            eventType: EventType.Competition,
+            name: '이벤트1',
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 2,
+            eventType: EventType.Competition,
+            name: '이벤트2',
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 3,
+            eventType: EventType.Competition,
+            name: '이벤트3',
+            recruitStatus: RecruitStatus.Open,
+          },
+          {
+            eventId: 4,
+            eventType: EventType.Competition,
+            name: '이벤트4',
+            recruitStatus: RecruitStatus.Open,
+          },
+        ],
+      });
+    },
+  ),
+
   //adminUserListGet
   http.get<NoneType, NoneType, AdminUserListGetResponse>(
     baseURL + '/admin/user-list',
