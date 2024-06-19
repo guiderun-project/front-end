@@ -201,6 +201,7 @@ export type CurrentEventType = {
   eventType: EventType; //훈련인지 대회인지
   name: string;
   recruitStatus: RecruitStatus; //모집 상태
+  date: string;
 };
 
 export type AdminCurrentEventGetResponse = {

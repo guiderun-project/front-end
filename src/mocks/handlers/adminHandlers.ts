@@ -353,24 +353,28 @@ export const adminHandlers: HttpHandler[] = [
             eventType: EventType.Competition,
             name: '이벤트1',
             recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
           },
           {
             eventId: 2,
             eventType: EventType.Competition,
             name: '이벤트2',
             recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
           },
           {
             eventId: 3,
             eventType: EventType.Competition,
             name: '이벤트3',
             recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
           },
           {
             eventId: 4,
             eventType: EventType.Competition,
             name: '이벤트4',
             recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
           },
         ],
       });

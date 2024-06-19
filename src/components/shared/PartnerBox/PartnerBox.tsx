@@ -17,6 +17,7 @@ import { PartnerDataType } from '@/apis/types/info';
 
 interface PartnerBoxProps {
   partnerData: PartnerDataType;
+  mode?: 'default' | 'admin';
 }
 
 //
@@ -59,6 +60,7 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
     trainingCnt,
     type,
   },
+  mode = 'default',
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -87,12 +89,17 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
             <Typography fontWeight={500}>{name}</Typography>
             <GroupChip group={recordDegree} type="text" />
           </Stack>
-          <Stack alignItems="center">
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            gap="0.25rem"
+          >
             <Typography fontSize="0.75rem">
-              훈련 <StyledCountText>{trainingCnt}</StyledCountText>회
+              훈련<StyledCountText>{trainingCnt}</StyledCountText>회
             </Typography>
             <Typography fontSize="0.75rem">
-              대회 <StyledCountText>{contestCnt}</StyledCountText>회
+              대회<StyledCountText>{contestCnt}</StyledCountText>회
             </Typography>
           </Stack>
         </Stack>
@@ -122,11 +129,13 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
           </Typography>
         </Stack>
       </StyledContainer>
-      <ProfileModal
-        userid={userId}
-        open={open}
-        onClose={() => setOpen(false)}
-      />
+      {mode === 'default' ? (
+        <ProfileModal
+          userid={userId}
+          open={open}
+          onClose={() => setOpen(false)}
+        />
+      ) : null}
     </>
   );
 };
