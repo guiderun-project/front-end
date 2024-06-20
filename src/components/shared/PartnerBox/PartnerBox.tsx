@@ -11,7 +11,7 @@ import { ProfileImage } from '../ProfileImage';
 import { ProfileModal } from '../ProfileModal';
 
 import { PartnerDataType } from '@/apis/types/info';
-import UserDetailDialog from '@/pages/Admin/AdminUser/components/UserDetailDialog';
+import UserDetailDialog from '@/pages/Admin/pages/AdminUser/components/UserDetailDialog';
 //
 //
 //
