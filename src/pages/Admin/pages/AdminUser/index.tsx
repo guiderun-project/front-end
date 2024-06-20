@@ -29,6 +29,7 @@ import UserTableRow from './components/UserTableRow';
 import adminApi from '@/apis/requests/admin';
 import { InputAdornment } from '@mui/material';
 import useDebounce from '@/hooks/useDebounce';
+import useUserFilter from '../../hooks/useUserFilter';
 
 //
 //
@@ -84,7 +85,8 @@ const AdminUser: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const [searchPage, setSearchPage] = React.useState(1);
   const [search, setSearch] = React.useState('');
-  const [filter, setFilter] = React.useState<FilterType>(INITIAL_FILTER);
+
+  const { filter, handleFilterChange, resetFilter } = useUserFilter();
 
   const searchMode = search.length > 0;
 
@@ -138,21 +140,10 @@ const AdminUser: React.FC = () => {
   const handleSearchChange = debounce(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setSearch(e.target.value);
-      setFilter(INITIAL_FILTER);
+      resetFilter();
     },
     300,
   );
-
-  /**
-   *
-   */
-  const handleFilterClick = (selectedFilter: keyof FilterType) => () => {
-    if (filter[selectedFilter]) {
-      setFilter((prev) => ({ ...prev, [selectedFilter]: 0 }));
-      return;
-    }
-    setFilter((prev) => ({ ...prev, [selectedFilter]: 1 }));
-  };
 
   /**
    *
@@ -195,7 +186,7 @@ const AdminUser: React.FC = () => {
                     <TableSortLabel
                       active={typeof filter[key] === 'number'}
                       direction={filter[key] === 0 ? 'desc' : 'asc'}
-                      onClick={handleFilterClick(key)}
+                      onClick={handleFilterChange(key)}
                     >
                       {name}
                     </TableSortLabel>
