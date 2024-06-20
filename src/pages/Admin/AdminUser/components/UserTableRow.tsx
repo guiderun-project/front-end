@@ -213,7 +213,8 @@ const UserTableRow: React.FC<UserTableRowProps> = ({ userData }) => {
         </TableCell>
       </TableRow>
       <UserDetailDialog
-        userData={userData}
+        userId={userData.userId}
+        group={userData.team}
         open={isDialogOpen}
         onClose={() => {
           setIsDialogOpen(false);

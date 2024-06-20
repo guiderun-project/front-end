@@ -16,8 +16,9 @@ import {
   Chip,
   Tabs,
   Tab,
+  CircularProgress,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import UserEventTabPanel from '../panels/event/UserEventTabpanel';
 import UserInfoTabpanel from '../panels/Info/UserInfoTabpanel';
@@ -26,11 +27,13 @@ import adminApi from '@/apis/requests/admin';
 import { UserListItemType } from '@/apis/types/admin';
 import { DisabilityChip, GenderChip, ProfileImage } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
-import { RoleEnum, RunningGroup } from '@/types/group';
+import { RunningGroup } from '@/types/group';
 import ApproveStatus from './ApprroveStatus';
+import infoApi from '@/apis/requests/info';
 
 interface UserDetailDialogProps extends DialogProps {
-  userData: UserListItemType;
+  userId: string;
+  group: RunningGroup;
   onClose: () => void;
 }
 
@@ -39,13 +42,23 @@ interface UserDetailDialogProps extends DialogProps {
 //
 
 const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
-  const { userData, onClose } = props;
-  const [team, setTeam] = React.useState<RunningGroup>(userData.team);
+  const { userId, group, onClose } = props;
+
+  const { data: userData, isLoading } = useQuery({
+    queryKey: ['personalInfoGet', userId],
+    queryFn: () => infoApi.personalInfoGet({ userId }),
+    enabled: props.open,
+  });
+
+  const [team, setTeam] = React.useState<RunningGroup>(group);
   const [tabValue, setTabValue] = React.useState<'info' | 'event'>('info');
   const [isActiveConfirm, setIsActiveConfirm] = React.useState(false);
   const queryClient = useQueryClient();
 
   const handleConfirm = (result: 'confirm' | 'deny') => async () => {
+    if (!userData) {
+      return;
+    }
     if (!isActiveConfirm) {
       return;
     }
@@ -97,95 +110,83 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   //
   //
   React.useEffect(() => {
-    setTeam(userData.team);
-  }, [userData]);
+    setTeam(group);
+  }, [group]);
 
   /**
    *
    */
   const renderInfo = () => {
-    return (
-      <Stack
-        padding="0 0.5rem"
-        direction="row"
-        gap="1rem"
-        justifyContent="center"
-      >
-        <ProfileImage size={80} img={userData.img} />
-        <Stack gap="1rem" alignItems="flex-start">
-          <Box display="flex" alignItems="center" gap="0.5rem">
-            <DisabilityChip component="chip" type={userData.type} />
-            <GenderChip type={userData.gender} />
-            <Typography component="h2" fontSize="1.25rem" fontWeight={700}>
-              {userData.name}
-            </Typography>
-            <Select
-              disableUnderline
-              variant="standard"
-              value={team}
-              defaultValue={userData.team}
-              onChange={(e) => {
-                setTeam(e.target.value as RunningGroup);
-              }}
-            >
-              <MenuItem value={RunningGroup.A}>
-                <GropuChip type="avatar" group={RunningGroup.A} />
-              </MenuItem>
-              <MenuItem value={RunningGroup.B}>
-                <GropuChip type="avatar" group={RunningGroup.B} />
-              </MenuItem>
-              <MenuItem value={RunningGroup.C}>
-                <GropuChip type="avatar" group={RunningGroup.C} />
-              </MenuItem>
-              <MenuItem value={RunningGroup.D}>
-                <GropuChip type="avatar" group={RunningGroup.D} />
-              </MenuItem>
-              <MenuItem value={RunningGroup.E}>
-                <GropuChip type="avatar" group={RunningGroup.E} />
-              </MenuItem>
-              <MenuItem value={RunningGroup.P}>
-                <GropuChip type="avatar" group={RunningGroup.P} />
-              </MenuItem>
-            </Select>
-          </Box>
-          <Box display="flex" gap="1rem">
-            <Stack gap="0.5rem">
-              <Chip
-                component="button"
-                clickable
-                color="primary"
-                variant="filled"
-                label="그룹편성 승인"
-                deleteIcon={<CheckIcon aria-hidden />}
-                onDelete={handleConfirm('confirm')}
-                onClick={handleConfirm('confirm')}
-                onTouchStart={() =>
-                  setTimeout(() => setIsActiveConfirm((prev) => !prev), 1000)
-                }
-                onTouchEnd={() => setIsActiveConfirm(false)}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  setIsActiveConfirm((prev) => !prev);
+    if (isLoading) {
+      return (
+        <Stack alignItems="center">
+          <CircularProgress />
+        </Stack>
+      );
+    }
+    if (userData) {
+      return (
+        <Stack
+          padding="0 0.5rem"
+          direction="row"
+          gap="1rem"
+          justifyContent="center"
+        >
+          <ProfileImage size={80} img={userData.img} />
+          <Stack gap="1rem" alignItems="flex-start">
+            <Box display="flex" alignItems="center" gap="0.5rem">
+              <DisabilityChip component="chip" type={userData.type} />
+              <GenderChip type={userData.gender} />
+              <Typography component="h2" fontSize="1.25rem" fontWeight={700}>
+                {userData.name}
+              </Typography>
+              <Select
+                disableUnderline
+                variant="standard"
+                value={team}
+                onChange={(e) => {
+                  setTeam(e.target.value as RunningGroup);
                 }}
-                sx={{
-                  height: '2.5rem',
-                  width: '8.75rem',
-                  borderRadius: '100rem',
-                  '.MuiChip-deleteIcon': {
-                    fontSize: '0.75rem',
-                  },
-                }}
-              />
-              {isActiveConfirm && (
+              >
+                <MenuItem value={RunningGroup.A}>
+                  <GropuChip type="avatar" group={RunningGroup.A} />
+                </MenuItem>
+                <MenuItem value={RunningGroup.B}>
+                  <GropuChip type="avatar" group={RunningGroup.B} />
+                </MenuItem>
+                <MenuItem value={RunningGroup.C}>
+                  <GropuChip type="avatar" group={RunningGroup.C} />
+                </MenuItem>
+                <MenuItem value={RunningGroup.D}>
+                  <GropuChip type="avatar" group={RunningGroup.D} />
+                </MenuItem>
+                <MenuItem value={RunningGroup.E}>
+                  <GropuChip type="avatar" group={RunningGroup.E} />
+                </MenuItem>
+                <MenuItem value={RunningGroup.P}>
+                  <GropuChip type="avatar" group={RunningGroup.P} />
+                </MenuItem>
+              </Select>
+            </Box>
+            <Box display="flex" gap="1rem" alignItems="center">
+              <Stack gap="0.5rem">
                 <Chip
                   component="button"
                   clickable
                   color="primary"
-                  variant="outlined"
-                  label="승인 거부"
-                  deleteIcon={<HighlightOffIcon aria-hidden />}
-                  onDelete={handleConfirm('deny')}
-                  onClick={handleConfirm('deny')}
+                  variant="filled"
+                  label="그룹편성 승인"
+                  deleteIcon={<CheckIcon aria-hidden />}
+                  onDelete={handleConfirm('confirm')}
+                  onClick={handleConfirm('confirm')}
+                  onTouchStart={() =>
+                    setTimeout(() => setIsActiveConfirm((prev) => !prev), 1000)
+                  }
+                  onTouchEnd={() => setIsActiveConfirm(false)}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    setIsActiveConfirm((prev) => !prev);
+                  }}
                   sx={{
                     height: '2.5rem',
                     width: '8.75rem',
@@ -195,35 +196,54 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
                     },
                   }}
                 />
-              )}
-            </Stack>
-            <ApproveStatus status={userData.role} />
-          </Box>
+                {isActiveConfirm && (
+                  <Chip
+                    component="button"
+                    clickable
+                    color="primary"
+                    variant="outlined"
+                    label="승인 거부"
+                    deleteIcon={<HighlightOffIcon aria-hidden />}
+                    onDelete={handleConfirm('deny')}
+                    onClick={handleConfirm('deny')}
+                    sx={{
+                      height: '2.5rem',
+                      width: '8.75rem',
+                      borderRadius: '100rem',
+                      '.MuiChip-deleteIcon': {
+                        fontSize: '0.75rem',
+                      },
+                    }}
+                  />
+                )}
+              </Stack>
+              <ApproveStatus status={userData.role} />
+            </Box>
+          </Stack>
         </Stack>
-      </Stack>
-    );
+      );
+    }
   };
 
   /**
    *
    */
   const renderSelectedData = () => {
-    switch (tabValue) {
-      case 'event':
-        return (
-          <UserEventTabPanel
-            userId={userData.userId}
-            count={{
-              eventCount: userData.competitionCnt,
-              trainingCount: userData.trainingCnt,
-            }}
-          />
-        );
-      case 'info':
-      default:
-        return (
-          <UserInfoTabpanel type={userData.type} userId={userData.userId} />
-        );
+    if (isLoading) {
+      return (
+        <Stack alignItems="center">
+          <CircularProgress />
+        </Stack>
+      );
+    }
+    if (userData) {
+      switch (tabValue) {
+        case 'event':
+          return <UserEventTabPanel userId={userId} />;
+        case 'info':
+        default:
+          return <UserInfoTabpanel type={userData.type} userId={userId} />;
+      }
     }
   };
 

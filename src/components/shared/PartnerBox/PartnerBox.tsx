@@ -11,6 +11,7 @@ import { ProfileImage } from '../ProfileImage';
 import { ProfileModal } from '../ProfileModal';
 
 import { PartnerDataType } from '@/apis/types/info';
+import UserDetailDialog from '@/pages/Admin/AdminUser/components/UserDetailDialog';
 //
 //
 //
@@ -135,7 +136,16 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
           open={open}
           onClose={() => setOpen(false)}
         />
-      ) : null}
+      ) : (
+        <UserDetailDialog
+          userId={userId}
+          group={recordDegree}
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        />
+      )}
     </>
   );
 };

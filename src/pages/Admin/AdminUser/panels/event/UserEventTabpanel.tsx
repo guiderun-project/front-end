@@ -5,13 +5,9 @@ import UserEventList from './UserEventList';
 
 interface UserEventTabpanelProps {
   userId: string;
-  count: { eventCount: number; trainingCount: number };
 }
 
-const UserEventTabPanel: React.FC<UserEventTabpanelProps> = ({
-  userId,
-  count,
-}) => {
+const UserEventTabPanel: React.FC<UserEventTabpanelProps> = ({ userId }) => {
   return (
     <Stack
       component="div"
@@ -20,7 +16,7 @@ const UserEventTabPanel: React.FC<UserEventTabpanelProps> = ({
       gap="1.25rem"
       aria-labelledby="Tab-event"
     >
-      <UserEventCount count={count} />
+      <UserEventCount userId={userId} />
       <UserEventList userId={userId} />
     </Stack>
   );
