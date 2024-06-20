@@ -19,6 +19,10 @@ import {
   AdminGuideApplyGetResponse,
   AdminNewUserGetRequest,
   AdminNewUserGetResponse,
+  AdminSearchEventHistoryCountGetRequest,
+  AdminSearchEventHistoryCountGetResponse,
+  AdminSearchEventHistoryGetRequest,
+  AdminSearchEventHistoryGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetRequest,
   AdminUserListGetResponse,
@@ -193,6 +197,30 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminEventTypeCountGetResponse>(`/admin/event-type/count/${userId}`)
       .then((res) => res.data);
+  };
+
+  adminSearchEventHistoryCountGet = async ({
+    text,
+    userId,
+  }: AdminSearchEventHistoryCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchEventHistoryCountGetResponse>(
+        `/admin/search/event-list/count/${userId}?text=${text}`,
+      )
+      .then((res) => res.data.count);
+  };
+
+  adminSearchEventHistoryGet = async ({
+    text,
+    userId,
+    limit = 5,
+    start = 0,
+  }: AdminSearchEventHistoryGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchEventHistoryGetResponse>(
+        `/admin/search/event-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
   };
 }
 

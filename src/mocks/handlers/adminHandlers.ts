@@ -15,6 +15,8 @@ import {
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
   AdminNewUserGetResponse,
+  AdminSearchEventHistoryCountGetResponse,
+  AdminSearchEventHistoryGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetResponse,
   AdminUserSearchCountGetResponse,
@@ -579,6 +581,61 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/:userId/event-type/count',
     () => {
       return HttpResponse.json({ competition: 10, training: 10 });
+    },
+  ),
+
+  //adminSearchEventHistoryCountGet
+  http.get<
+    { userId: string },
+    NoneType,
+    AdminSearchEventHistoryCountGetResponse
+  >(baseURL + '/admin/search/event-list/count/:userId', () => {
+    return HttpResponse.json({ count: 30 });
+  }),
+
+  //adminSearchEventHistoryGet
+  http.get<{ userId: string }, NoneType, AdminSearchEventHistoryGetResponse>(
+    baseURL + '/admin/search/event-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 2,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 3,
+            eventType: EventType.Training,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 4,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 5,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+        ],
+      });
     },
   ),
 ];

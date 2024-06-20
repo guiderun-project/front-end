@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FormattedMessage } from 'react-intl';
 
 import adminApi from '@/apis/requests/admin';
-import { EventModal, EventChip } from '@/components/shared';
+import { EventModal, EventChip, EventLinkBox } from '@/components/shared';
 import { StyledEventButton } from '@/pages/Mypage';
 import { RecruitStatus } from '@/types/group';
 
@@ -37,9 +37,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   });
-  const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(1);
-  const [selectedEvent, setSelectedEvent] = React.useState(-1);
   const { data: eventCount, isLoading } = useQuery({
     queryKey: ['adminEventHistoryCountGet', userId, selelectedDate],
     queryFn: () =>
@@ -64,26 +62,6 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
       }),
     enabled: !isLoading && userId !== '',
   });
-
-  const getColor = (recruitStatus: RecruitStatus) => {
-    switch (recruitStatus) {
-      case RecruitStatus.Open:
-        return '#DE1313';
-      case RecruitStatus.Close:
-        return '#42474E';
-      case RecruitStatus.Upcoming:
-      default:
-        return '#3586FF';
-    }
-  };
-
-  /**
-   *
-   */
-  const handleEventDetailOpen = (eventId: number) => {
-    setSelectedEvent(eventId);
-    setOpen(true);
-  };
 
   /**
    *
@@ -140,44 +118,7 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
       ) : (eventCount ?? 0) > 0 ? (
         <Stack>
           {EventList?.map((event) => (
-            <StyledEventButton
-              key={event.eventId}
-              onClick={() => handleEventDetailOpen(event.eventId)}
-            >
-              <EventChip type={event.eventType} variant="full" />
-              <Stack
-                gap="0.25rem"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                alignItems="flex-start"
-              >
-                <Typography fontWeight={500} noWrap>
-                  {event.name}
-                </Typography>
-                <Typography fontWeight={400} fontSize="0.8125rem" noWrap>
-                  {event.endDate.replace(/-/g, '.')}
-                </Typography>
-              </Stack>
-              <Typography
-                display="flex"
-                alignItems="center"
-                justifyContent="flex-end"
-                gap="0.625rem"
-                fontSize="0.6875rem"
-              >
-                <span
-                  style={{
-                    color: getColor(event.recruitStatus),
-                    fontWeight: 500,
-                  }}
-                >
-                  <FormattedMessage
-                    id={`common.status.${event.recruitStatus}`}
-                  />
-                </span>
-                <span aria-hidden>&gt;</span>
-              </Typography>
-            </StyledEventButton>
+            <EventLinkBox mode="admin" eventData={event} />
           ))}
         </Stack>
       ) : (
@@ -193,11 +134,6 @@ const UserEventList: React.FC<UserEventListProps> = ({ userId }) => {
           onChange={(_, value) => setPage(value)}
         />
       )}
-      <EventModal
-        eventId={selectedEvent}
-        isOpen={open}
-        onModalClose={() => setOpen(false)}
-      />
     </Stack>
   );
 };

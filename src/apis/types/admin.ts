@@ -245,3 +245,31 @@ export type AdminEventTypeCountGetResponse = {
   contestCnt: number;
   totalCnt: number;
 };
+
+export type AdminSearchEventHistoryGetRequest = {
+  userId: string;
+  text: string;
+  limit?: number;
+  start?: number;
+};
+
+export type SearchEventHistoryType = {
+  eventId: number;
+  eventType: EventType;
+  name: string;
+  startDate: string;
+  recruitStatus: RecruitStatus;
+};
+
+export type AdminSearchEventHistoryGetResponse = {
+  items: SearchEventHistoryType[];
+};
+
+export type AdminSearchEventHistoryCountGetRequest = {
+  userId: string;
+  text: string;
+};
+
+export type AdminSearchEventHistoryCountGetResponse = {
+  count: number;
+};
