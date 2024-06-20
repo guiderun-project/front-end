@@ -11,6 +11,7 @@ import {
   AdminEventListCountGetResponse,
   AdminEventListGetResponse,
   AdminEventTotalCountGetResponse,
+  AdminEventTypeCountGetResponse,
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
   AdminNewUserGetResponse,
@@ -501,6 +502,18 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/search/user/count',
     () => {
       return HttpResponse.json({ count: 20 });
+    },
+  ),
+
+  // adminEventTypeCountGet
+  http.get<{ userId: string }, NoneType, AdminEventTypeCountGetResponse>(
+    baseURL + '/admin/event-type/count/:userId',
+    () => {
+      return HttpResponse.json({
+        contestCnt: 10,
+        totalCnt: 20,
+        trainingCnt: 10,
+      });
     },
   ),
 

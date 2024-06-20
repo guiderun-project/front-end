@@ -13,6 +13,8 @@ import {
   AdminEventListGetResponse,
   AdminEventTotalCountGetRequest,
   AdminEventTotalCountGetResponse,
+  AdminEventTypeCountGetRequest,
+  AdminEventTypeCountGetResponse,
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
   AdminNewUserGetRequest,
@@ -183,6 +185,14 @@ class AdminApi {
         `/admin/current-event?limit=${limit}&start=${start}`,
       )
       .then((res) => res.data.items);
+  };
+
+  adminEventTypeCountGet = async ({
+    userId,
+  }: AdminEventTypeCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminEventTypeCountGetResponse>(`/admin/event-type/count/${userId}`)
+      .then((res) => res.data);
   };
 }
 

@@ -235,3 +235,13 @@ export type CurrentEventType = {
 export type AdminCurrentEventGetResponse = {
   items: CurrentEventType[];
 };
+
+export type AdminEventTypeCountGetRequest = {
+  userId: string;
+};
+
+export type AdminEventTypeCountGetResponse = {
+  trainingCnt: number;
+  contestCnt: number;
+  totalCnt: number;
+};
