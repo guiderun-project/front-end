@@ -30,6 +30,7 @@ import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RunningGroup } from '@/types/group';
 import ApproveStatus from './ApprroveStatus';
 import infoApi from '@/apis/requests/info';
+import UserPartnerTabPanel from '../panels/partner/UserPartnerTabPanel';
 
 interface UserDetailDialogProps extends DialogProps {
   userId: string;
@@ -51,7 +52,9 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   });
 
   const [team, setTeam] = React.useState<RunningGroup>(group);
-  const [tabValue, setTabValue] = React.useState<'info' | 'event'>('info');
+  const [tabValue, setTabValue] = React.useState<'info' | 'event' | 'partner'>(
+    'info',
+  );
   const [isActiveConfirm, setIsActiveConfirm] = React.useState(false);
   const queryClient = useQueryClient();
 
@@ -240,6 +243,8 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
       switch (tabValue) {
         case 'event':
           return <UserEventTabPanel userId={userId} />;
+        case 'partner':
+          return <UserPartnerTabPanel userId={userId} />;
         case 'info':
         default:
           return <UserInfoTabpanel type={userData.type} userId={userId} />;
@@ -272,6 +277,12 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
             value="event"
             label="이벤트 히스토리"
             aria-controls="Tabpanel-event"
+          />
+          <Tab
+            id="Tab-partner"
+            value="partner"
+            label="파트너 히스토리"
+            aria-controls="Tabpanel-partner"
           />
         </Tabs>
         {renderSelectedData()}
