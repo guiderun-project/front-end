@@ -1,13 +1,21 @@
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 import { EventChip } from '@/components/shared';
 import { EventType } from '@/types/group';
+import adminApi from '@/apis/requests/admin';
 
 interface UserEventCountProps {
-  count: { eventCount: number; trainingCount: number };
+  userId: string;
 }
 
-const UserEventCount: React.FC<UserEventCountProps> = ({ count }) => {
+const UserEventCount: React.FC<UserEventCountProps> = ({ userId }) => {
+  const { data: countData } = useQuery({
+    queryKey: ['adminEventTypeCountGet', userId],
+    queryFn: () => adminApi.adminEventTypeCountGet({ userId }),
+    enabled: Boolean(userId),
+  });
+
   return (
     <Box
       display="flex"
@@ -21,48 +29,54 @@ const UserEventCount: React.FC<UserEventCountProps> = ({ count }) => {
         boxShadow: '0px 2px 4px 0px #0000001A',
       }}
     >
-      <Typography>
-        <span
-          style={{
-            fontWeight: 500,
-            fontSize: '1.25rem',
-          }}
-        >{`총 `}</span>
-        <span
-          style={{
-            color: '#FF4040',
-          }}
-        >
-          {count.eventCount + count.trainingCount}
-        </span>
-        회
-      </Typography>
-      <Box display="flex" alignItems="center" gap="0.5rem">
-        <EventChip variant="full" type={EventType.Training} />
-        <Typography>
-          <span
-            style={{
-              color: '#FF4040',
-            }}
-          >
-            {count.trainingCount}
-          </span>
-          회
-        </Typography>
-      </Box>
-      <Box display="flex" alignItems="center" gap="0.5rem">
-        <EventChip variant="full" type={EventType.Competition} />
-        <Typography>
-          <span
-            style={{
-              color: '#FF4040',
-            }}
-          >
-            {count.eventCount}
-          </span>
-          회
-        </Typography>
-      </Box>
+      {countData ? (
+        <>
+          <Typography>
+            <span
+              style={{
+                fontWeight: 500,
+                fontSize: '1.25rem',
+              }}
+            >{`총 `}</span>
+            <span
+              style={{
+                color: '#FF4040',
+              }}
+            >
+              {countData.totalCnt}
+            </span>
+            회
+          </Typography>
+          <Box display="flex" alignItems="center" gap="0.5rem">
+            <EventChip variant="full" type={EventType.Training} />
+            <Typography>
+              <span
+                style={{
+                  color: '#FF4040',
+                }}
+              >
+                {countData.trainingCnt}
+              </span>
+              회
+            </Typography>
+          </Box>
+          <Box display="flex" alignItems="center" gap="0.5rem">
+            <EventChip variant="full" type={EventType.Competition} />
+            <Typography>
+              <span
+                style={{
+                  color: '#FF4040',
+                }}
+              >
+                {countData.contestCnt}
+              </span>
+              회
+            </Typography>
+          </Box>
+        </>
+      ) : (
+        <CircularProgress />
+      )}
     </Box>
   );
 };
