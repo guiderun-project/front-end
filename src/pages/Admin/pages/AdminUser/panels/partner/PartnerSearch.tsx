@@ -1,32 +1,21 @@
-import adminApi from '@/apis/requests/admin';
-import { PartnerBox } from '@/components/shared';
-import styled from '@emotion/styled';
-import { CircularProgress, Pagination, Stack, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-interface PartnerListProps {
-  userId: string;
-}
+import { CircularProgress, Pagination, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
-//
-//
-//
+import { StyledPartnerListBox } from './PartnerList';
+
+import adminApi from '@/apis/requests/admin';
+import { PartnerBox } from '@/components/shared';
+
+interface PartnerSearchProps {
+  userId: string;
+  search: string;
+}
 
 const MAX_PARTNER_LENGTH = 6;
 
-export const StyledPartnerListBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 7rem);
-  gap: 0.5rem;
-  align-items: center;
-`;
-
-//
-//
-//
-
-const PartnerList: React.FC<PartnerListProps> = ({ userId }) => {
+const PartnerSearch: React.FC<PartnerSearchProps> = ({ search, userId }) => {
   const [page, setPage] = React.useState(1);
 
   const {
@@ -34,8 +23,9 @@ const PartnerList: React.FC<PartnerListProps> = ({ userId }) => {
     isLoading: isCountLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['adminPartnerHistoryCountGet', userId],
-    queryFn: () => adminApi.adminPartnerHistoryCountGet({ userId }),
+    queryKey: ['adminSearchPartnerHistoryCountGet', userId],
+    queryFn: () =>
+      adminApi.adminSearchPartnerHistoryCountGet({ userId, text: search }),
   });
 
   const maxPage = Math.ceil((count ?? 0) / MAX_PARTNER_LENGTH);
@@ -44,15 +34,23 @@ const PartnerList: React.FC<PartnerListProps> = ({ userId }) => {
   const { data: partnerList, isLoading: isPartnerListLoading } = useQuery({
     queryKey: [],
     queryFn: () =>
-      adminApi.adminPartnerHistoryGet({ userId, start: startIndex }),
+      adminApi.adminSearchPartnerHistoryGet({
+        userId,
+        text: search,
+        start: startIndex,
+      }),
     enabled: isSuccess,
   });
+
+  //
+  //
+  //
 
   return (
     <Stack gap="2.5rem" alignItems="center">
       <Stack gap="1rem" alignItems="center">
         <Typography component="h3" fontWeight={700}>
-          훈련 함께 했던 파트너
+          {`파트너 ${search} 검색 결과`}
         </Typography>
         {isPartnerListLoading || isCountLoading ? (
           <CircularProgress />
@@ -67,7 +65,7 @@ const PartnerList: React.FC<PartnerListProps> = ({ userId }) => {
                 />
               ))
             ) : (
-              <Typography>파트너가 존재하지 않습니다</Typography>
+              <Typography>검색 결과가 존재하지 않습니다.</Typography>
             )}
           </StyledPartnerListBox>
         )}
@@ -88,4 +86,4 @@ const PartnerList: React.FC<PartnerListProps> = ({ userId }) => {
   );
 };
 
-export default PartnerList;
+export default PartnerSearch;

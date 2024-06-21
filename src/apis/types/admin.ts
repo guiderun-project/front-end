@@ -6,6 +6,7 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { PartnerDataType } from './info';
 
 export type UserListItemType = {
   userId: string;
@@ -309,4 +310,24 @@ export type AdminPartnerHistoryGetResponse = {
     recordDegree: RunningGroup;
     like: number; //좋아요 수
   }[];
+};
+
+export type AdminSearchPartnerHistoryCountGetRequest = {
+  userId: string;
+  text: string;
+};
+
+export type AdminSearchPartnerHistoryCountGetResponse = {
+  count: number;
+};
+
+export type AdminSearchPartnerHistoryGetRequest = {
+  userId: string;
+  text: string;
+  start?: number;
+  limit?: number;
+};
+
+export type AdminSearchPartnerHistoryGetResponse = {
+  items: Omit<PartnerDataType, 'isLiked'>[];
 };

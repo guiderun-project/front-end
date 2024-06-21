@@ -20,6 +20,8 @@ import {
   AdminPartnerTypeCountGetResponse,
   AdminSearchEventHistoryCountGetResponse,
   AdminSearchEventHistoryGetResponse,
+  AdminSearchPartnerHistoryCountGetResponse,
+  AdminSearchPartnerHistoryGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetResponse,
   AdminUserSearchCountGetResponse,
@@ -665,6 +667,94 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/:userId/event-type/count',
     () => {
       return HttpResponse.json({ competition: 10, training: 10 });
+    },
+  ),
+
+  //adminSearchPartnerHistoryCountGet
+  http.get<
+    { userId: string },
+    NoneType,
+    AdminSearchPartnerHistoryCountGetResponse
+  >(baseURL + '/admin/search/partner-list/count/:userId', () => {
+    return HttpResponse.json({
+      count: 34,
+    });
+  }),
+
+  //adminSearchPartnerHistoryGet
+  http.get<{ userId: string }, NoneType, AdminSearchPartnerHistoryGetResponse>(
+    baseURL + '/admin/search/partner-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자1',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfdsfs232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자2',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122sdfdsf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자3',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '1sdfsdf2232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자4',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122fdssdf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자5',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfsd232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자6',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122dfsdf32',
+            recordDegree: RunningGroup.A,
+          },
+        ],
+      });
     },
   ),
 

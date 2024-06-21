@@ -6,6 +6,7 @@ import { InputAdornment, Stack, TextField } from '@mui/material';
 import useDebounce from '@/hooks/useDebounce';
 import PartnerCount from './PartnerCount';
 import PartnerList from './PartnerList';
+import PartnerSearch from './PartnerSearch';
 
 interface UserPartnerTabPanelProps {
   userId: string;
@@ -41,7 +42,7 @@ const UserPartnerTabPanel: React.FC<UserPartnerTabPanelProps> = ({
     >
       <TextField
         fullWidth
-        placeholder="이벤트 검색"
+        placeholder="파트너 검색"
         onChange={handleSearchChange}
         InputProps={{
           endAdornment: (
@@ -54,8 +55,14 @@ const UserPartnerTabPanel: React.FC<UserPartnerTabPanelProps> = ({
           maxWidth: '18.4375rem',
         }}
       />
-      <PartnerCount userId={userId} />
-      <PartnerList userId={userId} />
+      {search.length ? (
+        <PartnerSearch userId={userId} search={search} />
+      ) : (
+        <>
+          <PartnerCount userId={userId} />
+          <PartnerList userId={userId} />
+        </>
+      )}
     </Stack>
   );
 };

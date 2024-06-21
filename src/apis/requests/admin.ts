@@ -30,6 +30,10 @@ import {
   AdminSearchEventHistoryCountGetResponse,
   AdminSearchEventHistoryGetRequest,
   AdminSearchEventHistoryGetResponse,
+  AdminSearchPartnerHistoryCountGetRequest,
+  AdminSearchPartnerHistoryCountGetResponse,
+  AdminSearchPartnerHistoryGetRequest,
+  AdminSearchPartnerHistoryGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetRequest,
   AdminUserListGetResponse,
@@ -260,6 +264,30 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminPartnerHistoryGetResponse>(
         `/admin/partner-list/${userId}?kind=${kind}&start=${start}&limit=${limit}`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  adminSearchPartnerHistoryCountGet = async ({
+    userId,
+    text,
+  }: AdminSearchPartnerHistoryCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchPartnerHistoryCountGetResponse>(
+        `/admin/search/partner-list/count/${userId}?text=${text}`,
+      )
+      .then((res) => res.data.count);
+  };
+
+  adminSearchPartnerHistoryGet = async ({
+    text,
+    userId,
+    limit = 6,
+    start = 0,
+  }: AdminSearchPartnerHistoryGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchPartnerHistoryGetResponse>(
+        `admin/search/partner-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
       )
       .then((res) => res.data.items);
   };
