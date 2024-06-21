@@ -15,6 +15,9 @@ import {
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
   AdminNewUserGetResponse,
+  AdminPartnerHistoryCountGetResponse,
+  AdminPartnerHistoryGetResponse,
+  AdminPartnerTypeCountGetResponse,
   AdminSearchEventHistoryCountGetResponse,
   AdminSearchEventHistoryGetResponse,
   AdminUserListCountGetResponse,
@@ -356,6 +359,87 @@ const GUIDE_APPLY_DATA: AdminGuideApplyGetResponse = {
 //
 
 export const adminHandlers: HttpHandler[] = [
+  // adminPartnerTypeCountGet
+  http.get<{ userId: string }, NoneType, AdminPartnerTypeCountGetResponse>(
+    baseURL + '/admin/partner-type/count/:userId',
+    () => {
+      return HttpResponse.json({ contestCnt: 10, trainingCnt: 10 });
+    },
+  ),
+
+  // adminPartnerHistoryCountGet
+  http.get<{ userId: string }, NoneType, AdminPartnerHistoryCountGetResponse>(
+    baseURL + '/admin/partner-list/count/:userId',
+    () => {
+      return HttpResponse.json({ count: 43 });
+    },
+  ),
+
+  // adminPartnerHistoryGet
+  http.get<{ userId: string }, NoneType, AdminPartnerHistoryGetResponse>(
+    baseURL + '/admin/partner-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '1',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '2',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '3',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '4',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '5',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '6',
+          },
+        ],
+      });
+    },
+  ),
+
   //adminNewUserGet
   http.get<NoneType, NoneType, AdminNewUserGetResponse>(
     baseURL + '/admin/new-user',

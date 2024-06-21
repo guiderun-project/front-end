@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -19,13 +20,14 @@ import UserDetailDialog from '@/pages/Admin/pages/AdminUser/components/UserDetai
 interface PartnerBoxProps {
   partnerData: PartnerDataType;
   mode?: 'default' | 'admin';
+  size?: 'small' | 'medium';
 }
 
 //
 //
 //
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ size: 'medium' | 'small' }>`
   box-sizing: border-box;
   min-width: 7.75rem;
   display: flex;
@@ -37,6 +39,14 @@ const StyledContainer = styled.div`
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   background-color: #fff;
+
+  ${({ size }) => {
+    if (size === 'small') {
+      return css`
+        min-width: 7rem;
+      `;
+    }
+  }}
 
   cursor: pointer;
 `;
@@ -62,6 +72,7 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
     type,
   },
   mode = 'default',
+  size = 'medium',
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -71,19 +82,18 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
 
   return (
     <>
-      <StyledContainer onClick={() => setOpen(true)}>
+      <StyledContainer size={size} onClick={() => setOpen(true)}>
         <ProfileImage img={img} size={60} />
         <Stack
           boxSizing="border-box"
           alignItems="center"
           justifyContent="center"
-          padding="0.25rem 0.5rem"
           gap="0.25rem"
         >
           <Stack
             direction="row"
             justifyContent="center"
-            gap="0.25rem"
+            gap="0.15625rem"
             alignItems="center"
           >
             <DisabilityChip component="avartar" type={type} variant="reserve" />
@@ -96,12 +106,16 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
             alignItems="center"
             gap="0.25rem"
           >
-            <Typography fontSize="0.75rem">
-              훈련<StyledCountText>{trainingCnt}</StyledCountText>회
-            </Typography>
-            <Typography fontSize="0.75rem">
-              대회<StyledCountText>{contestCnt}</StyledCountText>회
-            </Typography>
+            {trainingCnt && (
+              <Typography fontSize="0.75rem">
+                훈련<StyledCountText>{trainingCnt}</StyledCountText>회
+              </Typography>
+            )}
+            {contestCnt && (
+              <Typography fontSize="0.75rem">
+                대회<StyledCountText>{contestCnt}</StyledCountText>회
+              </Typography>
+            )}
           </Stack>
         </Stack>
         <Stack gap="0.0125rem" direction="row" alignItems="center">

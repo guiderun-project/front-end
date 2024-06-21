@@ -1,3 +1,4 @@
+import { EventType } from '@/types/group';
 import { axiosInstanceWithToken } from '../axios';
 import {
   AdminApproveUserPostRequest,
@@ -19,6 +20,12 @@ import {
   AdminGuideApplyGetResponse,
   AdminNewUserGetRequest,
   AdminNewUserGetResponse,
+  AdminPartnerHistoryCountGetRequest,
+  AdminPartnerHistoryCountGetResponse,
+  AdminPartnerHistoryGetRequest,
+  AdminPartnerHistoryGetResponse,
+  AdminPartnerTypeCountGetRequest,
+  AdminPartnerTypeCountGetResponse,
   AdminSearchEventHistoryCountGetRequest,
   AdminSearchEventHistoryCountGetResponse,
   AdminSearchEventHistoryGetRequest,
@@ -219,6 +226,40 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminSearchEventHistoryGetResponse>(
         `/admin/search/event-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  adminPartnerTypeCountGet = async ({
+    userId,
+  }: AdminPartnerTypeCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminPartnerTypeCountGetResponse>(
+        `/admin/partner-type/count/${userId}`,
+      )
+      .then((res) => res.data);
+  };
+
+  adminPartnerHistoryCountGet = async ({
+    userId,
+    kind = EventType.TOTAL,
+  }: AdminPartnerHistoryCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminPartnerHistoryCountGetResponse>(
+        `/admin/partner-list/count/${userId}?kind=${kind}`,
+      )
+      .then((res) => res.data.count);
+  };
+
+  adminPartnerHistoryGet = async ({
+    userId,
+    kind = EventType.TOTAL,
+    limit = 6,
+    start = 0,
+  }: AdminPartnerHistoryGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminPartnerHistoryGetResponse>(
+        `/admin/partner-list/${userId}?kind=${kind}&start=${start}&limit=${limit}`,
       )
       .then((res) => res.data.items);
   };

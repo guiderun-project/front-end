@@ -273,3 +273,40 @@ export type AdminSearchEventHistoryCountGetRequest = {
 export type AdminSearchEventHistoryCountGetResponse = {
   count: number;
 };
+
+export type AdminPartnerTypeCountGetRequest = {
+  userId: string;
+};
+
+export type AdminPartnerTypeCountGetResponse = {
+  trainingCnt: number;
+  contestCnt: number;
+};
+
+export type AdminPartnerHistoryCountGetRequest = {
+  userId: string;
+  kind?: EventType;
+};
+
+export type AdminPartnerHistoryCountGetResponse = {
+  count: number;
+};
+
+export type AdminPartnerHistoryGetRequest = {
+  userId: string;
+  kind?: EventType;
+  start?: number;
+  limit?: number;
+};
+
+export type AdminPartnerHistoryGetResponse = {
+  items: {
+    userId: string;
+    img: string; //프로필 이미지
+    role: RoleEnum; //권한
+    type: DisabilityEnum; //vi인지 guide 인지
+    name: string;
+    recordDegree: RunningGroup;
+    like: number; //좋아요 수
+  }[];
+};
