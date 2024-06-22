@@ -89,6 +89,21 @@ const EventDetail: React.FC = () => {
     },
   });
 
+  const { mutate: cancelSubmit } = useMutation({
+    mutationKey: ['eventApplyDelete', eventId],
+    mutationFn: () =>
+      eventApi.eventApplyDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('참가 신청 취소되었습니다. ');
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet'] });
+    },
+  });
+
   const isOwner = eventData?.organizerId === userId;
   const section = searchParams.get('section') ?? EventPageSectionEnum.Detail;
 
@@ -298,6 +313,16 @@ const EventDetail: React.FC = () => {
         }
       } else {
         if (eventData.recruitStatus === RecruitStatus.Open) {
+          if (eventData.submit) {
+            <Button
+              fullWidth
+              size="large"
+              variant="contained"
+              onClick={() => cancelSubmit()}
+            >
+              이벤트 참여 취소
+            </Button>;
+          }
           return (
             <Button
               fullWidth
