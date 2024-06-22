@@ -60,10 +60,22 @@ const EditEvent: React.FC = () => {
       alert(
         '이벤트 모집 마감 처리 되었습니다. 이벤트 상세페이지로 이동합니다.',
       );
-      navigate(BROWSER_PATH.EVENT.DETAIL);
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`);
     },
     onError: () => {
       alert('마감 처리가 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const { mutate: deleteEvent } = useMutation({
+    mutationKey: ['eventDelete', eventId],
+    mutationFn: () => eventApi.eventDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('삭제되었습니다. 메인 페이지로 이동합니다.');
+      navigate(BROWSER_PATH.MAIN);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
     },
   });
 
@@ -99,6 +111,15 @@ const EditEvent: React.FC = () => {
     Object.keys(errors).forEach((key) => {
       alert(errors[key as keyof FieldErrors<EventFormType>]?.message);
     });
+  };
+
+  /**
+   *
+   */
+  const handleDeleteEventClick = () => {
+    if (window.confirm('이벤트를 삭제하시겠습니까?')) {
+      deleteEvent();
+    }
   };
 
   //
@@ -416,7 +437,7 @@ const EditEvent: React.FC = () => {
           )}
         />
       </Stack>
-      <Stack alignItems="center">
+      <Stack alignItems="center" gap="1rem">
         <Button
           fullWidth
           type="submit"
@@ -425,6 +446,14 @@ const EditEvent: React.FC = () => {
           size="large"
         >
           이벤트 수정하기
+        </Button>
+        <Button
+          fullWidth
+          variant="outlined"
+          size="large"
+          onClick={handleDeleteEventClick}
+        >
+          이벤트 삭제하기
         </Button>
       </Stack>
     </>

@@ -958,4 +958,9 @@ export const eventHandlers: HttpHandler[] = [
       ],
     });
   }),
+
+  //eventDelete
+  http.delete<{ eventId: string }>('event/:eventId', () => {
+    return HttpResponse.json();
+  }),
 ];

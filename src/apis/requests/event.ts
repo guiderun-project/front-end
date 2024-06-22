@@ -74,12 +74,19 @@ import {
   EventApplyAllGetRequest,
   EventApplyAllGetResponse,
   EventApplyDeleteRequest,
+  EventDeleteRequest,
 } from '../types/event';
 
 class EventApi {
   eventGet = async ({ eventId }: EventGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventGetResponse>(`/event/${eventId}`)
+      .then((res) => res.data);
+  };
+
+  eventDelete = async ({ eventId }: EventDeleteRequest) => {
+    return await axiosInstanceWithToken
+      .delete(`/event/${eventId}`)
       .then((res) => res.data);
   };
 
