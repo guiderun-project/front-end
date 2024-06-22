@@ -164,8 +164,6 @@ export type AdminEventListCountGetResponse = {
 
 export type AdminEventHistoryCountGetRequest = {
   userId: string;
-  year: number;
-  month: number;
 };
 
 export type AdminEventHistoryCountGetResponse = {
@@ -176,8 +174,6 @@ export type AdminEventHistoryGetRequest = {
   userId: string;
   start: number;
   limit: number;
-  year: number;
-  month: number;
 };
 
 export type EventHistoryItemType = {

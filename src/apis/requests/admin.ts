@@ -149,26 +149,22 @@ class AdminApi {
 
   adminEventHistoryGet = async ({
     limit,
-    month,
     start,
     userId,
-    year,
   }: AdminEventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<AdminEventHistoryGetResponse>(
-        `/admin/event-list/${userId}?start=${start}&limit=${limit}&year=${year}&month=${month}`,
+        `/admin/event-list/${userId}?start=${start}&limit=${limit}`,
       )
       .then((res) => res.data.items);
   };
 
   adminEventHistoryCountGet = async ({
-    month,
     userId,
-    year,
   }: AdminEventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<AdminEventHistoryCountGetResponse>(
-        `/admin/event-list/count/${userId}?year=${year}&month=${month}`,
+        `/admin/event-list/count/${userId}`,
       )
       .then((res) => res.data.count);
   };
