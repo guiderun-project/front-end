@@ -61,7 +61,7 @@ export const theme = createTheme({
           props: { variant: 'chip' },
           style: {
             backgroundColor: '#111',
-            color: '#FFF',
+            color: '#000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
