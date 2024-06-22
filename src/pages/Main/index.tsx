@@ -157,7 +157,7 @@ const Main: React.FC = () => {
           >
             <CircularProgress size={24} aria-label="내 파트너 불러오는 중" />
           </Stack>
-        ) : partnerListData ? (
+        ) : partnerListData && partnerListData.length ? (
           <StyledPartnerBox>
             {partnerListData.map((partner) => (
               <PartnerBox key={partner.userId} partnerData={partner} />
