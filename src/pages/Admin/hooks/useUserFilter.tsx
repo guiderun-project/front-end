@@ -32,8 +32,12 @@ const useUserFilter = () => {
   };
 
   const handleFilterChange = (selectedFilter: keyof FilterType) => () => {
-    if (filter[selectedFilter]) {
+    if (filter[selectedFilter] === 1) {
       setFilter((prev) => ({ ...prev, [selectedFilter]: 0 }));
+      return;
+    }
+    if (filter[selectedFilter] === 0) {
+      setFilter((prev) => ({ ...prev, [selectedFilter]: undefined }));
       return;
     }
     setFilter((prev) => ({ ...prev, [selectedFilter]: 1 }));
