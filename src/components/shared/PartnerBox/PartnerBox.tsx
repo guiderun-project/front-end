@@ -106,12 +106,12 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
             alignItems="center"
             gap="0.25rem"
           >
-            {trainingCnt && (
+            {typeof trainingCnt === 'number' && (
               <Typography fontSize="0.75rem">
                 훈련<StyledCountText>{trainingCnt}</StyledCountText>회
               </Typography>
             )}
-            {contestCnt && (
+            {typeof contestCnt === 'number' && (
               <Typography fontSize="0.75rem">
                 대회<StyledCountText>{contestCnt}</StyledCountText>회
               </Typography>
