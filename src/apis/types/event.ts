@@ -63,7 +63,7 @@ export type EventGetResponse = {
   recruitEndDate: string; //모집 마감일
   organizerId: string; //주최자 userId
   organizer: string; //주최자 이름
-  oragnizerType: DisabilityEnum; //주최자가 vi인지 guide 인지
+  organizerType: DisabilityEnum; //주최자가 vi인지 guide 인지
   organizerPace: RunningGroup; //주최자 러닝 등급
   date: string; //이벤트 시작일
   startTime: string; //"HH : MM"

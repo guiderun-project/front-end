@@ -398,7 +398,7 @@ export const eventHandlers: HttpHandler[] = [
         name: '테스트 이벤트',
         NumG: 11,
         NumV: 12,
-        oragnizerType: DisabilityEnum.GUIDE,
+        organizerType: DisabilityEnum.GUIDE,
         organizer: '홍길동',
         organizerId: '123',
         organizerPace: RunningGroup.A,
