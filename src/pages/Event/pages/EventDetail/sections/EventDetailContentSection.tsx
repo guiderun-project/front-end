@@ -56,8 +56,8 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
       eventData.recruitStatus === RecruitStatus.End ? (
         <RecruitCountBox
           title="참여 인원"
-          viNum={eventData.NumV}
-          guideNum={eventData.NumG}
+          viNum={eventData.numV}
+          guideNum={eventData.numG}
         />
       ) : (
         <RecruitCountBox
