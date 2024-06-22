@@ -549,6 +549,11 @@ export const eventHandlers: HttpHandler[] = [
     },
   ),
 
+  //eventApplyDelete
+  http.delete<{ eventId: string }>(baseURL + '/event/:eventId/form', () => {
+    return HttpResponse.json();
+  }),
+
   // eventCommentPatch
   http.patch<
     { eventId: string; commentId: string },

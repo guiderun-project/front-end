@@ -73,6 +73,7 @@ import {
   EventMatchedGuideGetResponse,
   EventApplyAllGetRequest,
   EventApplyAllGetResponse,
+  EventApplyDeleteRequest,
 } from '../types/event';
 
 class EventApi {
@@ -300,6 +301,12 @@ class EventApi {
       .then((res) => res.data.requestId);
   };
 
+  eventApplyDelete = async ({ eventId }: EventApplyDeleteRequest) => {
+    return await axiosInstanceWithToken
+      .delete(`/event/${eventId}/form`)
+      .then((res) => res.data);
+  };
+
   eventApplyCountGet = async ({ eventId }: EventApplyCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<EventApplyCountGetResponse>(`/event/${eventId}/forms/count`)
@@ -387,7 +394,7 @@ class EventApi {
     viId,
   }: EventMatchedGuideGetRequest) => {
     return await axiosInstanceWithToken
-      .get<EventMatchedGuideGetResponse>(`/event/${eventId}/match/${viId}`)
+      .get<EventMatchedGuideGetResponse>(`/event/${eventId}/match/${viId}/list`)
       .then((res) => res.data);
   };
 

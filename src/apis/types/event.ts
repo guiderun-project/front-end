@@ -406,6 +406,10 @@ export type EventApplyPostResponse = {
   requestId: number;
 };
 
+export type EventApplyDeleteRequest = {
+  eventId: number;
+};
+
 export type EventApplyPatchRequest = {
   eventId: number;
   EventApplyPatchRequestBody: EventApplyType;
