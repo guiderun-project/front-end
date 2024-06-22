@@ -25,6 +25,7 @@ import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
 import { EventType, RecruitStatus } from '@/types/group';
+import { addOneHour } from '@/utils/time';
 
 const EditEvent: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -66,7 +67,7 @@ const EditEvent: React.FC = () => {
     },
   });
 
-  const { control, watch, handleSubmit } = useForm<EventFormType>({
+  const { control, watch, handleSubmit, setValue } = useForm<EventFormType>({
     defaultValues: {
       content: eventData?.details ?? '',
       date: eventData?.date,
@@ -122,6 +123,13 @@ const EditEvent: React.FC = () => {
 
   if (userData.userId !== eventData.organizerId) return <></>;
 
+  React.useEffect(() => {
+    setValue('endTime', addOneHour(watch('startTime')));
+  }, [watch('startTime')]);
+
+  React.useEffect(() => {
+    setValue('recruitEndDate', watch('date'));
+  }, [watch('date')]);
   //
   //
   //
@@ -361,18 +369,12 @@ const EditEvent: React.FC = () => {
               message: '모집 마감일은 대회 시점까지 입니다. ',
             },
           }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <InputBox
               multiline
               title="모집 마감일"
               subTitle="(추가 설정을 안 한 경우, 이벤트 당일까지)"
-              inputElement={
-                <TextField
-                  {...field}
-                  value={fieldState.isDirty ? field.value : watch('date')}
-                  type="date"
-                />
-              }
+              inputElement={<TextField {...field} type="date" />}
             />
           )}
         />

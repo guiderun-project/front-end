@@ -23,6 +23,7 @@ import { DisabilityChip, GroupChip } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventType } from '@/types/group';
+import { addOneHour } from '@/utils/time';
 
 const NewEvent: React.FC = () => {
   const userData = useSelector((state: RootState) => state.user);
@@ -74,16 +75,6 @@ const NewEvent: React.FC = () => {
     Object.keys(errors).forEach((key) => {
       alert(errors[key as keyof FieldErrors<EventFormType>]?.message);
     });
-  };
-
-  /**
-   *
-   */
-  const addOneHour = (time: string) => {
-    const [hours, minutes] = time.split(':');
-    let newHours = parseInt(hours, 10) + 1;
-    if (newHours >= 24) newHours = newHours - 24;
-    return `${String(newHours).padStart(2, '0')}:${minutes}`;
   };
 
   //
