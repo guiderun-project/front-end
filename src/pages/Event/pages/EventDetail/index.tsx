@@ -100,6 +100,7 @@ const EventDetail: React.FC = () => {
       window.navigator.share({
         title: 'Guide run Project',
         text: `${eventData?.name ?? ''} 이벤트에 참여하세요!`,
+        url: window.location.href,
       });
     }
   };
