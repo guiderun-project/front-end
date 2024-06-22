@@ -15,11 +15,13 @@ import { EventStatus as EventStatusType, RecruitStatus } from '@/types/group';
 interface EventDetailContentSectionProps {
   eventId: number;
   eventData: EventGetResponse;
+  isOwner: boolean;
 }
 
 const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
   eventData,
   eventId,
+  isOwner,
 }) => {
   //
   //
@@ -66,7 +68,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
           guideNum={eventData.minNumG}
         />
       )}
-      {eventData.submit ? (
+      {eventData.submit && !isOwner ? (
         <TitleContentRow
           title="내 파트너"
           alignItems="flex-start"

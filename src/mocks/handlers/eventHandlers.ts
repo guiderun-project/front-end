@@ -410,7 +410,7 @@ export const eventHandlers: HttpHandler[] = [
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
         recruitStatus: RecruitStatus.End,
-        status: EventStatus.End,
+        status: EventStatus.Open,
         submit: true,
         type: EventType.Competition,
         updated_at: '0000-00-00',

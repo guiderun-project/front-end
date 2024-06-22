@@ -271,6 +271,7 @@ const EventDetail: React.FC = () => {
             <EventDetailContentSection
               eventId={Number(eventId)}
               eventData={eventData}
+              isOwner={isOwner}
             />
           );
       }
