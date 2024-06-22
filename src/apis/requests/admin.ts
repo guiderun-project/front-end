@@ -156,7 +156,7 @@ class AdminApi {
   }: AdminEventHistoryGetRequest) => {
     return await axiosInstanceWithToken
       .get<AdminEventHistoryGetResponse>(
-        `/admin/${userId}/event-list?start=${start}&limit=${limit}&year=${year}&month=${month}`,
+        `/admin/event-list/${userId}?start=${start}&limit=${limit}&year=${year}&month=${month}`,
       )
       .then((res) => res.data.items);
   };
@@ -168,7 +168,7 @@ class AdminApi {
   }: AdminEventHistoryCountGetRequest) => {
     return await axiosInstanceWithToken
       .get<AdminEventHistoryCountGetResponse>(
-        `/admin/${userId}/event-list/count?year=${year}&month=${month}`,
+        `/admin/event-list/count/${userId}?year=${year}&month=${month}`,
       )
       .then((res) => res.data.count);
   };
