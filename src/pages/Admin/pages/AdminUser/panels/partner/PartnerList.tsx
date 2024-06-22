@@ -1,9 +1,11 @@
-import adminApi from '@/apis/requests/admin';
-import { PartnerBox } from '@/components/shared';
+import React from 'react';
+
 import styled from '@emotion/styled';
 import { CircularProgress, Pagination, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+
+import adminApi from '@/apis/requests/admin';
+import { PartnerBox } from '@/components/shared';
 
 interface PartnerListProps {
   userId: string;

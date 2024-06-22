@@ -3,10 +3,11 @@ import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, Stack, TextField } from '@mui/material';
 
-import useDebounce from '@/hooks/useDebounce';
 import PartnerCount from './PartnerCount';
 import PartnerList from './PartnerList';
 import PartnerSearch from './PartnerSearch';
+
+import useDebounce from '@/hooks/useDebounce';
 
 interface UserPartnerTabPanelProps {
   userId: string;

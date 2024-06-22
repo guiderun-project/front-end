@@ -1,9 +1,9 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
+import adminApi from '@/apis/requests/admin';
 import { EventChip } from '@/components/shared';
 import { EventType } from '@/types/group';
-import adminApi from '@/apis/requests/admin';
 
 interface UserEventCountProps {
   userId: string;

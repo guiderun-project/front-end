@@ -1,19 +1,27 @@
 import React from 'react';
 
-import { UserListItemType } from '@/apis/types/admin';
+import styled from '@emotion/styled';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { Box, Stack, TableCell, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Stack,
+  TableCell,
+  TableRow,
+  Typography,
+  Collapse,
+} from '@mui/material';
+
+import ApproveStatus from './ApprroveStatus';
+import UserDetailDialog from './UserDetailDialog';
+import { StyledCollapsBox } from '..';
+
+import { UserListItemType } from '@/apis/types/admin';
 import {
   DisabilityChip,
   GenderChip,
   GroupChip,
   ProfileImage,
 } from '@/components/shared';
-import ApproveStatus from './ApprroveStatus';
-import { Collapse } from '@mui/material';
-import { StyledCollapsBox } from '..';
-import styled from '@emotion/styled';
-import UserDetailDialog from './UserDetailDialog';
 
 //
 //

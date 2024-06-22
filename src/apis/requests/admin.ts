@@ -1,4 +1,3 @@
-import { EventType } from '@/types/group';
 import { axiosInstanceWithToken } from '../axios';
 import {
   AdminApproveUserPostRequest,
@@ -44,6 +43,8 @@ import {
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
 } from '../types/admin';
+
+import { EventType } from '@/types/group';
 
 class AdminApi {
   adminUserListGet = async ({

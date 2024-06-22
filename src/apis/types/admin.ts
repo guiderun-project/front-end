@@ -1,3 +1,5 @@
+import { PartnerDataType } from './info';
+
 import {
   DisabilityEnum,
   EventType,
@@ -6,7 +8,6 @@ import {
   RoleEnum,
   RunningGroup,
 } from '@/types/group';
-import { PartnerDataType } from './info';
 
 export type UserListItemType = {
   userId: string;

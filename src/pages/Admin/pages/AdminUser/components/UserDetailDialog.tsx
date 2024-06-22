@@ -20,17 +20,16 @@ import {
 } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import ApproveStatus from './ApprroveStatus';
 import UserEventTabPanel from '../panels/event/UserEventTabpanel';
 import UserInfoTabpanel from '../panels/Info/UserInfoTabpanel';
+import UserPartnerTabPanel from '../panels/partner/UserPartnerTabPanel';
 
 import adminApi from '@/apis/requests/admin';
-import { UserListItemType } from '@/apis/types/admin';
+import infoApi from '@/apis/requests/info';
 import { DisabilityChip, GenderChip, ProfileImage } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RunningGroup } from '@/types/group';
-import ApproveStatus from './ApprroveStatus';
-import infoApi from '@/apis/requests/info';
-import UserPartnerTabPanel from '../panels/partner/UserPartnerTabPanel';
 
 interface UserDetailDialogProps extends DialogProps {
   userId: string;

@@ -5,9 +5,9 @@ import { InputAdornment, Stack, TextField } from '@mui/material';
 
 import UserEventCount from './UserEventCount';
 import UserEventList from './UserEventList';
+import UserEventSearchList from './UserEventSearchList';
 
 import useDebounce from '@/hooks/useDebounce';
-import UserEventSearchList from './UserEventSearchList';
 
 interface UserEventTabpanelProps {
   userId: string;

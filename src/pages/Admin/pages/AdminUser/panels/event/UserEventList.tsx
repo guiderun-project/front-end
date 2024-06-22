@@ -11,12 +11,9 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { FormattedMessage } from 'react-intl';
 
 import adminApi from '@/apis/requests/admin';
-import { EventModal, EventChip, EventLinkBox } from '@/components/shared';
-import { StyledEventButton } from '@/pages/Mypage';
-import { RecruitStatus } from '@/types/group';
+import { EventLinkBox } from '@/components/shared';
 
 interface UserEventListProps {
   userId: string;

@@ -16,6 +16,7 @@ import {
   TableSortLabel,
   TextField,
   Typography,
+  InputAdornment,
 } from '@mui/material';
 import {
   useSuspenseQuery,
@@ -25,11 +26,10 @@ import {
 import { Helmet } from 'react-helmet-async';
 
 import UserTableRow from './components/UserTableRow';
+import useUserFilter from '../../hooks/useUserFilter';
 
 import adminApi from '@/apis/requests/admin';
-import { InputAdornment } from '@mui/material';
 import useDebounce from '@/hooks/useDebounce';
-import useUserFilter from '../../hooks/useUserFilter';
 
 //
 //
@@ -54,14 +54,6 @@ const TABLE_HEAD: { key: keyof FilterType; name: string }[] = [
   { key: 'team', name: '이름/팀' },
   { key: 'approval', name: '승인여부' },
 ];
-
-const INITIAL_FILTER = {
-  approval: undefined,
-  gender: undefined,
-  team: undefined,
-  time: undefined,
-  type: undefined,
-};
 
 const MAX_USER_LENGTH = 10;
 
