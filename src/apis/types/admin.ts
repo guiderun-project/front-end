@@ -1,3 +1,5 @@
+import { PartnerDataType } from './info';
+
 import {
   DisabilityEnum,
   EventType,
@@ -9,6 +11,7 @@ import {
 
 export type UserListItemType = {
   userId: string;
+  img: string;
   role: RoleEnum; //유저 권한
   type: DisabilityEnum; //vi인지 guide인지
   name: string;
@@ -27,6 +30,11 @@ export type UserListItemType = {
 export type AdminUserListGetRequest = {
   limit: number;
   start: number;
+  time?: 0 | 1;
+  type?: 0 | 1;
+  gender?: 0 | 1;
+  team?: 0 | 1;
+  approval?: 0 | 1;
 };
 
 export type AdminUserListGetResponse = {
@@ -41,6 +49,29 @@ export type AdminUserListCountGetResponse = {
 
 export type AdminViApplyGetRequest = {
   userId: string;
+};
+
+export type AdminUserSearchGetRequest = {
+  limit: number;
+  start: number;
+  text: string;
+  time?: 0 | 1;
+  type?: 0 | 1;
+  gender?: 0 | 1;
+  team?: 0 | 1;
+  approval?: 0 | 1;
+};
+
+export type AdminUserSearchGetResponse = {
+  items: UserListItemType[];
+};
+
+export type AdminUserSearchCountGetRequest = {
+  text: string;
+};
+
+export type AdminUserSearchCountGetResponse = {
+  count: number;
 };
 
 export type AdminViApplyGetResponse = {
@@ -168,4 +199,136 @@ export type AdminEventTotalCountGetRequest = {
 export type AdminEventTotalCountGetResponse = {
   training: number;
   competition: number;
+};
+
+//어드민 메인 페이지
+export type AdminNewUserGetRequest = {
+  limit?: number;
+  start?: number;
+};
+
+export type AdminNewUserGetResponse = {
+  items: {
+    userId: string;
+    img: string;
+    role: RoleEnum; //권한
+    type: DisabilityEnum; //vi인지 guide인지
+    name: string;
+    trainingCnt: number; //훈련 참여 수
+    contestCnt: number; //대회 참여
+    like: number; //좋아요 수
+    recordDegree: RunningGroup;
+  }[];
+};
+
+export type AdminCurrentEventGetRequest = {
+  limit?: number;
+  start?: number;
+};
+
+export type CurrentEventType = {
+  eventId: number; //이벤트 id
+  eventType: EventType; //훈련인지 대회인지
+  name: string;
+  recruitStatus: RecruitStatus; //모집 상태
+  date: string;
+};
+
+export type AdminCurrentEventGetResponse = {
+  items: CurrentEventType[];
+};
+
+export type AdminEventTypeCountGetRequest = {
+  userId: string;
+};
+
+export type AdminEventTypeCountGetResponse = {
+  trainingCnt: number;
+  contestCnt: number;
+  totalCnt: number;
+};
+
+export type AdminSearchEventHistoryGetRequest = {
+  userId: string;
+  text: string;
+  limit?: number;
+  start?: number;
+};
+
+export type SearchEventHistoryType = {
+  eventId: number;
+  eventType: EventType;
+  name: string;
+  startDate: string;
+  recruitStatus: RecruitStatus;
+};
+
+export type AdminSearchEventHistoryGetResponse = {
+  items: SearchEventHistoryType[];
+};
+
+export type AdminSearchEventHistoryCountGetRequest = {
+  userId: string;
+  text: string;
+};
+
+export type AdminSearchEventHistoryCountGetResponse = {
+  count: number;
+};
+
+export type AdminPartnerTypeCountGetRequest = {
+  userId: string;
+};
+
+export type AdminPartnerTypeCountGetResponse = {
+  trainingCnt: number;
+  contestCnt: number;
+};
+
+export type AdminPartnerHistoryCountGetRequest = {
+  userId: string;
+  kind?: EventType;
+};
+
+export type AdminPartnerHistoryCountGetResponse = {
+  count: number;
+};
+
+export type AdminPartnerHistoryGetRequest = {
+  userId: string;
+  kind?: EventType;
+  start?: number;
+  limit?: number;
+};
+
+export type AdminPartnerHistoryGetResponse = {
+  items: {
+    userId: string;
+    img: string; //프로필 이미지
+    role: RoleEnum; //권한
+    type: DisabilityEnum; //vi인지 guide 인지
+    name: string;
+    recordDegree: RunningGroup;
+    like: number; //좋아요 수
+  }[];
+};
+
+export type AdminSearchPartnerHistoryCountGetRequest = {
+  userId: string;
+  text: string;
+};
+
+export type AdminSearchPartnerHistoryCountGetResponse = {
+  count: number;
+};
+
+export type AdminSearchPartnerHistoryGetRequest = {
+  userId: string;
+  text: string;
+  start?: number;
+  limit?: number;
+};
+
+export type AdminSearchPartnerHistoryGetResponse = {
+  items: Omit<PartnerDataType, 'isLiked'>[];
 };

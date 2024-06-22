@@ -5,15 +5,27 @@ import { NoneType } from '../handlers';
 import { baseURL } from '@/apis/axios';
 import {
   AdminApproveUserPostResponse,
+  AdminCurrentEventGetResponse,
   AdminEventHistoryCountGetResponse,
   AdminEventHistoryGetResponse,
   AdminEventListCountGetResponse,
   AdminEventListGetResponse,
   AdminEventTotalCountGetResponse,
+  AdminEventTypeCountGetResponse,
   AdminGuideApplyGetRequest,
   AdminGuideApplyGetResponse,
+  AdminNewUserGetResponse,
+  AdminPartnerHistoryCountGetResponse,
+  AdminPartnerHistoryGetResponse,
+  AdminPartnerTypeCountGetResponse,
+  AdminSearchEventHistoryCountGetResponse,
+  AdminSearchEventHistoryGetResponse,
+  AdminSearchPartnerHistoryCountGetResponse,
+  AdminSearchPartnerHistoryGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetResponse,
+  AdminUserSearchCountGetResponse,
+  AdminUserSearchGetResponse,
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
   EventHistoryItemType,
@@ -48,6 +60,7 @@ const USER_LIST_DATA: UserListItemType[] = [
     type: DisabilityEnum.GUIDE,
     update_date: '00-00-00',
     update_time: '00.00.00',
+    img: '',
   },
   {
     userId: '2',
@@ -63,6 +76,7 @@ const USER_LIST_DATA: UserListItemType[] = [
     type: DisabilityEnum.GUIDE,
     update_date: '00-00-00',
     update_time: '00.00.00',
+    img: '',
   },
   {
     userId: '3',
@@ -78,6 +92,7 @@ const USER_LIST_DATA: UserListItemType[] = [
     type: DisabilityEnum.GUIDE,
     update_date: '00-00-00',
     update_time: '00.00.00',
+    img: '',
   },
   {
     userId: '4',
@@ -93,6 +108,7 @@ const USER_LIST_DATA: UserListItemType[] = [
     type: DisabilityEnum.GUIDE,
     update_date: '00-00-00',
     update_time: '00.00.00',
+    img: '',
   },
   {
     userId: '5',
@@ -108,6 +124,87 @@ const USER_LIST_DATA: UserListItemType[] = [
     type: DisabilityEnum.GUIDE,
     update_date: '00-00-00',
     update_time: '00.00.00',
+    img: '',
+  },
+  {
+    userId: '6',
+    age: 20,
+    competitionCnt: 5,
+    trainingCnt: 5,
+    gender: GenderEnum.M,
+    name: '홍길동',
+    phoneNumber: '01234567890',
+    role: RoleEnum.User,
+    snsId: 'pride_sd',
+    team: RunningGroup.B,
+    type: DisabilityEnum.GUIDE,
+    update_date: '00-00-00',
+    update_time: '00.00.00',
+    img: '',
+  },
+  {
+    userId: '7',
+    age: 20,
+    competitionCnt: 5,
+    trainingCnt: 5,
+    gender: GenderEnum.M,
+    name: '홍길동',
+    phoneNumber: '01234567890',
+    role: RoleEnum.User,
+    snsId: 'pride_sd',
+    team: RunningGroup.B,
+    type: DisabilityEnum.GUIDE,
+    update_date: '00-00-00',
+    update_time: '00.00.00',
+    img: '',
+  },
+  {
+    userId: '8',
+    age: 20,
+    competitionCnt: 5,
+    trainingCnt: 5,
+    gender: GenderEnum.M,
+    name: '홍길동',
+    phoneNumber: '01234567890',
+    role: RoleEnum.User,
+    snsId: 'pride_sd',
+    team: RunningGroup.B,
+    type: DisabilityEnum.GUIDE,
+    update_date: '00-00-00',
+    update_time: '00.00.00',
+    img: '',
+  },
+  {
+    userId: '9',
+    age: 20,
+    competitionCnt: 5,
+    trainingCnt: 5,
+    gender: GenderEnum.M,
+    name: '홍길동',
+    phoneNumber: '01234567890',
+    role: RoleEnum.User,
+    snsId: 'pride_sd',
+    team: RunningGroup.B,
+    type: DisabilityEnum.GUIDE,
+    update_date: '00-00-00',
+    update_time: '00.00.00',
+    img: '',
+  },
+  {
+    userId: '10',
+    age: 20,
+    competitionCnt: 5,
+    trainingCnt: 5,
+    gender: GenderEnum.M,
+    name: '홍길동',
+    phoneNumber: '01234567890',
+    role: RoleEnum.User,
+    snsId: 'pride_sd',
+    team: RunningGroup.B,
+    type: DisabilityEnum.GUIDE,
+    update_date: '00-00-00',
+    update_time: '00.00.00',
+    img: '',
   },
 ];
 
@@ -264,6 +361,202 @@ const GUIDE_APPLY_DATA: AdminGuideApplyGetResponse = {
 //
 
 export const adminHandlers: HttpHandler[] = [
+  // adminPartnerTypeCountGet
+  http.get<{ userId: string }, NoneType, AdminPartnerTypeCountGetResponse>(
+    baseURL + '/admin/partner-type/count/:userId',
+    () => {
+      return HttpResponse.json({ contestCnt: 10, trainingCnt: 10 });
+    },
+  ),
+
+  // adminPartnerHistoryCountGet
+  http.get<{ userId: string }, NoneType, AdminPartnerHistoryCountGetResponse>(
+    baseURL + '/admin/partner-list/count/:userId',
+    () => {
+      return HttpResponse.json({ count: 43 });
+    },
+  ),
+
+  // adminPartnerHistoryGet
+  http.get<{ userId: string }, NoneType, AdminPartnerHistoryGetResponse>(
+    baseURL + '/admin/partner-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '1',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '2',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '3',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '4',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '5',
+          },
+          {
+            img: '',
+            like: 23,
+            name: '홍길동',
+            recordDegree: RunningGroup.A,
+            role: RoleEnum.User,
+            type: DisabilityEnum.GUIDE,
+            userId: '6',
+          },
+        ],
+      });
+    },
+  ),
+
+  //adminNewUserGet
+  http.get<NoneType, NoneType, AdminNewUserGetResponse>(
+    baseURL + '/admin/new-user',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자1',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfdsfs232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자2',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122sdfdsf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자3',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '1sdfsdf2232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자4',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122fdssdf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자5',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfsd232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자6',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122dfsdf32',
+            recordDegree: RunningGroup.A,
+          },
+        ],
+      });
+    },
+  ),
+  //adminCurrentEventGet
+  http.get<NoneType, NoneType, AdminCurrentEventGetResponse>(
+    baseURL + '/admin/current-event',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            eventType: EventType.Competition,
+            name: '이벤트1',
+            recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
+          },
+          {
+            eventId: 2,
+            eventType: EventType.Competition,
+            name: '이벤트2',
+            recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
+          },
+          {
+            eventId: 3,
+            eventType: EventType.Competition,
+            name: '이벤트3',
+            recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
+          },
+          {
+            eventId: 4,
+            eventType: EventType.Competition,
+            name: '이벤트4',
+            recruitStatus: RecruitStatus.Open,
+            date: '2000-00-00',
+          },
+        ],
+      });
+    },
+  ),
+
   //adminUserListGet
   http.get<NoneType, NoneType, AdminUserListGetResponse>(
     baseURL + '/admin/user-list',
@@ -281,6 +574,34 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/user-list/count',
     () => {
       return HttpResponse.json({ count: 30 });
+    },
+  ),
+
+  //adminUserSearchGet
+  http.get<NoneType, NoneType, AdminUserSearchGetResponse>(
+    baseURL + '/admin/search/user',
+    () => {
+      return HttpResponse.json({ items: USER_LIST_DATA.slice(0, 5) });
+    },
+  ),
+
+  //adminUserSearchCountGet
+  http.get<NoneType, NoneType, AdminUserSearchCountGetResponse>(
+    baseURL + '/admin/search/user/count',
+    () => {
+      return HttpResponse.json({ count: 20 });
+    },
+  ),
+
+  // adminEventTypeCountGet
+  http.get<{ userId: string }, NoneType, AdminEventTypeCountGetResponse>(
+    baseURL + '/admin/event-type/count/:userId',
+    () => {
+      return HttpResponse.json({
+        contestCnt: 10,
+        totalCnt: 20,
+        trainingCnt: 10,
+      });
     },
   ),
 
@@ -346,6 +667,149 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/:userId/event-type/count',
     () => {
       return HttpResponse.json({ competition: 10, training: 10 });
+    },
+  ),
+
+  //adminSearchPartnerHistoryCountGet
+  http.get<
+    { userId: string },
+    NoneType,
+    AdminSearchPartnerHistoryCountGetResponse
+  >(baseURL + '/admin/search/partner-list/count/:userId', () => {
+    return HttpResponse.json({
+      count: 34,
+    });
+  }),
+
+  //adminSearchPartnerHistoryGet
+  http.get<{ userId: string }, NoneType, AdminSearchPartnerHistoryGetResponse>(
+    baseURL + '/admin/search/partner-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자1',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfdsfs232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자2',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122sdfdsf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자3',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '1sdfsdf2232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자4',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122fdssdf32',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자5',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '12sdfsd232',
+            recordDegree: RunningGroup.A,
+          },
+          {
+            contestCnt: 5,
+            img: '',
+            like: 21,
+            name: '사용자6',
+            role: RoleEnum.User,
+            trainingCnt: 3,
+            type: DisabilityEnum.GUIDE,
+            userId: '122dfsdf32',
+            recordDegree: RunningGroup.A,
+          },
+        ],
+      });
+    },
+  ),
+
+  //adminSearchEventHistoryCountGet
+  http.get<
+    { userId: string },
+    NoneType,
+    AdminSearchEventHistoryCountGetResponse
+  >(baseURL + '/admin/search/event-list/count/:userId', () => {
+    return HttpResponse.json({ count: 30 });
+  }),
+
+  //adminSearchEventHistoryGet
+  http.get<{ userId: string }, NoneType, AdminSearchEventHistoryGetResponse>(
+    baseURL + '/admin/search/event-list/:userId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            eventId: 1,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 2,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 3,
+            eventType: EventType.Training,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 4,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+          {
+            eventId: 5,
+            eventType: EventType.Competition,
+            name: '테스트트트트트트트트',
+            recruitStatus: RecruitStatus.Close,
+            startDate: '2000-00-00',
+          },
+        ],
+      });
     },
   ),
 ];

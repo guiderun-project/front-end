@@ -15,6 +15,7 @@ const UserInfoTabpanel: React.FC<UserInfoTabpanelProps> = ({
   userId,
   type,
 }) => {
+  //TODO: 신청서 API로 변경
   return (
     <Stack
       component="div"
