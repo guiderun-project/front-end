@@ -21,7 +21,7 @@ import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
 import { LoginPostRequest } from '@/apis/types/auth';
 import { ErrorType } from '@/apis/types/error';
-import { BROWSER_PATH } from '@/constants/path';
+import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { setUserInfo } from '@/store/reducer/user';
 //
@@ -87,12 +87,14 @@ const Login: React.FC = () => {
     mutationKey: ['loginPost'],
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
     onSuccess: async (accessToken) => {
+      const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
+
       dispatch(setAccessToken(accessToken));
       infoApi
         .userInfoGet()
         .then((res) => {
           dispatch(setUserInfo(res));
-          navigate(BROWSER_PATH.MAIN);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
         })
         .catch((err) => {
           if (isAxiosError<ErrorType>(err))
