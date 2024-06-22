@@ -93,6 +93,10 @@ const NewEvent: React.FC = () => {
     setValue('endTime', addOneHour(watch('startTime')));
   }, [watch('startTime')]);
 
+  React.useEffect(() => {
+    setValue('recruitEndDate', watch('date'));
+  }, [watch('date')]);
+
   //
   //
   //

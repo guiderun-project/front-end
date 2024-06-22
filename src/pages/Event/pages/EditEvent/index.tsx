@@ -45,7 +45,7 @@ const EditEvent: React.FC = () => {
       }),
     onSuccess: () => {
       alert('이벤트가 수정되었습니다. ');
-      navigate(BROWSER_PATH.EVENT.DETAIL);
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`);
     },
     onError: () => {
       alert('이벤트 수정이 실패했습니다. 다시 시도해주세요.');
@@ -86,7 +86,7 @@ const EditEvent: React.FC = () => {
    *
    */
   const handleEventSubmit = (data: EventFormType) => {
-    if (window.confirm('이벤트를 등록하시겠습니까?')) {
+    if (window.confirm('이벤트를 수정시겠습니까?')) {
       mutate(data);
     }
   };
