@@ -98,8 +98,9 @@ const EventDetail: React.FC = () => {
   const handleShare = () => {
     if (typeof window.navigator.share !== 'undefined') {
       window.navigator.share({
-        title: 'Guide run Project',
-        text: `${eventData?.name ?? ''} 이벤트에 참여하세요!`,
+        text: `Guide run Project \n ${
+          eventData?.name ?? ''
+        } 이벤트에 참여하세요! \n ${window.location.href}`,
       });
     }
   };

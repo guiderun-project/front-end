@@ -29,6 +29,7 @@ import { setUserInfo } from '@/store/reducer/user';
 //
 
 const StyledSubmitButton = styled.button`
+  color: #000;
   max-width: 18.4375rem;
   width: 100%;
   height: 3.25rem;
@@ -210,7 +211,6 @@ const Login: React.FC = () => {
               justifyContent="center"
               color="#111"
             >
-              {/* TODO: 아이디 비밀번호 찾기 페이지 구현 */}
               <Typography
                 fontSize="0.875rem"
                 fontWeight={500}

@@ -339,7 +339,7 @@ const NewEvent: React.FC = () => {
             <InputBox
               multiline
               title="모집 마감일"
-              subTitle="(추가 설정을 안 한 경우, 이벤트 2시간 전까지)"
+              subTitle="(추가 설정을 안 한 경우, 시작 당일까지)"
               inputElement={
                 <TextField
                   {...field}

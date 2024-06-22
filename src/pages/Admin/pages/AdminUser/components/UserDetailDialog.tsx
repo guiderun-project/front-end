@@ -45,8 +45,8 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
   const { userId, group, onClose } = props;
 
   const { data: userData, isLoading } = useQuery({
-    queryKey: ['personalInfoGet', userId],
-    queryFn: () => infoApi.personalInfoGet({ userId }),
+    queryKey: ['userProfileGet', userId],
+    queryFn: () => infoApi.userProfileGet({ userId }),
     enabled: props.open,
   });
 
@@ -98,6 +98,9 @@ const UserDetailDialog: React.FC<UserDetailDialogProps> = (props) => {
           } finally {
             queryClient.invalidateQueries({
               queryKey: ['adminUserListGet'],
+            });
+            queryClient.invalidateQueries({
+              queryKey: ['userProfileGet'],
             });
           }
         }

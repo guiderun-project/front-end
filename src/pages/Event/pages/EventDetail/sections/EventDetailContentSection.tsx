@@ -31,7 +31,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
         title="주최자"
         content={
           <Stack direction="row" alignItems="center" gap="0.25rem">
-            <DisabilityChip component="chip" type={eventData.oragnizerType} />
+            <DisabilityChip component="chip" type={eventData.organizerType} />
             <Typography fontWeight={600}>{eventData.organizer}</Typography>
             <GroupChip type="text" group={eventData.organizerPace} />
           </Stack>
@@ -56,8 +56,8 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
       eventData.recruitStatus === RecruitStatus.End ? (
         <RecruitCountBox
           title="참여 인원"
-          viNum={eventData.NumV}
-          guideNum={eventData.NumG}
+          viNum={eventData.numV}
+          guideNum={eventData.numG}
         />
       ) : (
         <RecruitCountBox
