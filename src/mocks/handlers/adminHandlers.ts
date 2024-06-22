@@ -648,7 +648,7 @@ export const adminHandlers: HttpHandler[] = [
 
   //adminEventHistoryGet
   http.get<{ userId: string }, NoneType, AdminEventHistoryGetResponse>(
-    baseURL + '/admin/:userId/event-list',
+    baseURL + '/admin/event-list/:userId',
     () => {
       return HttpResponse.json({ items: EVENT_HISTORY_DATA });
     },
@@ -656,7 +656,7 @@ export const adminHandlers: HttpHandler[] = [
 
   //adminEventHistoryCountGet
   http.get<{ userId: string }, NoneType, AdminEventHistoryCountGetResponse>(
-    baseURL + '/admin/:userId/event-list/count',
+    baseURL + '/admin/event-list/count/:userId',
     () => {
       return HttpResponse.json({ count: 40 });
     },

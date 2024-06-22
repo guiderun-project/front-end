@@ -174,7 +174,7 @@ const Withdraw: React.FC = () => {
           </Stack>
         </FormGroup>
       </StyledForm>
-      <Stack gap="1rem">
+      <Stack gap="1rem" alignItems="center">
         <Button size="large" variant="contained" onClick={() => navigate(-1)}>
           탈퇴를 다시 고려해보겠습니다.
         </Button>
