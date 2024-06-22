@@ -314,14 +314,16 @@ const EventDetail: React.FC = () => {
       } else {
         if (eventData.recruitStatus === RecruitStatus.Open) {
           if (eventData.submit) {
-            <Button
-              fullWidth
-              size="large"
-              variant="contained"
-              onClick={() => cancelSubmit()}
-            >
-              이벤트 참여 취소
-            </Button>;
+            return (
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                onClick={() => cancelSubmit()}
+              >
+                이벤트 참여 취소
+              </Button>
+            );
           }
           return (
             <Button
