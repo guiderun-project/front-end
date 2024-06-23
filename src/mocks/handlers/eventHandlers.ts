@@ -396,9 +396,9 @@ export const eventHandlers: HttpHandler[] = [
         minNumG: 10,
         minNumV: 10,
         name: '테스트 이벤트',
-        NumG: 11,
-        NumV: 12,
-        oragnizerType: DisabilityEnum.GUIDE,
+        numG: 11,
+        numV: 12,
+        organizerType: DisabilityEnum.GUIDE,
         organizer: '홍길동',
         organizerId: '123',
         organizerPace: RunningGroup.A,
@@ -410,7 +410,7 @@ export const eventHandlers: HttpHandler[] = [
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
         recruitStatus: RecruitStatus.End,
-        status: EventStatus.End,
+        status: EventStatus.Open,
         submit: true,
         type: EventType.Competition,
         updated_at: '0000-00-00',
@@ -548,6 +548,11 @@ export const eventHandlers: HttpHandler[] = [
       return HttpResponse.json({ requestId: 12343456543234 });
     },
   ),
+
+  //eventApplyDelete
+  http.delete<{ eventId: string }>(baseURL + '/event/:eventId/form', () => {
+    return HttpResponse.json();
+  }),
 
   // eventCommentPatch
   http.patch<
@@ -952,5 +957,10 @@ export const eventHandlers: HttpHandler[] = [
         },
       ],
     });
+  }),
+
+  //eventDelete
+  http.delete<{ eventId: string }>('event/:eventId', () => {
+    return HttpResponse.json();
   }),
 ];

@@ -25,6 +25,7 @@ import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
 import { EventType, RecruitStatus } from '@/types/group';
+import { addOneHour } from '@/utils/time';
 
 const EditEvent: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -45,7 +46,7 @@ const EditEvent: React.FC = () => {
       }),
     onSuccess: () => {
       alert('이벤트가 수정되었습니다. ');
-      navigate(BROWSER_PATH.EVENT.DETAIL);
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`);
     },
     onError: () => {
       alert('이벤트 수정이 실패했습니다. 다시 시도해주세요.');
@@ -59,14 +60,26 @@ const EditEvent: React.FC = () => {
       alert(
         '이벤트 모집 마감 처리 되었습니다. 이벤트 상세페이지로 이동합니다.',
       );
-      navigate(BROWSER_PATH.EVENT.DETAIL);
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`);
     },
     onError: () => {
       alert('마감 처리가 실패했습니다. 다시 시도해주세요.');
     },
   });
 
-  const { control, watch, handleSubmit } = useForm<EventFormType>({
+  const { mutate: deleteEvent } = useMutation({
+    mutationKey: ['eventDelete', eventId],
+    mutationFn: () => eventApi.eventDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('삭제되었습니다. 메인 페이지로 이동합니다.');
+      navigate(BROWSER_PATH.MAIN);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
+    },
+  });
+
+  const { control, watch, handleSubmit, setValue } = useForm<EventFormType>({
     defaultValues: {
       content: eventData?.details ?? '',
       date: eventData?.date,
@@ -86,7 +99,7 @@ const EditEvent: React.FC = () => {
    *
    */
   const handleEventSubmit = (data: EventFormType) => {
-    if (window.confirm('이벤트를 등록하시겠습니까?')) {
+    if (window.confirm('이벤트를 수정시겠습니까?')) {
       mutate(data);
     }
   };
@@ -98,6 +111,15 @@ const EditEvent: React.FC = () => {
     Object.keys(errors).forEach((key) => {
       alert(errors[key as keyof FieldErrors<EventFormType>]?.message);
     });
+  };
+
+  /**
+   *
+   */
+  const handleDeleteEventClick = () => {
+    if (window.confirm('이벤트를 삭제하시겠습니까?')) {
+      deleteEvent();
+    }
   };
 
   //
@@ -122,6 +144,13 @@ const EditEvent: React.FC = () => {
 
   if (userData.userId !== eventData.organizerId) return <></>;
 
+  React.useEffect(() => {
+    setValue('endTime', addOneHour(watch('startTime')));
+  }, [watch('startTime')]);
+
+  React.useEffect(() => {
+    setValue('recruitEndDate', watch('date'));
+  }, [watch('date')]);
   //
   //
   //
@@ -361,18 +390,12 @@ const EditEvent: React.FC = () => {
               message: '모집 마감일은 대회 시점까지 입니다. ',
             },
           }}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <InputBox
               multiline
               title="모집 마감일"
-              subTitle="(추가 설정을 안 한 경우, 이벤트 2시간 전까지)"
-              inputElement={
-                <TextField
-                  {...field}
-                  value={fieldState.isDirty ? field.value : watch('date')}
-                  type="date"
-                />
-              }
+              subTitle="(추가 설정을 안 한 경우, 이벤트 당일까지)"
+              inputElement={<TextField {...field} type="date" />}
             />
           )}
         />
@@ -414,7 +437,7 @@ const EditEvent: React.FC = () => {
           )}
         />
       </Stack>
-      <Stack alignItems="center">
+      <Stack alignItems="center" gap="1rem">
         <Button
           fullWidth
           type="submit"
@@ -423,6 +446,14 @@ const EditEvent: React.FC = () => {
           size="large"
         >
           이벤트 수정하기
+        </Button>
+        <Button
+          fullWidth
+          variant="outlined"
+          size="large"
+          onClick={handleDeleteEventClick}
+        >
+          이벤트 삭제하기
         </Button>
       </Stack>
     </>

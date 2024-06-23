@@ -89,6 +89,21 @@ const EventDetail: React.FC = () => {
     },
   });
 
+  const { mutate: cancelSubmit } = useMutation({
+    mutationKey: ['eventApplyDelete', eventId],
+    mutationFn: () =>
+      eventApi.eventApplyDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('참가 신청 취소되었습니다. ');
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet'] });
+    },
+  });
+
   const isOwner = eventData?.organizerId === userId;
   const section = searchParams.get('section') ?? EventPageSectionEnum.Detail;
 
@@ -98,8 +113,9 @@ const EventDetail: React.FC = () => {
   const handleShare = () => {
     if (typeof window.navigator.share !== 'undefined') {
       window.navigator.share({
-        title: 'Guide run Project',
-        text: `${eventData?.name ?? ''} 이벤트에 참여하세요!`,
+        text: `Guide run Project \n ${
+          eventData?.name ?? ''
+        } 이벤트에 참여하세요! \n ${window.location.href}`,
       });
     }
   };
@@ -270,6 +286,7 @@ const EventDetail: React.FC = () => {
             <EventDetailContentSection
               eventId={Number(eventId)}
               eventData={eventData}
+              isOwner={isOwner}
             />
           );
       }
@@ -296,6 +313,18 @@ const EventDetail: React.FC = () => {
         }
       } else {
         if (eventData.recruitStatus === RecruitStatus.Open) {
+          if (eventData.submit) {
+            return (
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                onClick={() => cancelSubmit()}
+              >
+                이벤트 참여 취소
+              </Button>
+            );
+          }
           return (
             <Button
               fullWidth

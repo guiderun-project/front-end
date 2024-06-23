@@ -23,6 +23,7 @@ import { DisabilityChip, GroupChip } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventType } from '@/types/group';
+import { addOneHour } from '@/utils/time';
 
 const NewEvent: React.FC = () => {
   const userData = useSelector((state: RootState) => state.user);
@@ -76,22 +77,16 @@ const NewEvent: React.FC = () => {
     });
   };
 
-  /**
-   *
-   */
-  const addOneHour = (time: string) => {
-    const [hours, minutes] = time.split(':');
-    let newHours = parseInt(hours, 10) + 1;
-    if (newHours >= 24) newHours = newHours - 24;
-    return `${String(newHours).padStart(2, '0')}:${minutes}`;
-  };
-
   //
   //
   //
   React.useEffect(() => {
     setValue('endTime', addOneHour(watch('startTime')));
   }, [watch('startTime')]);
+
+  React.useEffect(() => {
+    setValue('recruitEndDate', watch('date'));
+  }, [watch('date')]);
 
   //
   //
@@ -339,7 +334,7 @@ const NewEvent: React.FC = () => {
             <InputBox
               multiline
               title="모집 마감일"
-              subTitle="(추가 설정을 안 한 경우, 이벤트 2시간 전까지)"
+              subTitle="(추가 설정을 안 한 경우, 시작 당일까지)"
               inputElement={
                 <TextField
                   {...field}
