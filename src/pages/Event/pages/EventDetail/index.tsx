@@ -21,6 +21,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EventCommentSection from './sections/EventCommentSection';
 import EventDetailContentSection from './sections/EventDetailContentSection';
 import EventDetailStatusSection from './sections/EventDetailStatusSection';
+import useKakaoShare from '../../hooks/useKakaoShare';
 
 import eventApi from '@/apis/requests/event';
 import {
@@ -55,6 +56,8 @@ const EventDetail: React.FC = () => {
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const { shareLink } = useKakaoShare();
 
   const queryClient = useQueryClient();
 
@@ -111,12 +114,8 @@ const EventDetail: React.FC = () => {
    *
    */
   const handleShare = () => {
-    if (typeof window.navigator.share !== 'undefined') {
-      window.navigator.share({
-        text: `Guide run Project \n ${
-          eventData?.name ?? ''
-        } 이벤트에 참여하세요! \n ${window.location.href}`,
-      });
+    if (eventData) {
+      shareLink(eventData.name, eventData.organizer);
     }
   };
   /**

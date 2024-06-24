@@ -13,6 +13,12 @@ import Route from './Route';
 import { store } from './store';
 import './index.css';
 import { theme } from './theme/theme';
+
+declare global {
+  interface Window {
+    Kakao: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }
+}
 declare module '@tanstack/react-query' {
   interface Register {
     defaultError: AxiosError<ErrorType>;
