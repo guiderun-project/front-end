@@ -16,7 +16,7 @@ import { theme } from './theme/theme';
 
 declare global {
   interface Window {
-    Kakao: any;
+    Kakao: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 }
 declare module '@tanstack/react-query' {

@@ -1,27 +1,28 @@
 import React from 'react';
 
-import Logo from '@/assets/Logo.png';
-
 const useKakaoShare = () => {
   const { Kakao, location } = window;
 
   /**
    * 카카오톡 공유하기 기능
+   * @param title 이벤트 제목 required
+   * @param organizer 작성자  required
    * @param content 카카오톡에 들어갈 공유 텍스트
    * @param url 공유 주소
    * @param img 상단에 들어갈 이미지
    */
   const shareLink = (
-    content: string = '이벤트에 참여하세요!',
+    title: string,
+    organizer: string,
+    content: string = `${organizer}님이 만든 이벤트에 참여해보세요!`,
     url = location.href,
-    img = Logo,
   ) => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '딸기 치즈 케익',
+        title: title,
         description: content,
-        imageUrl: img,
+        imageUrl: 'https://i.ibb.co/Dg4G03D/Kakao-Talk-20240624-104425778.png',
         link: {
           mobileWebUrl: url,
           webUrl: url,
@@ -29,17 +30,17 @@ const useKakaoShare = () => {
       },
       buttons: [
         {
-          title: '참가 신청하기',
-          link: {
-            mobileWebUrl: url,
-            webUrl: url,
-          },
-        },
-        {
-          title: '사이트 구경하기',
+          title: '메인페이지',
           link: {
             mobileWebUrl: location.host,
             webUrl: location.host,
+          },
+        },
+        {
+          title: '참가 신청',
+          link: {
+            mobileWebUrl: url,
+            webUrl: url,
           },
         },
       ],
