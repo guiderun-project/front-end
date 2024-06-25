@@ -71,7 +71,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
       {eventData.submit && !isOwner ? (
         <TitleContentRow
           title="내 파트너"
-          alignItems="flex-start"
+          alignItems={eventData.partner ? 'flex-start' : 'center'}
           content={
             eventData.partner ? (
               <Stack gap="0.5rem">
