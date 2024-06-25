@@ -304,7 +304,11 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => closeEvent()}
+              onClick={() => {
+                if (window.confirm('모집 마감 하시겠습니까?')) {
+                  closeEvent();
+                }
+              }}
             >
               지금 모집 마감
             </Button>
@@ -318,7 +322,11 @@ const EventDetail: React.FC = () => {
                 fullWidth
                 size="large"
                 variant="contained"
-                onClick={() => cancelSubmit()}
+                onClick={() => {
+                  if (window.confirm('이벤트 참여를 취소하시겠습니까??')) {
+                    cancelSubmit();
+                  }
+                }}
               >
                 이벤트 참여 취소
               </Button>
