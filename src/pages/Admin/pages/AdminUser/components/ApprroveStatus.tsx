@@ -30,6 +30,12 @@ const ApproveStatus: React.FC<ApproveStatusProps> = ({ status }) => {
           대기중
         </Typography>
       );
+    case RoleEnum.Withdrawal:
+      return (
+        <Typography component="span" fontSize="0.75rem" fontWeight={700}>
+          탈퇴
+        </Typography>
+      );
     default:
       return (
         <Typography

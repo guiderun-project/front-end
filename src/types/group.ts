@@ -14,6 +14,7 @@ export enum RoleEnum {
   User = 'USER',
   Coach = 'COACH',
   Admin = 'ADMIN',
+  Withdrawal = 'WITHDRAWAL',
 }
 
 export enum GenderEnum {
