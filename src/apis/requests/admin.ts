@@ -33,6 +33,10 @@ import {
   AdminSearchPartnerHistoryCountGetResponse,
   AdminSearchPartnerHistoryGetRequest,
   AdminSearchPartnerHistoryGetResponse,
+  AdminSearchWithdrawalListCountGetRequest,
+  AdminSearchWithdrawalListCountGetResponse,
+  AdminSearchWithdrawalListGetRequest,
+  AdminSearchWithdrawalListGetResponse,
   AdminUserListCountGetResponse,
   AdminUserListGetRequest,
   AdminUserListGetResponse,
@@ -42,6 +46,9 @@ import {
   AdminUserSearchGetResponse,
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
+  AdminWithdrawalListCountGetResponse,
+  AdminWithdrawalListGetRequest,
+  AdminWithdrawalListGetResponse,
 } from '../types/admin';
 
 import { EventType } from '@/types/group';
@@ -73,6 +80,67 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminUserListCountGetResponse>(`/admin/user-list/count`)
       .then((res) => res.data.count);
+  };
+
+  adminWithdrawalListCountGet = async () => {
+    return await axiosInstanceWithToken
+      .get<AdminWithdrawalListCountGetResponse>('/admin/withdrawal-list/count')
+      .then((res) => res.data.count);
+  };
+
+  adminWithdrawlListGet = async ({
+    limit = 10,
+    start = 0,
+    approval,
+    gender,
+    team,
+    time,
+    type,
+  }: AdminWithdrawalListGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminWithdrawalListGetResponse>(
+        `/admin/withdrawal-list?limit=${limit}&start=${start}${
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+          typeof team === 'number' ? `&name_team=${team}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}${
+          typeof type === 'number' ? `&approval=${type}` : ''
+        }`,
+      )
+      .then((res) => res.data.items);
+  };
+
+  adminSearchWithdrawalListCountGet = async ({
+    text,
+  }: AdminSearchWithdrawalListCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchWithdrawalListCountGetResponse>(
+        `/admin/search/withdrawal-list/count?text=${text}`,
+      )
+      .then((res) => res.data.count);
+  };
+
+  adminSearchWithdrawalListGet = async ({
+    limit,
+    start,
+    text,
+    approval,
+    gender,
+    team,
+    time,
+    type,
+  }: AdminSearchWithdrawalListGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminSearchWithdrawalListGetResponse>(
+        `/admin/search/withdrawal-list?text=${text}&limit=${limit}&start=${start}${
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+          typeof team === 'number' ? `&name_team=${team}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}${
+          typeof type === 'number' ? `&approval=${type}` : ''
+        }`,
+      )
+      .then((res) => res.data.items);
   };
 
   adminUserSearchGet = async ({

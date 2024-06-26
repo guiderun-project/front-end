@@ -47,7 +47,7 @@ type FilterType = {
 //
 //
 
-const TABLE_HEAD: { key: keyof FilterType; name: string }[] = [
+export const TABLE_HEAD: { key: keyof FilterType; name: string }[] = [
   { key: 'time', name: 'Time Stamp' },
   { key: 'type', name: '장애여부' },
   { key: 'gender', name: '성별' },
@@ -133,6 +133,7 @@ const AdminUser: React.FC = () => {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setSearch(e.target.value);
       resetFilter();
+      setSearchPage(1);
     },
     300,
   );
@@ -223,7 +224,7 @@ const AdminUser: React.FC = () => {
           <Pagination
             size="small"
             page={searchPage}
-            count={maxPage}
+            count={maxSearchPage}
             onChange={(_, value) => setSearchPage(value)}
           />
         </Stack>
