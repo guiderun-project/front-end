@@ -28,6 +28,8 @@ import {
   AdminUserSearchGetResponse,
   AdminViApplyGetRequest,
   AdminViApplyGetResponse,
+  AdminWithdrawalListCountGetResponse,
+  AdminWithdrawalListGetResponse,
   EventHistoryItemType,
   EventListItemType,
   UserListItemType,
@@ -807,6 +809,80 @@ export const adminHandlers: HttpHandler[] = [
             name: '테스트트트트트트트트',
             recruitStatus: RecruitStatus.Close,
             startDate: '2000-00-00',
+          },
+        ],
+      });
+    },
+  ),
+
+  // adminWithdrawalListCountGet
+  http.get<NoneType, NoneType, AdminWithdrawalListCountGetResponse>(
+    baseURL + '/admin/withdrawal-list/count',
+    () => {
+      return HttpResponse.json({ count: 76 });
+    },
+  ),
+
+  // adminWithdrawlListGet
+  http.get<NoneType, NoneType, AdminWithdrawalListGetResponse>(
+    baseURL + '/admin/withdrawal-list',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            gender: GenderEnum.M,
+            name: '홍길동',
+            reason: ['다양한 활동이 있는 곳으로'],
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.GUIDE,
+            update_date: '0000-00-00',
+            update_time: '00:00',
+            userId: '123',
+          },
+          {
+            gender: GenderEnum.M,
+            name: '홍길동',
+            reason: ['다양한 활동이 있는 곳으로'],
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.GUIDE,
+            update_date: '0000-00-00',
+            update_time: '00:00',
+            userId: '1234',
+          },
+          {
+            gender: GenderEnum.M,
+            name: '홍길동',
+            reason: ['다양한 활동이 있는 곳으로'],
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.GUIDE,
+            update_date: '0000-00-00',
+            update_time: '00:00',
+            userId: '1235',
+          },
+          {
+            gender: GenderEnum.M,
+            name: '홍길동',
+            reason: ['다양한 활동이 있는 곳으로'],
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.GUIDE,
+            update_date: '0000-00-00',
+            update_time: '00:00',
+            userId: '1236',
+          },
+          {
+            gender: GenderEnum.M,
+            name: '홍길동',
+            reason: ['다양한 활동이 있는 곳으로'],
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.GUIDE,
+            update_date: '0000-00-00',
+            update_time: '00:00',
+            userId: '1237',
           },
         ],
       });

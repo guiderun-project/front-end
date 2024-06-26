@@ -51,16 +51,19 @@ export type AdminViApplyGetRequest = {
   userId: string;
 };
 
-export type AdminUserSearchGetRequest = {
-  limit: number;
-  start: number;
-  text: string;
+export type UserTableFilterType = {
   time?: 0 | 1;
   type?: 0 | 1;
   gender?: 0 | 1;
   team?: 0 | 1;
   approval?: 0 | 1;
 };
+
+export type AdminUserSearchGetRequest = {
+  limit: number;
+  start: number;
+  text: string;
+} & UserTableFilterType;
 
 export type AdminUserSearchGetResponse = {
   items: UserListItemType[];
@@ -327,4 +330,29 @@ export type AdminSearchPartnerHistoryGetRequest = {
 
 export type AdminSearchPartnerHistoryGetResponse = {
   items: Omit<PartnerDataType, 'isLiked'>[];
+};
+
+export type AdminWithdrawalListCountGetResponse = {
+  count: number;
+};
+
+export type AdminWithdrawalListGetRequest = {
+  limit: number;
+  start: number;
+} & UserTableFilterType;
+
+export type WithdrawalUserType = {
+  userId: string;
+  role: RoleEnum; //유저 권한
+  type: DisabilityEnum; //vi인지 guide인지
+  name: string;
+  team: RunningGroup; //팀
+  gender: GenderEnum; //성별
+  reason: string[]; //탈퇴 사유
+  update_date: string; //수정일
+  update_time: string; //수정 시간
+};
+
+export type AdminWithdrawalListGetResponse = {
+  items: WithdrawalUserType[];
 };
