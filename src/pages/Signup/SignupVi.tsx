@@ -166,7 +166,10 @@ const SignupVi: React.FC = () => {
                 required: '아이디는 필수 입력입니다.',
                 minLength: 1,
                 maxLength: 15,
-                pattern: /^[a-zA-Z0-9_]+$/,
+                pattern: {
+                  value: /^[a-zA-Z0-9_]+$/,
+                  message: '아이디는 영문으로 1자 이상 15자 미만이어야 합니다.',
+                },
               }}
               render={({ field, fieldState }) => (
                 <StyledInputLabel multiLine>
@@ -238,7 +241,11 @@ const SignupVi: React.FC = () => {
                 required: '비밀번호는 필수 입력입니다.',
                 minLength: 8,
                 maxLength: 32,
-                pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+                pattern: {
+                  value: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+                  message:
+                    '영문, 특수문자(!@#$%^&*?_), 숫자를 포함하여 8자 이상 32자 미만 입력해주세요.',
+                },
               }}
               render={({ field, fieldState }) => (
                 <Stack gap="1rem">
