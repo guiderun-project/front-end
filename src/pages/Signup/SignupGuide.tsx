@@ -82,6 +82,15 @@ const SignupGuide: React.FC = () => {
    *
    */
   const handleSubmit = async (data: GuideSignupPostRequest) => {
+    if (!isChecked || !isPasswordConfirm) {
+      if (!isChecked) {
+        alert('아이디 중복 확인이 필요합니다.');
+      }
+      if (!isPasswordConfirm) {
+        alert('아이디 중복 확인이 필요합니다.');
+      }
+      return;
+    }
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
