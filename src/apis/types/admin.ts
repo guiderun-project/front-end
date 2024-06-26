@@ -356,3 +356,21 @@ export type WithdrawalUserType = {
 export type AdminWithdrawalListGetResponse = {
   items: WithdrawalUserType[];
 };
+
+export type AdminSearchWithdrawalListGetRequest = {
+  text: string;
+  limit: number;
+  start: number;
+} & UserTableFilterType;
+
+export type AdminSearchWithdrawalListGetResponse = {
+  items: WithdrawalUserType[];
+};
+
+export type AdminSearchWithdrawalListCountGetRequest = {
+  text: string;
+};
+
+export type AdminSearchWithdrawalListCountGetResponse = {
+  count: number;
+};
