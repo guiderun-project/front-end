@@ -109,7 +109,10 @@ const AdminWithdraw: React.FC = () => {
   const renderTable = () => {
     return (
       <TableContainer component={Paper}>
-        <Table aria-label="회원 정보 테이블" sx={{ boxSizing: 'border-box' }}>
+        <Table
+          aria-label="회원 탈퇴 정보 테이블"
+          sx={{ boxSizing: 'border-box' }}
+        >
           <caption style={{ display: 'none' }}>회원 탈퇴 정보 테이블</caption>
           <TableHead>
             <TableRow
@@ -203,7 +206,7 @@ const AdminWithdraw: React.FC = () => {
       </Helmet>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
-          회원 관리
+          탈퇴한 회원
         </Typography>
         <TextField
           fullWidth
