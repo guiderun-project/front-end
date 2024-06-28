@@ -3,6 +3,7 @@ import { Stack, Typography } from '@mui/material';
 interface TitleContentRowProps {
   title: string;
   content: React.ReactElement;
+  multiline?: boolean;
   alignItems?: 'center' | 'flex-start';
 }
 
@@ -13,15 +14,20 @@ interface TitleContentRowProps {
 const TitleContentRow: React.FC<TitleContentRowProps> = ({
   title,
   content,
+  multiline = false,
   alignItems = 'center',
 }) => {
   return (
-    <Stack direction="row" alignItems={alignItems} gap="0.5rem">
+    <Stack
+      direction={multiline ? 'column' : 'row'}
+      alignItems={alignItems}
+      gap={multiline ? '1rem' : '0.5rem'}
+    >
       <Typography
         component="h3"
         fontSize="1.0625rem"
         fontWeight={700}
-        width="4.375rem"
+        width={multiline ? '100%' : '4.375rem'}
       >
         {title}
       </Typography>

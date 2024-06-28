@@ -24,6 +24,8 @@ import {
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
+import AdminEventDialog from './components/AdminEventDialog';
+import EventStatusText from './components/EventStatusText';
 import useEventFilter from '../../hooks/useEventFilter';
 import { StyledCollapsBox } from '../AdminUser';
 
@@ -55,34 +57,6 @@ const TABLE_HEAD: { key: keyof EventFilterType; name: string }[] = [
 const Row: React.FC<{ eventData: EventListItemType }> = ({ eventData }) => {
   const [open, setOpen] = React.useState(false);
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
-
-  const renderApproveStatus = (status: boolean) => {
-    switch (status) {
-      case false:
-        return (
-          <Typography
-            component="span"
-            fontSize="0.75rem"
-            fontWeight={700}
-            color="#4BABB8"
-          >
-            대기중
-          </Typography>
-        );
-      case true:
-      default:
-        return (
-          <Typography
-            component="span"
-            fontSize="0.75rem"
-            fontWeight={700}
-            color="#0156D6"
-          >
-            승인
-          </Typography>
-        );
-    }
-  };
 
   //
   //
@@ -120,7 +94,7 @@ const Row: React.FC<{ eventData: EventListItemType }> = ({ eventData }) => {
           {eventData.organizer} <GroupChip type="text" group={eventData.pace} />
         </TableCell>
         <TableCell component="th" align="center">
-          {renderApproveStatus(eventData.approval)}
+          <EventStatusText status={eventData.approval} />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -220,6 +194,12 @@ const Row: React.FC<{ eventData: EventListItemType }> = ({ eventData }) => {
           </Collapse>
         </TableCell>
       </TableRow>
+      <AdminEventDialog
+        open={isDialogOpen}
+        approval={eventData.approval}
+        eventId={eventData.eventId}
+        onClose={() => setIsDialogOpen(false)}
+      />
     </>
   );
 };
