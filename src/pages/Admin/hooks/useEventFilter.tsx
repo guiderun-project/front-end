@@ -1,12 +1,9 @@
 import React from 'react';
 
-type EventFilterType = {
-  name?: 1 | 0;
-  organizer?: 1 | 0;
-  approval?: 1 | 0;
-};
+import { EventFilterType } from '@/apis/types/admin';
 
 const INITIAL_FILTER: EventFilterType = {
+  time: undefined,
   name: undefined,
   organizer: undefined,
   approval: undefined,
