@@ -2,6 +2,7 @@ import { PartnerDataType } from './info';
 
 import {
   DisabilityEnum,
+  EventStatus,
   EventType,
   GenderEnum,
   RecruitStatus,
@@ -397,5 +398,62 @@ export type AdminSearchWithdrawalListCountGetRequest = {
 };
 
 export type AdminSearchWithdrawalListCountGetResponse = {
+  count: number;
+};
+
+export type AdminApprovalEventPostRequest = {
+  eventId: number;
+  approval: boolean; //true면 허가, false면 거절.
+};
+
+export type AdminEventResultGetRequest = {
+  eventId: number;
+};
+
+export type AdminEventResultGetResponse = {
+  name: string;
+  type: EventType; //훈련인지 대회인지
+  approval: boolean; //이벤트 승인 여부
+  date: string; //이벤트 시작 날짜(모집 시작일 아님)
+  organizer: string; //생성자
+  pace: RunningGroup; //생성자 러닝 등급
+  status: EventStatus; //이벤트 진행 상태
+  recuitStatus: RecruitStatus; //모집 상태
+  total: number; //총 참여인원
+  viCnt: number; //vi 수
+  guideCnt: number; //guide 수
+  absent: number; //전체 불참인원
+  viAbsent: number; //vi 불참 인원
+  guideAbsent: number; //guide 불참 인원
+};
+
+export type ApplyListFilterType = {
+  time?: 0 | 1;
+  typeName?: 0 | 1;
+  team?: 0 | 1;
+};
+
+export type AdminApplyListGetRequest = {
+  eventId: number;
+  limit: number;
+  start: number;
+} & ApplyListFilterType;
+
+export type AdminApplyListGetResponse = {
+  items: {
+    userId: string;
+    role: RoleEnum; //유저 권한
+    type: DisabilityEnum; //vi인지 guide인지
+    name: string;
+    team: RunningGroup; //팀
+    apply_time: string; //신청 시간
+  }[];
+};
+
+export type AdminApplyListCountGetRequest = {
+  eventId: number;
+};
+
+export type AdminApplyListCountGetResponse = {
   count: number;
 };

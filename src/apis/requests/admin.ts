@@ -1,5 +1,10 @@
 import { axiosInstanceWithToken } from '../axios';
 import {
+  AdminApplyListCountGetRequest,
+  AdminApplyListCountGetResponse,
+  AdminApplyListGetRequest,
+  AdminApplyListGetResponse,
+  AdminApprovalEventPostRequest,
   AdminApproveUserPostRequest,
   AdminApproveUserPostResponse,
   AdminCurrentEventGetRequest,
@@ -11,6 +16,8 @@ import {
   AdminEventListCountGetResponse,
   AdminEventListGetRequest,
   AdminEventListGetResponse,
+  AdminEventResultGetRequest,
+  AdminEventResultGetResponse,
   AdminEventTotalCountGetRequest,
   AdminEventTotalCountGetResponse,
   AdminEventTypeCountGetRequest,
@@ -400,6 +407,46 @@ class AdminApi {
         `admin/search/partner-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
       )
       .then((res) => res.data.items);
+  };
+
+  adminApprovalEventPostRequest = async ({
+    approval,
+    eventId,
+  }: AdminApprovalEventPostRequest) => {
+    return await axiosInstanceWithToken
+      .post(`/admin/approval-event/${eventId}`, { approval })
+      .then((res) => res.data);
+  };
+
+  adminEventResultGet = async ({ eventId }: AdminEventResultGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminEventResultGetResponse>(`/admin/event-result/${eventId}`)
+      .then((res) => res.data);
+  };
+
+  adminApplyListGet = async ({
+    eventId,
+    limit,
+    start,
+    team,
+    time,
+    typeName,
+  }: AdminApplyListGetRequest) => {
+    return await axiosInstanceWithToken<AdminApplyListGetResponse>(
+      `/admin/apply-list/${eventId}?limit=${limit}&start=${start}${
+        typeof team === 'number' ? `team=${team}` : ''
+      }${typeof typeName === 'number' ? `type_name=${typeName}` : ''}${
+        typeof time === 'number' ? `time=${time}` : ''
+      }`,
+    ).then((res) => res.data.items);
+  };
+
+  adminApplyListCountGet = async ({
+    eventId,
+  }: AdminApplyListCountGetRequest) => {
+    return await axiosInstanceWithToken
+      .get<AdminApplyListCountGetResponse>(`/admin/apply-list/count/${eventId}`)
+      .then((res) => res.data.count);
   };
 }
 
