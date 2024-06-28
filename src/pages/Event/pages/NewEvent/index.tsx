@@ -41,7 +41,7 @@ const NewEvent: React.FC = () => {
         content: '',
         minNumG: 0,
         minNumV: 0,
-        startTime: '00:00',
+        startTime: '09:00',
         eventType: EventType.Competition,
         name: '',
         place: '',
