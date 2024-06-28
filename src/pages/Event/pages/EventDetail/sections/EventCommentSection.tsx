@@ -154,7 +154,7 @@ const EventCommentSection: React.FC<EventCommentSectionProps> = ({
           />
         ))
       ) : null}
-      {commentCount && (
+      {commentCount && commentCount > 1 ? (
         <Stack direction="row" justifyContent="center">
           <Pagination
             size="small"
@@ -163,7 +163,7 @@ const EventCommentSection: React.FC<EventCommentSectionProps> = ({
             onChange={(_, value) => setPage(value)}
           />
         </Stack>
-      )}
+      ) : null}
     </Stack>
   );
 };

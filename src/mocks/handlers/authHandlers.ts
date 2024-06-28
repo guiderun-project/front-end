@@ -35,7 +35,7 @@ export const authHandlers: HttpHandler[] = [
   http.post<NoneType, NoneType, KakaoAuthPostResponse>(
     baseURL + '/oauth/login/kakao',
     () => {
-      return HttpResponse.json({ accessToken: '123', isExist: true });
+      return HttpResponse.json({ accessToken: '123', isExist: false });
     },
   ),
 

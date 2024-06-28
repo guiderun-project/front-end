@@ -37,6 +37,7 @@ const useUserLike = ({ userId }: UseLikeParams) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['userProfileGet', userId] });
+      queryClient.invalidateQueries({ queryKey: ['partnerListGet'] });
     },
   });
 

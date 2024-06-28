@@ -43,7 +43,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
   isOwner,
 }) => {
   const [selectedTab, setSelectedTab] = React.useState<EventTabEnum>(
-    EventTabEnum.Matching,
+    EventTabEnum.Attend,
   );
   /**
    *

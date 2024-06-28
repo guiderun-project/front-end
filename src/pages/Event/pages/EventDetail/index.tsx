@@ -21,6 +21,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EventCommentSection from './sections/EventCommentSection';
 import EventDetailContentSection from './sections/EventDetailContentSection';
 import EventDetailStatusSection from './sections/EventDetailStatusSection';
+import useKakaoShare from '../../hooks/useKakaoShare';
 
 import eventApi from '@/apis/requests/event';
 import {
@@ -56,6 +57,8 @@ const EventDetail: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { shareLink } = useKakaoShare();
+
   const queryClient = useQueryClient();
 
   const {
@@ -89,6 +92,21 @@ const EventDetail: React.FC = () => {
     },
   });
 
+  const { mutate: cancelSubmit } = useMutation({
+    mutationKey: ['eventApplyDelete', eventId],
+    mutationFn: () =>
+      eventApi.eventApplyDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('참가 신청 취소되었습니다. ');
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet'] });
+    },
+  });
+
   const isOwner = eventData?.organizerId === userId;
   const section = searchParams.get('section') ?? EventPageSectionEnum.Detail;
 
@@ -96,11 +114,8 @@ const EventDetail: React.FC = () => {
    *
    */
   const handleShare = () => {
-    if (typeof window.navigator.share !== 'undefined') {
-      window.navigator.share({
-        title: 'Guide run Project',
-        text: `${eventData?.name ?? ''} 이벤트에 참여하세요!`,
-      });
+    if (eventData) {
+      shareLink(eventData.name, eventData.organizer);
     }
   };
   /**
@@ -183,7 +198,7 @@ const EventDetail: React.FC = () => {
           justifyContent="space-between"
         >
           <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
-            신청 현황
+            모집 현황
           </Typography>
           <Chip
             component="button"
@@ -229,7 +244,7 @@ const EventDetail: React.FC = () => {
           label={
             <Stack direction="row" alignItems="center" gap="0.25rem">
               <Typography fontSize="0.9375rem" fontWeight={600}>
-                신청 현황
+                모집 현황
               </Typography>
               <ChevronRightIcon fontSize="small" aria-hidden />
             </Stack>
@@ -270,6 +285,7 @@ const EventDetail: React.FC = () => {
             <EventDetailContentSection
               eventId={Number(eventId)}
               eventData={eventData}
+              isOwner={isOwner}
             />
           );
       }
@@ -288,7 +304,11 @@ const EventDetail: React.FC = () => {
               fullWidth
               size="large"
               variant="contained"
-              onClick={() => closeEvent()}
+              onClick={() => {
+                if (window.confirm('모집 마감 하시겠습니까?')) {
+                  closeEvent();
+                }
+              }}
             >
               지금 모집 마감
             </Button>
@@ -296,6 +316,22 @@ const EventDetail: React.FC = () => {
         }
       } else {
         if (eventData.recruitStatus === RecruitStatus.Open) {
+          if (eventData.submit) {
+            return (
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                onClick={() => {
+                  if (window.confirm('이벤트 참여를 취소하시겠습니까??')) {
+                    cancelSubmit();
+                  }
+                }}
+              >
+                이벤트 참여 취소
+              </Button>
+            );
+          }
           return (
             <Button
               fullWidth

@@ -157,9 +157,9 @@ const Main: React.FC = () => {
           >
             <CircularProgress size={24} aria-label="내 파트너 불러오는 중" />
           </Stack>
-        ) : (
+        ) : partnerListData && partnerListData.length ? (
           <StyledPartnerBox>
-            {partnerListData?.map((partner) => (
+            {partnerListData.map((partner) => (
               <PartnerBox key={partner.userId} partnerData={partner} />
             ))}
             {partnerCount && partnerCount > 2 ? (
@@ -174,6 +174,10 @@ const Main: React.FC = () => {
               </StyledPartnerListButton>
             ) : null}
           </StyledPartnerBox>
+        ) : (
+          <Stack alignItems="center" padding="1rem">
+            <Typography>파트너가 존재하지 않습니다</Typography>
+          </Stack>
         )}
       </Stack>
     );

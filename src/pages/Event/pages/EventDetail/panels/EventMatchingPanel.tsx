@@ -205,7 +205,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
         <StyledUserBox>
           {isMatchedLoading || !matchedList ? (
             <CircularProgress />
-          ) : (
+          ) : matchedList.vi.length ? (
             matchedList.vi.map((user, idx) => (
               <>
                 <MatchingBox
@@ -222,6 +222,10 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
                 )}
               </>
             ))
+          ) : (
+            <Typography fontWeight={700}>
+              매칭이 완료된 참가자가 없습니다
+            </Typography>
           )}
         </StyledUserBox>
       </Stack>
@@ -242,7 +246,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
         <StyledUserBox>
           {isNotMatchedLoading || !notMatchedList ? (
             <CircularProgress />
-          ) : (
+          ) : notMatchedList.notMatch.length ? (
             <>
               <StyledUserListBox>
                 {notMatchedList.notMatch
@@ -286,6 +290,10 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
                   ))}
               </StyledUserListBox>
             </>
+          ) : (
+            <Typography fontWeight={700}>
+              매칭되지 않은 참가자가 없습니다
+            </Typography>
           )}
         </StyledUserBox>
       </Stack>

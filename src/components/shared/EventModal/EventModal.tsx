@@ -245,9 +245,10 @@ const EventModal: React.FC<EventModalProps> = ({
             <Button
               fullWidth
               component={Link}
-              to={`${BROWSER_PATH.EVENT.ALL}?type=close`}
+              to={`${BROWSER_PATH.EVENT.MAIN}/${eventId}`}
               variant="chip"
               size="large"
+              onClick={() => onModalClose()}
             >
               지난 이벤트 둘러보기
             </Button>

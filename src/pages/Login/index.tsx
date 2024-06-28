@@ -21,7 +21,7 @@ import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
 import { LoginPostRequest } from '@/apis/types/auth';
 import { ErrorType } from '@/apis/types/error';
-import { BROWSER_PATH } from '@/constants/path';
+import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { setUserInfo } from '@/store/reducer/user';
 //
@@ -29,6 +29,7 @@ import { setUserInfo } from '@/store/reducer/user';
 //
 
 const StyledSubmitButton = styled.button`
+  color: #000;
   max-width: 18.4375rem;
   width: 100%;
   height: 3.25rem;
@@ -86,12 +87,14 @@ const Login: React.FC = () => {
     mutationKey: ['loginPost'],
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
     onSuccess: async (accessToken) => {
+      const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
+
       dispatch(setAccessToken(accessToken));
       infoApi
         .userInfoGet()
         .then((res) => {
           dispatch(setUserInfo(res));
-          navigate(BROWSER_PATH.MAIN);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
         })
         .catch((err) => {
           if (isAxiosError<ErrorType>(err))
@@ -210,7 +213,6 @@ const Login: React.FC = () => {
               justifyContent="center"
               color="#111"
             >
-              {/* TODO: 아이디 비밀번호 찾기 페이지 구현 */}
               <Typography
                 fontSize="0.875rem"
                 fontWeight={500}

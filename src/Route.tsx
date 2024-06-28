@@ -16,8 +16,10 @@ import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
 import Admin from './pages/Admin';
-import AdminEvent from './pages/Admin/AdminEvent';
-import AdminUser from './pages/Admin/AdminUser';
+import AdminEvent from './pages/Admin/pages/AdminEvent';
+import AdminMain from './pages/Admin/pages/AdminMain';
+import AdminUser from './pages/Admin/pages/AdminUser';
+import AdminWithdraw from './pages/Admin/pages/AdminWithdraw';
 import AllEvent from './pages/Event/pages/AllEvent';
 import EditEvent from './pages/Event/pages/EditEvent';
 import EditEventApply from './pages/Event/pages/EditEventApply';
@@ -118,8 +120,16 @@ const router = createBrowserRouter([
             element: <Admin />,
             children: [
               {
+                path: BROWSER_PATH.ADMIN.MAIN,
+                element: <AdminMain />,
+              },
+              {
                 path: BROWSER_PATH.ADMIN.USER,
                 element: <AdminUser />,
+              },
+              {
+                path: BROWSER_PATH.ADMIN.WITHDRAW,
+                element: <AdminWithdraw />,
               },
               {
                 path: BROWSER_PATH.ADMIN.EVENT,

@@ -231,7 +231,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
             <Typography fontSize="0.875rem" fontWeight={700} color="#666">
               출첵 완료
             </Typography>
-            {!applyStatus.notAttend.length ? (
+            {!applyStatus.attend.length ? (
               <Typography fontSize="0.875rem" fontWeight={700} color="#666">
                 완료 인원 없음
               </Typography>
