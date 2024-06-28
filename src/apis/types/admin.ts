@@ -136,25 +136,32 @@ export type AdminApproveUserPostResponse = {
   role: RoleEnum;
 };
 
+export type EventFilterType = {
+  time?: 1 | 0;
+  name?: 1 | 0;
+  organizer?: 1 | 0;
+  approval?: 1 | 0;
+};
+
 export type AdminEventListGetRequest = {
   limit: number;
   start: number;
-};
+} & EventFilterType;
 
 export type EventListItemType = {
   eventId: number;
-  title: string;
-  smallDate: string; // 좋은 이름 추천 받아요 [1/7]
-  date: string; //24.02.21 PM 2:15:09
+  name: string;
+  smallDate: string; // 이벤트 시작일 [1/7]
+  startTime: string; //이벤트 시작 시간
   organizer: string; //생성자
-  pace: RunningGroup;
+  pace: RunningGroup; // 생성자 pace A ,B,C,D,E로 구분
   recuitStatus: RecruitStatus;
   approval: boolean; //이벤트 승인 여부
-  participation: number; //50
-  viParticipation: number; //20
-  guideParticipation: number; //30
-  update_date: string; // 24.02.21
-  update_time: string; // 2:15:09
+  minApply: number; //모집 희망 인원
+  minNumV: number; //vi 희망 인원
+  minNumG: number; //guide 희망 인원
+  update_date: string;
+  update_time: string;
 };
 
 export type AdminEventListGetResponse = {
@@ -162,6 +169,24 @@ export type AdminEventListGetResponse = {
 };
 
 export type AdminEventListCountGetResponse = {
+  count: number;
+};
+
+export type AdminSearchEventGetRequest = {
+  search: string;
+  limit: number;
+  start: number;
+} & EventFilterType;
+
+export type AdminSearchEventGetResponse = {
+  items: EventListItemType[];
+};
+
+export type AdminSearchEventCountGetRequest = {
+  search: string;
+};
+
+export type AdminSearchEventCountGetResponse = {
   count: number;
 };
 
