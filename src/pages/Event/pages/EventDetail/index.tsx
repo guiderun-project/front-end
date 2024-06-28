@@ -198,7 +198,7 @@ const EventDetail: React.FC = () => {
           justifyContent="space-between"
         >
           <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
-            신청 현황
+            모집 현황
           </Typography>
           <Chip
             component="button"
@@ -244,7 +244,7 @@ const EventDetail: React.FC = () => {
           label={
             <Stack direction="row" alignItems="center" gap="0.25rem">
               <Typography fontSize="0.9375rem" fontWeight={600}>
-                신청 현황
+                모집 현황
               </Typography>
               <ChevronRightIcon fontSize="small" aria-hidden />
             </Stack>
