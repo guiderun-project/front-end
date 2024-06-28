@@ -665,7 +665,7 @@ export const adminHandlers: HttpHandler[] = [
   http.get<NoneType, NoneType, AdminEventListCountGetResponse>(
     baseURL + '/admin/event-list/count',
     () => {
-      return HttpResponse.json({ count: 30 });
+      return HttpResponse.json({ count: 50 });
     },
   ),
 
