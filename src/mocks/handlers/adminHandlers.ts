@@ -4,12 +4,15 @@ import { NoneType } from '../handlers';
 
 import { baseURL } from '@/apis/axios';
 import {
+  AdminApplyListCountGetResponse,
+  AdminApplyListGetResponse,
   AdminApproveUserPostResponse,
   AdminCurrentEventGetResponse,
   AdminEventHistoryCountGetResponse,
   AdminEventHistoryGetResponse,
   AdminEventListCountGetResponse,
   AdminEventListGetResponse,
+  AdminEventResultGetResponse,
   AdminEventTotalCountGetResponse,
   AdminEventTypeCountGetResponse,
   AdminGuideApplyGetRequest,
@@ -18,6 +21,8 @@ import {
   AdminPartnerHistoryCountGetResponse,
   AdminPartnerHistoryGetResponse,
   AdminPartnerTypeCountGetResponse,
+  AdminSearchEventCountGetResponse,
+  AdminSearchEventGetResponse,
   AdminSearchEventHistoryCountGetResponse,
   AdminSearchEventHistoryGetResponse,
   AdminSearchPartnerHistoryCountGetResponse,
@@ -38,6 +43,7 @@ import {
 } from '@/apis/types/admin';
 import {
   DisabilityEnum,
+  EventStatus,
   EventType,
   GenderEnum,
   RecruitStatus,
@@ -215,78 +221,33 @@ const USER_LIST_DATA: UserListItemType[] = [
 const EVENT_LIST_DATA: EventListItemType[] = [
   {
     approval: true,
-    date: '00-00-00',
-    eventId: 1,
-    guideParticipation: 20,
-    organizer: '조재석',
-    pace: RunningGroup.A,
-    participation: 40,
-    recuitStatus: RecruitStatus.Close,
-    smallDate: '2/2',
-    title: '테스트테스트',
-    update_date: 'ㅇㅇㅇ',
-    update_time: 'ㅇㅇㅇ',
-    viParticipation: 4,
+    eventId: 123,
+    minApply: 34,
+    minNumG: 344,
+    minNumV: 34,
+    name: '테스트 이벤트',
+    organizer: '홍길동',
+    pace: RunningGroup.C,
+    recuitStatus: RecruitStatus.Open,
+    smallDate: '[1/2]',
+    startTime: '00:00',
+    update_date: '00-00',
+    update_time: '00-00',
   },
   {
-    approval: true,
-    date: '00-00-00',
-    eventId: 2,
-    guideParticipation: 20,
-    organizer: '조재석',
-    pace: RunningGroup.A,
-    participation: 40,
-    recuitStatus: RecruitStatus.Close,
-    smallDate: '2/2',
-    title: '테스트테스트',
-    update_date: 'ㅇㅇㅇ',
-    update_time: 'ㅇㅇㅇ',
-    viParticipation: 4,
-  },
-  {
-    approval: true,
-    date: '00-00-00',
-    eventId: 3,
-    guideParticipation: 20,
-    organizer: '조재석',
-    pace: RunningGroup.A,
-    participation: 40,
-    recuitStatus: RecruitStatus.Close,
-    smallDate: '2/2',
-    title: '테스트테스트',
-    update_date: 'ㅇㅇㅇ',
-    update_time: 'ㅇㅇㅇ',
-    viParticipation: 4,
-  },
-  {
-    approval: true,
-    date: '00-00-00',
-    eventId: 4,
-    guideParticipation: 20,
-    organizer: '조재석',
-    pace: RunningGroup.A,
-    participation: 40,
-    recuitStatus: RecruitStatus.Close,
-    smallDate: '2/2',
-    title: '테스트테스트',
-    update_date: 'ㅇㅇㅇ',
-    update_time: 'ㅇㅇㅇ',
-    viParticipation: 4,
-  },
-  {
-    approval: true,
-    date: '00-00-00',
-    eventId: 5,
-    guideParticipation: 20,
-    organizer: '조재석',
-    pace: RunningGroup.A,
-    participation: 40,
-    recuitStatus: RecruitStatus.Close,
-    smallDate: '2/2',
-    title: '테스트테스트',
-    update_date: 'ㅇㅇㅇ',
-    update_time: 'ㅇㅇㅇ',
-    viParticipation: 4,
+    approval: false,
+    eventId: 123,
+    minApply: 34,
+    minNumG: 344,
+    minNumV: 34,
+    name: '테스트 이벤트',
+    organizer: '홍길동',
+    pace: RunningGroup.C,
+    recuitStatus: RecruitStatus.Open,
+    smallDate: '[1/2]',
+    startTime: '00:00',
+    update_date: '00-00',
+    update_time: '00-00',
   },
 ];
 
@@ -704,7 +665,23 @@ export const adminHandlers: HttpHandler[] = [
   http.get<NoneType, NoneType, AdminEventListCountGetResponse>(
     baseURL + '/admin/event-list/count',
     () => {
-      return HttpResponse.json({ count: 30 });
+      return HttpResponse.json({ count: 50 });
+    },
+  ),
+
+  // adminSearchEventGet
+  http.get<NoneType, NoneType, AdminSearchEventGetResponse>(
+    baseURL + '/admin/search/event',
+    () => {
+      return HttpResponse.json({ items: EVENT_LIST_DATA });
+    },
+  ),
+
+  // adminSearchEventCountGet
+  http.get<NoneType, NoneType, AdminSearchEventCountGetResponse>(
+    baseURL + '/admin/search/event/count',
+    () => {
+      return HttpResponse.json({ count: 27 });
     },
   ),
 
@@ -906,6 +883,103 @@ export const adminHandlers: HttpHandler[] = [
     baseURL + '/admin/search/withdrawal-list',
     () => {
       return HttpResponse.json({ items: WITHDRAWAL_LIST });
+    },
+  ),
+
+  // adminApprovalEventPostRequest
+  http.post<{ eventId: string }, { approval: boolean }>(
+    baseURL + '/admin/approval-event/:eventId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
+  // adminEventResultGet
+  http.get<{ eventId: string }, NoneType, AdminEventResultGetResponse>(
+    baseURL + '/admin/event-result/:eventId',
+    () => {
+      return HttpResponse.json({
+        absent: 10,
+        approval: true,
+        date: '00-00-00',
+        guideAbsent: 5,
+        guideCnt: 20,
+        name: '테스트 이벤트',
+        organizer: '홍길동',
+        pace: RunningGroup.C,
+        recuitStatus: RecruitStatus.End,
+        status: EventStatus.End,
+        total: 30,
+        type: EventType.Competition,
+        viAbsent: 5,
+        viCnt: 40,
+      });
+    },
+  ),
+  // adminApplyListGet
+  http.get<{ eventId: string }, NoneType, AdminApplyListGetResponse>(
+    baseURL + '/admin/apply-list/:eventId',
+    () => {
+      return HttpResponse.json({
+        items: [
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.C,
+            type: DisabilityEnum.GUIDE,
+            userId: '12234323',
+          },
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.C,
+            type: DisabilityEnum.GUIDE,
+            userId: '122342343',
+          },
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.A,
+            type: DisabilityEnum.VI,
+            userId: '123423',
+          },
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.D,
+            type: DisabilityEnum.VI,
+            userId: '122343',
+          },
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.C,
+            type: DisabilityEnum.GUIDE,
+            userId: '124323',
+          },
+          {
+            apply_time: '0000-00-00',
+            name: '홍길동',
+            role: RoleEnum.User,
+            team: RunningGroup.C,
+            type: DisabilityEnum.GUIDE,
+            userId: '1233',
+          },
+        ],
+      });
+    },
+  ),
+
+  // adminApplyListCountGet
+  http.get<{ eventId: string }, NoneType, AdminApplyListCountGetResponse>(
+    baseURL + '/admin/apply-list/count/:eventId',
+    () => {
+      return HttpResponse.json({ count: 50 });
     },
   ),
 ];
