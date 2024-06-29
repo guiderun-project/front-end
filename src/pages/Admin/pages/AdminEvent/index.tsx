@@ -244,7 +244,7 @@ const AdminEvent: React.FC = () => {
   const startSearchIndex = (searchPage - 1) * MAX_EVENT_LENGTH;
 
   const { data: searchList, isLoading: isSearchListGetLoading } = useQuery({
-    queryKey: ['adminSearchEventGet', startSearchIndex],
+    queryKey: ['adminSearchEventGet', startSearchIndex, filter],
     queryFn: () =>
       adminApi.adminSearchEventGet({
         search,
