@@ -223,10 +223,10 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminEventListGetResponse>(
         `/admin/event-list?limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `approval=${approval}` : ''
-        }${typeof name === 'number' ? `name=${name}` : ''}${
-          typeof organizer === 'number' ? `organizer=${organizer}` : ''
-        }${typeof time === 'number' ? `time=${time}` : ''}`,
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof name === 'number' ? `&name=${name}` : ''}${
+          typeof organizer === 'number' ? `&organizer=${organizer}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}`,
       )
       .then((res) => res.data.items);
   };
@@ -249,10 +249,10 @@ class AdminApi {
     return await axiosInstanceWithToken
       .get<AdminSearchEventGetResponse>(
         `/admin/search/event?text=${search}&limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `approval=${approval}` : ''
-        }${typeof name === 'number' ? `name=${name}` : ''}${
-          typeof organizer === 'number' ? `organizer=${organizer}` : ''
-        }${typeof time === 'number' ? `time=${time}` : ''}`,
+          typeof approval === 'number' ? `&approval=${approval}` : ''
+        }${typeof name === 'number' ? `&name=${name}` : ''}${
+          typeof organizer === 'number' ? `&organizer=${organizer}` : ''
+        }${typeof time === 'number' ? `&time=${time}` : ''}`,
       )
       .then((res) => res.data.items);
   };
