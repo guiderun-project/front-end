@@ -225,7 +225,7 @@ const AdminEvent: React.FC = () => {
   const startIndex = (page - 1) * MAX_EVENT_LENGTH;
 
   const { data: eventList, isLoading: isEventListGetLoading } = useQuery({
-    queryKey: ['adminEventListGet', startIndex],
+    queryKey: ['adminEventListGet', startIndex, filter],
     queryFn: () =>
       adminApi.adminEventListGet({
         limit: MAX_EVENT_LENGTH,

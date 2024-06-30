@@ -88,11 +88,11 @@ const Login: React.FC = () => {
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
     onSuccess: async (accessToken) => {
       const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
-
       dispatch(setAccessToken(accessToken));
       infoApi
         .userInfoGet()
         .then((res) => {
+          window.localStorage.removeItem(PREV_PATH_KEY);
           dispatch(setUserInfo(res));
           navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
         })

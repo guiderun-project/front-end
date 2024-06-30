@@ -29,8 +29,8 @@ const Oauth: React.FC = () => {
       if (data.isExist) {
         infoApi.userInfoGet().then((res) => {
           dispatch(updateInfo(res));
-
-          navigate(prevPath ? prevPath : '/');
+          window.localStorage.removeItem(PREV_PATH_KEY);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
         });
       } else {
         navigate(BROWSER_PATH.SIGNUP);

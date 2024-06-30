@@ -81,7 +81,6 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
     dDay,
     recruitStatus,
   },
-  mode = 'default',
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -162,13 +161,11 @@ const EventLinkBox: React.FC<EventLinkBoxProps> = ({
           <ArrowRightIcon aria-hidden fontSize="small" />
         </Stack>
       </StyledContainer>
-      {mode === 'default' ? (
-        <EventModal
-          eventId={eventId}
-          isOpen={open}
-          onModalClose={() => setOpen(false)}
-        />
-      ) : null}
+      <EventModal
+        eventId={eventId}
+        isOpen={open}
+        onModalClose={() => setOpen(false)}
+      />
     </>
   );
 };

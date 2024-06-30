@@ -81,7 +81,7 @@ class AdminApi {
         }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
           typeof team === 'number' ? `&name_team=${team}` : ''
         }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&approval=${type}` : ''
+          typeof type === 'number' ? `&type=${type}` : ''
         }`,
       )
       .then((res) => res.data.items);
@@ -434,9 +434,9 @@ class AdminApi {
   }: AdminApplyListGetRequest) => {
     return await axiosInstanceWithToken<AdminApplyListGetResponse>(
       `/admin/apply-list/${eventId}?limit=${limit}&start=${start}${
-        typeof team === 'number' ? `team=${team}` : ''
-      }${typeof typeName === 'number' ? `type_name=${typeName}` : ''}${
-        typeof time === 'number' ? `time=${time}` : ''
+        typeof team === 'number' ? `&team=${team}` : ''
+      }${typeof typeName === 'number' ? `&type_name=${typeName}` : ''}${
+        typeof time === 'number' ? `&time=${time}` : ''
       }`,
     ).then((res) => res.data.items);
   };
