@@ -81,7 +81,7 @@ class AdminApi {
         }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
           typeof team === 'number' ? `&name_team=${team}` : ''
         }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&approval=${type}` : ''
+          typeof type === 'number' ? `&type=${type}` : ''
         }`,
       )
       .then((res) => res.data.items);
