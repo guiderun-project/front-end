@@ -1,5 +1,9 @@
 import { Button, Stack, Typography } from '@mui/material';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useQueryClient,
+  useSuspenseQuery,
+  useMutation,
+} from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -14,6 +18,7 @@ import {
   EventChip,
   EventStatus,
   GroupChip,
+  TextLink,
   TitleHeader,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
@@ -23,6 +28,7 @@ import { RunningGroup } from '@/types/group';
 const EventApplyDetail: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const { userId } = useSelector((state: RootState) => state.user);
+  const queryClient = useQueryClient();
 
   const { data: eventData } = useSuspenseQuery({
     queryKey: ['eventGet', eventId],
@@ -33,6 +39,21 @@ const EventApplyDetail: React.FC = () => {
     queryKey: ['eventApplyGet', userId, eventId],
     queryFn: () =>
       eventApi.eventApplyGet({ eventId: Number(eventId) ?? 0, userId }),
+  });
+
+  const { mutate: cancelSubmit } = useMutation({
+    mutationKey: ['eventApplyDelete', eventId],
+    mutationFn: () =>
+      eventApi.eventApplyDelete({ eventId: Number(eventId) ?? 0 }),
+    onSuccess: () => {
+      alert('참가 신청 취소되었습니다. ');
+    },
+    onError: () => {
+      alert('에러가 발생했습니다.');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventGet'] });
+    },
   });
 
   const getTeam = () => {
@@ -138,6 +159,15 @@ const EventApplyDetail: React.FC = () => {
         >
           제출한 내용 수정하기
         </Button>
+        <TextLink
+          type="button"
+          label="신청 취소하기"
+          onClick={() => {
+            if (window.confirm('이벤트 참여를 취소하시겠습니까??')) {
+              cancelSubmit();
+            }
+          }}
+        />
       </Stack>
     );
   };

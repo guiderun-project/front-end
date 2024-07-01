@@ -237,7 +237,7 @@ const EventModal: React.FC<EventModalProps> = ({
               variant="chip"
               size="large"
             >
-              이벤트 신청하러 가기
+              이벤트 상세페이지 이동
             </Button>
           );
         default:
@@ -250,7 +250,7 @@ const EventModal: React.FC<EventModalProps> = ({
               size="large"
               onClick={() => onModalClose()}
             >
-              지난 이벤트 둘러보기
+              이벤트 참여결과 보러가기
             </Button>
           );
       }
