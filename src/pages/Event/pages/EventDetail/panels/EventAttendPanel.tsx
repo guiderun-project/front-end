@@ -9,11 +9,14 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
 import { ApplyUserChip, DisabilityChip } from '@/components/shared';
+import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
+import getAuthority from '@/utils/authority';
 
 //
 //
@@ -65,6 +68,7 @@ export const StyledUserListBox = styled.div`
 const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
   const [attendMode, setAttendMode] = React.useState(false);
   const eventId = Number(useParams<{ eventId: string }>().eventId);
+  const { role } = useSelector((state: RootState) => state.user);
   const queryClient = useQueryClient();
 
   const { data: applyCount, isLoading: isApplyCountLoading } = useQuery({
@@ -138,7 +142,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
    *
    */
   const renderMode = () => {
-    if (isOwner) {
+    if (getAuthority.isEditor(role) || isOwner) {
       return (
         <Stack
           direction="row"

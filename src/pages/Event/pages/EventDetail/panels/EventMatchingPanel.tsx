@@ -9,12 +9,15 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
 import { ApplyUserChip } from '@/components/shared';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
+import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
+import getAuthority from '@/utils/authority';
 
 //
 //
@@ -70,6 +73,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   const [selectedGuide, setSelectedGuide] =
     React.useState<SelectedUserType>(INITIAL_SELECTED);
 
+  const { role } = useSelector((state: RootState) => state.user);
   const eventId = Number(useParams<{ eventId: string }>().eventId);
 
   const queryClient = useQueryClient();
@@ -152,7 +156,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
    *
    */
   const renderMode = () => {
-    if (isOwner) {
+    if (getAuthority.isEditor(role) || isOwner) {
       return (
         <Stack
           direction="row"
