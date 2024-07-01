@@ -22,6 +22,7 @@ import { LinkButton, PartnerBox } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { PartnerSort } from '@/types/sort';
+import getAuthority from '@/utils/authority';
 
 //
 //
@@ -58,7 +59,7 @@ const StyledPartnerListButton = styled(Link)`
 //
 
 const Main: React.FC = () => {
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const { userId, role } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
 
   const {
@@ -87,17 +88,19 @@ const Main: React.FC = () => {
         <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           이벤트
         </Typography>
-        <Stack direction="row" justifyContent="center">
-          <Button
-            fullWidth
-            variant="chip"
-            size="large"
-            onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
-          >
-            이벤트 만들기
-            <ChevronRightIcon />
-          </Button>
-        </Stack>
+        {getAuthority.isEditor(role) && (
+          <Stack direction="row" justifyContent="center">
+            <Button
+              fullWidth
+              variant="chip"
+              size="large"
+              onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
+            >
+              이벤트 만들기
+              <ChevronRightIcon />
+            </Button>
+          </Stack>
+        )}
         <Stack
           direction="row"
           alignItems="center"

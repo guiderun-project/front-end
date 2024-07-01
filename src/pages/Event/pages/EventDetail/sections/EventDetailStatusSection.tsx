@@ -1,12 +1,15 @@
 import React from 'react';
 
 import { Stack, Tab, Tabs, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import EventApplyPanel from '../panels/EventApplyPanel';
 import EventAttendPanel from '../panels/EventAttendPanel';
 import EventMatchingPanel from '../panels/EventMatchingPanel';
 
 import { EventGetResponse } from '@/apis/types/event';
+import { RootState } from '@/store/index';
+import getAuthority from '@/utils/authority';
 
 //
 //
@@ -45,6 +48,8 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
   const [selectedTab, setSelectedTab] = React.useState<EventTabEnum>(
     EventTabEnum.Attend,
   );
+
+  const { role } = useSelector((state: RootState) => state.user);
   /**
    *
    */
@@ -73,7 +78,7 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
           aria-selected={EventTabEnum.Matching === selectedTab}
           aria-controls="tabpanel-matching"
         />
-        {isOwner ? (
+        {isOwner || getAuthority.isEditor(role) ? (
           <Tab
             role="tab"
             id="tab-apply"
