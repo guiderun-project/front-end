@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
+import { Typography } from '@mui/material';
 
 import { PaceGroupList } from '@/components/shared';
-import { Typography } from '@mui/material';
 
 //
 //
