@@ -28,6 +28,7 @@ import {
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { updateInfo } from '@/store/reducer/user';
+import getAuthority from '@/utils/authority';
 
 //
 //
@@ -254,17 +255,19 @@ const Mypage: React.FC = () => {
             ))}
           </Stack>
         )}
-        <Stack direction="row" justifyContent="center">
-          <Button
-            fullWidth
-            variant="chip"
-            size="large"
-            onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
-          >
-            이벤트 만들기
-            <ChevronRightIcon />
-          </Button>
-        </Stack>
+        {getAuthority.isEditor(userData.role) && (
+          <Stack direction="row" justifyContent="center">
+            <Button
+              fullWidth
+              variant="chip"
+              size="large"
+              onClick={() => navigate(BROWSER_PATH.EVENT.NEW)}
+            >
+              이벤트 만들기
+              <ChevronRightIcon />
+            </Button>
+          </Stack>
+        )}
       </Stack>
     );
   };
