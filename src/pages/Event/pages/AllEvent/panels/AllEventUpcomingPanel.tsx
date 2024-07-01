@@ -142,13 +142,13 @@ const AllEventUpcomingPanel: React.FC = () => {
               fontWeight: 700,
             }}
           >
-            모집 현황
+            모집 구분
           </InputLabel>
           <Select
             size="small"
             labelId="event-status-label"
             value={selectedEventStatus}
-            label="모집 현황"
+            label="모집 구분"
             onChange={(e) =>
               setSelectedEventStatus(e.target.value as RecruitStatus)
             }
