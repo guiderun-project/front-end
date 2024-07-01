@@ -13,6 +13,12 @@ import Route from './Route';
 import { store } from './store';
 import './index.css';
 import { theme } from './theme/theme';
+
+declare global {
+  interface Window {
+    Kakao: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  }
+}
 declare module '@tanstack/react-query' {
   interface Register {
     defaultError: AxiosError<ErrorType>;
@@ -25,33 +31,33 @@ if (!rootNode) {
   throw new Error('Failed to find the root element');
 }
 
-// async function enableMocking() {
-//   if (process.env.NODE_ENV !== 'development') {
-//     return;
-//   }
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
 
-//   const { worker } = await import('./mocks/browser');
+  const { worker } = await import('./mocks/browser');
 
-//   // `worker.start()` returns a Promise that resolves
-//   // once the Service Worker is up and ready to intercept requests.
-//   return worker.start();
-// }
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start();
+}
 
 const queryClient = new QueryClient();
 
-// enableMocking().then(() => {
-ReactDOM.createRoot(rootNode).render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ThemeProvider theme={theme}>
-            <Route />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </Provider>
-    </HelmetProvider>
-  </React.StrictMode>,
-);
-// });
+enableMocking().then(() => {
+  ReactDOM.createRoot(rootNode).render(
+    <React.StrictMode>
+      <HelmetProvider>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <ThemeProvider theme={theme}>
+              <Route />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </Provider>
+      </HelmetProvider>
+    </React.StrictMode>,
+  );
+});

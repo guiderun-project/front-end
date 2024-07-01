@@ -11,14 +11,14 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 
-import { permissionGetResponse } from '@/apis/types/info';
+import { PermissionGetResponse } from '@/apis/types/info';
 
 //
 //
 //
 
 interface TermsDetailProps {
-  data: permissionGetResponse;
+  data: PermissionGetResponse;
 }
 
 //

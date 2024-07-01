@@ -1,6 +1,6 @@
 import React from 'react';
 
-import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -8,7 +8,6 @@ import Loading from '../Loading';
 
 import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
-import { ErrorType } from '@/apis/types/error';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -21,6 +20,24 @@ const Oauth: React.FC = () => {
 
   const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
 
+  const { mutate } = useMutation({
+    mutationKey: ['kakaoAuthPost'],
+    mutationFn: (code: string) => authApi.kakaoAuthPost({ code }),
+    throwOnError: true,
+    onSuccess: (data) => {
+      dispatch(setAccessToken(data.accessToken));
+      if (data.isExist) {
+        infoApi.userInfoGet().then((res) => {
+          dispatch(updateInfo(res));
+          window.localStorage.removeItem(PREV_PATH_KEY);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
+        });
+      } else {
+        navigate(BROWSER_PATH.SIGNUP);
+      }
+    },
+  });
+
   //
   //
   //
@@ -29,24 +46,7 @@ const Oauth: React.FC = () => {
       navigate(BROWSER_PATH.INTRO);
       return;
     }
-
-    authApi
-      .kakaoAuthPost({ code })
-      .then((res) => {
-        dispatch(setAccessToken(res.accessToken));
-        if (res.isExist) {
-          infoApi.userInfoGet().then((res) => {
-            dispatch(updateInfo(res));
-
-            navigate(prevPath ? prevPath : '/');
-          });
-          return;
-        }
-        navigate(BROWSER_PATH.SIGNUP);
-      })
-      .catch((err) => {
-        if (axios.isAxiosError<ErrorType>(err)) throw new Error(err.message);
-      });
+    mutate(code);
   }, [code]);
 
   //

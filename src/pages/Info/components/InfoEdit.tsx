@@ -24,7 +24,7 @@ import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
-import { personalInfoPatchRequest } from '@/apis/types/info';
+import { PersonalInfoPatchRequest } from '@/apis/types/info';
 import { GenderEnum } from '@/types/group';
 
 //
@@ -32,7 +32,7 @@ import { GenderEnum } from '@/types/group';
 //
 
 interface InfoEditProps {
-  defaultValues: personalInfoPatchRequest;
+  defaultValues: PersonalInfoPatchRequest;
 }
 
 //
@@ -76,7 +76,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
 }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
-  const { handleSubmit, control, setFocus } = useForm<personalInfoPatchRequest>(
+  const { handleSubmit, control, setFocus } = useForm<PersonalInfoPatchRequest>(
     {
       defaultValues: {
         age,
@@ -95,7 +95,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
   /**
    *
    */
-  const onSubmit = async (data: personalInfoPatchRequest) => {
+  const onSubmit = async (data: PersonalInfoPatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
       try {
         await infoApi.personalInfoPatch(data);

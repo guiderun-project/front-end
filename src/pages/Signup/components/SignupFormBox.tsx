@@ -31,6 +31,7 @@ interface SignupFormBoxProps {
   title: string;
   name: string;
   formType: FormType;
+  prefix?: string;
   openBox?: React.ReactNode;
   formValue?: FormValueType[];
   content?: React.ReactNode | string;
@@ -74,6 +75,7 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   content,
   formValue,
   openBox,
+  prefix,
   label = '',
   multiLine = false,
   required = false,
@@ -91,7 +93,13 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
     rules: {
       required:
         formType === FormType.BooleanRadio
-          ? getValues(name) === undefined
+          ? {
+              value: getValues(name) === undefined,
+              message: `${intl.formatMessage(
+                { id: 'message.form.required.error' },
+                { field: title },
+              )}`,
+            }
           : required
             ? `${intl.formatMessage(
                 { id: 'message.form.required.error' },
@@ -306,7 +314,15 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
           </Badge>
         </Typography>
         {content ? content : null}
-        <Stack width="100%">{renderForm()}</Stack>
+        <Stack direction="row" width="100%" alignItems="center" gap="0.5rem">
+          {/* SNS의 @기호를 위한 거.. 일단 임시방편으로 */}
+          {prefix ? (
+            <Typography aria-hidden color="#999999">
+              {prefix}
+            </Typography>
+          ) : null}
+          {renderForm()}
+        </Stack>
       </StyledInputLabel>
       {error && (
         <Typography

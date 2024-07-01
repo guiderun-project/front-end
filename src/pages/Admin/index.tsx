@@ -118,6 +118,23 @@ const Admin: React.FC = () => {
                 <ListItemButton
                   onClick={() => {
                     handleClose();
+                    navigate(BROWSER_PATH.MAIN);
+                  }}
+                  sx={{
+                    padding: '1.125rem 1rem',
+                    borderRadius: '100rem',
+                  }}
+                >
+                  <ListItemText
+                    primaryTypographyProps={{ fontWeight: 700 }}
+                    primary="메인 페이지"
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    handleClose();
                     navigate(BROWSER_PATH.ADMIN.USER);
                   }}
                   sx={{
@@ -135,6 +152,23 @@ const Admin: React.FC = () => {
                 <ListItemButton
                   onClick={() => {
                     handleClose();
+                    navigate(BROWSER_PATH.ADMIN.WITHDRAW);
+                  }}
+                  sx={{
+                    padding: '1.125rem 1rem',
+                    borderRadius: '100rem',
+                  }}
+                >
+                  <ListItemText
+                    primaryTypographyProps={{ fontWeight: 700 }}
+                    primary="탈퇴한 회원"
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    handleClose();
                     navigate(BROWSER_PATH.ADMIN.EVENT);
                   }}
                   sx={{
@@ -145,6 +179,23 @@ const Admin: React.FC = () => {
                   <ListItemText
                     primaryTypographyProps={{ fontWeight: 700 }}
                     primary="이벤트 관리"
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    handleClose();
+                    navigate(BROWSER_PATH.EVENT.NEW);
+                  }}
+                  sx={{
+                    padding: '1.125rem 1rem',
+                    borderRadius: '100rem',
+                  }}
+                >
+                  <ListItemText
+                    primaryTypographyProps={{ fontWeight: 700 }}
+                    primary="이벤트 생성"
                   />
                 </ListItemButton>
               </ListItem>

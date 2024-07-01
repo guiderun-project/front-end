@@ -27,10 +27,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SignupContentBox from './components/SignupContentBox';
 import SignupFormBox, { StyledInputLabel } from './components/SignupFormBox';
 import SignupTerms from './components/SignupTerms';
-import TeamingCriteria from './components/TeamingCriteria';
 
 import authApi from '@/apis/requests/auth';
-import { guideSignupPostRequest } from '@/apis/types/auth';
+import { GuideSignupPostRequest } from '@/apis/types/auth';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -51,7 +50,7 @@ const SignupGuide: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchparams] = useSearchParams();
-  const methods = useForm<guideSignupPostRequest>();
+  const methods = useForm<GuideSignupPostRequest>();
 
   const isGuideExp = methods.watch('isGuideExp');
 
@@ -82,7 +81,16 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const handleSubmit = async (data: guideSignupPostRequest) => {
+  const handleSubmit = async (data: GuideSignupPostRequest) => {
+    if (!isChecked || !isPasswordConfirm) {
+      if (!isChecked) {
+        alert('아이디 중복 확인이 필요합니다.');
+      }
+      if (!isPasswordConfirm) {
+        alert('아이디 중복 확인이 필요합니다.');
+      }
+      return;
+    }
     try {
       setIsSubmitting(true);
       const { userId, accessToken } = await authApi.guideSignupPost(data);
@@ -113,9 +121,9 @@ const SignupGuide: React.FC = () => {
   /**
    *
    */
-  const hadleInvalid = (errors: FieldErrors<guideSignupPostRequest>) => {
+  const hadleInvalid = (errors: FieldErrors<GuideSignupPostRequest>) => {
     Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<guideSignupPostRequest>]?.message);
+      alert(errors[key as keyof FieldErrors<GuideSignupPostRequest>]?.message);
     });
   };
 
@@ -170,7 +178,10 @@ const SignupGuide: React.FC = () => {
                 required: '아이디는 필수 입력입니다.',
                 minLength: 1,
                 maxLength: 15,
-                pattern: /^[a-zA-Z0-9_]+$/,
+                pattern: {
+                  value: /^[a-zA-Z0-9_]+$/,
+                  message: '아이디는 영문으로 1자 이상 15자 미만이어야 합니다.',
+                },
               }}
               render={({ field, fieldState }) => (
                 <StyledInputLabel multiLine>
@@ -242,7 +253,11 @@ const SignupGuide: React.FC = () => {
                 required: '비밀번호는 필수 입력입니다.',
                 minLength: 8,
                 maxLength: 32,
-                pattern: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+                pattern: {
+                  value: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/,
+                  message:
+                    '영문, 특수문자(!@#$%^&*?_), 숫자를 포함하여 8자 이상 32자 미만 입력해주세요.',
+                },
               }}
               render={({ field, fieldState }) => (
                 <Stack gap="1rem">
@@ -283,7 +298,7 @@ const SignupGuide: React.FC = () => {
               <StyledInputLabel multiLine={false}>
                 <Typography
                   color={!isPasswordConfirm ? 'error' : 'default'}
-                  whiteSpace="break-spaces"
+                  whiteSpace="normal"
                   fontWeight={700}
                 >
                   <Badge color="error" variant="dot">
@@ -417,7 +432,8 @@ const SignupGuide: React.FC = () => {
               multiLine
               name="snsId"
               title={intl.formatMessage({ id: 'signup.form.info.sns' })}
-              label={intl.formatMessage({ id: 'common.whelk' })}
+              label={intl.formatMessage({ id: 'signup.form.info.sns.label' })}
+              prefix={intl.formatMessage({ id: 'common.whelk' })}
               formType={FormType.Input}
               openBox={
                 <Controller
@@ -752,11 +768,13 @@ const SignupGuide: React.FC = () => {
         <title>회원 정보 입력(가이드) - Guide run project</title>
       </Helmet>
       <form onSubmit={methods.handleSubmit(handleSubmit, hadleInvalid)}>
-        <Stack padding="5rem 0" gap="5rem">
+        <Stack padding="5rem 0" gap="3.75rem">
+          <Typography component="h1" fontSize="2rem" fontWeight={400}>
+            기본 정보 입력하기
+          </Typography>
           {renderUserInfo()}
           {renderRunningSpec()}
           <SignupTerms />
-          <TeamingCriteria />
           {renderButton()}
         </Stack>
       </form>

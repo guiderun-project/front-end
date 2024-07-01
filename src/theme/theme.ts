@@ -17,6 +17,14 @@ declare module '@mui/material' {
     vi: true;
     guide: true;
   }
+  interface ButtonPropsVariantOverrides {
+    chip: true;
+  }
+
+  interface ChipPropsColorOverrides {
+    vi: true;
+    guide: true;
+  }
 }
 
 export const theme = createTheme({
@@ -48,6 +56,25 @@ export const theme = createTheme({
       },
     },
     MuiButton: {
+      variants: [
+        {
+          props: { variant: 'chip' },
+          style: {
+            backgroundColor: '#111',
+            color: '#FFF',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            borderRadius: '1000000px',
+            fontSize: '0.9375rem',
+            fontWeight: 600,
+            '&:hover': {
+              backgroundColor: '#222',
+            },
+          },
+        },
+      ],
       styleOverrides: {
         sizeLarge: {
           height: '3.5rem',

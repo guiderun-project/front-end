@@ -25,7 +25,7 @@ import { useSearchParams } from 'react-router-dom';
 import { StyledInputLabel } from './InfoEdit';
 
 import infoApi from '@/apis/requests/info';
-import { runningSpecGuidePatchRequest } from '@/apis/types/info';
+import { RunningSpecGuidePatchRequest } from '@/apis/types/info';
 import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
@@ -42,7 +42,7 @@ const SpecGuideEdit: React.FC = () => {
     queryFn: () => infoApi.runningSpecGuideGet({ userId }),
   });
   const { handleSubmit, control, setValue, watch, setFocus } =
-    useForm<runningSpecGuidePatchRequest>({
+    useForm<RunningSpecGuidePatchRequest>({
       defaultValues: data,
     });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -51,7 +51,7 @@ const SpecGuideEdit: React.FC = () => {
   /**
    *
    */
-  const onSubmit = async (data: runningSpecGuidePatchRequest) => {
+  const onSubmit = async (data: RunningSpecGuidePatchRequest) => {
     if (data && window.confirm('저장하시겠습니까?')) {
       try {
         await infoApi.runningSpecGuidePatch(data);
