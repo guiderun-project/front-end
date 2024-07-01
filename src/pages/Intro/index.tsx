@@ -83,14 +83,12 @@ const Intro: React.FC = () => {
           </Typography>
         </Stack>
         <Button
-          component="a"
-          target="_blank"
-          href="https://wadiz.onelink.me/gmeA/zf07d2mf"
           variant="contained"
           size="large"
           fullWidth
+          onClick={() => navigate(BROWSER_PATH.MAIN)}
         >
-          {`가이드런프로젝트에 대해서  >`}
+          <FormattedMessage id="intro.main.button" />
         </Button>
       </Stack>
     </>
