@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
-import MatchingStandard from '../../components/MatchingStandard';
+import MatchingStandardAccordion from '../../components/MatchingStandardAccordion';
 import { GROUP_SELECT } from '../EventApply';
 
 import eventApi from '@/apis/requests/event';
@@ -201,20 +201,6 @@ const EditEventApply: React.FC = () => {
     );
   };
 
-  /**
-   *
-   */
-  const renderMatchingStandard = () => {
-    return (
-      <Stack gap="1.5rem">
-        <Typography component="h2" fontSize="2rem">
-          매칭 기준
-        </Typography>
-        <MatchingStandard />
-      </Stack>
-    );
-  };
-
   //
   // 모집이 마감된 이벤트인 경우 이전 페이지로
   //
@@ -236,7 +222,7 @@ const EditEventApply: React.FC = () => {
       <TitleHeader title="참여신청서 작성" />
       {renderHeader()}
       {renderForm()}
-      {renderMatchingStandard()}
+      <MatchingStandardAccordion />
       <Stack alignItems="center">
         <Button
           fullWidth
