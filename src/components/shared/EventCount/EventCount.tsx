@@ -52,19 +52,19 @@ const EventCount: React.FC<EventCountProps> = ({ userid }) => {
     const { contestCnt, totalCnt, trainingCnt } = eventTypeCount;
     return (
       <StyledCountContainer aria-label="이벤트 참여 횟수">
-        <Typography>
+        <Typography role="text">
           <span style={{ fontSize: '1.25rem' }}>총</span>{' '}
           <span style={{ color: '#FF4040' }}>{totalCnt}</span>회
         </Typography>
         <Stack direction="row" alignItems="center" gap="0.5rem">
           <EventChip variant="full" type={EventType.Training} />
-          <Typography fontSize="0.9375rem">
+          <Typography role="text" fontSize="0.9375rem">
             <span style={{ color: '#FF4040' }}>{trainingCnt}</span>회
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center" gap="0.5rem">
           <EventChip variant="full" type={EventType.Competition} />
-          <Typography fontSize="0.9375rem">
+          <Typography role="text" fontSize="0.9375rem">
             <span style={{ color: '#FF4040' }}>{contestCnt}</span>회
           </Typography>
         </Stack>

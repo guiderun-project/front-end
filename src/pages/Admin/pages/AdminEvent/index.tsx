@@ -151,14 +151,14 @@ const Row: React.FC<{ eventData: EventListItemType }> = ({ eventData }) => {
                       },
                     }}
                   >
-                    <Typography fontSize="0.625rem">
+                    <Typography role="text" fontSize="0.625rem">
                       총 <span className="count">{eventData.minApply}</span>명
                     </Typography>
-                    <Typography fontSize="0.625rem">
+                    <Typography role="text" fontSize="0.625rem">
                       시각장애러너{' '}
                       <span className="count">{eventData.minNumV}</span>명
                     </Typography>
-                    <Typography fontSize="0.625rem">
+                    <Typography role="text" fontSize="0.625rem">
                       가이드러너{' '}
                       <span className="count">{eventData.minNumG}</span>명
                     </Typography>

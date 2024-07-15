@@ -27,7 +27,12 @@ const MainRoot: React.FC = () => {
           flexDirection="column"
           gap="0.75rem"
         >
-          <Typography component="h1" fontSize="1.5rem" fontWeight={400}>
+          <Typography
+            role="text"
+            component="h1"
+            fontSize="1.5rem"
+            fontWeight={400}
+          >
             <Typography component="span" fontSize="2rem" fontWeight={600}>
               {userName}
             </Typography>
@@ -46,6 +51,7 @@ const MainRoot: React.FC = () => {
               data?.map((item) => (
                 <Typography
                   key={`${item.name}-dDay`}
+                  role="text"
                   component="p"
                   color="#666"
                   fontSize="0.875rem"

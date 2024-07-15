@@ -129,7 +129,12 @@ const EventModal: React.FC<EventModalProps> = ({
             }
             alignItems="flex-start"
             content={
-              <Typography display="flex" flexDirection="column" gap="0.5rem">
+              <Typography
+                role="text"
+                display="flex"
+                flexDirection="column"
+                gap="0.5rem"
+              >
                 <span>
                   시각장애러너
                   <span
