@@ -61,7 +61,8 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
-        content: '테스트용 이벤트입니다!',
+        content:
+          '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
         date: '0000-00-00',
         startTime: '00:00',
         endTime: '00:00',
@@ -389,7 +390,8 @@ export const eventHandlers: HttpHandler[] = [
         checkOrganizer: true,
         created_at: '0000-00-00',
         date: '2000-12-22',
-        details: '테스트용 이벤트 상세 내용',
+        details:
+          '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
         startTime: '01:00',
         endTime: '10:00',
         eventId: 1,

@@ -216,7 +216,11 @@ const EventModal: React.FC<EventModalProps> = ({
               border="1px solid #D9D9D9"
               borderRadius="0.5rem"
             >
-              <Typography fontSize="0.8125rem" lineHeight="1.25rem">
+              <Typography
+                fontSize="0.8125rem"
+                lineHeight="1.25rem"
+                whiteSpace="break-spaces"
+              >
                 {eventData.content}
               </Typography>
             </Box>
