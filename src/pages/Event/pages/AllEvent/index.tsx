@@ -99,9 +99,12 @@ const AllEvent: React.FC = () => {
           variant="fullWidth"
           value={type}
           onChange={(_, newValue) =>
-            setSearchParams({
-              type: newValue,
-            })
+            setSearchParams(
+              {
+                type: newValue,
+              },
+              { replace: true },
+            )
           }
         >
           <Tab

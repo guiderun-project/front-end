@@ -57,9 +57,12 @@ const FindIdPassword: React.FC = () => {
           centered
           value={selectedTab}
           onChange={(_, newValue) =>
-            setSearchParams({
-              type: newValue,
-            })
+            setSearchParams(
+              {
+                type: newValue,
+              },
+              { replace: true },
+            )
           }
         >
           <Tab

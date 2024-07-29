@@ -67,7 +67,7 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
         alert('저장되었습니다. ');
         queryClient.invalidateQueries({ queryKey: ['permissionGet'] });
         searchParams.set('mode', 'detail');
-        setSearchParams(searchParams.toString());
+        setSearchParams(searchParams.toString(), { replace: true });
       } catch (err) {
         alert('오류가 발생했습니다. 다시 시도해주세요.');
       }
