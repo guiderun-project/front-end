@@ -63,7 +63,7 @@ export const eventHandlers: HttpHandler[] = [
       return HttpResponse.json({
         content:
           '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
-        date: '0000-00-00',
+        date: '2020-01-01',
         startTime: '00:00',
         endTime: '00:00',
         eventId: Number(params.eventId),
@@ -71,7 +71,7 @@ export const eventHandlers: HttpHandler[] = [
         place: '테스트 장소',
         recruitStatus: RecruitStatus.Open,
         type: EventType.Training,
-        updatedAt: '0000-00-00',
+        updatedAt: '2020-01-01',
         hasPartner: false,
         isApply: true,
         organizer: '홍길동',
@@ -388,7 +388,7 @@ export const eventHandlers: HttpHandler[] = [
     () => {
       return HttpResponse.json({
         checkOrganizer: true,
-        created_at: '0000-00-00',
+        created_at: '2020-02-02',
         date: '2000-12-22',
         details:
           '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
@@ -415,7 +415,7 @@ export const eventHandlers: HttpHandler[] = [
         status: EventStatus.Open,
         submit: true,
         type: EventType.Competition,
-        updated_at: '0000-00-00',
+        updated_at: '2020-02-02',
       });
     },
   ),
