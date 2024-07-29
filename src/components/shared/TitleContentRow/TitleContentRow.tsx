@@ -22,6 +22,7 @@ const TitleContentRow: React.FC<TitleContentRowProps> = ({
       direction={multiline ? 'column' : 'row'}
       alignItems={alignItems}
       gap={multiline ? '1rem' : '0.5rem'}
+      padding="0.5rem"
     >
       <Typography
         component="h3"

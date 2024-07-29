@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { EventGetResponse } from '@/apis/types/event';
 import {
@@ -11,6 +11,7 @@ import { BROWSER_PATH } from '@/constants/path';
 import MatchingStandardAccordion from '@/pages/Event/components/MatchingStandardAccordion';
 import RecruitCountBox from '@/pages/Event/components/RecruitCountBox';
 import { EventStatus as EventStatusType, RecruitStatus } from '@/types/group';
+import { getFullKoreanDate, getPeriod } from '@/utils/time';
 
 interface EventDetailContentSectionProps {
   eventId: number;
@@ -28,7 +29,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
   //
 
   return (
-    <Stack gap="1rem">
+    <Stack gap="0.75rem">
       <TitleContentRow
         title="주최자"
         content={
@@ -40,12 +41,16 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
         }
       />
       <TitleContentRow
-        title="일시"
+        title="날짜"
         content={
-          <Typography component="span" display="flex" gap="0.5rem">
-            {eventData.date.replace(/-/g, '.')}
-            <Divider orientation="vertical" variant="middle" flexItem />
-            {eventData.startTime}~{eventData.endTime}
+          <Typography>{getFullKoreanDate(new Date(eventData.date))}</Typography>
+        }
+      />
+      <TitleContentRow
+        title="시간"
+        content={
+          <Typography>
+            {getPeriod(eventData.startTime, eventData.endTime)}
           </Typography>
         }
       />
@@ -118,8 +123,13 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
           }
         />
       ) : null}
-      <Stack paddingTop="0.625rem" gap="0.5rem">
-        <Typography component="h3" fontWeight={700}>
+      <Stack paddingTop="0.625rem" gap="1rem">
+        <Typography
+          component="h3"
+          fontSize="1.0625rem"
+          fontWeight={700}
+          paddingLeft="0.5rem"
+        >
           훈련 상세
         </Typography>
         <Box padding="1rem" border="1px solid #D9D9D9" borderRadius="0.5rem">
