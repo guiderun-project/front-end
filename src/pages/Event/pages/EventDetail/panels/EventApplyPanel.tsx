@@ -5,11 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 import { StyledApplyUserBox, StyledUserListBox } from './EventAttendPanel';
+import ApplyDetailTooltip from '../components/ApplyDetailTooltip';
 
 import eventApi from '@/apis/requests/event';
 import { ApplyUserType } from '@/apis/types/event';
-import { ApplyUserChip, GroupChip } from '@/components/shared';
-import ApplyDetailTooltip from '../components/ApplyDetailTooltip';
+import { ApplyUserChip } from '@/components/shared';
 
 const EventApplyPanel: React.FC = () => {
   const [userId, setUserId] = React.useState('');
@@ -18,12 +18,6 @@ const EventApplyPanel: React.FC = () => {
   const { data: applyAllData, isLoading: isApplyAllLoading } = useQuery({
     queryKey: ['eventApplyAllGet', eventId],
     queryFn: () => eventApi.eventApplyAllGet({ eventId }),
-  });
-
-  const { data: applyDetail, isLoading: isApplyDetailLoading } = useQuery({
-    queryKey: ['eventApplyGet', eventId, userId],
-    queryFn: () => eventApi.eventApplyGet({ eventId, userId }),
-    enabled: Boolean(userId),
   });
 
   //
