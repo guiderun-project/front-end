@@ -58,7 +58,7 @@ const SpecViEdit: React.FC = () => {
       alert('저장되었습니다. ');
       queryClient.invalidateQueries({ queryKey: ['runningSpecViGet'] });
       searchParams.set('mode', 'detail');
-      setSearchParams(searchParams.toString());
+      setSearchParams(searchParams.toString(), { replace: true });
     }
   };
 
