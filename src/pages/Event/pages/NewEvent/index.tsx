@@ -169,7 +169,7 @@ const NewEvent: React.FC = () => {
           render={({ field }) => (
             <InputBox
               required
-              title="일시"
+              title="날짜"
               inputElement={<TextField {...field} required type="date" />}
             />
           )}
