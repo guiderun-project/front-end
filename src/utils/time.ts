@@ -22,3 +22,7 @@ export const getKoreanHourMonth = (time: string) => {
     .toString()
     .padStart(2, '0')}분`;
 };
+
+export const getPeriod = (startTime: string, endTime: string) => {
+  return `${getKoreanHourMonth(startTime)} ~ ${getKoreanHourMonth(endTime)}`;
+};
