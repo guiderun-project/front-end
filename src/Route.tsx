@@ -48,8 +48,11 @@ import { RootState } from './store';
 
 const router = createBrowserRouter([
   {
-    element: <App />,
-    errorElement: <ErrorBoundary />,
+    element: (
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    ),
     children: [
       {
         path: BROWSER_PATH.INTRO,
