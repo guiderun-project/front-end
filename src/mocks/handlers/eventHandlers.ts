@@ -412,7 +412,7 @@ export const eventHandlers: HttpHandler[] = [
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
         recruitStatus: RecruitStatus.End,
-        status: EventStatus.Open,
+        status: EventStatus.End,
         submit: true,
         type: EventType.Competition,
         updated_at: '2020-02-02',
@@ -464,7 +464,17 @@ export const eventHandlers: HttpHandler[] = [
           {
             commentId: 3324224,
             content:
-              '너무 좋은2 기이이이이이이이이이이 이이이이이이이이 이이이이이이이 이이이이이이이이이이이 이이이이f 이이이이이이이인 문장',
+              '너무 좋은2 기이이이이이이이이이이\n이이이이이이이이 이이이이이이이 이이이이이이이이이이이 이이이이f 이이이이이이이인 문장',
+            createdAt: '2000-01-02',
+            likes: 22,
+            name: '사오정',
+            type: DisabilityEnum.VI,
+            userId: '1233',
+          },
+          {
+            commentId: 332424234324,
+            content:
+              '너무 좋은2 기이이이이이이이이이이\n이이이이이이이이 이이이이이이이\n\n\n\n\n\n\n이이fdfdsfdsakl\n\n\n\n\n\n이이이이이이이이이 이이이이f 이이이이이이이인 문장',
             createdAt: '2000-01-02',
             likes: 22,
             name: '사오정',
