@@ -112,6 +112,7 @@ const EventCommentSection: React.FC<EventCommentSectionProps> = ({
             onSubmit={handleSubmit}
           >
             <TextField
+              multiline
               fullWidth
               required
               variant="standard"
@@ -120,7 +121,8 @@ const EventCommentSection: React.FC<EventCommentSectionProps> = ({
               onChange={(e) => setContent(e.target.value)}
               InputProps={{
                 style: {
-                  height: '4rem',
+                  minHeight: '4rem',
+                  overflowY: 'auto',
                 },
               }}
             />
