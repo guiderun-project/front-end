@@ -62,6 +62,7 @@ const ApplyDetailTooltip: React.FC<
   const { data: applyDetail } = useQuery({
     queryKey: ['eventApplyGet', eventId, userId],
     queryFn: () => eventApi.eventApplyGet({ eventId, userId }),
+    enabled: open,
   });
 
   //
