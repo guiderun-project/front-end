@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import { axiosInstanceWithToken } from '../axios';
 import {
   EventCalendarDetailGetRequest,
@@ -76,12 +77,27 @@ import {
   EventApplyDeleteRequest,
   EventDeleteRequest,
 } from '../types/event';
+import { ErrorType } from '../types/error';
 
 class EventApi {
+  private async handleRequest<T>(request: () => Promise<T>) {
+    try {
+      return await request();
+    } catch (error) {
+      if (isAxiosError<ErrorType>(error)) {
+        throw error;
+      }
+      throw new Error('예상치 못한 에러 발생');
+    }
+  }
+
   eventGet = async ({ eventId }: EventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventGetResponse>(`/event/${eventId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventGetResponse>(
+        `/event/${eventId}`,
+      );
+      return res.data;
+    });
   };
 
   eventDelete = async ({ eventId }: EventDeleteRequest) => {
