@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import { axiosInstanceWithToken } from '../axios';
 import {
   AdminApplyListCountGetRequest,
@@ -63,8 +64,19 @@ import {
 } from '../types/admin';
 
 import { EventType } from '@/types/group';
+import { ErrorType } from '../types/error';
 
 class AdminApi {
+  private async handleRequest<T>(request: () => Promise<T>) {
+    try {
+      return await request();
+    } catch (error) {
+      if (isAxiosError<ErrorType>(error)) {
+        throw error;
+      }
+      throw new Error('예상치 못한 에러 발생');
+    }
+  }
   adminUserListGet = async ({
     limit,
     start,
@@ -74,8 +86,8 @@ class AdminApi {
     time,
     type,
   }: AdminUserListGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminUserListGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminUserListGetResponse>(
         `/admin/user-list?limit=${limit}&start=${start}${
           typeof approval === 'number' ? `&approval=${approval}` : ''
         }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
@@ -83,20 +95,29 @@ class AdminApi {
         }${typeof time === 'number' ? `&time=${time}` : ''}${
           typeof type === 'number' ? `&type=${type}` : ''
         }`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   adminUserListCountGet = async () => {
-    return await axiosInstanceWithToken
-      .get<AdminUserListCountGetResponse>(`/admin/user-list/count`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminUserListCountGetResponse>(
+          `/admin/user-list/count`,
+        );
+      return res.data.count;
+    });
   };
 
   adminWithdrawalListCountGet = async () => {
-    return await axiosInstanceWithToken
-      .get<AdminWithdrawalListCountGetResponse>('/admin/withdrawal-list/count')
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminWithdrawalListCountGetResponse>(
+          '/admin/withdrawal-list/count',
+        );
+      return res.data.count;
+    });
   };
 
   adminWithdrawlListGet = async ({
@@ -108,27 +129,31 @@ class AdminApi {
     time,
     type,
   }: AdminWithdrawalListGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminWithdrawalListGetResponse>(
-        `/admin/withdrawal-list?limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-          typeof team === 'number' ? `&name_team=${team}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&approval=${type}` : ''
-        }`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminWithdrawalListGetResponse>(
+          `/admin/withdrawal-list?limit=${limit}&start=${start}${
+            typeof approval === 'number' ? `&approval=${approval}` : ''
+          }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+            typeof team === 'number' ? `&name_team=${team}` : ''
+          }${typeof time === 'number' ? `&time=${time}` : ''}${
+            typeof type === 'number' ? `&approval=${type}` : ''
+          }`,
+        );
+      return res.data.items;
+    });
   };
 
   adminSearchWithdrawalListCountGet = async ({
     text,
   }: AdminSearchWithdrawalListCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchWithdrawalListCountGetResponse>(
-        `/admin/search/withdrawal-list/count?text=${text}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchWithdrawalListCountGetResponse>(
+          `/admin/search/withdrawal-list/count?text=${text}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminSearchWithdrawalListGet = async ({
@@ -141,17 +166,19 @@ class AdminApi {
     time,
     type,
   }: AdminSearchWithdrawalListGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchWithdrawalListGetResponse>(
-        `/admin/search/withdrawal-list?text=${text}&limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-          typeof team === 'number' ? `&name_team=${team}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&approval=${type}` : ''
-        }`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchWithdrawalListGetResponse>(
+          `/admin/search/withdrawal-list?text=${text}&limit=${limit}&start=${start}${
+            typeof approval === 'number' ? `&approval=${approval}` : ''
+          }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
+            typeof team === 'number' ? `&name_team=${team}` : ''
+          }${typeof time === 'number' ? `&time=${time}` : ''}${
+            typeof type === 'number' ? `&approval=${type}` : ''
+          }`,
+        );
+      return res.data.items;
+    });
   };
 
   adminUserSearchGet = async ({
@@ -164,8 +191,8 @@ class AdminApi {
     time,
     type,
   }: AdminUserSearchGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminUserSearchGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminUserSearchGetResponse>(
         `/admin/search/user?text=${text}&limit=${limit}&start=${start}${
           typeof approval === 'number' ? `&approval=${approval}` : ''
         }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
@@ -173,30 +200,39 @@ class AdminApi {
         }${typeof time === 'number' ? `&time=${time}` : ''}${
           typeof type === 'number' ? `&approval=${type}` : ''
         }`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   adminUserSearchCountGet = async ({
     text,
   }: AdminUserSearchCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminUserSearchCountGetResponse>(
-        `/admin/search/user/count?text=${text}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminUserSearchCountGetResponse>(
+          `/admin/search/user/count?text=${text}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminViApplyGet = async ({ userId }: AdminViApplyGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminViApplyGetResponse>(`/admin/apply/vi/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminViApplyGetResponse>(
+        `/admin/apply/vi/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   adminGuideApplyGet = async ({ userId }: AdminGuideApplyGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminGuideApplyGetResponse>(`/admin/apply/guide/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminGuideApplyGetResponse>(
+        `/admin/apply/guide/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   adminApproveUserPost = async ({
@@ -204,12 +240,17 @@ class AdminApi {
     userId,
     recordDegree,
   }: AdminApproveUserPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<AdminApproveUserPostResponse>(`/admin/approval-user/${userId}`, {
-        isApprove,
-        recordDegree,
-      })
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.post<AdminApproveUserPostResponse>(
+          `/admin/approval-user/${userId}`,
+          {
+            isApprove,
+            recordDegree,
+          },
+        );
+      return res.data;
+    });
   };
 
   adminEventListGet = async ({
@@ -220,21 +261,26 @@ class AdminApi {
     organizer,
     time,
   }: AdminEventListGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventListGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminEventListGetResponse>(
         `/admin/event-list?limit=${limit}&start=${start}${
           typeof approval === 'number' ? `&approval=${approval}` : ''
         }${typeof name === 'number' ? `&name=${name}` : ''}${
           typeof organizer === 'number' ? `&organizer=${organizer}` : ''
         }${typeof time === 'number' ? `&time=${time}` : ''}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   adminEventListCountGet = async () => {
-    return await axiosInstanceWithToken
-      .get<AdminEventListCountGetResponse>(`/admin/event-list/count`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventListCountGetResponse>(
+          `/admin/event-list/count`,
+        );
+      return res.data.count;
+    });
   };
 
   adminSearchEventGet = async ({
@@ -246,25 +292,28 @@ class AdminApi {
     limit,
     start,
   }: AdminSearchEventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchEventGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminSearchEventGetResponse>(
         `/admin/search/event?text=${search}&limit=${limit}&start=${start}${
           typeof approval === 'number' ? `&approval=${approval}` : ''
         }${typeof name === 'number' ? `&name=${name}` : ''}${
           typeof organizer === 'number' ? `&organizer=${organizer}` : ''
         }${typeof time === 'number' ? `&time=${time}` : ''}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   adminSearchEventCountGet = async ({
     search,
   }: AdminSearchEventCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchEventCountGetResponse>(
-        `/admin/search/event/count?text=${search}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchEventCountGetResponse>(
+          `/admin/search/event/count?text=${search}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminEventHistoryGet = async ({
@@ -272,70 +321,87 @@ class AdminApi {
     start,
     userId,
   }: AdminEventHistoryGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventHistoryGetResponse>(
-        `/admin/event-list/${userId}?start=${start}&limit=${limit}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventHistoryGetResponse>(
+          `/admin/event-list/${userId}?start=${start}&limit=${limit}`,
+        );
+      return res.data.items;
+    });
   };
 
   adminEventHistoryCountGet = async ({
     userId,
   }: AdminEventHistoryCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventHistoryCountGetResponse>(
-        `/admin/event-list/count/${userId}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventHistoryCountGetResponse>(
+          `/admin/event-list/count/${userId}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminEventTotalCountGet = async ({
     userId,
   }: AdminEventTotalCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventTotalCountGetResponse>(`/admin/${userId}/event-type/count`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventTotalCountGetResponse>(
+          `/admin/${userId}/event-type/count`,
+        );
+      return res.data;
+    });
   };
 
   adminNewUserGet = async ({
     limit = 6,
     start = 0,
   }: AdminNewUserGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminNewUserGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminNewUserGetResponse>(
         `/admin/new-user?limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   adminCurrentEventGet = async ({
     limit = 4,
     start = 0,
   }: AdminCurrentEventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminCurrentEventGetResponse>(
-        `/admin/current-event?limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminCurrentEventGetResponse>(
+          `/admin/current-event?limit=${limit}&start=${start}`,
+        );
+      return res.data.items;
+    });
   };
 
   adminEventTypeCountGet = async ({
     userId,
   }: AdminEventTypeCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventTypeCountGetResponse>(`/admin/event-type/count/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventTypeCountGetResponse>(
+          `/admin/event-type/count/${userId}`,
+        );
+      return res.data;
+    });
   };
 
   adminSearchEventHistoryCountGet = async ({
     text,
     userId,
   }: AdminSearchEventHistoryCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchEventHistoryCountGetResponse>(
-        `/admin/search/event-list/count/${userId}?text=${text}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchEventHistoryCountGetResponse>(
+          `/admin/search/event-list/count/${userId}?text=${text}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminSearchEventHistoryGet = async ({
@@ -344,32 +410,38 @@ class AdminApi {
     limit = 5,
     start = 0,
   }: AdminSearchEventHistoryGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchEventHistoryGetResponse>(
-        `/admin/search/event-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchEventHistoryGetResponse>(
+          `/admin/search/event-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+        );
+      return res.data.items;
+    });
   };
 
   adminPartnerTypeCountGet = async ({
     userId,
   }: AdminPartnerTypeCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminPartnerTypeCountGetResponse>(
-        `/admin/partner-type/count/${userId}`,
-      )
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminPartnerTypeCountGetResponse>(
+          `/admin/partner-type/count/${userId}`,
+        );
+      return res.data;
+    });
   };
 
   adminPartnerHistoryCountGet = async ({
     userId,
     kind = EventType.TOTAL,
   }: AdminPartnerHistoryCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminPartnerHistoryCountGetResponse>(
-        `/admin/partner-list/count/${userId}?kind=${kind}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminPartnerHistoryCountGetResponse>(
+          `/admin/partner-list/count/${userId}?kind=${kind}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminPartnerHistoryGet = async ({
@@ -378,22 +450,26 @@ class AdminApi {
     limit = 6,
     start = 0,
   }: AdminPartnerHistoryGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminPartnerHistoryGetResponse>(
-        `/admin/partner-list/${userId}?kind=${kind}&start=${start}&limit=${limit}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminPartnerHistoryGetResponse>(
+          `/admin/partner-list/${userId}?kind=${kind}&start=${start}&limit=${limit}`,
+        );
+      return res.data.items;
+    });
   };
 
   adminSearchPartnerHistoryCountGet = async ({
     userId,
     text,
   }: AdminSearchPartnerHistoryCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchPartnerHistoryCountGetResponse>(
-        `/admin/search/partner-list/count/${userId}?text=${text}`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchPartnerHistoryCountGetResponse>(
+          `/admin/search/partner-list/count/${userId}?text=${text}`,
+        );
+      return res.data.count;
+    });
   };
 
   adminSearchPartnerHistoryGet = async ({
@@ -402,26 +478,35 @@ class AdminApi {
     limit = 6,
     start = 0,
   }: AdminSearchPartnerHistoryGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminSearchPartnerHistoryGetResponse>(
-        `admin/search/partner-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminSearchPartnerHistoryGetResponse>(
+          `admin/search/partner-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+        );
+      return res.data.items;
+    });
   };
 
   adminApprovalEventPostRequest = async ({
     approval,
     eventId,
   }: AdminApprovalEventPostRequest) => {
-    return await axiosInstanceWithToken
-      .post(`/admin/approval-event/${eventId}`, { approval })
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(
+        `/admin/approval-event/${eventId}`,
+        { approval },
+      );
+      return res.data;
+    });
   };
 
   adminEventResultGet = async ({ eventId }: AdminEventResultGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminEventResultGetResponse>(`/admin/event-result/${eventId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminEventResultGetResponse>(
+        `/admin/event-result/${eventId}`,
+      );
+      return res.data;
+    });
   };
 
   adminApplyListGet = async ({
@@ -432,21 +517,28 @@ class AdminApi {
     time,
     typeName,
   }: AdminApplyListGetRequest) => {
-    return await axiosInstanceWithToken<AdminApplyListGetResponse>(
-      `/admin/apply-list/${eventId}?limit=${limit}&start=${start}${
-        typeof team === 'number' ? `&team=${team}` : ''
-      }${typeof typeName === 'number' ? `&type_name=${typeName}` : ''}${
-        typeof time === 'number' ? `&time=${time}` : ''
-      }`,
-    ).then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AdminApplyListGetResponse>(
+        `/admin/apply-list/${eventId}?limit=${limit}&start=${start}${
+          typeof team === 'number' ? `&team=${team}` : ''
+        }${typeof typeName === 'number' ? `&type_name=${typeName}` : ''}${
+          typeof time === 'number' ? `&time=${time}` : ''
+        }`,
+      );
+      return res.data.items;
+    });
   };
 
   adminApplyListCountGet = async ({
     eventId,
   }: AdminApplyListCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AdminApplyListCountGetResponse>(`/admin/apply-list/count/${eventId}`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminApplyListCountGetResponse>(
+          `/admin/apply-list/count/${eventId}`,
+        );
+      return res.data.count;
+    });
   };
 }
 

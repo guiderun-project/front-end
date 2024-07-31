@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import { axiosInstance, axiosInstanceWithToken } from '../axios';
 import {
   AccessTokenGetResponse,
@@ -19,84 +20,131 @@ import {
   ViSignupPostRequest,
   WithdrawDeleteRequest,
 } from '../types/auth';
+import { ErrorType } from '../types/error';
 
 class AuthApi {
+  private async handleRequest<T>(request: () => Promise<T>) {
+    try {
+      return await request();
+    } catch (error) {
+      if (isAxiosError<ErrorType>(error)) {
+        throw error;
+      }
+      throw new Error('예상치 못한 에러 발생');
+    }
+  }
+
   kakaoAuthPost = async ({ code }: KakaoAuthPostRequest) => {
-    return await axiosInstance
-      .post<KakaoAuthPostResponse>(`/oauth/login/kakao?code=${code}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post<KakaoAuthPostResponse>(
+        `/oauth/login/kakao?code=${code}`,
+      );
+      return res.data;
+    });
   };
 
   viSignupPost = async (signupData: ViSignupPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<SignupPostResponse>('/signup/vi', signupData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<SignupPostResponse>(
+        '/signup/vi',
+        signupData,
+      );
+      return res.data;
+    });
   };
 
   guideSignupPost = async (signupData: GuideSignupPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<SignupPostResponse>('/signup/guide', signupData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<SignupPostResponse>(
+        '/signup/guide',
+        signupData,
+      );
+      return res.data;
+    });
   };
 
   accessTokenGet = async () => {
-    return await axiosInstance
-      .get<AccessTokenGetResponse>('/oauth/login/reissue')
-      .then((res) => res.data.accessToken);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.get<AccessTokenGetResponse>(
+        '/oauth/login/reissue',
+      );
+      return res.data.accessToken;
+    });
   };
 
   checkDuplicatedPost = async (id: CheckDuplicatedPostRequest) => {
-    return axiosInstanceWithToken
-      .post<CheckDuplicatedPostResponse>('/signup/duplicated', id)
-      .then((res) => res.data.isUnique);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.post<CheckDuplicatedPostResponse>(
+          '/signup/duplicated',
+          id,
+        );
+      return res.data.isUnique;
+    });
   };
 
   loginPost = async (loginData: LoginPostRequest) => {
-    return axiosInstance
-      .post<LoginPostResponse>('/login', loginData)
-      .then((res) => res.data.accessToken);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post<LoginPostResponse>(
+        '/login',
+        loginData,
+      );
+      return res.data.accessToken;
+    });
   };
-
-  /**
-   *
-   * @param data 아이디, 휴대전화 번호
-   * @returns 성공여부
-   */
 
   getCertificationTokenPasswordPost = async (
     data: GetCertificationTokenPasswordPostRequest,
   ) => {
-    return axiosInstance.post('/sms/password', data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post('/sms/password', data);
+      return res.data;
+    });
   };
 
   getCertificationTokenIdPost = async (
     data: GetCertificationTokenIdPostRequest,
   ) => {
-    return axiosInstance.post('/sms/accountId', data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post('/sms/accountId', data);
+      return res.data;
+    });
   };
 
   checkCertificationTokenPost = async (
     token: CheckCertificationTokenPostRequest,
   ) => {
-    return axiosInstance
-      .post<CheckCertificationTokenPostResponse>('/sms/token', token)
-      .then((res) => res.data.token);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post<CheckCertificationTokenPostResponse>(
+        '/sms/token',
+        token,
+      );
+      return res.data.token;
+    });
   };
 
   renewalPasswordPatch = async (data: RenewalPasswordPatchRequest) => {
-    return axiosInstance.patch('/new-password', data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.patch('/new-password', data);
+      return res.data;
+    });
   };
 
   getUserIdPost = async (token: GetUserIdPostRequest) => {
-    return axiosInstance
-      .post<GetUserIdPostResponse>('/accountId', token)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstance.post<GetUserIdPostResponse>(
+        '/accountId',
+        token,
+      );
+      return res.data;
+    });
   };
 
   withdrawDelete = async (data: WithdrawDeleteRequest) => {
-    return await axiosInstanceWithToken
-      .delete('/withdrawal', { data })
-      .then((res) => res);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.delete('/withdrawal', { data });
+      return res.data;
+    });
   };
 }
 

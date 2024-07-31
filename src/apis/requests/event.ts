@@ -101,17 +101,19 @@ class EventApi {
   };
 
   eventDelete = async ({ eventId }: EventDeleteRequest) => {
-    return await axiosInstanceWithToken
-      .delete(`/event/${eventId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.delete(`/event/${eventId}`);
+      return res.data;
+    });
   };
 
   allEventCountGet = async ({ kind, sort, type }: AllEventCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AllEventCountGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AllEventCountGetResponse>(
         `/event/all/count?sort=${sort}&type=${type}&kind=${kind}`,
-      )
-      .then((res) => res.data.count);
+      );
+      return res.data.count;
+    });
   };
 
   allEventGet = async ({
@@ -121,55 +123,67 @@ class EventApi {
     sort,
     type,
   }: AllEventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<AllEventGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<AllEventGetResponse>(
         `/event/all?start=${start}&limit=${limit}&kind=${kind}&sort=${sort}&type=${type}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   eventPopupGet = async ({ eventId }: EventPopupGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventPopupGetResponse>(`/event/pop/${eventId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventPopupGetResponse>(
+        `/event/pop/${eventId}`,
+      );
+      return res.data;
+    });
   };
 
-  /**
-   *
-   * @returns 메인페이지 상단에 나타나는 사용자가 신청한 이벤트 D-day를 반환
-   */
   upcomingEventDdayGet = async () => {
-    return await axiosInstanceWithToken
-      .get<UpcomingEventDdayGetResponse>('/event/dday')
-      .then((res) => res.data.eventItems);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<UpcomingEventDdayGetResponse>(
+          '/event/dday',
+        );
+      return res.data.eventItems;
+    });
   };
 
   myEventGet = async ({ year, sort }: MyEventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<MyEventGetResponse>(`/event/my?sort=${sort}&year=${year}`)
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<MyEventGetResponse>(
+        `/event/my?sort=${sort}&year=${year}`,
+      );
+      return res.data.items;
+    });
   };
 
   searchEventCountGet = async ({ title }: SearchEventCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<SearchEventCountGetResponse>(`/event/search/count?title=${title}`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<SearchEventCountGetResponse>(
+        `/event/search/count?title=${title}`,
+      );
+      return res.data.count;
+    });
   };
 
   searchEventGet = async ({ title, limit, start }: SearchEventGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<SearchEventGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<SearchEventGetResponse>(
         `/event/search?title=${title}&limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   eventCalendarGet = async ({ month, year }: EventCalendarGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventCalendarGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventCalendarGetResponse>(
         `/event/calendar?year=${year}&month=${month}`,
-      )
-      .then((res) => res.data.result);
+      );
+      return res.data.result;
+    });
   };
 
   eventCalendarDetailGet = async ({
@@ -177,59 +191,80 @@ class EventApi {
     month,
     year,
   }: EventCalendarDetailGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventCalendarDetailGetResponse>(
-        `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
-      )
-      .then((res) => res.data.items);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventCalendarDetailGetResponse>(
+          `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
+        );
+      return res.data.items;
+    });
   };
 
   eventTypeCountGet = async ({ userId }: EventTypeCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventTypeCountGetResponse>(`/user/event-type/count/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventTypeCountGetResponse>(
+        `/user/event-type/count/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   newEventPost = async (body: NewEventPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<NewEventPostResponse>('/event', body)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<NewEventPostResponse>(
+        '/event',
+        body,
+      );
+      return res.data;
+    });
   };
 
   editEventPatch = async ({
     eventId,
     EditEventPatchRequestBody,
   }: EditEventPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<EditEventPatchResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch<EditEventPatchResponse>(
         `/event/${eventId}`,
         EditEventPatchRequestBody,
-      )
-      .then((res) => res.data);
+      );
+      return res.data;
+    });
   };
 
   closeEventPatch = async ({ eventId }: CloseEventPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch(`/event/close/${eventId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch(`/event/close/${eventId}`);
+      return res.data;
+    });
   };
 
   eventLikeCountGet = async ({ eventId }: EventLikeCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventLikeCountGetResponse>(`/event/${eventId}/likes/count`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventLikeCountGetResponse>(
+        `/event/${eventId}/likes/count`,
+      );
+      return res.data;
+    });
   };
 
   eventLikePost = async ({ eventId }: EventLikePoseRequest) => {
-    return await axiosInstanceWithToken
-      .post<EventLikePostResponse>(`/event/${eventId}/likes`)
-      .then((res) => res.data.likes);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<EventLikePostResponse>(
+        `/event/${eventId}/likes`,
+      );
+      return res.data.likes;
+    });
   };
 
   eventCommentCountGet = async ({ eventId }: EventCommentCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventCommentCountGetResponse>(`/event/${eventId}/comments/count`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventCommentCountGetResponse>(
+          `/event/${eventId}/comments/count`,
+        );
+      return res.data.count;
+    });
   };
 
   eventCommentGet = async ({
@@ -237,39 +272,47 @@ class EventApi {
     limit = 4,
     start = 0,
   }: EventCommentGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventCommentGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventCommentGetResponse>(
         `/event/${eventId}/comments?limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.comments);
+      );
+      return res.data.comments;
+    });
   };
 
   eventCommentLikeCountGet = async ({
     commentId,
   }: EventCommentLikeCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventCommentLikeCountGetResponse>(
-        `/event/comment/${commentId}/likes/count`,
-      )
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventCommentLikeCountGetResponse>(
+          `/event/comment/${commentId}/likes/count`,
+        );
+      return res.data;
+    });
   };
 
   eventCommentLikePost = async ({ commentId }: EventCommentLikePostRequest) => {
-    return await axiosInstanceWithToken
-      .post<EventCommentLikePostResponse>(`/event/comment/${commentId}/likes`)
-      .then((res) => res.data.likes);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.post<EventCommentLikePostResponse>(
+          `/event/comment/${commentId}/likes`,
+        );
+      return res.data.likes;
+    });
   };
 
   eventCommentPost = async ({
     eventId,
     EventCommentPostBody,
   }: EventCommentPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<EventCommentPostResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<EventCommentPostResponse>(
         `/event/${eventId}/comments`,
         EventCommentPostBody,
-      )
-      .then((res) => res.data.commentId);
+      );
+      return res.data.commentId;
+    });
   };
 
   eventCommentPatch = async ({
@@ -277,83 +320,107 @@ class EventApi {
     commentId,
     EventCommentPatchBody,
   }: EventCommentPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<EventCommentPatchResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch<EventCommentPatchResponse>(
         `/event/${eventId}/${commentId}`,
         EventCommentPatchBody,
-      )
-      .then((res) => res.data.commentId);
+      );
+      return res.data.commentId;
+    });
   };
 
   eventCommentDelete = async ({
     commentId,
     eventId,
   }: EventCommentDeleteRequest) => {
-    return await axiosInstanceWithToken
-      .delete<EventCommentDeleteResponse>(`/event/${eventId}/${commentId}`)
-      .then((res) => res.data.commentId);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.delete<EventCommentDeleteResponse>(
+          `/event/${eventId}/${commentId}`,
+        );
+      return res.data.commentId;
+    });
   };
 
   eventApplyGet = async ({ eventId, userId }: EventApplyGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventApplyGetResponse>(`/event/${eventId}/form/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventApplyGetResponse>(
+        `/event/${eventId}/form/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   eventApplyPatch = async ({
     eventId,
     EventApplyPatchRequestBody,
   }: EventApplyPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<EventApplyPatchResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch<EventApplyPatchResponse>(
         `/event/${eventId}/form`,
         EventApplyPatchRequestBody,
-      )
-      .then((res) => res.data.requestId);
+      );
+      return res.data.requestId;
+    });
   };
 
   eventApplyPost = async ({
     EventApplyPostRequestBody,
     eventId,
   }: EventApplyPostRequest) => {
-    return await axiosInstanceWithToken
-      .post<EventApplyPostResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<EventApplyPostResponse>(
         `/event/${eventId}/form`,
         EventApplyPostRequestBody,
-      )
-      .then((res) => res.data.requestId);
+      );
+      return res.data.requestId;
+    });
   };
 
   eventApplyDelete = async ({ eventId }: EventApplyDeleteRequest) => {
-    return await axiosInstanceWithToken
-      .delete(`/event/${eventId}/form`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.delete(`/event/${eventId}/form`);
+      return res.data;
+    });
   };
 
   eventApplyCountGet = async ({ eventId }: EventApplyCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventApplyCountGetResponse>(`/event/${eventId}/forms/count`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventApplyCountGetResponse>(
+        `/event/${eventId}/forms/count`,
+      );
+      return res.data;
+    });
   };
 
   eventApplyStatusGet = async ({ eventId }: EventApplyStatusGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventApplyStatusGetResponse>(`/event/${eventId}/forms`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventApplyStatusGetResponse>(
+        `/event/${eventId}/forms`,
+      );
+      return res.data;
+    });
   };
 
   eventAttendPost = async ({ eventId, userId }: EventAttendPostRequest) => {
-    return await axiosInstanceWithToken
-      .post(`/event/${eventId}/attend/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(
+        `/event/${eventId}/attend/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   eventAttendStatusCountGet = async ({
     eventId,
   }: EventAttendStatusCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventAttendStatusCountGetResponse>(`/event/${eventId}/attend/count`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventAttendStatusCountGetResponse>(
+          `/event/${eventId}/attend/count`,
+        );
+      return res.data;
+    });
   };
 
   eventMatchingPost = async ({
@@ -361,9 +428,12 @@ class EventApi {
     userId,
     viId,
   }: EventMatchingPostRequest) => {
-    return await axiosInstanceWithToken
-      .post(`/event/${eventId}/match/${viId}/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(
+        `/event/${eventId}/match/${viId}/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   eventMatchingDelete = async ({
@@ -371,60 +441,89 @@ class EventApi {
     userId,
     viId,
   }: EventMatchingDeleteRequest) => {
-    return await axiosInstanceWithToken
-      .delete(`/event/${eventId}/match/${viId}/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.delete(
+        `/event/${eventId}/match/${viId}/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   eventNotMatchingCountGet = async ({
     eventId,
   }: EventNotMatchingCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventNotMatchingCountGetResponse>(
-        `/event/${eventId}/match/not/count`,
-      )
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventNotMatchingCountGetResponse>(
+          `/event/${eventId}/match/not/count`,
+        );
+      return res.data;
+    });
   };
+
   eventNotMatchingGet = async ({ eventId }: EventNotMatchingGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventNotMatchingGetResponse>(`/event/${eventId}/match/list`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventNotMatchingGetResponse>(
+        `/event/${eventId}/match/list`,
+      );
+      return res.data;
+    });
   };
+
   eventMatchedViCountGet = async ({
     eventId,
   }: EventMatchedViCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventMatchedViCountGetResponse>(`/event/${eventId}/match/vi/count`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventMatchedViCountGetResponse>(
+          `/event/${eventId}/match/vi/count`,
+        );
+      return res.data;
+    });
   };
+
   eventMatchedViGet = async ({ eventId }: EventMatchedViGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventMatchedViGetResponse>(`/event/${eventId}/match/vi/list`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventMatchedViGetResponse>(
+        `/event/${eventId}/match/vi/list`,
+      );
+      return res.data;
+    });
   };
+
   eventMatchedGuideCountGet = async ({
     eventId,
     viId,
   }: EventMatchedGuideCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventMatchedGuideCountGetResponse>(
-        `/event/${eventId}/match/${viId}/count`,
-      )
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventMatchedGuideCountGetResponse>(
+          `/event/${eventId}/match/${viId}/count`,
+        );
+      return res.data;
+    });
   };
+
   eventMatchedGuideGet = async ({
     eventId,
     viId,
   }: EventMatchedGuideGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventMatchedGuideGetResponse>(`/event/${eventId}/match/${viId}/list`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventMatchedGuideGetResponse>(
+          `/event/${eventId}/match/${viId}/list`,
+        );
+      return res.data;
+    });
   };
 
   eventApplyAllGet = async ({ eventId }: EventApplyAllGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventApplyAllGetResponse>(`/event/${eventId}/forms/all`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventApplyAllGetResponse>(
+        `/event/${eventId}/forms/all`,
+      );
+      return res.data;
+    });
   };
 }
 
