@@ -153,9 +153,12 @@ const MyEvent: React.FC = () => {
         variant="fullWidth"
         value={sortValue}
         onChange={(_, newValue) => {
-          setSearchParams({
-            sort: newValue,
-          });
+          setSearchParams(
+            {
+              sort: newValue,
+            },
+            { replace: true },
+          );
         }}
       >
         <Tab value={EventSort.Upcoming} label="나의 예정 이벤트" />

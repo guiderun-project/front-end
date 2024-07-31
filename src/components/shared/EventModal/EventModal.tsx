@@ -6,7 +6,6 @@ import {
   IconButton,
   DialogContent,
   DialogTitle,
-  Divider,
   CircularProgress,
   Stack,
   Button,
@@ -25,6 +24,7 @@ import { TitleContentRow } from '../TitleContentRow';
 import eventApi from '@/apis/requests/event';
 import { BROWSER_PATH } from '@/constants/path';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
+import { getFullKoreanDate, getPeriod } from '@/utils/time';
 
 interface EventModalProps {
   eventId: number;
@@ -87,7 +87,7 @@ const EventModal: React.FC<EventModalProps> = ({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '1.75rem',
+            gap: '0.75rem',
             '&::-webkit-scrollbar': {
               display: 'none',
             },
@@ -107,12 +107,18 @@ const EventModal: React.FC<EventModalProps> = ({
             }
           />
           <TitleContentRow
-            title="일시"
+            title="날짜"
             content={
-              <Typography component="span" display="flex" gap="0.5rem">
-                {eventData.date.replace(/-/g, '.')}
-                <Divider orientation="vertical" variant="middle" flexItem />
-                {eventData.startTime}~{eventData.endTime}
+              <Typography>
+                {getFullKoreanDate(new Date(eventData.date))}
+              </Typography>
+            }
+          />
+          <TitleContentRow
+            title="시간"
+            content={
+              <Typography>
+                {getPeriod(eventData.startTime, eventData.endTime)}
               </Typography>
             }
           />
@@ -208,7 +214,12 @@ const EventModal: React.FC<EventModalProps> = ({
             flexDirection="column"
             gap="0.5rem"
           >
-            <Typography component="h3" fontWeight={700}>
+            <Typography
+              component="h3"
+              fontWeight={700}
+              fontSize="1.0625rem"
+              paddingLeft="0.5rem"
+            >
               훈련 상세
             </Typography>
             <Box
@@ -216,7 +227,11 @@ const EventModal: React.FC<EventModalProps> = ({
               border="1px solid #D9D9D9"
               borderRadius="0.5rem"
             >
-              <Typography fontSize="0.8125rem" lineHeight="1.25rem">
+              <Typography
+                fontSize="0.8125rem"
+                lineHeight="1.25rem"
+                whiteSpace="break-spaces"
+              >
                 {eventData.content}
               </Typography>
             </Box>

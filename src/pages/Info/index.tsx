@@ -56,9 +56,12 @@ const Info = () => {
           value={type}
           aria-label="제출 정보 선택"
           onChange={(_, newValue) => {
-            setSearchParams({
-              type: newValue,
-            });
+            setSearchParams(
+              {
+                type: newValue,
+              },
+              { replace: true },
+            );
           }}
         >
           <Tab

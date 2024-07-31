@@ -179,6 +179,7 @@ const EventCommentBox: React.FC<EventCommentBoxProps> = ({
     return (
       <StyledEditForm onSubmit={handleEditSubmit}>
         <TextField
+          multiline
           fullWidth
           required
           placeholder="댓글을 수정해주세요."
@@ -267,7 +268,9 @@ const EventCommentBox: React.FC<EventCommentBoxProps> = ({
         {isEdit ? (
           renderEdit()
         ) : (
-          <Typography fontSize="0.875rem">{content}</Typography>
+          <Typography fontSize="0.875rem" whiteSpace="break-spaces">
+            {content}
+          </Typography>
         )}
         {likeData ? (
           <Stack direction="row" alignItems="center">

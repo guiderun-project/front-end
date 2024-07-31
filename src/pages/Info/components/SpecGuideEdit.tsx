@@ -58,7 +58,7 @@ const SpecGuideEdit: React.FC = () => {
         alert('저장되었습니다. ');
         queryClient.invalidateQueries({ queryKey: ['runningSpecGuideGet'] });
         searchParams.set('mode', 'detail');
-        setSearchParams(searchParams.toString());
+        setSearchParams(searchParams.toString(), { replace: true });
       } catch (err) {
         alert('오류가 발생했습니다. ');
       }
