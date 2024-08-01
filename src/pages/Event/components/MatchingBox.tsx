@@ -60,7 +60,7 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
       <ApplyUserChip
         selected={selectedVi === viData.userId}
         clickable={matchingMode}
-        isAttend={matchingMode ? false : viData.isAttened}
+        isAttend={matchingMode ? false : viData.isAttended}
         type={DisabilityEnum.VI}
         name={viData.name}
         onClick={() => onViSelect(viData.userId, viData.name)}
@@ -72,7 +72,7 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
               selected={selectedGuide === user.userId}
               clickable={matchingMode}
               key={`guide-${user.userId}`}
-              isAttend={matchingMode ? false : user.isAttened}
+              isAttend={matchingMode ? false : user.isAttended}
               type={DisabilityEnum.GUIDE}
               name={user.name}
               onClick={() => onGuideSelect(user.userId, user.name)}

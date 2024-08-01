@@ -493,7 +493,7 @@ export type EventNotMatchingCountGetResponse = {
   guide: number;
 };
 
-export type ApplyUserAttendType = ApplyUserType & { isAttened: boolean };
+export type ApplyUserAttendType = ApplyUserType & { isAttended: boolean };
 
 export type EventNotMatchingGetRequest = {
   eventId: number;
