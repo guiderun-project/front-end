@@ -173,7 +173,7 @@ const EventDetail: React.FC = () => {
                     <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
                   )}
                 </IconButton>
-                <Typography fontSize="0.625rem">
+                <Typography fontSize="0.625rem" role="text">
                   좋아요 {eventLike?.likes ?? 0}
                 </Typography>
               </Stack>
