@@ -1,5 +1,7 @@
 import { isAxiosError } from 'axios';
+
 import { axiosInstanceWithToken } from '../axios';
+import { ErrorType } from '../types/error';
 import {
   EventCalendarDetailGetRequest,
   EventCalendarDetailGetResponse,
@@ -77,7 +79,6 @@ import {
   EventApplyDeleteRequest,
   EventDeleteRequest,
 } from '../types/event';
-import { ErrorType } from '../types/error';
 
 class EventApi {
   private async handleRequest<T>(request: () => Promise<T>) {

@@ -2,9 +2,10 @@ import React, { PropsWithChildren, ReactNode } from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
 import { AxiosError } from 'axios';
+import { Link } from 'react-router-dom';
+
 import { ErrorType } from '@/apis/types/error';
 import { BROWSER_PATH } from '@/constants/path';
-import { Link } from 'react-router-dom';
 
 interface ErrorBoundaryProps {
   fallback?: ReactNode;

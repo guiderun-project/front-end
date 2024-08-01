@@ -1,4 +1,5 @@
 import { isAxiosError } from 'axios';
+
 import { axiosInstanceWithToken } from '../axios';
 import {
   AdminApplyListCountGetRequest,
@@ -62,9 +63,9 @@ import {
   AdminWithdrawalListGetRequest,
   AdminWithdrawalListGetResponse,
 } from '../types/admin';
+import { ErrorType } from '../types/error';
 
 import { EventType } from '@/types/group';
-import { ErrorType } from '../types/error';
 
 class AdminApi {
   private async handleRequest<T>(request: () => Promise<T>) {
