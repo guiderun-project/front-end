@@ -260,7 +260,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
                       selected={selectedVi.userId === user.userId}
                       clickable={matchingMode}
                       key={user.userId}
-                      isAttend={matchingMode ? false : user.isAttened}
+                      isAttend={matchingMode ? false : user.isAttended}
                       name={user.name}
                       type={DisabilityEnum.VI}
                       onClick={() =>
@@ -281,7 +281,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
                       selected={selectedGuide.userId === user.userId}
                       clickable={matchingMode}
                       key={user.userId}
-                      isAttend={matchingMode ? false : user.isAttened}
+                      isAttend={matchingMode ? false : user.isAttended}
                       name={user.name}
                       type={DisabilityEnum.GUIDE}
                       onClick={() =>

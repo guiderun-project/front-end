@@ -60,6 +60,7 @@ const DisabilityChip: React.FC<DisabilityChipProps> = ({
   if (component === 'avartar') {
     return (
       <Avatar
+        role="text"
         aria-label={
           type === DisabilityEnum.GUIDE ? '가이드러너' : '시각장애러너'
         }
