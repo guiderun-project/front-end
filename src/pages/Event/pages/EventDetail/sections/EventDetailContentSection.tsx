@@ -37,7 +37,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
       <TitleContentRow
         title="주최자"
         content={
-          <Stack direction="row" alignItems="center" gap="0.25rem">
+          <Stack role="text" direction="row" alignItems="center" gap="0.25rem">
             <DisabilityChip component="chip" type={eventData.organizerType} />
             <Typography fontWeight={600}>{eventData.organizer}</Typography>
             <GroupChip type="text" group={eventData.organizerPace} />

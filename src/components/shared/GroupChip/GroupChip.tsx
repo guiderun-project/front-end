@@ -20,6 +20,7 @@ const GroupChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   if (type === 'text') {
     return (
       <Typography
+        role="text"
         component="span"
         fontSize="1.125rem"
         fontWeight={700}
@@ -33,6 +34,7 @@ const GroupChip: React.FC<GroupChipProps> = ({ type = 'avatar', group }) => {
   return (
     <Avatar
       component="span"
+      role="text"
       aria-label={`Group ${group}`}
       sx={{
         width: '1.875rem',
