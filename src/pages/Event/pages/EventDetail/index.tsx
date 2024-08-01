@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -211,10 +212,10 @@ const EventDetail: React.FC = () => {
             }}
             label={
               <Stack direction="row" alignItems="center" gap="0.25rem">
+                <ChevronLeftIcon fontSize="small" aria-hidden />
                 <Typography fontSize="0.9375rem" fontWeight={600}>
                   훈련 상세 내용
                 </Typography>
-                <ChevronRightIcon fontSize="small" aria-hidden />
               </Stack>
             }
             sx={{
