@@ -43,6 +43,11 @@ const EventModal: React.FC<EventModalProps> = ({
     enabled: isOpen,
   });
 
+  const isEndEvent =
+    eventData &&
+    (eventData.status === EventStatusType.End ||
+      eventData.recruitStatus === RecruitStatus.End);
+
   /**
    *
    */
@@ -126,56 +131,43 @@ const EventModal: React.FC<EventModalProps> = ({
             title="장소"
             content={<Typography>{eventData.place}</Typography>}
           />
-          <TitleContentRow
-            title={
-              eventData.status === EventStatusType.End ||
-              eventData.recruitStatus === RecruitStatus.End
-                ? '참여인원'
-                : '모집인원'
-            }
-            alignItems="flex-start"
-            content={
-              <Typography
-                role="text"
-                display="flex"
-                flexDirection="column"
-                gap="0.5rem"
-              >
-                <span>
-                  시각장애러너
-                  <span
-                    style={{
-                      color: '#DE1313',
-                    }}
-                  >
-                    {` ${
-                      eventData.status === EventStatusType.End ||
-                      eventData.recruitStatus === RecruitStatus.End
-                        ? eventData.viCnt
-                        : eventData.recruitVi
-                    }`}
+          {isEndEvent && (
+            <TitleContentRow
+              title="참여인원"
+              alignItems="flex-start"
+              content={
+                <Typography
+                  role="text"
+                  display="flex"
+                  flexDirection="column"
+                  gap="0.5rem"
+                >
+                  <span>
+                    시각장애러너
+                    <span
+                      style={{
+                        color: '#DE1313',
+                      }}
+                    >
+                      {eventData.viCnt}
+                    </span>
+                    명
                   </span>
-                  명
-                </span>
-                <span>
-                  가이드러너
-                  <span
-                    style={{
-                      color: '#DE1313',
-                    }}
-                  >
-                    {` ${
-                      eventData.status === EventStatusType.End ||
-                      eventData.recruitStatus === RecruitStatus.End
-                        ? eventData.guideCnt
-                        : eventData.recruitGuide
-                    }`}
+                  <span>
+                    가이드러너
+                    <span
+                      style={{
+                        color: '#DE1313',
+                      }}
+                    >
+                      {eventData.guideCnt}
+                    </span>
+                    명
                   </span>
-                  명
-                </span>
-              </Typography>
-            }
-          />
+                </Typography>
+              }
+            />
+          )}
           {eventData.isApply ? (
             <TitleContentRow
               title="내 파트너"

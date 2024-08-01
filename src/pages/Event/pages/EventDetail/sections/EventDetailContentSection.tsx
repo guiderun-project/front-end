@@ -24,6 +24,10 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
   eventId,
   isOwner,
 }) => {
+  const isEndEvent =
+    eventData.status === EventStatusType.End ||
+    eventData.recruitStatus === RecruitStatus.Close ||
+    eventData.recruitStatus === RecruitStatus.End;
   //
   //
   //
@@ -58,19 +62,11 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
         title="장소"
         content={<Typography>{eventData.place}</Typography>}
       />
-      {eventData.status === EventStatusType.End ||
-      eventData.recruitStatus === RecruitStatus.Close ||
-      eventData.recruitStatus === RecruitStatus.End ? (
+      {isEndEvent && (
         <RecruitCountBox
           title="참여 인원"
           viNum={eventData.numV}
           guideNum={eventData.numG}
-        />
-      ) : (
-        <RecruitCountBox
-          title="모집 인원"
-          viNum={eventData.minNumV}
-          guideNum={eventData.minNumG}
         />
       )}
       {eventData.submit && !isOwner ? (

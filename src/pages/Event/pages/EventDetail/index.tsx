@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -172,7 +173,7 @@ const EventDetail: React.FC = () => {
                     <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
                   )}
                 </IconButton>
-                <Typography fontSize="0.625rem">
+                <Typography fontSize="0.625rem" role="text">
                   좋아요 {eventLike?.likes ?? 0}
                 </Typography>
               </Stack>
@@ -211,10 +212,10 @@ const EventDetail: React.FC = () => {
             }}
             label={
               <Stack direction="row" alignItems="center" gap="0.25rem">
+                <ChevronLeftIcon fontSize="small" aria-hidden />
                 <Typography fontSize="0.9375rem" fontWeight={600}>
                   훈련 상세 내용
                 </Typography>
-                <ChevronRightIcon fontSize="small" aria-hidden />
               </Stack>
             }
             sx={{

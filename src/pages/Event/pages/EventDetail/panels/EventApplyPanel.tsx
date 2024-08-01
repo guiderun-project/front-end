@@ -40,6 +40,7 @@ const EventApplyPanel: React.FC = () => {
           <StyledUserListBox>
             {userData.map((user) => (
               <ApplyDetailTooltip
+                key={`UserListBox-${user.userId}`}
                 open={userId === user.userId}
                 userId={user.userId}
                 onClose={() => setUserId('')}
