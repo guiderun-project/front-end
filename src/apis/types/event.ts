@@ -7,6 +7,12 @@ import {
 } from '@/types/group';
 import { EventKind, EventSort } from '@/types/sort';
 
+export type MachingPartnerType = {
+  partnerName: string; //파트너 이름
+  partnerRecord: RunningGroup; //파트너 러닝등급
+  partnerType: DisabilityEnum; //파트너 타입(가이드인지 vi인지)
+};
+
 export type EventPostRequest = {
   recruitStartDate: string;
   recruitEndDate: string;
@@ -75,15 +81,12 @@ export type EventGetResponse = {
   minNumG: number; //희망 guide 인원
   numV: number; //참여 vi 인원
   numG: number; //참여 guide 인원
-
-  partner: string | null; // 파트너 이름 (없으면 null)
-  partnerType: DisabilityEnum; // 파트너가 vi인지 guide인지
-  partnerPace: RunningGroup; // 파트너 러닝 등급
   details: string; //상세사항
   //여기까지 이벤트 기본 정보
 
   checkOrganizer: boolean; // 이벤트 개설자인지 아닌
-  submit: boolean; //내가 신청 완료된 이벤트인지 아닌지
+  isApply: boolean; //신청 여부
+  partner: MachingPartnerType[];
   status: EventStatus /*
 - EVENT_UPCOMING 이벤트 시작 전
 - EVENT_OPEN 이벤트 진행중
@@ -114,12 +117,9 @@ export type EventPopupGetResponse = {
   place: string; //달리는 장소
   content: string; //이벤트 내용
   updatedAt: string;
-
+  partner: MachingPartnerType[];
   isApply: boolean; //신청 여부
   hasPartner: boolean; //파트너 존재 여부
-  partnerName: string; //파트너 이름
-  partnerRecord: RunningGroup; //파트너 러닝등급
-  partnerType: DisabilityEnum; //파트너 타입(가이드인지 vi인지)
 };
 
 export type MyEventGetRequest = {
