@@ -215,7 +215,7 @@ const EventApply: React.FC = () => {
   if (
     eventData.recruitStatus === RecruitStatus.Close ||
     eventData.status === EventStatusType.End ||
-    eventData.submit
+    eventData.isApply
   ) {
     return <Navigate to={`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`} />;
   }

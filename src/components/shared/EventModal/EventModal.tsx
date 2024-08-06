@@ -175,14 +175,22 @@ const EventModal: React.FC<EventModalProps> = ({
               content={
                 eventData.hasPartner ? (
                   <Stack paddingLeft="0.5rem" gap="0.5rem">
-                    <Stack direction="row" gap="0.5rem" alignItems="center">
-                      <DisabilityChip
-                        component="chip"
-                        type={eventData.partnerType}
-                      />
-                      <Typography>{eventData.partnerName}</Typography>
-                      <GroupChip type="text" group={eventData.partnerRecord} />
-                    </Stack>
+                    {eventData.partner.map((partner) => (
+                      <Stack
+                        role="text"
+                        key={`matching-popup-${partner.partnerName}-${partner.partnerName}`}
+                        direction="row"
+                        gap="0.5rem"
+                        alignItems="center"
+                      >
+                        <DisabilityChip
+                          component="chip"
+                          type={partner.partnerType}
+                        />
+                        <Typography>{partner.partnerName}</Typography>
+                        <GroupChip type="text" group={partner.partnerRecord} />
+                      </Stack>
+                    ))}
                     <TextLink
                       label="참가자 현황"
                       to={`BROWSER_PATH.EVENT/${eventId}`}
