@@ -317,7 +317,7 @@ const EventDetail: React.FC = () => {
         }
       } else {
         if (eventData.recruitStatus === RecruitStatus.Open) {
-          if (eventData.submit) {
+          if (eventData.isApply) {
             return (
               <Button
                 fullWidth

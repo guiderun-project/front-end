@@ -22,7 +22,6 @@ interface EventDetailContentSectionProps {
 const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
   eventData,
   eventId,
-  isOwner,
 }) => {
   const isEndEvent =
     eventData.status === EventStatusType.End ||
@@ -69,26 +68,36 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
           guideNum={eventData.numG}
         />
       )}
-      {eventData.submit && !isOwner ? (
+      {eventData.isApply ? (
         <TitleContentRow
           title="내 파트너"
           alignItems={eventData.partner ? 'flex-start' : 'center'}
           content={
-            eventData.partner ? (
-              <Stack gap="0.5rem">
-                <Stack direction="row" gap="0.25rem" alignItems="center">
-                  <DisabilityChip
-                    component="chip"
-                    type={eventData.partnerType}
-                  />
-                  <Typography component="span" fontSize="0.9375rem">
-                    {eventData.partner}
-                  </Typography>
-                  <GroupChip type="text" group={eventData.partnerPace} />
+            eventData.partner.length > 0 ? (
+              <Stack gap="1.5rem">
+                <Stack gap="0.75rem">
+                  {eventData.partner.map((partner) => (
+                    <Stack
+                      key={`matching-${partner.partnerName}-${partner.partnerName}`}
+                      role="text"
+                      direction="row"
+                      gap="0.25rem"
+                      alignItems="center"
+                    >
+                      <DisabilityChip
+                        component="chip"
+                        type={partner.partnerType}
+                      />
+                      <Typography component="span" fontSize="0.9375rem">
+                        {partner.partnerName}
+                      </Typography>
+                      <GroupChip type="text" group={partner.partnerRecord} />
+                    </Stack>
+                  ))}
                 </Stack>
                 {eventData.status !== EventStatusType.End && (
                   <TextLink
-                    label="신청내용 조회"
+                    label="신청내용 수정 혹은 취소"
                     to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
                   />
                 )}
@@ -110,7 +119,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
                 </Typography>
                 {eventData.status !== EventStatusType.End && (
                   <TextLink
-                    label="신청내용 조회"
+                    label="신청내용 수정 혹은 취소"
                     to={`${BROWSER_PATH.EVENT.APPLY_DETAIL}/${eventId}`}
                   />
                 )}
