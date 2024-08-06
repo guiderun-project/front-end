@@ -171,9 +171,11 @@ const EventModal: React.FC<EventModalProps> = ({
           {eventData.isApply ? (
             <TitleContentRow
               title="내 파트너"
-              alignItems={eventData.hasPartner ? 'flex-start' : 'center'}
+              alignItems={
+                eventData.partner.length > 0 ? 'flex-start' : 'center'
+              }
               content={
-                eventData.hasPartner ? (
+                eventData.partner.length > 0 ? (
                   <Stack paddingLeft="0.5rem" gap="0.5rem">
                     {eventData.partner.map((partner) => (
                       <Stack
@@ -193,7 +195,7 @@ const EventModal: React.FC<EventModalProps> = ({
                     ))}
                     <TextLink
                       label="참가자 현황"
-                      to={`BROWSER_PATH.EVENT/${eventId}`}
+                      to={`${BROWSER_PATH.EVENT.MAIN}/${eventId}?section=status`}
                     />
                   </Stack>
                 ) : (
