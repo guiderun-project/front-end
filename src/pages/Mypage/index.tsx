@@ -255,7 +255,7 @@ const Mypage: React.FC = () => {
             ))}
           </Stack>
         )}
-        {getAuthority.isEditor(userData.role) && (
+        {getAuthority.isAdmin(userData.role) && (
           <Stack direction="row" justifyContent="center">
             <Button
               fullWidth
