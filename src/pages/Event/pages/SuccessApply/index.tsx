@@ -39,6 +39,7 @@ const SuccessApply: React.FC<SuccessApplyProps> = ({ eventId }) => {
         <Stack width="100%" alignItems="center" gap="1rem">
           <Button
             fullWidth
+            replace
             size="large"
             variant="contained"
             component={Link}
@@ -52,6 +53,7 @@ const SuccessApply: React.FC<SuccessApplyProps> = ({ eventId }) => {
             variant="outlined"
             component={Link}
             to={BROWSER_PATH.MYPAGE}
+            replace
           >
             마이페이지
           </Button>

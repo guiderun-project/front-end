@@ -217,7 +217,7 @@ const EventApply: React.FC = () => {
     eventData.status === EventStatusType.End ||
     eventData.isApply
   ) {
-    return <Navigate to={`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`} />;
+    return <Navigate to={`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`} replace />;
   }
 
   if (isSuccess) {

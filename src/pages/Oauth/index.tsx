@@ -30,7 +30,7 @@ const Oauth: React.FC = () => {
         infoApi.userInfoGet().then((res) => {
           dispatch(updateInfo(res));
           window.localStorage.removeItem(PREV_PATH_KEY);
-          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN, { replace: true });
         });
       } else {
         navigate(BROWSER_PATH.SIGNUP);
@@ -43,7 +43,7 @@ const Oauth: React.FC = () => {
   //
   React.useEffect(() => {
     if (!code) {
-      navigate(BROWSER_PATH.INTRO);
+      navigate(BROWSER_PATH.INTRO, { replace: true });
       return;
     }
     mutate(code);
