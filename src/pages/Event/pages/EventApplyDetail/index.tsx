@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
 import MatchingStandardAccordion from '../../components/MatchingStandardAccordion';
@@ -29,6 +29,7 @@ const EventApplyDetail: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const { userId } = useSelector((state: RootState) => state.user);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: eventData } = useSuspenseQuery({
     queryKey: ['eventGet', eventId],
@@ -47,6 +48,7 @@ const EventApplyDetail: React.FC = () => {
       eventApi.eventApplyDelete({ eventId: Number(eventId) ?? 0 }),
     onSuccess: () => {
       alert('참가 신청 취소되었습니다. ');
+      navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`, { replace: true });
     },
     onError: () => {
       alert('에러가 발생했습니다.');
