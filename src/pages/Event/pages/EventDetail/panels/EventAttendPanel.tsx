@@ -84,8 +84,24 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
   const { mutate } = useMutation({
     mutationFn: (userId: string) =>
       eventApi.eventAttendPost({ eventId, userId }),
-    onSuccess: () => {
-      alert('처리되었습니다. ');
+    onSuccess: (_, userId) => {
+      if (!applyStatus) return;
+      const userIndex = applyStatus.attend.findIndex(
+        (user) => user.userId === userId,
+      );
+      if (userIndex !== -1) {
+        alert(
+          `${applyStatus.attend[userIndex].name}님이 출석 취소 되었습니다. `,
+        );
+        return;
+      }
+      alert(
+        `${
+          applyStatus.notAttend[
+            applyStatus.notAttend.findIndex((user) => user.userId === userId)
+          ].name
+        }님이 출석 되었습니다.`,
+      );
     },
     onError: () => {
       alert('에러가 발생했습니다. 다시 시도해주세요.');
@@ -213,13 +229,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
                     type={user.type}
                     name={user.name}
                     onAttend={() => {
-                      if (
-                        window.confirm(
-                          `${user.name}님을 출석 처리하시겠습니까? `,
-                        )
-                      ) {
-                        mutate(user.userId);
-                      }
+                      mutate(user.userId);
                     }}
                   />
                 ))}
@@ -245,13 +255,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
                     type={user.type}
                     name={user.name}
                     onAttend={() => {
-                      if (
-                        window.confirm(
-                          `${user.name}님을 출석 취소하시겠습니까? `,
-                        )
-                      ) {
-                        mutate(user.userId);
-                      }
+                      mutate(user.userId);
                     }}
                   />
                 ))}
