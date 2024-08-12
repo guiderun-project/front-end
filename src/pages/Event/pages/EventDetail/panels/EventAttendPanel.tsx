@@ -213,13 +213,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
                     type={user.type}
                     name={user.name}
                     onAttend={() => {
-                      if (
-                        window.confirm(
-                          `${user.name}님을 출석 처리하시겠습니까? `,
-                        )
-                      ) {
-                        mutate(user.userId);
-                      }
+                      mutate(user.userId);
                     }}
                   />
                 ))}
