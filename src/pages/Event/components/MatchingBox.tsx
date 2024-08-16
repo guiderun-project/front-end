@@ -3,6 +3,8 @@ import { CircularProgress, Stack } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
+import CancelMatchingButton from '../pages/EventDetail/components/CancelMatchingButton';
+
 import eventApi from '@/apis/requests/event';
 import { ApplyUserAttendType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
@@ -60,26 +62,42 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
         .map(({ name }) => name)
         .join(', ')}`}
     >
-      <ApplyUserChip
-        selected={selectedVi === viData.userId}
-        clickable={matchingMode}
-        isAttend={matchingMode ? false : viData.isAttended}
+      <CancelMatchingButton
+        visible={selectedVi === viData.userId}
+        userId={viData.userId}
+        userName={viData.name}
         type={DisabilityEnum.VI}
-        name={viData.name}
-        onClick={() => onViSelect(viData.userId, viData.name)}
-      />
+        onResetSelect={() => () => onViSelect(viData.userId, viData.name)}
+      >
+        <ApplyUserChip
+          selected={selectedVi === viData.userId}
+          clickable={matchingMode}
+          isAttend={matchingMode ? false : viData.isAttended}
+          type={DisabilityEnum.VI}
+          name={viData.name}
+          onClick={() => onViSelect(viData.userId, viData.name)}
+        />
+      </CancelMatchingButton>
       {guideList ? (
         <StyledGuideList>
           {guideList.guide.map((user) => (
-            <ApplyUserChip
-              selected={selectedGuide === user.userId}
-              clickable={matchingMode}
-              key={`guide-${user.userId}`}
-              isAttend={matchingMode ? false : user.isAttended}
+            <CancelMatchingButton
+              visible={selectedGuide === user.userId}
+              userId={user.userId}
+              userName={user.name}
               type={DisabilityEnum.GUIDE}
-              name={user.name}
-              onClick={() => onGuideSelect(user.userId, user.name)}
-            />
+              onResetSelect={() => onGuideSelect(user.userId, user.name)}
+            >
+              <ApplyUserChip
+                selected={selectedGuide === user.userId}
+                clickable={matchingMode}
+                key={`guide-${user.userId}`}
+                isAttend={matchingMode ? false : user.isAttended}
+                type={DisabilityEnum.GUIDE}
+                name={user.name}
+                onClick={() => onGuideSelect(user.userId, user.name)}
+              />
+            </CancelMatchingButton>
           ))}
         </StyledGuideList>
       ) : (

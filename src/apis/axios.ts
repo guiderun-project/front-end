@@ -31,7 +31,6 @@ axiosInstanceWithToken.interceptors.response.use(
   (error) => {
     if (isAxiosError(error)) {
       if (error.response?.status === 401 || error.status === 401) {
-        console.log('에러 발생');
         //TODO: 자동로그인 개발 시 이곳에서 액세스 토큰을 요청합니다.
         window.location.reload();
       }

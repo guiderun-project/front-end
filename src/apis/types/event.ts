@@ -478,12 +478,6 @@ export type EventMatchingPostRequest = {
   userId: string;
 };
 
-export type EventMatchingDeleteRequest = {
-  eventId: number;
-  viId: string;
-  userId: string;
-};
-
 export type EventNotMatchingCountGetRequest = {
   eventId: number;
 };
@@ -544,4 +538,9 @@ export type EventApplyAllGetRequest = {
 export type EventApplyAllGetResponse = {
   vi: ApplyUserType[];
   guide: ApplyUserType[];
+};
+
+export type EventMatchingDeleteRequest = {
+  eventId: number;
+  userId: string;
 };
