@@ -1,3 +1,4 @@
+import { isAxiosError } from 'axios';
 import { axiosInstanceWithToken } from '../axios';
 import type {
   EventHistoryCountGetRequest,
@@ -29,134 +30,181 @@ import type {
   RunningSpecViGetRequest,
   RunningSpecViGetResponse,
   RunningSpecViPatchRequest,
-  runningSpecViPatchResponse,
+  RunningSpecViPatchResponse,
   UserInfoGetResponse,
 } from '../types/info';
 
 import { RecruitStatus } from '@/types/group';
 import { PartnerSort } from '@/types/sort';
+import { ErrorType } from '../types/error';
 
 class InfoApi {
+  private async handleRequest<T>(request: () => Promise<T>) {
+    try {
+      return await request();
+    } catch (error) {
+      if (isAxiosError<ErrorType>(error)) {
+        throw error;
+      }
+      throw new Error('예상치 못한 에러 발생');
+    }
+  }
   /**
    * @returns 마이페이지 상단에 있는 값 반환
    */
   myPageGet = async () => {
-    return await axiosInstanceWithToken
-      .get<MyPageGetResponse>('/user/mypage')
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<MyPageGetResponse>('/user/mypage');
+      return res.data;
+    });
   };
 
   /**
    * @returns userId를 포함한 값 반환
    */
   userInfoGet = async () => {
-    return await axiosInstanceWithToken
-      .get<UserInfoGetResponse>('/user/personal')
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<UserInfoGetResponse>('/user/personal');
+      return res.data;
+    });
   };
 
   /**
    * @return 회원가입 시 입력한 기본 인적사항 반환
    */
   personalInfoGet = async ({ userId }: PersonalInfoGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<PersonalInfoGetResponse>(`/user/personal/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<PersonalInfoGetResponse>(
+        `/user/personal/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   personalInfoPatch = async (updateData: PersonalInfoPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<PersonalInfoPatchResponse>('/user/personal', updateData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch<PersonalInfoPatchResponse>(
+        '/user/personal',
+        updateData,
+      );
+      return res.data;
+    });
   };
 
   /**
    * @returns 회원가입 인적사항 중 러닝 스펙과 관련된 내용 반환
    */
   runningSpecGuideGet = async ({ userId }: RunningSpecGuideGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<RunningSpecGuideGetResponse>(`/user/running/guide/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<RunningSpecGuideGetResponse>(
+        `/user/running/guide/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   runningSpecGuidePatch = async (updataData: RunningSpecGuidePatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<RunningSpecGuidePatchResponse>('/user/running/guide', updataData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.patch<RunningSpecGuidePatchResponse>(
+          '/user/running/guide',
+          updataData,
+        );
+      return res.data;
+    });
   };
 
   /**
    * @returns 시각 장애 러너 러닝 스펙 반환
    */
-
   runningSpecViGet = async ({ userId }: RunningSpecViGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<RunningSpecViGetResponse>(`/user/running/vi/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<RunningSpecViGetResponse>(
+        `/user/running/vi/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   runningSpecViPatch = async (updateData: RunningSpecViPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<runningSpecViPatchResponse>('/user/running/vi', updateData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.patch<RunningSpecViPatchResponse>(
+          '/user/running/vi',
+          updateData,
+        );
+      return res.data;
+    });
   };
 
   /**
    * @returns 권한 동의 여부 반환
    */
-
   permissionGet = async ({ userId }: PermissionGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<PermissionGetResponse>(`/user/permission/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<PermissionGetResponse>(
+        `/user/permission/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   permissionPatch = async (updateData: PermissionPatchRequest) => {
-    return await axiosInstanceWithToken
-      .patch<PermissionPatchResponse>('/user/permission', updateData)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.patch<PermissionPatchResponse>(
+        '/user/permission',
+        updateData,
+      );
+      return res.data;
+    });
   };
 
   /**
    * 다른 사용자 정보를 search할 때 사용하는 api
    * @returns 사용자 기초 정보를 반환
    */
-
   userProfileGet = async ({ userId }: UserProfileGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<UserProfileGetResponse>(`/user/profile/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<UserProfileGetResponse>(
+        `/user/profile/${userId}`,
+      );
+      return res.data;
+    });
   };
 
   /**
    * 함께 뛰었던 파트너 조회
    * @returns
    */
-
   partnerListGet = async ({
     userId,
     sort = PartnerSort.Count,
     limit = 4,
     start = 0,
   }: PartnerListGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<PartnerListGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<PartnerListGetResponse>(
         `/user/partner-list/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
-      )
-      .then((res) => res.data.items);
+      );
+      return res.data.items;
+    });
   };
 
   partnerListCountGet = async ({ userId }: PartnerListCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<PartnerListCountGetResponse>(`/user/partner-list/count/${userId}`)
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<PartnerListCountGetResponse>(
+        `/user/partner-list/count/${userId}`,
+      );
+      return res.data.count;
+    });
   };
 
   /**
    * 내가 참여한(신청한) 이벤트 목록 조회
    * @returns 내가 참여한 이벤트 목록 반환
    */
-
   eventHistoryGet = async ({
     userId,
     sort = RecruitStatus.All,
@@ -164,13 +212,14 @@ class InfoApi {
     start = 0,
     year,
   }: EventHistoryGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventHistoryGetResponse>(
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get<EventHistoryGetResponse>(
         `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
           year ? `&year=${year}` : ''
         }`,
-      )
-      .then((res) => res.data);
+      );
+      return res.data;
+    });
   };
 
   eventHistoryCountGet = async ({
@@ -178,25 +227,39 @@ class InfoApi {
     sort = RecruitStatus.All,
     year,
   }: EventHistoryCountGetRequest) => {
-    return await axiosInstanceWithToken
-      .get<EventHistoryCountGetResponse>(
-        `/user/event-history/count/${userId}?sort=${sort}${
-          year ? `&year=${year}` : ''
-        }`,
-      )
-      .then((res) => res.data.count);
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<EventHistoryCountGetResponse>(
+          `/user/event-history/count/${userId}?sort=${sort}${
+            year ? `&year=${year}` : ''
+          }`,
+        );
+      return res.data.count;
+    });
   };
 
   profileImagePost = async ({ image }: ProfileImagePostRequest) => {
-    return await axiosInstanceWithToken
-      .post<ProfileImagePostResponse>('/user/img', image)
-      .then((res) => res.data.img);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post<ProfileImagePostResponse>(
+        '/user/img',
+        image,
+      );
+      return res.data.img;
+    });
   };
 
   likePost = async ({ userId }: LikePostRequest) => {
-    return await axiosInstanceWithToken
-      .post(`/user/like/${userId}`)
-      .then((res) => res.data);
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(`/user/like/${userId}`);
+      return res.data;
+    });
+  };
+
+  userInfoAllResponse = async () => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.get('/user/info/all');
+      return res.data;
+    });
   };
 }
 

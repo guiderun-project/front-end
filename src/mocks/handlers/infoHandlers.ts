@@ -23,7 +23,7 @@ import {
   RunningSpecGuidePatchResponse,
   RunningSpecViGetResponse,
   RunningSpecViPatchRequest,
-  runningSpecViPatchResponse,
+  RunningSpecViPatchResponse,
   UserInfoGetResponse,
 } from '@/apis/types/info';
 import {
@@ -161,7 +161,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // runningSpecViPatch
-  http.patch<NoneType, RunningSpecViPatchRequest, runningSpecViPatchResponse>(
+  http.patch<NoneType, RunningSpecViPatchRequest, RunningSpecViPatchResponse>(
     baseURL + '/user/running/vi',
     async ({ request }) => {
       const newSpec = await request.json();
