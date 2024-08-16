@@ -1,5 +1,7 @@
 import { isAxiosError } from 'axios';
+
 import { axiosInstanceWithToken } from '../axios';
+import { ErrorType } from '../types/error';
 import type {
   EventHistoryCountGetRequest,
   EventHistoryCountGetResponse,
@@ -32,11 +34,11 @@ import type {
   RunningSpecViPatchRequest,
   RunningSpecViPatchResponse,
   UserInfoGetResponse,
+  UserInfoAllGetResponse,
 } from '../types/info';
 
 import { RecruitStatus } from '@/types/group';
 import { PartnerSort } from '@/types/sort';
-import { ErrorType } from '../types/error';
 
 class InfoApi {
   private async handleRequest<T>(request: () => Promise<T>) {
@@ -257,7 +259,10 @@ class InfoApi {
 
   userInfoAllGet = async () => {
     return this.handleRequest(async () => {
-      const res = await axiosInstanceWithToken.get('/user/info/all');
+      const res =
+        await axiosInstanceWithToken.get<UserInfoAllGetResponse>(
+          '/user/info/all',
+        );
       return res.data;
     });
   };
