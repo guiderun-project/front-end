@@ -56,6 +56,13 @@ import { EventSort } from '@/types/sort';
 //https://mswjs.io/docs/network-behavior/rest
 
 export const eventHandlers: HttpHandler[] = [
+  http.delete<{ eventId: string; userId: string }>(
+    baseURL + '/event/:eventId/match/:userId',
+    () => {
+      return HttpResponse.json();
+    },
+  ),
+
   //eventPopupGet
   http.get<{ eventId: string }, NoneType, EventPopupGetResponse>(
     baseURL + '/event/pop/:eventId',

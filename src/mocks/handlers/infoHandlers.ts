@@ -23,8 +23,9 @@ import {
   RunningSpecGuidePatchResponse,
   RunningSpecViGetResponse,
   RunningSpecViPatchRequest,
-  runningSpecViPatchResponse,
+  RunningSpecViPatchResponse,
   UserInfoGetResponse,
+  UserInfoAllGetResponse,
 } from '@/apis/types/info';
 import {
   DisabilityEnum,
@@ -161,7 +162,7 @@ export const infoHandlers: HttpHandler[] = [
   ),
 
   // runningSpecViPatch
-  http.patch<NoneType, RunningSpecViPatchRequest, runningSpecViPatchResponse>(
+  http.patch<NoneType, RunningSpecViPatchRequest, RunningSpecViPatchResponse>(
     baseURL + '/user/running/vi',
     async ({ request }) => {
       const newSpec = await request.json();
@@ -567,4 +568,12 @@ export const infoHandlers: HttpHandler[] = [
   http.post<LikePostRequest>(baseURL + '/user/like/:userId', () => {
     return HttpResponse.json();
   }),
+
+  //userInfoAllGet
+  http.get<NoneType, NoneType, UserInfoAllGetResponse>(
+    baseURL + '/user/info/all',
+    () => {
+      return HttpResponse.json({ guideInfo: [], viInfo: [] });
+    },
+  ),
 ];

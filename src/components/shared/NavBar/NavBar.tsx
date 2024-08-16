@@ -18,11 +18,19 @@ import { RoleEnum } from '@/types/group';
 //
 //
 
-const StyledContainer = styled.nav`
-  position: absolute;
+const StyledContainer = styled.div`
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledNav = styled.nav`
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 48rem;
   background-color: #ececec;
   padding: 0.625rem 3.125rem;
   display: flex;
@@ -73,9 +81,22 @@ const NavBar: React.FC = () => {
 
   return (
     <StyledContainer>
-      {NAV_LINK_LIST.map((navItem) =>
-        navItem?.limit ? (
-          navItem.limit === role ? (
+      <StyledNav>
+        {NAV_LINK_LIST.map((navItem) =>
+          navItem?.limit ? (
+            navItem.limit === role ? (
+              <Tooltip key={`${navItem.alt}-nav`} title={navItem.alt}>
+                <Link to={navItem.link}>
+                  <Box
+                    component="img"
+                    width="1.4375rem"
+                    src={navItem.img}
+                    alt={navItem.alt}
+                  />
+                </Link>
+              </Tooltip>
+            ) : null
+          ) : (
             <Tooltip key={`${navItem.alt}-nav`} title={navItem.alt}>
               <Link to={navItem.link}>
                 <Box
@@ -86,20 +107,9 @@ const NavBar: React.FC = () => {
                 />
               </Link>
             </Tooltip>
-          ) : null
-        ) : (
-          <Tooltip key={`${navItem.alt}-nav`} title={navItem.alt}>
-            <Link to={navItem.link}>
-              <Box
-                component="img"
-                width="1.4375rem"
-                src={navItem.img}
-                alt={navItem.alt}
-              />
-            </Link>
-          </Tooltip>
-        ),
-      )}
+          ),
+        )}
+      </StyledNav>
     </StyledContainer>
   );
 };
