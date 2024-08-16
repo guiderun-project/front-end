@@ -7,6 +7,7 @@ import eventApi from '@/apis/requests/event';
 import { ApplyUserAttendType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
 import { DisabilityEnum } from '@/types/group';
+import CancelMatchingButton from '../pages/EventDetail/components/CancelMatchingButton';
 
 //
 //
@@ -60,26 +61,38 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
         .map(({ name }) => name)
         .join(', ')}`}
     >
-      <ApplyUserChip
-        selected={selectedVi === viData.userId}
-        clickable={matchingMode}
-        isAttend={matchingMode ? false : viData.isAttended}
+      <CancelMatchingButton
+        visible={selectedVi === viData.userId}
+        userId={viData.userId}
         type={DisabilityEnum.VI}
-        name={viData.name}
-        onClick={() => onViSelect(viData.userId, viData.name)}
-      />
+      >
+        <ApplyUserChip
+          selected={selectedVi === viData.userId}
+          clickable={matchingMode}
+          isAttend={matchingMode ? false : viData.isAttended}
+          type={DisabilityEnum.VI}
+          name={viData.name}
+          onClick={() => onViSelect(viData.userId, viData.name)}
+        />
+      </CancelMatchingButton>
       {guideList ? (
         <StyledGuideList>
           {guideList.guide.map((user) => (
-            <ApplyUserChip
-              selected={selectedGuide === user.userId}
-              clickable={matchingMode}
-              key={`guide-${user.userId}`}
-              isAttend={matchingMode ? false : user.isAttended}
+            <CancelMatchingButton
+              visible={selectedGuide === user.userId}
+              userId={user.userId}
               type={DisabilityEnum.GUIDE}
-              name={user.name}
-              onClick={() => onGuideSelect(user.userId, user.name)}
-            />
+            >
+              <ApplyUserChip
+                selected={selectedGuide === user.userId}
+                clickable={matchingMode}
+                key={`guide-${user.userId}`}
+                isAttend={matchingMode ? false : user.isAttended}
+                type={DisabilityEnum.GUIDE}
+                name={user.name}
+                onClick={() => onGuideSelect(user.userId, user.name)}
+              />
+            </CancelMatchingButton>
           ))}
         </StyledGuideList>
       ) : (

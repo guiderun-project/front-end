@@ -1,5 +1,5 @@
 import DoneIcon from '@mui/icons-material/Done';
-import { Chip, ChipProps } from '@mui/material';
+import { Chip, ChipProps, useTheme } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 
@@ -31,6 +31,7 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
     isAttend = false,
     onAttend = () => null,
   } = props;
+  const theme = useTheme();
 
   /**
    *
@@ -68,6 +69,10 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
         transition: 'all 0.2s ease-in',
         bgcolor: !isAttend ? '#FFF' : 'default',
         borderWidth: selected ? '3px' : 'default',
+        borderColor:
+          type === DisabilityEnum.VI
+            ? theme.palette.vi.main
+            : theme.palette.guide.main,
         padding: '0 0.375rem',
         fontWeight: selected ? 700 : 400,
         color: getChipColor(),
