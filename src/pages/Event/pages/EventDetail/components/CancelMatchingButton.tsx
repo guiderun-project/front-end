@@ -80,7 +80,7 @@ const CancelMatchingButton: React.FC<CancelMatchingButtonProps> = ({
           onClick={() => {
             if (
               window.confirm(
-                `${userName} 매칭을 취소하시겠습니까? \nVI의 경우 매칭된 가이드러너가 모두 취소됩니다.`,
+                `${userName} 매칭을 취소하시겠습니까? \nVI러너의 경우 매칭된 가이드러너가 모두 취소됩니다.`,
               )
             ) {
               mutate();
