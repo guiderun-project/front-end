@@ -256,58 +256,54 @@ export type LikePostRequest = {
   userId: string;
 };
 
-export type UserInfoAllResponse = {
-  guideInfo: [
-    {
-      name: string;
-      type: string;
-      role: RoleEnum;
-      gender: GenderEnum;
-      phoneNumber: string;
-      recordDegree: RunningGroup;
-      age: number;
-      snsId: string;
-      isOpenNumber: boolean;
-      isOpenSns: boolean;
-      detailRecord: string;
+export type UserInfoAllGetResponse = {
+  guideInfo: {
+    name: string;
+    type: string;
+    role: RoleEnum;
+    gender: GenderEnum;
+    phoneNumber: string;
+    recordDegree: RunningGroup;
+    age: number;
+    snsId: string;
+    isOpenNumber: boolean;
+    isOpenSns: boolean;
+    detailRecord: string;
 
-      isGuideExp: boolean;
-      viName: string;
-      viRecord?: string; //vi 러닝 기록
-      viCount?: string; //상세한 가이드 경험 *선택
-      guidingPace: string; //가이드 가능한 페이스
+    isGuideExp: boolean;
+    viName: string;
+    viRecord?: string; //vi 러닝 기록
+    viCount?: string; //상세한 가이드 경험 *선택
+    guidingPace: string; //가이드 가능한 페이스
 
-      runningPlace: string;
-      howToKnow: string[];
-      motive: string;
-      hopePrefs: string;
-      privacy: boolean;
-      portraitRights: boolean;
-    },
-  ];
-  viInfo: [
-    {
-      name: string;
-      type: string;
-      role: RoleEnum;
-      gender: GenderEnum;
-      phoneNumber: string;
-      recordDegree: RunningGroup;
-      age: number;
-      snsId: string;
-      isOpenNumber: boolean;
-      isOpenSns: boolean;
-      detailRecord: string;
+    runningPlace: string;
+    howToKnow: string[];
+    motive: string;
+    hopePrefs: string;
+    privacy: boolean;
+    portraitRights: boolean;
+  }[];
+  viInfo: {
+    name: string;
+    type: string;
+    role: RoleEnum;
+    gender: GenderEnum;
+    phoneNumber: string;
+    recordDegree: RunningGroup;
+    age: number;
+    snsId: string;
+    isOpenNumber: boolean;
+    isOpenSns: boolean;
+    detailRecord: string;
 
-      isRunningExp: boolean;
-      guideName?: string;
+    isRunningExp: boolean;
+    guideName?: string;
 
-      runningPlace: string;
-      howToKnow: string[];
-      motive: string;
-      hopePrefs: string;
-      privacy: boolean;
-      portraitRights: boolean;
-    },
-  ];
+    runningPlace: string;
+    howToKnow: string[];
+    motive: string;
+    hopePrefs: string;
+    privacy: boolean;
+    portraitRights: boolean;
+  }[];
 };

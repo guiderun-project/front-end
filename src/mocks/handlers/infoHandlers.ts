@@ -25,6 +25,7 @@ import {
   RunningSpecViPatchRequest,
   RunningSpecViPatchResponse,
   UserInfoGetResponse,
+  UserInfoAllGetResponse,
 } from '@/apis/types/info';
 import {
   DisabilityEnum,
@@ -567,4 +568,12 @@ export const infoHandlers: HttpHandler[] = [
   http.post<LikePostRequest>(baseURL + '/user/like/:userId', () => {
     return HttpResponse.json();
   }),
+
+  //userInfoAllGet
+  http.get<NoneType, NoneType, UserInfoAllGetResponse>(
+    baseURL + '/user/info/all',
+    () => {
+      return HttpResponse.json({ guideInfo: [], viInfo: [] });
+    },
+  ),
 ];
