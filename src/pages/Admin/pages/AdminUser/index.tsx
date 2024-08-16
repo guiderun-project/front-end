@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
+import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   CircularProgress,
@@ -17,6 +18,7 @@ import {
   TextField,
   Typography,
   InputAdornment,
+  IconButton,
 } from '@mui/material';
 import {
   useSuspenseQuery,
@@ -30,6 +32,7 @@ import useUserFilter from '../../hooks/useUserFilter';
 
 import adminApi from '@/apis/requests/admin';
 import useDebounce from '@/hooks/useDebounce';
+import { downloadUserDataByExcel } from '@/utils/info';
 
 //
 //
@@ -263,6 +266,9 @@ const AdminUser: React.FC = () => {
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           회원 관리
+          <IconButton onClick={downloadUserDataByExcel}>
+            <DownloadIcon />
+          </IconButton>
         </Typography>
         <TextField
           fullWidth
