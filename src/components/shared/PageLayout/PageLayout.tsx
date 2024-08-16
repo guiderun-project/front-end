@@ -20,7 +20,7 @@ interface PagelayoutProps {
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
-  background-color: lightgray;
+  background-color: #f8f9ff;
   width: 100%;
   height: 100%;
   min-height: 100vh;
