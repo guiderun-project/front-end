@@ -3,11 +3,12 @@ import { CircularProgress, Stack } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
+import CancelMatchingButton from '../pages/EventDetail/components/CancelMatchingButton';
+
 import eventApi from '@/apis/requests/event';
 import { ApplyUserAttendType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
 import { DisabilityEnum } from '@/types/group';
-import CancelMatchingButton from '../pages/EventDetail/components/CancelMatchingButton';
 
 //
 //
@@ -64,7 +65,9 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
       <CancelMatchingButton
         visible={selectedVi === viData.userId}
         userId={viData.userId}
+        userName={viData.name}
         type={DisabilityEnum.VI}
+        onResetSelect={() => () => onViSelect(viData.userId, viData.name)}
       >
         <ApplyUserChip
           selected={selectedVi === viData.userId}
@@ -81,7 +84,9 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
             <CancelMatchingButton
               visible={selectedGuide === user.userId}
               userId={user.userId}
+              userName={user.name}
               type={DisabilityEnum.GUIDE}
+              onResetSelect={() => onGuideSelect(user.userId, user.name)}
             >
               <ApplyUserChip
                 selected={selectedGuide === user.userId}

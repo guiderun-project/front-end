@@ -437,19 +437,6 @@ class EventApi {
     });
   };
 
-  eventMatchingDelete = async ({
-    eventId,
-    userId,
-    viId,
-  }: EventMatchingDeleteRequest) => {
-    return this.handleRequest(async () => {
-      const res = await axiosInstanceWithToken.delete(
-        `/event/${eventId}/match/${viId}/${userId}`,
-      );
-      return res.data;
-    });
-  };
-
   eventNotMatchingCountGet = async ({
     eventId,
   }: EventNotMatchingCountGetRequest) => {
@@ -522,6 +509,18 @@ class EventApi {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<EventApplyAllGetResponse>(
         `/event/${eventId}/forms/all`,
+      );
+      return res.data;
+    });
+  };
+
+  eventMatchingDelete = async ({
+    eventId,
+    userId,
+  }: EventMatchingDeleteRequest) => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.delete(
+        `/event/${eventId}/match/${userId}`,
       );
       return res.data;
     });
