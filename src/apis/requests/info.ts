@@ -255,7 +255,7 @@ class InfoApi {
     });
   };
 
-  userInfoAllResponse = async () => {
+  userInfoAllGet = async () => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get('/user/info/all');
       return res.data;
