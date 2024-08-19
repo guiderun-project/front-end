@@ -71,59 +71,48 @@ export type AdminUserSearchCountGetResponse = {
   count: number;
 };
 
-export type AdminViApplyGetResponse = {
-  //인적사항
-  phoneNumber: UserType['phoneNumber']; //전화번호
-  age: UserType['age']; //나이
-  snsId: UserType['snsId']; //sns 계정
-
-  //러닝스펙
-  isRunningExp: ViType['isRunningExp']; //러닝 경험 유무
-  runningPlace: UserType['runningPlace']; //러닝한 장소
-  detailRecord: UserType['detailRecord']; //상세기록
-  recordDegree: UserType['recordDegree']; //기록
-  guideName: ViType['guideName']; // 함께 뛴 가이드 이름
-  hopePrefs: UserType['hopePrefs']; //희망사항
-
-  //러닝 경험 있을 시 null
-  howToknow: UserType['howToKnow']; //알게 된 계기
-  motive: UserType['motive']; //동기
-
-  //약관동의
-  privacy: UserType['privacy']; //개인정보 동의
-  portraitRights: UserType['portraitRights']; //초상권 동의
-};
+export type AdminViApplyGetResponse = Pick<
+  ViType,
+  | 'phoneNumber'
+  | 'age'
+  | 'snsId'
+  | 'isRunningExp'
+  | 'runningPlace'
+  | 'detailRecord'
+  | 'recordDegree'
+  | 'guideName'
+  | 'hopePrefs'
+  | 'howToKnow'
+  | 'motive'
+  | 'privacy'
+  | 'portraitRights'
+>;
 
 export type AdminGuideApplyGetRequest = {
   userId: UserType['userId'];
 };
 
-export type AdminGuideApplyGetResponse = {
-  //인적사항
-  phoneNumber: UserType['phoneNumber']; //전화번호
-  age: UserType['age']; //나이
-  snsId: UserType['snsId']; //sns 계정
-
-  //러닝 스펙
-  isGuideExp: GuideType['isGuideExp']; //가이드 경험 유무
-  recordDegree: UserType['recordDegree']; //기록
-  detailRecord: UserType['detailRecord']; // 상세 기록
-  viCount: GuideType['viCount']; //상세한 가이드 경험
-  guidingPace: GuideType['guidingPace']; //가능한 페이스 그룹 *선택
-  hopePrefs: UserType['hopePrefs']; //희망사항 *선택
-
-  //가이드 경험 있을 때 null
-  howToKnow: UserType['howToKnow']; //알게 된 계기 *선택
-  motive: UserType['motive']; //동기 *선택
-
-  privacy: UserType['privacy']; //개인정보 동의 *필수
-  portraitRights: UserType['portraitRights']; //초상권 동의 *필수
-};
+export type AdminGuideApplyGetResponse = Pick<
+  GuideType,
+  | 'phoneNumber'
+  | 'age'
+  | 'snsId'
+  | 'isGuideExp'
+  | 'recordDegree'
+  | 'detailRecord'
+  | 'viCount'
+  | 'guidingPace'
+  | 'hopePrefs'
+  | 'howToKnow'
+  | 'motive'
+  | 'privacy'
+  | 'portraitRights'
+>;
 
 export type AdminApproveUserPostRequest = {
   userId: UserType['userId'];
   isApprove: boolean;
-  recordDegree: RunningGroup;
+  recordDegree: UserType['userId'];
 };
 
 export type AdminApproveUserPostResponse = {
@@ -226,17 +215,18 @@ export type AdminNewUserGetRequest = {
 };
 
 export type AdminNewUserGetResponse = {
-  items: {
-    userId: UserType['userId'];
-    img: UserType['img'];
-    role: UserType['role']; //권한
-    type: UserType['type']; //vi인지 guide인지
-    name: UserType['name'];
-    trainingCnt: number; //훈련 참여 수
-    contestCnt: number; //대회 참여
-    like: number; //좋아요 수
-    recordDegree: UserType['recordDegree'];
-  }[];
+  items: Pick<
+    UserType,
+    | 'userId'
+    | 'img'
+    | 'role'
+    | 'type'
+    | 'name'
+    | 'trainingCnt'
+    | 'contestCnt'
+    | 'like'
+    | 'recordDegree'
+  >[];
 };
 
 export type AdminCurrentEventGetRequest = {
@@ -320,15 +310,10 @@ export type AdminPartnerHistoryGetRequest = {
 };
 
 export type AdminPartnerHistoryGetResponse = {
-  items: {
-    userId: UserType['userId'];
-    img: UserType['img']; //프로필 이미지
-    role: UserType['role']; //권한
-    type: UserType['type']; //vi인지 guide 인지
-    name: UserType['name'];
-    recordDegree: UserType['recordDegree'];
-    like: number; //좋아요 수
-  }[];
+  items: Pick<
+    UserType,
+    'userId' | 'img' | 'role' | 'type' | 'name' | 'recordDegree' | 'like'
+  >[];
 };
 
 export type AdminSearchPartnerHistoryCountGetRequest = {
