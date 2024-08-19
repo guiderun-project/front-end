@@ -6,6 +6,7 @@ import {
   RunningGroup,
 } from '@/types/group';
 import { EventKind, EventSort } from '@/types/sort';
+import { UserType } from '@/types/user';
 
 export type MachingPartnerType = {
   partnerName: string; //파트너 이름
@@ -256,7 +257,7 @@ export type EventCalendarDetailGetResponse = {
 };
 
 export type EventTypeCountGetRequest = {
-  userId: string;
+  userID: UserType['userId'];
 };
 
 export type EventTypeCountGetResponse = {
@@ -330,7 +331,7 @@ export type EventCommentGetRequest = {
 
 export type EventCommentType = {
   commentId: number;
-  userId: string; //작성자 id
+  userID: UserType['userId']; //작성자 id
   name: string; //작성자 이름
   type: DisabilityEnum; // 작성자가 vi인지 guide 인지
   content: string; //댓글 내용
@@ -421,7 +422,7 @@ export type EventApplyPatchResponse = {
 
 export type EventApplyGetRequest = {
   eventId: number;
-  userId: string;
+  userID: UserType['userId'];
 };
 
 export type EventApplyGetResponse = {
@@ -448,7 +449,7 @@ export type EventApplyStatusGetRequest = {
 };
 
 export type ApplyUserType = {
-  userId: string;
+  userID: UserType['userId'];
   type: DisabilityEnum;
   name: string;
 };
@@ -460,7 +461,7 @@ export type EventApplyStatusGetResponse = {
 
 export type EventAttendPostRequest = {
   eventId: number;
-  userId: string;
+  userID: UserType['userId'];
 };
 
 export type EventAttendStatusCountGetRequest = {
@@ -475,7 +476,7 @@ export type EventAttendStatusCountGetResponse = {
 export type EventMatchingPostRequest = {
   eventId: number;
   viId: string;
-  userId: string;
+  userID: UserType['userId'];
 };
 
 export type EventNotMatchingCountGetRequest = {
@@ -542,5 +543,5 @@ export type EventApplyAllGetResponse = {
 
 export type EventMatchingDeleteRequest = {
   eventId: number;
-  userId: string;
+  userID: UserType['userId'];
 };

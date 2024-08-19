@@ -17,9 +17,10 @@ import {
   TitleHeader,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
+import { UserType } from '@/types/user';
 
 const Profile: React.FC = () => {
-  const { userId } = useParams<{ userId: string }>();
+  const { userId } = useParams<{ userId: UserType['userId'] }>();
 
   if (!userId) {
     return <Navigate to={BROWSER_PATH.MAIN} replace />;

@@ -6,9 +6,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import adminApi from '@/apis/requests/admin';
 import { PartnerBox } from '@/components/shared';
+import { UserType } from '@/types/user';
 
 interface PartnerListProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 //

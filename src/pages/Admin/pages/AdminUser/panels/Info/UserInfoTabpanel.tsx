@@ -5,9 +5,10 @@ import UserSpecCard from './UserSpecCard';
 import UserTermsCard from './UserTermsCard';
 
 import { DisabilityEnum } from '@/types/group';
+import { UserType } from '@/types/user';
 
 interface UserInfoTabpanelProps {
-  userId: string;
+  userId: UserType['userId']
   type: DisabilityEnum;
 }
 

@@ -8,9 +8,10 @@ import PartnerList from './PartnerList';
 import PartnerSearch from './PartnerSearch';
 
 import useDebounce from '@/hooks/useDebounce';
+import { UserType } from '@/types/user';
 
 interface UserPartnerTabPanelProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const UserPartnerTabPanel: React.FC<UserPartnerTabPanelProps> = ({

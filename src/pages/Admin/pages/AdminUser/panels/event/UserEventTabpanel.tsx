@@ -8,9 +8,10 @@ import UserEventList from './UserEventList';
 import UserEventSearchList from './UserEventSearchList';
 
 import useDebounce from '@/hooks/useDebounce';
+import { UserType } from '@/types/user';
 
 interface UserEventTabpanelProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const UserEventTabPanel: React.FC<UserEventTabpanelProps> = ({ userId }) => {

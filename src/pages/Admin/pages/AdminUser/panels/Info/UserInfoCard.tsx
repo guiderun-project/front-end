@@ -10,8 +10,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import infoApi from '@/apis/requests/info';
 import { StyledSection } from '@/pages/Info/components/InfoDetail';
+import { UserType } from '@/types/user';
 interface UserInfoCardProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const UserInfoCard: React.FC<UserInfoCardProps> = ({ userId }) => {

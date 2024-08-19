@@ -8,10 +8,11 @@ import { useParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
 import { GroupChip } from '@/components/shared';
+import { UserType } from '@/types/user';
 
 interface ApplyDetailTooltipProps {
   open: boolean;
-  userId: string;
+  userId: UserType['userId'];
   onClose: VoidFunction;
 }
 

@@ -9,6 +9,7 @@ import eventApi from '@/apis/requests/event';
 import { ApplyUserAttendType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
 import { DisabilityEnum } from '@/types/group';
+import { UserType } from '@/types/user';
 
 //
 //
@@ -18,8 +19,8 @@ interface MatchingBoxProps {
   selectedVi: string;
   selectedGuide: string;
   viData: ApplyUserAttendType;
-  onGuideSelect: (userId: string, name: string) => void;
-  onViSelect: (userId: string, name: string) => void;
+  onGuideSelect: (userId: UserType['userId'], name: UserType['name']) => void;
+  onViSelect: (userId: UserType['userId'], name: UserType['name']) => void;
   matchingMode?: boolean;
 }
 
