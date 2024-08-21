@@ -22,7 +22,8 @@ const useKakaoShare = () => {
       content: {
         title: title,
         description: content,
-        imageUrl: 'https://i.ibb.co/Dg4G03D/Kakao-Talk-20240624-104425778.png',
+        imageUrl:
+          'https://guiderun-prod.s3.ap-northeast-2.amazonaws.com/icon/guiderun2.png',
         link: {
           mobileWebUrl: url,
           webUrl: url,
