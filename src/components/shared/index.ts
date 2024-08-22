@@ -16,6 +16,7 @@ export * from './NavBar';
 export * from './NotFound';
 export * from './PaceGroupList';
 export * from './PageLayout';
+export * from './PageTitle';
 export * from './PartnerBox';
 export * from './PartnerList';
 export * from './ProfileImage';
