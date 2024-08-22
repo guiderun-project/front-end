@@ -2,10 +2,13 @@ import React, { Suspense } from 'react';
 
 import { Stack } from '@mui/material';
 import { IntlProvider } from 'react-intl';
+import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import tapLogo from './assets/service_logo_black.png';
+import ogImage from './assets/og-image.jpg';
 import {
   ErrorBoundary,
   NavBar,
@@ -219,6 +222,11 @@ const Route: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <link rel="icon" href={tapLogo} />
+        <link rel="apple-touch-icon" href={tapLogo} />
+        <meta property="og:image" content={ogImage} />
+      </Helmet>
       <Suspense fallback={<Loading />}>
         <IntlProvider locale={locale} messages={messages}>
           <RouterProvider router={router} />
