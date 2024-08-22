@@ -25,12 +25,12 @@ import {
   useQuery,
   keepPreviousData,
 } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 
 import UserTableRow from './components/UserTableRow';
 import useUserFilter from '../../hooks/useUserFilter';
 
 import adminApi from '@/apis/requests/admin';
+import { PageTitle } from '@/components/shared';
 import useDebounce from '@/hooks/useDebounce';
 import { downloadUserDataByExcel } from '@/utils/info';
 
@@ -260,9 +260,7 @@ const AdminUser: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
-      <Helmet>
-        <title>회원 관리 - Admin - Guide run project</title>
-      </Helmet>
+      <PageTitle title="회원 관리 - Admin" />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           회원 관리

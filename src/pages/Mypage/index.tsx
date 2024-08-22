@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,6 +22,7 @@ import {
   EventLinkBox,
   GenderChip,
   GroupChip,
+  PageTitle,
   TextLink,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
@@ -297,9 +297,7 @@ const Mypage: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>마이 페이지 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="마이 페이지" />
       {/* 이름, 팀 */}
       {renderTeamInfo()}
       {/* 기본정보 */}

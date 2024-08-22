@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Header from './components/Header';
 
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { RoleEnum } from '@/types/group';
@@ -44,9 +44,7 @@ const SignupIntro: React.FC = () => {
       alignItems="center"
       gap="2.5rem"
     >
-      <Helmet>
-        <title>장애여부 선택 - Guide run project</title>
-      </Helmet>
+      <PageTitle title="장애여부 선택" />
       <Header>
         <FormattedMessage id="signup.intro.title" />
       </Header>

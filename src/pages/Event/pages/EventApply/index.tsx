@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
@@ -26,6 +25,7 @@ import {
   EventChip,
   EventStatus,
   GroupChip,
+  PageTitle,
   TitleHeader,
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
@@ -229,9 +229,7 @@ const EventApply: React.FC = () => {
   //
   return (
     <>
-      <Helmet>
-        <title>참여 신청서 작성 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="참여 신청서 작성" />
       <TitleHeader title="참여신청서 작성" />
       {renderHeader()}
       {renderForm()}

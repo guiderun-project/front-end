@@ -11,12 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import authApi from '@/apis/requests/auth';
 import { WithdrawDeleteRequest } from '@/apis/types/auth';
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { resetAccessToken } from '@/store/reducer/auth';
@@ -109,9 +109,7 @@ const Withdraw: React.FC = () => {
   //
   return (
     <>
-      <Helmet>
-        <title>탈퇴하기 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="탈퇴하기" />
       <Stack gap="0.75rem">
         <Typography
           component="h1"

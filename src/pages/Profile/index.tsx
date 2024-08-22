@@ -1,6 +1,5 @@
 import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
@@ -11,6 +10,7 @@ import {
   GenderChip,
   GroupChip,
   LikeButton,
+  PageTitle,
   PartnerList,
   ProfileImage,
   TitleContentRow,
@@ -140,9 +140,7 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{`${userData?.name}의 프로필 - Guide run Project`}</title>
-      </Helmet>
+      <PageTitle title={`${userData?.name}의 프로필`} />
       <TitleHeader title="개인 프로필 상세" />
       {renderProfileInfo()}
       <Stack gap="2rem">

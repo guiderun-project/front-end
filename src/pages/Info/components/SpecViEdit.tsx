@@ -16,7 +16,6 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -26,6 +25,7 @@ import { StyledInputLabel } from './InfoEdit';
 
 import infoApi from '@/apis/requests/info';
 import { RunningSpecViPatchRequest } from '@/apis/types/info';
+import { PageTitle } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
@@ -75,9 +75,7 @@ const SpecViEdit: React.FC = () => {
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
-      <Helmet>
-        <title>러닝 스펙 수정 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="러닝 스펙 수정" />
       <Stack gap="2rem">
         {/* 러닝 경험 */}
         <Controller

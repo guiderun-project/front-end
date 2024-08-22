@@ -11,11 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useSearchParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
-import { EventLinkBox } from '@/components/shared';
+import { EventLinkBox, PageTitle } from '@/components/shared';
 import useDebounce from '@/hooks/useDebounce';
 
 //
@@ -78,7 +77,7 @@ const EventSearch: React.FC = () => {
 
   const renderCountResult = () => {
     return (
-      <Typography component="h2" textAlign="center">
+      <Typography role="text" component="h2" textAlign="center">
         <span style={{ fontWeight: 700 }}>"{searchValue}"</span> 관련 내용이{' '}
         <span style={{ fontWeight: 700 }}>{eventCount}건</span> 검색되었습니다
       </Typography>
@@ -98,9 +97,7 @@ const EventSearch: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>이벤트 검색 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="이벤트 검색" />
       <Stack gap="2.5rem">
         <TextField
           autoFocus

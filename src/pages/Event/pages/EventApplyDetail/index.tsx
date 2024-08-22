@@ -4,7 +4,6 @@ import {
   useSuspenseQuery,
   useMutation,
 } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ import {
   EventChip,
   EventStatus,
   GroupChip,
+  PageTitle,
   TextLink,
   TitleHeader,
 } from '@/components/shared';
@@ -179,9 +179,7 @@ const EventApplyDetail: React.FC = () => {
   //
   return (
     <>
-      <Helmet>
-        <title>참가 신청서 조회 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="참가 신청서 조회" />
       <TitleHeader title="제출 정보 확인" />
       {renderHeader()}
       {renderForm()}

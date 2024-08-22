@@ -18,13 +18,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import { PersonalInfoPatchRequest } from '@/apis/types/info';
+import { PageTitle } from '@/components/shared';
 import { GenderEnum } from '@/types/group';
 
 //
@@ -122,9 +122,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
 
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
-      <Helmet>
-        <title>개인 인적사항 수정 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="개인 인적사항 수정" />
       <Stack gap="2rem">
         <Controller
           name="gender"

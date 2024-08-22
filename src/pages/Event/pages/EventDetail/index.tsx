@@ -15,7 +15,6 @@ import {
   IconButton,
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
@@ -29,6 +28,7 @@ import {
   EventChip,
   EventModal,
   EventStatus,
+  PageTitle,
   TextLink,
   TitleHeader,
 } from '@/components/shared';
@@ -407,9 +407,7 @@ const EventDetail: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>이벤트 상세 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="이벤트 상세" />
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHeader()}
       <Stack gap="2rem">
