@@ -32,7 +32,6 @@ export type PersonalInfoGetRequest = Pick<UserType, 'userId'>;
 
 export type PersonalInfoGetResponse = Pick<
   UserType,
-  | 'userId'
   | 'name'
   | 'type'
   | 'role'
@@ -42,7 +41,6 @@ export type PersonalInfoGetResponse = Pick<
   | 'snsId'
   | 'isOpenNumber'
   | 'isOpenSns'
-  | 'img'
 >;
 
 export type PersonalInfoPatchRequest = Omit<
