@@ -1,9 +1,11 @@
 import {
   DisabilityEnum,
   EventStatus,
+  EventType,
   RecruitStatus,
   RunningGroup,
 } from './group';
+import { UserType } from './user';
 
 export type MachingPartnerType = {
   partnerName: string; //파트너 이름
@@ -11,7 +13,7 @@ export type MachingPartnerType = {
   partnerType: DisabilityEnum; //파트너 타입(가이드인지 vi인지)
 };
 
-export type EventType = {
+export type Event = {
   eventId: number; //이벤트 아이디
   type: EventType; //대회인지 훈련인지
   name: string; //제목
@@ -39,4 +41,15 @@ export type EventType = {
   isApply: boolean; //신청 여부
   partner: MachingPartnerType[];
   status: EventStatus;
+  isApprove: boolean;
+};
+
+export type CommentType = {
+  commentId: number;
+  content: string;
+  createdAt: string;
+  likes: number;
+  userId: UserType['userId'];
+  name: UserType['name'];
+  type: UserType['type'];
 };
