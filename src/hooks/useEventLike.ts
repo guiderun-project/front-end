@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import eventApi from '@/apis/requests/event';
 import { EventLikeCountGetResponse } from '@/apis/types/event';
+import { Event } from '@/types/event';
 
 interface UseEventLikeProps {
-  eventId: number;
+  eventId: Event['eventId'];
 }
 
 const useEventLike = ({ eventId }: UseEventLikeProps) => {

@@ -17,20 +17,18 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 
 import eventApi from '@/apis/requests/event';
-import {
-  EventCommentLikeCountGetResponse,
-  EventCommentType,
-} from '@/apis/types/event';
+import { EventCommentLikeCountGetResponse } from '@/apis/types/event';
 import { DisabilityChip } from '@/components/shared';
 import { RootState } from '@/store/index';
+import { CommentType, Event } from '@/types/event';
 
 //
 //
 //
 
 interface EventCommentBoxProps {
-  comment: EventCommentType;
-  eventId: number;
+  comment: CommentType;
+  eventId: Event['eventId'];
 }
 
 //

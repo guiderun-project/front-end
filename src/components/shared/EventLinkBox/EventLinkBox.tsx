@@ -8,22 +8,23 @@ import { FormattedMessage } from 'react-intl';
 import { EventChip } from '../EventChip';
 import { EventModal } from '../EventModal';
 
-import { EventType, RecruitStatus } from '@/types/group';
+import { Event } from '@/types/event';
+import { RecruitStatus } from '@/types/group';
 
 //
 //
 //
 
 export type EventDataType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
-  recruitStatus: RecruitStatus;
-  date?: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
+  recruitStatus: Event['recruitStatus'];
+  date?: Event['date'];
   endDate?: string;
   startDate?: string;
   dDay?: number;
-  isApply?: boolean;
+  isApply?: Event['isApply'];
 };
 
 interface EventLinkBoxProps {

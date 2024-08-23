@@ -1,7 +1,6 @@
 import { CommentType, Event } from '@/types/event';
 import {
   DisabilityEnum,
-  EventStatus,
   EventType,
   RecruitStatus,
   RunningGroup,
@@ -12,14 +11,14 @@ import { UserType } from '@/types/user';
 export type EventPostRequest = {
   recruitStartDate: string;
   recruitEndDate: string;
-  name: string;
-  type: EventType;
-  startTime: string;
-  endTime: string;
-  maxNumV: number;
-  maxNumG: number;
-  place: string;
-  content: string;
+  name: Event['name'];
+  type: Event['type'];
+  startTime: Event['startTime'];
+  endTime: Event['endTime'];
+  minNumV: Event['minNumV'];
+  minNumG: Event['minNumG'];
+  place: Event['place'];
+  content: Event['details'];
 };
 
 export type EventPostResponse = Pick<Event, 'eventId' | 'isApprove'>;
@@ -89,6 +88,7 @@ export type EventPopupGetResponse = Pick<
   guideCnt: number;
   content: Event['updated_at'];
   hasPartner: boolean;
+  updatedAt: Event['updated_at'];
 };
 
 export type MyEventGetRequest = {
@@ -318,7 +318,7 @@ export type EventCommentDeleteResponse = Pick<CommentType, 'commentId'>;
 export type EventCommentPatchRequest = {
   eventId: Event['eventId'];
   commentId: CommentType['commentId'];
-  EventCommentPatchBody: Pick<CommentType, 'commentId'>;
+  EventCommentPatchBody: Pick<CommentType, 'content'>;
 };
 
 export type EventCommentPatchResponse = Pick<CommentType, 'commentId'>;
@@ -383,13 +383,11 @@ export type EventApplyStatusGetResponse = {
 };
 
 export type EventAttendPostRequest = {
-  eventId: number;
+  eventId: Event['eventId'];
   userId: UserType['userId'];
 };
 
-export type EventAttendStatusCountGetRequest = {
-  eventId: number;
-};
+export type EventAttendStatusCountGetRequest = Pick<Event, 'eventId'>;
 
 export type EventAttendStatusCountGetResponse = {
   attend: number;

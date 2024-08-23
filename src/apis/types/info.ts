@@ -1,4 +1,5 @@
-import { EventType, RecruitStatus } from '@/types/group';
+import { Event } from '@/types/event';
+import { RecruitStatus } from '@/types/group';
 import { PartnerSort } from '@/types/sort';
 import { GuideType, UserType, ViType } from '@/types/user';
 
@@ -167,11 +168,11 @@ export type EventHistoryGetRequest = {
 };
 
 export type EventDataType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
+  recruitStatus: Event['recruitStatus'];
   startDate: string;
-  recruitStatus: RecruitStatus;
 };
 
 export type EventHistoryGetResponse = {

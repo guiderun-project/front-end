@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import adminApi from '@/apis/requests/admin';
 import { ApplyListFilterType } from '@/apis/types/admin';
 import { ApplyUserChip, GroupChip } from '@/components/shared';
+import { Event } from '@/types/event';
 
 const MAX_USER_LENGTH = 10;
 
@@ -26,7 +27,9 @@ const TABLE_HEAD: { key: keyof ApplyListFilterType; name: string }[] = [
   { key: 'team', name: '팀' },
 ];
 
-const AdminEventApplyPanel: React.FC<{ eventId: number }> = ({ eventId }) => {
+const AdminEventApplyPanel: React.FC<{ eventId: Event['eventId'] }> = ({
+  eventId,
+}) => {
   const [page, setPage] = React.useState(1);
   const [filter, setFilter] = React.useState<ApplyListFilterType>({
     team: undefined,
