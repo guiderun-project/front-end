@@ -30,9 +30,10 @@ import infoApi from '@/apis/requests/info';
 import { DisabilityChip, GenderChip, ProfileImage } from '@/components/shared';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { RunningGroup } from '@/types/group';
+import { UserType } from '@/types/user';
 
 interface UserDetailDialogProps extends DialogProps {
-  userId: string;
+  userId: UserType['userId'];
   group: RunningGroup;
   onClose: () => void;
 }

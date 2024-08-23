@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 import { TitleHeader } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
+import { Event } from '@/types/event';
 
 //
 //
 //
 interface SuccessApplyProps {
-  eventId: number;
+  eventId: Event['eventId'];
 }
 
 //

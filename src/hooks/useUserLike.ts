@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import infoApi from '@/apis/requests/info';
 import { UserProfileGetResponse } from '@/apis/types/info';
+import { UserType } from '@/types/user';
 
 interface UseLikeParams {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const useUserLike = ({ userId }: UseLikeParams) => {

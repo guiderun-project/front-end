@@ -1,10 +1,10 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
 import kakaoImg from '@/assets/kakao_login.png';
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, KAKAO_REDIRECT_URL } from '@/constants/path';
 import { getKakaoOauthUrl } from '@/utils/login';
 
@@ -18,9 +18,7 @@ const Intro: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>시작하기 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="시작하기" />
       <Stack
         boxSizing="border-box"
         minHeight="100vh"

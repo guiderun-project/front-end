@@ -3,9 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 
 import adminApi from '@/apis/requests/admin';
 import { DisabilityChip } from '@/components/shared';
+import { Event } from '@/types/event';
 import { DisabilityEnum } from '@/types/group';
 
-const AdminEventResultPanel: React.FC<{ eventId: number }> = ({ eventId }) => {
+const AdminEventResultPanel: React.FC<{ eventId: Event['eventId'] }> = ({
+  eventId,
+}) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['adminEventResultGet', eventId],
     queryFn: () => adminApi.adminEventResultGet({ eventId }),

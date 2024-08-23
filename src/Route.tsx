@@ -1,11 +1,13 @@
 import React, { Suspense } from 'react';
 
 import { Stack } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { IntlProvider } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import tapLogo from './assets/service_logo_black.png';
 import {
   ErrorBoundary,
   NavBar,
@@ -219,6 +221,10 @@ const Route: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <link rel="icon" href={tapLogo} />
+        <link rel="apple-touch-icon" href={tapLogo} />
+      </Helmet>
       <Suspense fallback={<Loading />}>
         <IntlProvider locale={locale} messages={messages}>
           <RouterProvider router={router} />

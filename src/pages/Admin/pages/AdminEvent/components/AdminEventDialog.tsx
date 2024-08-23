@@ -33,6 +33,7 @@ import {
   GroupChip,
   TitleContentRow,
 } from '@/components/shared';
+import { Event } from '@/types/event';
 import { DisabilityEnum } from '@/types/group';
 
 //
@@ -40,8 +41,8 @@ import { DisabilityEnum } from '@/types/group';
 //
 
 interface AdminEventDialogProps extends DialogProps {
-  eventId: number;
-  approval: boolean;
+  eventId: Event['eventId'];
+  approval: Event['isApprove'];
   onClose: () => void;
 }
 

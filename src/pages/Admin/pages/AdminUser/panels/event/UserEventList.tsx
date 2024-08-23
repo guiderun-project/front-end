@@ -5,9 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import adminApi from '@/apis/requests/admin';
 import { EventLinkBox } from '@/components/shared';
+import { UserType } from '@/types/user';
 
 interface UserEventListProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 //

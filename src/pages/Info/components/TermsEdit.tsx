@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSearchParams } from 'react-router-dom';
@@ -23,6 +22,7 @@ import {
   PermissionGetResponse,
   PermissionPatchRequest,
 } from '@/apis/types/info';
+import { PageTitle } from '@/components/shared';
 
 //
 //
@@ -90,9 +90,7 @@ const TermsEdit: React.FC<TermsEditProps> = ({ defaultValues }) => {
   //
   return (
     <form id="edit_form" onSubmit={handleSubmit(onSubmit)}>
-      <Helmet>
-        <title>약관 동의 수정 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="약관 동의 수정" />
       <Stack gap="2rem" width="100%">
         <Controller
           name="privacy"

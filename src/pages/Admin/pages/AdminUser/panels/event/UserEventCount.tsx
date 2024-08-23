@@ -4,9 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import adminApi from '@/apis/requests/admin';
 import { EventChip } from '@/components/shared';
 import { EventType } from '@/types/group';
+import { UserType } from '@/types/user';
 
 interface UserEventCountProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const UserEventCount: React.FC<UserEventCountProps> = ({ userId }) => {

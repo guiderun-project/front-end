@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, FieldErrors, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +18,7 @@ import InputBox from '../../components/InputBox';
 
 import eventApi from '@/apis/requests/event';
 import { EventFormType, NewEventPostRequest } from '@/apis/types/event';
-import { DisabilityChip, GroupChip } from '@/components/shared';
+import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventType } from '@/types/group';
@@ -93,9 +92,7 @@ const NewEvent: React.FC = () => {
   //
   return (
     <>
-      <Helmet>
-        <title>이벤트 생성 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="이벤트 생성" />
       <Typography component="h1" fontSize="2rem">
         이벤트 만들기
       </Typography>

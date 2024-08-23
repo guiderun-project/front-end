@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { Helmet } from 'react-helmet-async';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
@@ -21,6 +20,7 @@ import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
 import { LoginPostRequest } from '@/apis/types/auth';
 import { ErrorType } from '@/apis/types/error';
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { setUserInfo } from '@/store/reducer/user';
@@ -131,9 +131,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>로그인 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="로그인" />
       <Stack
         boxSizing="border-box"
         minHeight="100vh"

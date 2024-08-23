@@ -7,10 +7,14 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 
-import { EventCount, EventHistoryList, PartnerList } from '@/components/shared';
+import {
+  EventCount,
+  EventHistoryList,
+  PageTitle,
+  PartnerList,
+} from '@/components/shared';
 import { RootState } from '@/store/index';
 
 const EventHistory: React.FC = () => {
@@ -74,11 +78,15 @@ const EventHistory: React.FC = () => {
   //
   return (
     <>
-      <Helmet>
-        <title>이벤트 히스토리 - Guide run project</title>
-      </Helmet>
+      <PageTitle title="이벤트 히스토리" />
       <Stack gap="2.5rem">
-        <Stack component="h1" direction="row" alignItems="center" gap="0.5rem">
+        <Stack
+          component="h1"
+          role="text"
+          direction="row"
+          alignItems="center"
+          gap="0.5rem"
+        >
           <Typography component="span" fontSize="2rem">
             {name}님의
           </Typography>

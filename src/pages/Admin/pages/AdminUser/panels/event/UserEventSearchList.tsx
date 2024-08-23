@@ -6,10 +6,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import adminApi from '@/apis/requests/admin';
 import { EventLinkBox } from '@/components/shared';
+import { UserType } from '@/types/user';
 
 interface UserEventSearchListProps {
   search: string;
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const MAX_EVENT_LENGTH = 5;

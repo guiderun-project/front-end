@@ -15,9 +15,10 @@ import { FormattedMessage } from 'react-intl';
 
 import infoApi from '@/apis/requests/info';
 import { StyledTermsBox } from '@/pages/Info/components/TermsDetail';
+import { UserType } from '@/types/user';
 
 interface UserTermsCardProps {
-  userId: string;
+  userId: UserType['userId'];
 }
 
 const UserTermsCard: React.FC<UserTermsCardProps> = ({ userId }) => {

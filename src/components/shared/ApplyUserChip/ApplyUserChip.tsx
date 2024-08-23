@@ -4,14 +4,15 @@ import { Chip, ChipProps, useTheme } from '@mui/material';
 import { DisabilityChip } from '../DisabilityChip';
 
 import { DisabilityEnum } from '@/types/group';
+import { UserType } from '@/types/user';
 
 //
 //
 //
 
 interface ApplyUserChipProps extends ChipProps {
-  type: DisabilityEnum;
-  name: string;
+  type: UserType['type'];
+  name: UserType['name'];
   selected?: boolean;
   isAttendMode?: boolean;
   isAttend?: boolean;
