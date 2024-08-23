@@ -1,5 +1,6 @@
 import { PartnerDataType } from './info';
 
+import { Event } from '@/types/event';
 import {
   EventStatus,
   EventType,
@@ -132,17 +133,17 @@ export type AdminEventListGetRequest = {
 } & EventFilterType;
 
 export type EventListItemType = {
-  eventId: number;
-  name: string;
-  smallDate: string; // 이벤트 시작일 [1/7]
-  startTime: string; //이벤트 시작 시간
-  organizer: string; //생성자
-  pace: RunningGroup; // 생성자 pace A ,B,C,D,E로 구분
-  recuitStatus: RecruitStatus;
-  approval: boolean; //이벤트 승인 여부
+  eventId: Event['eventId'];
+  name: Event['name'];
+  smallDate: Event['date']; // 이벤트 시작일 [1/7]
+  startTime: Event['startTime']; //이벤트 시작 시간
+  organizer: Event['organizer']; //생성자
+  pace: Event['organizerPace']; // 생성자 pace A ,B,C,D,E로 구분
+  recuitStatus: Event['recruitStatus'];
+  approval: Event['isApprove']; //이벤트 승인 여부
   minApply: number; //모집 희망 인원
-  minNumV: number; //vi 희망 인원
-  minNumG: number; //guide 희망 인원
+  minNumV: Event['minNumV']; //vi 희망 인원
+  minNumG: Event['minNumG']; //guide 희망 인원
   update_date: string;
   update_time: string;
 };
@@ -188,11 +189,11 @@ export type AdminEventHistoryGetRequest = {
 };
 
 export type EventHistoryItemType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
   endDate: string;
-  recruitStatus: RecruitStatus;
+  recruitStatus: Event['recruitStatus'];
 };
 
 export type AdminEventHistoryGetResponse = {
@@ -234,13 +235,10 @@ export type AdminCurrentEventGetRequest = {
   start?: number;
 };
 
-export type CurrentEventType = {
-  eventId: number; //이벤트 id
-  eventType: EventType; //훈련인지 대회인지
-  name: string;
-  recruitStatus: RecruitStatus; //모집 상태
-  date: string;
-};
+export type CurrentEventType = Pick<
+  Event,
+  'eventId' | 'name' | 'recruitStatus' | 'date'
+> & { eventType: Event['type'] };
 
 export type AdminCurrentEventGetResponse = {
   items: CurrentEventType[];
@@ -264,11 +262,11 @@ export type AdminSearchEventHistoryGetRequest = {
 };
 
 export type SearchEventHistoryType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
+  recruitStatus: Event['recruitStatus'];
   startDate: string;
-  recruitStatus: RecruitStatus;
 };
 
 export type AdminSearchEventHistoryGetResponse = {
@@ -380,13 +378,11 @@ export type AdminSearchWithdrawalListCountGetResponse = {
 };
 
 export type AdminApprovalEventPostRequest = {
-  eventId: number;
-  approval: boolean; //true면 허가, false면 거절.
+  eventId: Event['eventId'];
+  approval: Event['isApprove']; //true면 허가, false면 거절.
 };
 
-export type AdminEventResultGetRequest = {
-  eventId: number;
-};
+export type AdminEventResultGetRequest = Pick<Event, 'eventId'>;
 
 export type AdminEventResultGetResponse = {
   name: string;
@@ -412,7 +408,7 @@ export type ApplyListFilterType = {
 };
 
 export type AdminApplyListGetRequest = {
-  eventId: number;
+  eventId: Event['eventId'];
   limit: number;
   start: number;
 } & ApplyListFilterType;
@@ -429,7 +425,7 @@ export type AdminApplyListGetResponse = {
 };
 
 export type AdminApplyListCountGetRequest = {
-  eventId: number;
+  eventId: Event['eventId'];
 };
 
 export type AdminApplyListCountGetResponse = {
