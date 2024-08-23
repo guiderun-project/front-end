@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const path = require('path');
 
@@ -55,6 +56,21 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env': JSON.stringify(process.env),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../public'),
+          to: path.resolve(__dirname, '../dist'),
+          globOptions: {
+            ignore: [
+              '**/mockServiceWorker.js',
+              '**/index.html',
+              '**/_redirects',
+            ],
+          },
+        },
+      ],
     }),
   ],
 };
