@@ -17,13 +17,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 
 import useUserFilter from '../../hooks/useUserFilter';
 import { TABLE_HEAD } from '../AdminUser';
 import WithdrawalTableRow from '../AdminUser/components/WithdrawalTableRow';
 
 import adminApi from '@/apis/requests/admin';
+import { PageTitle } from '@/components/shared';
 import useDebounce from '@/hooks/useDebounce';
 
 //
@@ -201,9 +201,7 @@ const AdminWithdraw: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
-      <Helmet>
-        <title>탈퇴 회원 조회 - Guiderun project</title>
-      </Helmet>
+      <PageTitle title="탈퇴 회원 조회" />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           탈퇴한 회원

@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Badge, Box, Divider, Stack, Typography } from '@mui/material';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 
 import infoApi from '@/apis/requests/info';
+import { PageTitle } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { RunningGroup } from '@/types/group';
 
@@ -89,9 +89,7 @@ const SpecGuideDetail: React.FC = () => {
 
   return (
     <Stack component="div" gap="2rem">
-      <Helmet>
-        <title>러닝 스펙 조회 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="러닝 스펙 조회" />
       {/* 개인기록 */}
       <StyledDataSection>
         <Typography component="h3" fontWeight={700}>

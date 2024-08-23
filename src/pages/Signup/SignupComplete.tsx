@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Button, Stack, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import TeamingCriteria from './components/TeamingCriteria';
 
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { RoleEnum } from '@/types/group';
@@ -32,9 +32,7 @@ const SignupComplete: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>회원가입 완료 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="회원가입 완료" />
       <Header>
         <FormattedMessage id="signup.complete.title" />
       </Header>

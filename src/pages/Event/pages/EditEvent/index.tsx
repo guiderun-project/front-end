@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Controller, FieldErrors, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,7 +19,7 @@ import InputBox from '../../components/InputBox';
 
 import eventApi from '@/apis/requests/event';
 import { EventFormType } from '@/apis/types/event';
-import { DisabilityChip, GroupChip } from '@/components/shared';
+import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
@@ -157,9 +156,7 @@ const EditEvent: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>이벤트 수정 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="이벤트 수정" />
       <Typography component="h1" fontSize="2rem">
         이벤트 수정하기
       </Typography>

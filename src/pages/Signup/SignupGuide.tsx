@@ -13,7 +13,6 @@ import {
   Checkbox,
 } from '@mui/material';
 import axios from 'axios';
-import { Helmet } from 'react-helmet-async';
 import {
   Controller,
   FieldErrors,
@@ -30,6 +29,7 @@ import SignupTerms from './components/SignupTerms';
 
 import authApi from '@/apis/requests/auth';
 import { GuideSignupPostRequest } from '@/apis/types/auth';
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -764,9 +764,7 @@ const SignupGuide: React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <Helmet>
-        <title>회원 정보 입력(가이드) - Guide run project</title>
-      </Helmet>
+      <PageTitle title="회원 정보 입력(가이드)" />
       <form onSubmit={methods.handleSubmit(handleSubmit, hadleInvalid)}>
         <Stack padding="5rem 0" gap="3.75rem">
           <Typography component="h1" fontSize="2rem" fontWeight={400}>

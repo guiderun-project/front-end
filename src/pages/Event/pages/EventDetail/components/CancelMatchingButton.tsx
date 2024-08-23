@@ -8,12 +8,13 @@ import { useParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
 import { DisabilityEnum } from '@/types/group';
+import { UserType } from '@/types/user';
 
 interface CancelMatchingButtonProps extends PropsWithChildren {
-  userId: string;
-  userName: string;
+  userId: UserType['userId'];
+  userName: UserType['name'];
   visible: boolean;
-  type: DisabilityEnum;
+  type: UserType['type'];
   onResetSelect: VoidFunction;
 }
 

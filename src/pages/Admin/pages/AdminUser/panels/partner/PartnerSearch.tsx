@@ -7,9 +7,10 @@ import { StyledPartnerListBox } from './PartnerList';
 
 import adminApi from '@/apis/requests/admin';
 import { PartnerBox } from '@/components/shared';
+import { UserType } from '@/types/user';
 
 interface PartnerSearchProps {
-  userId: string;
+  userId: UserType['userId'];
   search: string;
 }
 

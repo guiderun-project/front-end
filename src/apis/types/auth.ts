@@ -1,4 +1,4 @@
-import { GenderEnum, RoleEnum, RunningGroup } from '@/types/group';
+import { GuideType, UserType, ViType } from '@/types/user';
 
 export type KakaoAuthPostRequest = {
   code: string;
@@ -11,93 +11,85 @@ export type KakaoAuthPostResponse = {
   isExist: boolean;
 };
 
-export type ViSignupPostRequest = {
-  //common section
+type AccountType = {
   accountId: string;
   password: string;
-  name: string;
-  gender: GenderEnum;
-  phoneNumber: string;
-  isOpenNumber: boolean;
-  age: number;
-  recordDegree: RunningGroup;
-  detailRecord: string | null;
-  snsId: string | null;
-  isOpenSns: boolean;
-  //VI section
-  isRunningExp: boolean;
-  guideName: string | null;
-  runningPlace: string | null;
-
-  howToKnow: string[] | null;
-  motive: string | null;
-  hopePrefs: string | null;
-
-  privacy: boolean;
-  portraitRights: boolean;
 };
 
-export type GuideSignupPostRequest = {
-  //common section
-  accountId: string;
-  password: string;
-  name: string;
-  gender: GenderEnum;
-  phoneNumber: string;
-  isOpenNumber: boolean;
-  age: number;
-  recordDegree: RunningGroup;
-  detailRecord: string | null;
-  snsId: string | null;
-  isOpenSns: boolean;
-  runningPlace: string | null;
+export type ViSignupPostRequest = Pick<
+  ViType,
+  | 'name'
+  | 'gender'
+  | 'phoneNumber'
+  | 'isOpenNumber'
+  | 'age'
+  | 'recordDegree'
+  | 'detailRecord'
+  | 'snsId'
+  | 'isOpenSns'
+  | 'isRunningExp'
+  | 'guideName'
+  | 'runningPlace'
+  | 'howToKnow'
+  | 'motive'
+  | 'hopePrefs'
+  | 'privacy'
+  | 'portraitRights'
+> &
+  AccountType;
 
-  //guide section
-  isGuideExp: boolean;
-  viName: string | null;
-  viRecord: string | null;
-  viCount: string | null;
-  guidingPace: RunningGroup;
-
-  howToKnow: string[] | null;
-  motive: string | null;
-  hopePrefs: string | null;
-
-  privacy: boolean;
-  portraitRights: boolean;
-};
+export type GuideSignupPostRequest = Pick<
+  GuideType,
+  | 'name'
+  | 'gender'
+  | 'phoneNumber'
+  | 'isOpenNumber'
+  | 'age'
+  | 'recordDegree'
+  | 'detailRecord'
+  | 'snsId'
+  | 'isOpenSns'
+  | 'runningPlace'
+  | 'isGuideExp'
+  | 'viName'
+  | 'viRecord'
+  | 'viCount'
+  | 'guidingPace'
+  | 'howToKnow'
+  | 'motive'
+  | 'hopePrefs'
+  | 'privacy'
+  | 'portraitRights'
+> &
+  AccountType;
 
 export type SignupPostResponse = {
-  userId: string;
+  userId: UserType['userId'];
   accessToken: string;
-  role: RoleEnum;
+  role: UserType['role'];
 };
 
 export type AccessTokenGetResponse = {
   accessToken: string;
-
   isExist: boolean;
 };
 
 export type CheckDuplicatedPostRequest = {
-  accountId: string;
+  accountId: AccountType['accountId'];
 };
 
 export type CheckDuplicatedPostResponse = {
   isUnique: boolean;
 };
 
-export type LoginPostRequest = {
-  accountId: string;
-  password: string;
-};
+export type LoginPostRequest = AccountType;
 
 export type LoginPostResponse = {
   accessToken: string;
 };
 
 export type GetCertificationTokenPasswordPostRequest = {
-  accountId: string;
+  accountId: AccountType['accountId'];
   phoneNum: string;
 };
 
@@ -123,7 +115,7 @@ export type GetUserIdPostRequest = {
 };
 
 export type GetUserIdPostResponse = {
-  accountId: string;
+  accountId: AccountType['accountId'];
   createdAt: string;
 };
 

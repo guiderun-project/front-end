@@ -23,11 +23,12 @@ import { TitleContentRow } from '../TitleContentRow';
 
 import eventApi from '@/apis/requests/event';
 import { BROWSER_PATH } from '@/constants/path';
+import { Event } from '@/types/event';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 import { getFullKoreanDate, getPeriod } from '@/utils/time';
 
 interface EventModalProps {
-  eventId: number;
+  eventId: Event['eventId'];
   isOpen: boolean;
   onModalClose: () => void;
 }

@@ -9,6 +9,7 @@ import EventMatchingPanel from '../panels/EventMatchingPanel';
 
 import { EventGetResponse } from '@/apis/types/event';
 import { RootState } from '@/store/index';
+import { Event } from '@/types/event';
 import getAuthority from '@/utils/authority';
 
 //
@@ -17,7 +18,7 @@ import getAuthority from '@/utils/authority';
 
 interface EventDetailStatusSectionProps {
   eventData: EventGetResponse;
-  eventId: number;
+  eventId: Event['eventId'];
   isOwner: boolean;
 }
 

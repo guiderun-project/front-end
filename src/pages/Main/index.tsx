@@ -11,7 +11,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -188,9 +187,6 @@ const Main: React.FC = () => {
 
   return (
     <Stack gap="2.5rem">
-      <Helmet>
-        <title>Guide run Project</title>
-      </Helmet>
       {renderEvent()}
       {renderPartner()}
     </Stack>

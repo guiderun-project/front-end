@@ -294,7 +294,7 @@ const VI_APPLY_DATA: AdminViApplyGetResponse = {
   detailRecord: '22분',
   guideName: '홍길동',
   hopePrefs: '화이팅',
-  howToknow: ['vi.1'],
+  howToKnow: ['vi.1'],
   isRunningExp: true,
   motive: 'ㅎㅎ',
   phoneNumber: '01234567890',

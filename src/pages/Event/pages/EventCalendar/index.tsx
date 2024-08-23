@@ -6,12 +6,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CircleIcon from '@mui/icons-material/Circle';
 import { IconButton, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 
 import eventApi from '@/apis/requests/event';
 import AllEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
-import { EventLinkBox, LinkButton } from '@/components/shared';
+import { EventLinkBox, LinkButton, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 //
@@ -300,9 +299,7 @@ const EventCalendar: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>캘린더 보기 - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="캘린더 보기" />
       <Stack gap="2.5rem">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           캘린더 보기

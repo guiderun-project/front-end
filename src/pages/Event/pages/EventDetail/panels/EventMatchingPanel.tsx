@@ -17,6 +17,7 @@ import { ApplyUserChip } from '@/components/shared';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
 import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
+import { UserType, ViType } from '@/types/user';
 import getAuthority from '@/utils/authority';
 
 //
@@ -28,8 +29,8 @@ interface EventMatchingPanelProps {
 }
 
 type SelectedUserType = {
-  userId: string;
-  name: string;
+  userId: UserType['userId'];
+  name: UserType['name'];
 };
 
 //
@@ -89,8 +90,13 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: ({ userId, viId }: { userId: string; viId: string }) =>
-      eventApi.eventMatchingPost({ eventId, userId, viId }),
+    mutationFn: ({
+      userId,
+      viId,
+    }: {
+      userId: UserType['userId'];
+      viId: ViType['userId'];
+    }) => eventApi.eventMatchingPost({ eventId, userId, viId }),
     onSuccess: () => {
       alert('매칭 처리 되었습니다.');
       setSelectedGuide(INITIAL_SELECTED);
@@ -113,7 +119,8 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   });
 
   const handleUserSelect =
-    (type: DisabilityEnum) => (userId: string, name: string) => {
+    (type: DisabilityEnum) =>
+    (userId: UserType['userId'], name: UserType['name']) => {
       if (!matchingMode) {
         return;
       }

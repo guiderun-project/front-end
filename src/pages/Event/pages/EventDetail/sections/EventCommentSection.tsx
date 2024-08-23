@@ -16,13 +16,14 @@ import EventCommentBox from '../components/EventCommentBox';
 import eventApi from '@/apis/requests/event';
 import { DisabilityChip } from '@/components/shared';
 import { RootState } from '@/store/index';
+import { Event } from '@/types/event';
 
 //
 //
 //
 
 interface EventCommentSectionProps {
-  eventId: number;
+  eventId: Event['eventId'];
 }
 
 //

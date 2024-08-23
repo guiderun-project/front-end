@@ -1,26 +1,25 @@
 import { PartnerDataType } from './info';
 
+import { Event } from '@/types/event';
 import {
-  DisabilityEnum,
   EventStatus,
   EventType,
-  GenderEnum,
   RecruitStatus,
-  RoleEnum,
   RunningGroup,
 } from '@/types/group';
+import { GuideType, UserType, ViType } from '@/types/user';
 
 export type UserListItemType = {
-  userId: string;
-  img: string;
-  role: RoleEnum; //유저 권한
-  type: DisabilityEnum; //vi인지 guide인지
-  name: string;
-  team: RunningGroup; //팀
-  gender: GenderEnum; //성별
-  age: number; //나이
-  snsId: string; //sns 계정
-  phoneNumber: string; //전화번호
+  userId: UserType['userId'];
+  img: UserType['img'];
+  role: UserType['role']; //유저 권한
+  type: UserType['type']; //vi인지 guide인지
+  name: UserType['name'];
+  team: UserType['recordDegree']; //팀
+  gender: UserType['gender']; //성별
+  age: UserType['age']; //나이
+  snsId: UserType['snsId']; //sns 계정
+  phoneNumber: UserType['phoneNumber']; //전화번호
 
   trainingCnt: number; //참여한 훈련 수
   competitionCnt: number; //참여한 대회 수
@@ -28,15 +27,18 @@ export type UserListItemType = {
   update_time: string; //수정 시간
 };
 
-export type AdminUserListGetRequest = {
-  limit: number;
-  start: number;
+export type UserTableFilterType = {
   time?: 0 | 1;
   type?: 0 | 1;
   gender?: 0 | 1;
   team?: 0 | 1;
   approval?: 0 | 1;
 };
+
+export type AdminUserListGetRequest = {
+  limit: number;
+  start: number;
+} & UserTableFilterType;
 
 export type AdminUserListGetResponse = {
   limit: number;
@@ -49,15 +51,7 @@ export type AdminUserListCountGetResponse = {
 };
 
 export type AdminViApplyGetRequest = {
-  userId: string;
-};
-
-export type UserTableFilterType = {
-  time?: 0 | 1;
-  type?: 0 | 1;
-  gender?: 0 | 1;
-  team?: 0 | 1;
-  approval?: 0 | 1;
+  userId: UserType['userId'];
 };
 
 export type AdminUserSearchGetRequest = {
@@ -78,63 +72,52 @@ export type AdminUserSearchCountGetResponse = {
   count: number;
 };
 
-export type AdminViApplyGetResponse = {
-  //인적사항
-  phoneNumber: string; //전화번호
-  age: number; //나이
-  snsId: string | null; //sns 계정
-
-  //러닝스펙
-  isRunningExp: boolean; //러닝 경험 유무
-  runningPlace: string | null; //러닝한 장소
-  detailRecord: string | null; //상세기록
-  recordDegree: RunningGroup | null; //기록
-  guideName: string | null; // 함께 뛴 가이드 이름
-  hopePrefs: string | null; //희망사항
-
-  //러닝 경험 있을 시 null
-  howToknow: string[] | null; //알게 된 계기
-  motive: string | null; //동기
-
-  //약관동의
-  privacy: boolean; //개인정보 동의
-  portraitRights: boolean; //초상권 동의
-};
+export type AdminViApplyGetResponse = Pick<
+  ViType,
+  | 'phoneNumber'
+  | 'age'
+  | 'snsId'
+  | 'isRunningExp'
+  | 'runningPlace'
+  | 'detailRecord'
+  | 'recordDegree'
+  | 'guideName'
+  | 'hopePrefs'
+  | 'howToKnow'
+  | 'motive'
+  | 'privacy'
+  | 'portraitRights'
+>;
 
 export type AdminGuideApplyGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
 };
 
-export type AdminGuideApplyGetResponse = {
-  //인적사항
-  phoneNumber: string; //전화번호
-  age: number; //나이
-  snsId: string | null; //sns 계정
-
-  //러닝 스펙
-  isGuideExp: boolean; //가이드 경험 유무
-  recordDegree: RunningGroup; //기록
-  detailRecord: string; // 상세 기록
-  viCount: string | null; //상세한 가이드 경험
-  guidingPace: RunningGroup; //가능한 페이스 그룹 *선택
-  hopePrefs: string | null; //희망사항 *선택
-
-  //가이드 경험 있을 때 null
-  howToKnow: string[] | null; //알게 된 계기 *선택
-  motive: string | null; //동기 *선택
-
-  privacy: boolean; //개인정보 동의 *필수
-  portraitRights: boolean; //초상권 동의 *필수
-};
+export type AdminGuideApplyGetResponse = Pick<
+  GuideType,
+  | 'phoneNumber'
+  | 'age'
+  | 'snsId'
+  | 'isGuideExp'
+  | 'recordDegree'
+  | 'detailRecord'
+  | 'viCount'
+  | 'guidingPace'
+  | 'hopePrefs'
+  | 'howToKnow'
+  | 'motive'
+  | 'privacy'
+  | 'portraitRights'
+>;
 
 export type AdminApproveUserPostRequest = {
-  userId: string;
+  userId: UserType['userId'];
   isApprove: boolean;
-  recordDegree: RunningGroup;
+  recordDegree: UserType['userId'];
 };
 
 export type AdminApproveUserPostResponse = {
-  role: RoleEnum;
+  role: UserType['role'];
 };
 
 export type EventFilterType = {
@@ -150,17 +133,17 @@ export type AdminEventListGetRequest = {
 } & EventFilterType;
 
 export type EventListItemType = {
-  eventId: number;
-  name: string;
-  smallDate: string; // 이벤트 시작일 [1/7]
-  startTime: string; //이벤트 시작 시간
-  organizer: string; //생성자
-  pace: RunningGroup; // 생성자 pace A ,B,C,D,E로 구분
-  recuitStatus: RecruitStatus;
-  approval: boolean; //이벤트 승인 여부
+  eventId: Event['eventId'];
+  name: Event['name'];
+  smallDate: Event['date']; // 이벤트 시작일 [1/7]
+  startTime: Event['startTime']; //이벤트 시작 시간
+  organizer: Event['organizer']; //생성자
+  pace: Event['organizerPace']; // 생성자 pace A ,B,C,D,E로 구분
+  recuitStatus: Event['recruitStatus'];
+  approval: Event['isApprove']; //이벤트 승인 여부
   minApply: number; //모집 희망 인원
-  minNumV: number; //vi 희망 인원
-  minNumG: number; //guide 희망 인원
+  minNumV: Event['minNumV']; //vi 희망 인원
+  minNumG: Event['minNumG']; //guide 희망 인원
   update_date: string;
   update_time: string;
 };
@@ -192,7 +175,7 @@ export type AdminSearchEventCountGetResponse = {
 };
 
 export type AdminEventHistoryCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
 };
 
 export type AdminEventHistoryCountGetResponse = {
@@ -200,17 +183,17 @@ export type AdminEventHistoryCountGetResponse = {
 };
 
 export type AdminEventHistoryGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   start: number;
   limit: number;
 };
 
 export type EventHistoryItemType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
   endDate: string;
-  recruitStatus: RecruitStatus;
+  recruitStatus: Event['recruitStatus'];
 };
 
 export type AdminEventHistoryGetResponse = {
@@ -218,7 +201,7 @@ export type AdminEventHistoryGetResponse = {
 };
 
 export type AdminEventTotalCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
 };
 
 export type AdminEventTotalCountGetResponse = {
@@ -233,17 +216,18 @@ export type AdminNewUserGetRequest = {
 };
 
 export type AdminNewUserGetResponse = {
-  items: {
-    userId: string;
-    img: string;
-    role: RoleEnum; //권한
-    type: DisabilityEnum; //vi인지 guide인지
-    name: string;
-    trainingCnt: number; //훈련 참여 수
-    contestCnt: number; //대회 참여
-    like: number; //좋아요 수
-    recordDegree: RunningGroup;
-  }[];
+  items: Pick<
+    UserType,
+    | 'userId'
+    | 'img'
+    | 'role'
+    | 'type'
+    | 'name'
+    | 'trainingCnt'
+    | 'contestCnt'
+    | 'like'
+    | 'recordDegree'
+  >[];
 };
 
 export type AdminCurrentEventGetRequest = {
@@ -251,20 +235,17 @@ export type AdminCurrentEventGetRequest = {
   start?: number;
 };
 
-export type CurrentEventType = {
-  eventId: number; //이벤트 id
-  eventType: EventType; //훈련인지 대회인지
-  name: string;
-  recruitStatus: RecruitStatus; //모집 상태
-  date: string;
-};
+export type CurrentEventType = Pick<
+  Event,
+  'eventId' | 'name' | 'recruitStatus' | 'date'
+> & { eventType: Event['type'] };
 
 export type AdminCurrentEventGetResponse = {
   items: CurrentEventType[];
 };
 
 export type AdminEventTypeCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
 };
 
 export type AdminEventTypeCountGetResponse = {
@@ -274,18 +255,18 @@ export type AdminEventTypeCountGetResponse = {
 };
 
 export type AdminSearchEventHistoryGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   text: string;
   limit?: number;
   start?: number;
 };
 
 export type SearchEventHistoryType = {
-  eventId: number;
-  eventType: EventType;
-  name: string;
+  eventId: Event['eventId'];
+  eventType: Event['type'];
+  name: Event['name'];
+  recruitStatus: Event['recruitStatus'];
   startDate: string;
-  recruitStatus: RecruitStatus;
 };
 
 export type AdminSearchEventHistoryGetResponse = {
@@ -293,7 +274,7 @@ export type AdminSearchEventHistoryGetResponse = {
 };
 
 export type AdminSearchEventHistoryCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   text: string;
 };
 
@@ -302,7 +283,7 @@ export type AdminSearchEventHistoryCountGetResponse = {
 };
 
 export type AdminPartnerTypeCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
 };
 
 export type AdminPartnerTypeCountGetResponse = {
@@ -311,7 +292,7 @@ export type AdminPartnerTypeCountGetResponse = {
 };
 
 export type AdminPartnerHistoryCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   kind?: EventType;
 };
 
@@ -320,26 +301,21 @@ export type AdminPartnerHistoryCountGetResponse = {
 };
 
 export type AdminPartnerHistoryGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   kind?: EventType;
   start?: number;
   limit?: number;
 };
 
 export type AdminPartnerHistoryGetResponse = {
-  items: {
-    userId: string;
-    img: string; //프로필 이미지
-    role: RoleEnum; //권한
-    type: DisabilityEnum; //vi인지 guide 인지
-    name: string;
-    recordDegree: RunningGroup;
-    like: number; //좋아요 수
-  }[];
+  items: Pick<
+    UserType,
+    'userId' | 'img' | 'role' | 'type' | 'name' | 'recordDegree' | 'like'
+  >[];
 };
 
 export type AdminSearchPartnerHistoryCountGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   text: string;
 };
 
@@ -348,7 +324,7 @@ export type AdminSearchPartnerHistoryCountGetResponse = {
 };
 
 export type AdminSearchPartnerHistoryGetRequest = {
-  userId: string;
+  userId: UserType['userId'];
   text: string;
   start?: number;
   limit?: number;
@@ -368,12 +344,12 @@ export type AdminWithdrawalListGetRequest = {
 } & UserTableFilterType;
 
 export type WithdrawalUserType = {
-  userId: string;
-  role: RoleEnum; //유저 권한
-  type: DisabilityEnum; //vi인지 guide인지
-  name: string;
-  team: RunningGroup; //팀
-  gender: GenderEnum; //성별
+  userId: UserType['userId'];
+  role: UserType['userId']; //유저 권한
+  type: UserType['type']; //vi인지 guide인지
+  name: UserType['name'];
+  team: UserType['recordDegree']; //팀
+  gender: UserType['gender']; //성별
   reason: string[]; //탈퇴 사유
   update_date: string; //수정일
   update_time: string; //수정 시간
@@ -402,13 +378,11 @@ export type AdminSearchWithdrawalListCountGetResponse = {
 };
 
 export type AdminApprovalEventPostRequest = {
-  eventId: number;
-  approval: boolean; //true면 허가, false면 거절.
+  eventId: Event['eventId'];
+  approval: Event['isApprove']; //true면 허가, false면 거절.
 };
 
-export type AdminEventResultGetRequest = {
-  eventId: number;
-};
+export type AdminEventResultGetRequest = Pick<Event, 'eventId'>;
 
 export type AdminEventResultGetResponse = {
   name: string;
@@ -434,24 +408,24 @@ export type ApplyListFilterType = {
 };
 
 export type AdminApplyListGetRequest = {
-  eventId: number;
+  eventId: Event['eventId'];
   limit: number;
   start: number;
 } & ApplyListFilterType;
 
 export type AdminApplyListGetResponse = {
   items: {
-    userId: string;
-    role: RoleEnum; //유저 권한
-    type: DisabilityEnum; //vi인지 guide인지
-    name: string;
-    team: RunningGroup; //팀
+    userId: UserType['userId'];
+    role: UserType['role']; //유저 권한
+    type: UserType['type']; //vi인지 guide인지
+    name: UserType['name'];
+    team: UserType['recordDegree']; //팀
     apply_time: string; //신청 시간
   }[];
 };
 
 export type AdminApplyListCountGetRequest = {
-  eventId: number;
+  eventId: Event['eventId'];
 };
 
 export type AdminApplyListCountGetResponse = {

@@ -22,7 +22,6 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 
 import AdminEventDialog from './components/AdminEventDialog';
 import EventStatusText from './components/EventStatusText';
@@ -31,7 +30,7 @@ import { StyledCollapsBox } from '../AdminUser';
 
 import adminApi from '@/apis/requests/admin';
 import { EventFilterType, EventListItemType } from '@/apis/types/admin';
-import { GroupChip } from '@/components/shared';
+import { GroupChip, PageTitle } from '@/components/shared';
 import useDebounce from '@/hooks/useDebounce';
 
 //
@@ -412,9 +411,7 @@ const AdminEvent: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
-      <Helmet>
-        <title>이벤트 관리 - Admin - Guide run Project</title>
-      </Helmet>
+      <PageTitle title="이벤트 관리 - Admin" />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           이벤트 관리

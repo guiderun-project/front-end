@@ -14,13 +14,14 @@ import infoApi from '@/apis/requests/info';
 import GropuChip from '@/components/shared/GroupChip/GroupChip';
 import { StyledDataSection } from '@/pages/Info/components/SpecGuideDetail';
 import { DisabilityEnum, RunningGroup } from '@/types/group';
+import { UserType } from '@/types/user';
 
 interface UserSpecCardProps {
-  userId: string;
+  userId: UserType['userId'];
   type: DisabilityEnum;
 }
 
-const ViSpecCard: React.FC<{ userId: string }> = ({ userId }) => {
+const ViSpecCard: React.FC<{ userId: UserType['userId'] }> = ({ userId }) => {
   const { data: viData, isLoading } = useQuery({
     queryKey: ['runningSpecViGet', userId],
     queryFn: () => infoApi.runningSpecViGet({ userId }),
@@ -135,7 +136,9 @@ const ViSpecCard: React.FC<{ userId: string }> = ({ userId }) => {
   );
 };
 
-const GuideSpecCard: React.FC<{ userId: string }> = ({ userId }) => {
+const GuideSpecCard: React.FC<{ userId: UserType['userId'] }> = ({
+  userId,
+}) => {
   const { data: guideData, isLoading } = useQuery({
     queryKey: ['runningSpecGuideGet', userId],
     queryFn: () => infoApi.runningSpecGuideGet({ userId }),

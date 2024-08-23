@@ -16,6 +16,7 @@ import eventApi from '@/apis/requests/event';
 import { ApplyUserChip, DisabilityChip } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
+import { UserType } from '@/types/user';
 import getAuthority from '@/utils/authority';
 
 //
@@ -82,7 +83,7 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (userId: string) =>
+    mutationFn: (userId: UserType['userId']) =>
       eventApi.eventAttendPost({ eventId, userId }),
     onSuccess: (_, userId) => {
       if (!applyStatus) return;

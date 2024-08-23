@@ -82,7 +82,6 @@ export const infoHandlers: HttpHandler[] = [
     baseURL + '/user/personal/:userId',
     () => {
       return HttpResponse.json({
-        userId: '123',
         age: 20,
         gender: GenderEnum.M,
         isOpenNumber: true,
@@ -92,11 +91,6 @@ export const infoHandlers: HttpHandler[] = [
         role: RoleEnum.Admin,
         snsId: 'test',
         type: DisabilityEnum.GUIDE,
-        img: '',
-        recordDegree: RunningGroup.A, //러닝 기록 등급
-        detailRecord: '5분 30초', //상세 기록
-        like: 999,
-        isLiked: false,
       });
     },
   ),

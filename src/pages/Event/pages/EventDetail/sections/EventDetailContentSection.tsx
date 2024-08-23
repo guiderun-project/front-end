@@ -10,11 +10,12 @@ import {
 import { BROWSER_PATH } from '@/constants/path';
 import MatchingStandardAccordion from '@/pages/Event/components/MatchingStandardAccordion';
 import RecruitCountBox from '@/pages/Event/components/RecruitCountBox';
+import { Event } from '@/types/event';
 import { EventStatus as EventStatusType, RecruitStatus } from '@/types/group';
 import { getFullKoreanDate, getPeriod } from '@/utils/time';
 
 interface EventDetailContentSectionProps {
-  eventId: number;
+  eventId: Event['eventId'];
   eventData: EventGetResponse;
   isOwner: boolean;
 }
