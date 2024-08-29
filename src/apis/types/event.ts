@@ -375,7 +375,9 @@ export type EventApplyCountGetResponse = {
 
 export type EventApplyStatusGetRequest = Pick<Event, 'eventId'>;
 
-export type ApplyUserType = Pick<UserType, 'userId' | 'type' | 'name'>;
+export type ApplyUserType = Pick<UserType, 'userId' | 'type' | 'name'> & {
+  applyRecord: RunningGroup;
+};
 
 export type EventApplyStatusGetResponse = {
   attend: ApplyUserType[];
