@@ -22,8 +22,7 @@ const useKakaoShare = () => {
       content: {
         title: title,
         description: content,
-        imageUrl:
-          'https://guiderun-prod.s3.ap-northeast-2.amazonaws.com/icon/guiderun2.png',
+        imageUrl: 'https://dwb5oybpxbixt.cloudfront.net/guiderun3.png',
         link: {
           mobileWebUrl: url,
           webUrl: url,
