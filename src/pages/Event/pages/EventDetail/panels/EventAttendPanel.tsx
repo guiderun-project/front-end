@@ -8,15 +8,17 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import AttendGroupBox from '../components/AttendGroupBox';
+import AttendModeBox from '../components/AttendModeBox';
+
 import eventApi from '@/apis/requests/event';
-import { ApplyUserChip, DisabilityChip } from '@/components/shared';
+import { DisabilityChip } from '@/components/shared';
 import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
-import { UserType } from '@/types/user';
 import getAuthority from '@/utils/authority';
 
 //
@@ -34,6 +36,7 @@ interface EventAttendPanelProps {
 const StyledCountBox = styled.div`
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   gap: 0.5rem;
   width: 100%;
   padding: 1.5rem 0.5rem;
@@ -70,7 +73,6 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
   const [attendMode, setAttendMode] = React.useState(false);
   const eventId = Number(useParams<{ eventId: string }>().eventId);
   const { role } = useSelector((state: RootState) => state.user);
-  const queryClient = useQueryClient();
 
   const { data: applyCount, isLoading: isApplyCountLoading } = useQuery({
     queryKey: ['eventApplyCountGet', eventId],
@@ -80,38 +82,6 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
   const { data: applyStatus, isLoading: isApplyStatusLoading } = useQuery({
     queryKey: ['eventApplyStatusGet', eventId],
     queryFn: () => eventApi.eventApplyStatusGet({ eventId }),
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: (userId: UserType['userId']) =>
-      eventApi.eventAttendPost({ eventId, userId }),
-    onSuccess: (_, userId) => {
-      if (!applyStatus) return;
-      const userIndex = applyStatus.attend.findIndex(
-        (user) => user.userId === userId,
-      );
-      if (userIndex !== -1) {
-        alert(
-          `${applyStatus.attend[userIndex].name}님이 출석 취소 되었습니다. `,
-        );
-        return;
-      }
-      alert(
-        `${
-          applyStatus.notAttend[
-            applyStatus.notAttend.findIndex((user) => user.userId === userId)
-          ].name
-        }님이 출석 되었습니다.`,
-      );
-    },
-    onError: () => {
-      alert('에러가 발생했습니다. 다시 시도해주세요.');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['eventApplyStatusGet', eventId],
-      });
-    },
   });
 
   /**
@@ -210,62 +180,13 @@ const EventAttendPanel: React.FC<EventAttendPanelProps> = ({ isOwner }) => {
         </StyledApplyUserBox>
       );
     }
-    if (applyStatus) {
-      return (
-        <StyledApplyUserBox>
-          <Stack alignItems="center" gap="1.5rem">
-            <Typography fontSize="0.875rem" fontWeight={700} color="#666">
-              출첵 미완료
-            </Typography>
-            {!applyStatus.notAttend.length ? (
-              <Typography fontSize="0.875rem" fontWeight={700} color="#666">
-                미완료 인원 없음
-              </Typography>
-            ) : (
-              <StyledUserListBox>
-                {applyStatus.notAttend.map((user) => (
-                  <ApplyUserChip
-                    isAttendMode={attendMode}
-                    key={user.userId}
-                    type={user.type}
-                    name={user.name}
-                    onAttend={() => {
-                      mutate(user.userId);
-                    }}
-                  />
-                ))}
-              </StyledUserListBox>
-            )}
-          </Stack>
-          <Divider sx={{ borderStyle: 'dashed' }} />
-          <Stack alignItems="center" gap="1.5rem">
-            <Typography fontSize="0.875rem" fontWeight={700} color="#666">
-              출첵 완료
-            </Typography>
-            {!applyStatus.attend.length ? (
-              <Typography fontSize="0.875rem" fontWeight={700} color="#666">
-                완료 인원 없음
-              </Typography>
-            ) : (
-              <StyledUserListBox>
-                {applyStatus.attend.map((user) => (
-                  <ApplyUserChip
-                    isAttend
-                    isAttendMode={attendMode}
-                    key={user.userId}
-                    type={user.type}
-                    name={user.name}
-                    onAttend={() => {
-                      mutate(user.userId);
-                    }}
-                  />
-                ))}
-              </StyledUserListBox>
-            )}
-          </Stack>
-        </StyledApplyUserBox>
-      );
+    if (!applyStatus) return;
+
+    if (attendMode) {
+      return <AttendModeBox member={applyStatus} />;
     }
+
+    return <AttendGroupBox member={applyStatus} />;
   };
 
   //

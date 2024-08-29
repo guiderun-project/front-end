@@ -811,7 +811,7 @@ export const eventHandlers: HttpHandler[] = [
             name: '가이드4',
             type: DisabilityEnum.GUIDE,
             userId: 'jrgsgdfgdyr1',
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: '가이드5',
@@ -823,7 +823,7 @@ export const eventHandlers: HttpHandler[] = [
             name: '가이드6',
             type: DisabilityEnum.GUIDE,
             userId: '1663dfgdf4r',
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: '가이드7',
@@ -835,7 +835,7 @@ export const eventHandlers: HttpHandler[] = [
             name: '가이드8',
             type: DisabilityEnum.GUIDE,
             userId: '16dfgdfwef',
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: '가이드9',

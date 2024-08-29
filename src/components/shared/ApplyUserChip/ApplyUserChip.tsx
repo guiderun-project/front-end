@@ -1,5 +1,5 @@
 import DoneIcon from '@mui/icons-material/Done';
-import { Chip, ChipProps, useTheme } from '@mui/material';
+import { Chip, ChipProps, Typography, useTheme } from '@mui/material';
 
 import { DisabilityChip } from '../DisabilityChip';
 
@@ -52,6 +52,7 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
   return (
     <Chip
       {...props}
+      role="text"
       avatar={
         <DisabilityChip
           component="avartar"
@@ -61,7 +62,16 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
       }
       variant={isAttend ? 'filled' : 'outlined'}
       color={type === DisabilityEnum.VI ? 'vi' : 'guide'}
-      label={name}
+      label={
+        <Typography
+          fontSize="0.8125rem"
+          fontWeight={400}
+          color={isAttend ? '#fff' : '#42474E'}
+          aria-label={isAttend ? `${name} 출석됨` : name}
+        >
+          {name}
+        </Typography>
+      }
       deleteIcon={isAttendMode ? <DoneIcon aria-label="출석" /> : undefined}
       onDelete={isAttendMode ? onAttend : undefined}
       aria-selected={selected}
