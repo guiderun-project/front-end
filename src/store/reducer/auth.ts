@@ -5,7 +5,7 @@ interface AccessToken {
 }
 
 const initialState: AccessToken = {
-  accessToken: '1234',
+  accessToken: null,
 };
 
 export const authSlice = createSlice({
