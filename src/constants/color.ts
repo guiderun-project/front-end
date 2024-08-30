@@ -1,5 +1,5 @@
 export const TEAM_COLOR = {
-  A: '#CC5A37',
+  A: '#CB5A37',
   B: '#DB8403',
   C: '#99940B',
   D: '#31A515',
