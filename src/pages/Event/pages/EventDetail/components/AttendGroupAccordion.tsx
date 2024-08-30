@@ -105,7 +105,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
   notAttendedMemberOfGuide,
   notAttendedMemberOfVi,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
     <StyledAccordionBox open={open} group={group}>
