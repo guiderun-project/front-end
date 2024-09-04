@@ -1,20 +1,15 @@
 import React from 'react';
 
-import styled from '@emotion/styled';
-import {
-  CircularProgress,
-  Divider,
-  Stack,
-  Switch,
-  Typography,
-} from '@mui/material';
+import { CircularProgress, Stack, Switch, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import MatchingGroupContainer from '../components/MatchingGroupContainer';
+import MatchingNonGroupContainer from '../components/MatchingNonGroupContainer';
+
 import eventApi from '@/apis/requests/event';
-import { ApplyUserChip } from '@/components/shared';
-import MatchingBox from '@/pages/Event/components/MatchingBox';
+import { ApplyUserAttendType } from '@/apis/types/event';
 import { RootState } from '@/store/index';
 import { DisabilityEnum } from '@/types/group';
 import { UserType, ViType } from '@/types/user';
@@ -24,35 +19,24 @@ import getAuthority from '@/utils/authority';
 //
 //
 
+export interface MatchingComponentProps {
+  matchingMode?: boolean;
+  selectedVi: SelectedUserType;
+  selectedGuide: SelectedUserType;
+  viOfMatched: ApplyUserAttendType[];
+  viOfnotMatched: ApplyUserAttendType[];
+  guideOfNotMatched: ApplyUserAttendType[];
+  onGuideSelect: (userId: UserType['userId'], name: UserType['name']) => void;
+  onViSelect: (userId: UserType['userId'], name: UserType['name']) => void;
+}
 interface EventMatchingPanelProps {
   isOwner: boolean;
 }
 
-type SelectedUserType = {
+export type SelectedUserType = {
   userId: UserType['userId'];
   name: UserType['name'];
 };
-
-//
-//
-//
-
-const StyledUserBox = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem 1rem;
-  background-color: #fff;
-  border: 1px solid #34618d33;
-  border-radius: 1rem;
-`;
-
-const StyledUserListBox = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.75rem;
-`;
 
 //
 //
@@ -87,6 +71,11 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   const { data: notMatchedList, isLoading: isNotMatchedLoading } = useQuery({
     queryKey: ['eventNotMatchingGet', eventId],
     queryFn: () => eventApi.eventNotMatchingGet({ eventId }),
+  });
+
+  const { data: applyCount, isLoading: isApplyCountLoading } = useQuery({
+    queryKey: ['eventApplyCountGet', eventId],
+    queryFn: () => eventApi.eventApplyCountGet({ eventId }),
   });
 
   const { mutate } = useMutation({
@@ -202,112 +191,50 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
     }
   };
 
-  const renderMatched = () => {
-    return (
-      <Stack gap="1rem" alignItems="center">
-        <Typography
-          component="h3"
-          fontSize="0.875rem"
-          fontWeight={700}
-          color="#666"
-        >
-          매칭이 완료된 참가자
-        </Typography>
-        <StyledUserBox>
-          {isMatchedLoading || !matchedList ? (
-            <CircularProgress />
-          ) : matchedList.vi.length ? (
-            matchedList.vi.map((user, idx) => (
-              <>
-                <MatchingBox
-                  key={`MatchingBox-${user.userId}`}
-                  matchingMode={matchingMode}
-                  viData={user}
-                  selectedGuide={selectedGuide.userId}
-                  selectedVi={selectedVi.userId}
-                  onGuideSelect={handleUserSelect(DisabilityEnum.GUIDE)}
-                  onViSelect={handleUserSelect(DisabilityEnum.VI)}
-                />
-                {idx + 1 !== matchedList.vi.length && (
-                  <Divider sx={{ borderStyle: 'dashed' }} />
-                )}
-              </>
-            ))
-          ) : (
-            <Typography fontWeight={700}>
-              매칭이 완료된 참가자가 없습니다
-            </Typography>
-          )}
-        </StyledUserBox>
-      </Stack>
-    );
-  };
+  const renderList = () => {
+    if (isMatchedLoading || isNotMatchedLoading || isApplyCountLoading) {
+      return (
+        <Stack alignItems="center">
+          <CircularProgress />
+        </Stack>
+      );
+    }
 
-  const renderNotMatched = () => {
-    return (
-      <Stack gap="1rem" alignItems="center">
-        <Typography
-          component="h3"
-          fontSize="0.875rem"
-          fontWeight={700}
-          color="#666"
-        >
-          매칭이 완료되지 않은 참가자
-        </Typography>
-        <StyledUserBox>
-          {isNotMatchedLoading || !notMatchedList ? (
-            <CircularProgress />
-          ) : notMatchedList.notMatch.length ? (
-            <>
-              <StyledUserListBox>
-                {notMatchedList.notMatch
-                  .filter((user) => user.type === DisabilityEnum.VI)
-                  .map((user) => (
-                    <ApplyUserChip
-                      selected={selectedVi.userId === user.userId}
-                      clickable={matchingMode}
-                      key={user.userId}
-                      isAttend={matchingMode ? false : user.isAttended}
-                      name={user.name}
-                      type={DisabilityEnum.VI}
-                      onClick={() =>
-                        handleUserSelect(DisabilityEnum.VI)(
-                          user.userId,
-                          user.name,
-                        )
-                      }
-                    />
-                  ))}
-              </StyledUserListBox>
-              <Divider sx={{ borderStyle: 'dashed' }} />
-              <StyledUserListBox>
-                {notMatchedList.notMatch
-                  .filter((user) => user.type === DisabilityEnum.GUIDE)
-                  .map((user) => (
-                    <ApplyUserChip
-                      selected={selectedGuide.userId === user.userId}
-                      clickable={matchingMode}
-                      key={user.userId}
-                      isAttend={matchingMode ? false : user.isAttended}
-                      name={user.name}
-                      type={DisabilityEnum.GUIDE}
-                      onClick={() =>
-                        handleUserSelect(DisabilityEnum.GUIDE)(
-                          user.userId,
-                          user.name,
-                        )
-                      }
-                    />
-                  ))}
-              </StyledUserListBox>
-            </>
-          ) : (
-            <Typography fontWeight={700}>
-              매칭되지 않은 참가자가 없습니다
-            </Typography>
+    if (!notMatchedList || !matchedList) return <>에러 발생</>;
+
+    if ((applyCount?.count ?? 0) > 30) {
+      return (
+        <MatchingGroupContainer
+          matchingMode={matchingMode}
+          guideOfNotMatched={notMatchedList.notMatch.filter(
+            (user) => user.type === DisabilityEnum.GUIDE,
           )}
-        </StyledUserBox>
-      </Stack>
+          selectedGuide={selectedGuide}
+          selectedVi={selectedVi}
+          viOfMatched={matchedList.vi}
+          viOfnotMatched={notMatchedList.notMatch.filter(
+            (user) => user.type === DisabilityEnum.VI,
+          )}
+          onGuideSelect={handleUserSelect(DisabilityEnum.GUIDE)}
+          onViSelect={handleUserSelect(DisabilityEnum.VI)}
+        />
+      );
+    }
+    return (
+      <MatchingNonGroupContainer
+        matchingMode={matchingMode}
+        guideOfNotMatched={notMatchedList.notMatch.filter(
+          (user) => user.type === DisabilityEnum.GUIDE,
+        )}
+        selectedGuide={selectedGuide}
+        selectedVi={selectedVi}
+        viOfMatched={matchedList.vi}
+        viOfnotMatched={notMatchedList.notMatch.filter(
+          (user) => user.type === DisabilityEnum.VI,
+        )}
+        onGuideSelect={handleUserSelect(DisabilityEnum.GUIDE)}
+        onViSelect={handleUserSelect(DisabilityEnum.VI)}
+      />
     );
   };
 
@@ -319,8 +246,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
       aria-labelledby="tab-matching"
     >
       {renderMode()}
-      {renderMatched()}
-      {renderNotMatched()}
+      {renderList()}
     </Stack>
   );
 };

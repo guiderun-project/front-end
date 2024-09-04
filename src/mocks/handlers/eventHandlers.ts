@@ -737,7 +737,7 @@ export const eventHandlers: HttpHandler[] = [
   http.get<{ eventId: string }, NoneType, EventApplyCountGetResponse>(
     baseURL + '/event/:eventId/forms/count',
     () => {
-      return HttpResponse.json({ count: 20, guide: 15, vi: 15 });
+      return HttpResponse.json({ count: 300, guide: 15, vi: 15 });
     },
   ),
 
@@ -1009,7 +1009,7 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '1312sdfs31',
             isAttended: false,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: 'VI2',
@@ -1023,7 +1023,7 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '131sf2bv31',
             isAttended: true,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.C,
           },
           {
             name: 'VI4',
@@ -1058,14 +1058,14 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.GUIDE,
             userId: '13vbf42',
             isAttended: true,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: '가이드2',
             type: DisabilityEnum.GUIDE,
             userId: '15ghtfv6',
             isAttended: true,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.D,
           },
           {
             name: '가이드3',
@@ -1162,7 +1162,7 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '131sf2bv31',
             isAttended: false,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.C,
           },
           {
             name: 'VI4',
@@ -1176,7 +1176,7 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '1sdf31ghgfcg231',
             isAttended: true,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.B,
           },
           {
             name: 'VI6',
@@ -1190,7 +1190,7 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '131sfssdfs2fdcv31',
             isAttended: true,
-            applyRecord: RunningGroup.A,
+            applyRecord: RunningGroup.D,
           },
         ],
       });
