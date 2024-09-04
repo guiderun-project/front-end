@@ -1,5 +1,7 @@
-export const TEAM_COLOR = {
-  A: '#CC5A37',
+import { RunningGroup } from '@/types/group';
+
+export const TEAM_COLOR: Record<RunningGroup, string> = {
+  A: '#CB5A37',
   B: '#DB8403',
   C: '#99940B',
   D: '#31A515',

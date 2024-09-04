@@ -1,12 +1,24 @@
+import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 
-import kakaoImg from '@/assets/kakao_login.png';
+import kakaoLogo from '@/assets/kakao-login-logo.png';
 import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, KAKAO_REDIRECT_URL } from '@/constants/path';
 import { getKakaoOauthUrl } from '@/utils/login';
+
+const StyledLoginButton = styled(Link)`
+  display: flex;
+  height: 2.75rem;
+  width: 100%;
+  max-width: 18.4375rem;
+  background-color: #fee500;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: #000;
+`;
 
 const Intro: React.FC = () => {
   const intl = useIntl();
@@ -28,7 +40,7 @@ const Intro: React.FC = () => {
         paddingTop="13.875rem"
         paddingBottom="5.125rem"
       >
-        <Stack gap="2.5rem" alignItems="center">
+        <Stack gap="2.5rem" alignItems="center" width="100%">
           <Typography
             component="h1"
             variant="h1"
@@ -43,25 +55,38 @@ const Intro: React.FC = () => {
             })}
             gap="1.5rem"
             alignItems="center"
+            width="100%"
           >
             <Typography variant="subtitle1" fontWeight="700">
               <FormattedMessage id="intro.signup" />
             </Typography>
-            <Link
+            <StyledLoginButton
               aria-label={intl.formatMessage({
                 id: 'intro.signup.kakao',
               })}
               to={getKakaoOauthUrl(KAKAO_REDIRECT_URL)}
             >
-              <Box
-                component="img"
-                maxWidth="18.4375rem"
-                src={kakaoImg}
-                alt={intl.formatMessage({
-                  id: 'intro.signup.kakao.alt',
-                })}
-              />
-            </Link>
+              <Stack
+                height="2.75rem"
+                width="2.75rem"
+                alignItems="center"
+                justifyContent="center"
+                flexShrink={0}
+              >
+                <img src={kakaoLogo} alt="" width={16} height={15} />
+              </Stack>
+              <Typography
+                component="div"
+                height="100%"
+                width="100%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                fontSize="0.875rem"
+              >
+                카카오 계정으로 로그인
+              </Typography>
+            </StyledLoginButton>
           </Stack>
           <Typography
             role="link"
