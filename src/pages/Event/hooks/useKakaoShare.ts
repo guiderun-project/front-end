@@ -22,7 +22,7 @@ const useKakaoShare = () => {
       content: {
         title: title,
         description: content,
-        imageUrl: 'https://dwb5oybpxbixt.cloudfront.net/guiderun3.png',
+        imageUrl: 'https://dwb5oybpxbixt.cloudfront.net/Logo.png',
         link: {
           mobileWebUrl: url,
           webUrl: url,
