@@ -420,7 +420,7 @@ const AdminEvent: React.FC = () => {
           fullWidth
           size="medium"
           variant="standard"
-          placeholder="회원 검색"
+          placeholder="이벤트 검색"
           onChange={handleSearchChange}
           InputProps={{
             style: { padding: '0.75rem' },
