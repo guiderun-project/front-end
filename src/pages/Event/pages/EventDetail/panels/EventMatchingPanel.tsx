@@ -202,7 +202,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
 
     if (!notMatchedList || !matchedList) return <>에러 발생</>;
 
-    if ((applyCount?.count ?? 0) > 30) {
+    if ((applyCount?.count ?? 0) > 20) {
       return (
         <MatchingGroupContainer
           matchingMode={matchingMode}
