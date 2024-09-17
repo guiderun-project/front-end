@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styled from '@emotion/styled';
 import {
   Button,
@@ -6,6 +8,8 @@ import {
   Stack,
   TextField,
   Typography,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
@@ -46,6 +50,7 @@ const StyledForm = styled.form`
 
 const EditEventApply: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
+  const [course, setCourse] = useState('');
 
   const { userId } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
@@ -89,7 +94,10 @@ const EditEventApply: React.FC = () => {
    */
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('수정하시겠습니까?')) {
-      mutate(data);
+      mutate({
+        ...data,
+        detail: `${course} 희망${data.detail ? `\n\n${data.detail}` : ''}`,
+      });
     }
   };
 
@@ -138,6 +146,26 @@ const EditEventApply: React.FC = () => {
               <Typography>{applyData.name}</Typography>
               <GroupChip group={applyData.pace} type="text" />
             </Stack>
+          }
+        />
+        <InputBox
+          required
+          title="참가 희망 코스"
+          inputElement={
+            <FormControl fullWidth>
+              <InputLabel id="course">희망 코스</InputLabel>
+              <Select
+                required
+                labelId="course"
+                label="희망 코스"
+                value={course}
+                onChange={(e) => setCourse(e.target.value as string)}
+              >
+                <MenuItem value="20km 이하">20km 이하</MenuItem>
+                <MenuItem value="21km">하프(21km)</MenuItem>
+                <MenuItem value="30km">30km</MenuItem>
+              </Select>
+            </FormControl>
           }
         />
         <InputBox
