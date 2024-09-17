@@ -273,6 +273,7 @@ const AdminEventDialog: React.FC<AdminEventDialogProps> = ({
                 border="1px solid #d9d9d9"
                 borderRadius="1rem"
                 padding="1.25rem 1rem"
+                whiteSpace="break-spaces"
               >
                 {eventData.details}
               </Box>
