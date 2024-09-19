@@ -138,7 +138,7 @@ const ApplyDetailTooltip: React.FC<
                     padding: '0.25rem 0.5rem',
                   }}
                 >
-                  {`30km 희망\n\n코멘트 코멘트`}
+                  {applyDetail.detail}
                 </Typography>
               )}
             </>
