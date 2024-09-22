@@ -131,8 +131,6 @@ const ApplyDetailTooltip: React.FC<
                   lineHeight="1rem"
                   border="1px solid #636363"
                   borderRadius="0.25rem"
-                  textAlign="center"
-                  whiteSpace="break-spaces"
                   sx={{
                     display: 'block',
                     padding: '0.25rem 0.5rem',

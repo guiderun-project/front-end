@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
 import {
   Button,
-  FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Stack,
@@ -66,7 +64,6 @@ export const GROUP_SELECT = [
 
 const EventApply: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
-  const [course, setCourse] = useState('');
 
   const { name, type, recordDegree } = useSelector(
     (state: RootState) => state.user,
@@ -100,10 +97,7 @@ const EventApply: React.FC = () => {
    */
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
-      mutate({
-        ...data,
-        detail: `${course} 희망${data.detail ? `\n\n${data.detail}` : ''}`,
-      });
+      mutate(data);
     }
   };
 
@@ -152,26 +146,6 @@ const EventApply: React.FC = () => {
               <Typography>{name}</Typography>
               <GroupChip group={recordDegree} type="text" />
             </Stack>
-          }
-        />
-        <InputBox
-          required
-          title="참가 희망 코스"
-          inputElement={
-            <FormControl fullWidth>
-              <InputLabel id="course">희망 코스</InputLabel>
-              <Select
-                required
-                labelId="course"
-                label="희망 코스"
-                value={course}
-                onChange={(e) => setCourse(e.target.value as string)}
-              >
-                <MenuItem value="20km 이하">20km 이하</MenuItem>
-                <MenuItem value="21km">하프(21km)</MenuItem>
-                <MenuItem value="30km">30km</MenuItem>
-              </Select>
-            </FormControl>
           }
         />
         <InputBox
