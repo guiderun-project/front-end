@@ -38,26 +38,24 @@ const EventApplyPanel: React.FC = () => {
           </Typography>
         ) : (
           <StyledUserListBox>
-            {userData
-              .sort((user1, user2) => user1.name.localeCompare(user2.name))
-              .map((user) => (
-                <ApplyDetailTooltip
-                  key={`UserListBox-${user.userId}`}
-                  open={userId === user.userId}
-                  userId={user.userId}
-                  onClose={() => setUserId('')}
-                >
-                  <ApplyUserChip
-                    clickable
-                    role="button"
-                    type={user.type}
-                    name={user.name}
-                    onClick={() => {
-                      setUserId(user.userId);
-                    }}
-                  />
-                </ApplyDetailTooltip>
-              ))}
+            {userData.map((user) => (
+              <ApplyDetailTooltip
+                key={`UserListBox-${user.userId}`}
+                open={userId === user.userId}
+                userId={user.userId}
+                onClose={() => setUserId('')}
+              >
+                <ApplyUserChip
+                  clickable
+                  role="button"
+                  type={user.type}
+                  name={user.name}
+                  onClick={() => {
+                    setUserId(user.userId);
+                  }}
+                />
+              </ApplyDetailTooltip>
+            ))}
           </StyledUserListBox>
         )}
       </Stack>
