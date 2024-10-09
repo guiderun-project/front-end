@@ -45,6 +45,15 @@ export const theme = createTheme({
     },
   },
   components: {
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          '&:focus': {
+            outline: '2px solid rgba(0, 0, 0, 0.5)',
+          },
+        },
+      },
+    },
     MuiBadge: {
       styleOverrides: {
         dot: {
