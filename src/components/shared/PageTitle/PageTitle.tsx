@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Helmet } from 'react-helmet-async';
 
 interface PageTitleProps {
@@ -5,9 +7,17 @@ interface PageTitleProps {
 }
 
 const PageTitle: React.FC<PageTitleProps> = ({ title }) => {
+  const getTitle = (title: string) => {
+    return `${title} | Guiderun Project`;
+  };
+
+  useEffect(() => {
+    document.title = getTitle(title);
+  }, [title, getTitle]);
+
   return (
     <Helmet>
-      <title>{`${title} - Guiderun Project`}</title>
+      <title>{getTitle(title)}</title>
     </Helmet>
   );
 };

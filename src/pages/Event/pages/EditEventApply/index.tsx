@@ -216,8 +216,8 @@ const EditEventApply: React.FC = () => {
   //
   return (
     <>
-      <PageTitle title="참여 신청서 작성" />
-      <TitleHeader title="참여신청서 작성" />
+      <PageTitle title="참여 신청서 수정" />
+      <TitleHeader title="참여 신청서 수정" />
       {renderHeader()}
       {renderForm()}
       <MatchingStandardAccordion />

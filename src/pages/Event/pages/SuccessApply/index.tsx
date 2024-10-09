@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import { TitleHeader } from '@/components/shared';
+import { PageTitle, TitleHeader } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { Event } from '@/types/event';
 
@@ -19,6 +19,7 @@ interface SuccessApplyProps {
 const SuccessApply: React.FC<SuccessApplyProps> = ({ eventId }) => {
   return (
     <>
+      <PageTitle title="이벤트 신청 완료" />
       <TitleHeader title="참여 여부 조사" />
       <Stack
         boxSizing="border-box"

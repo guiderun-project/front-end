@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { CircularProgress, Typography } from '@mui/material';
 
+import { PageTitle } from '@/components/shared';
+
 const StyledContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -14,6 +16,7 @@ const StyledContainer = styled.div`
 const Loading: React.FC = () => {
   return (
     <StyledContainer>
+      <PageTitle title="로딩중" />
       <CircularProgress size="3rem" />
       <Typography
         role="alert"

@@ -3,7 +3,12 @@ import { CircularProgress, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 import adminApi from '@/apis/requests/admin';
-import { EventLinkBox, PartnerBox, TextLink } from '@/components/shared';
+import {
+  EventLinkBox,
+  PageTitle,
+  PartnerBox,
+  TextLink,
+} from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 const StyledContainer = styled.div`
@@ -154,6 +159,7 @@ const AdminMain: React.FC = () => {
 
   return (
     <StyledContainer>
+      <PageTitle title="Admin" />
       {renderUser()}
       {renderEvent()}
     </StyledContainer>

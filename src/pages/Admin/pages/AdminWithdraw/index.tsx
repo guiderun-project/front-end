@@ -201,7 +201,7 @@ const AdminWithdraw: React.FC = () => {
       width="100%"
       maxWidth="31.875rem"
     >
-      <PageTitle title="탈퇴 회원 조회" />
+      <PageTitle title="탈퇴 회원 조회 - Admin" />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           탈퇴한 회원
