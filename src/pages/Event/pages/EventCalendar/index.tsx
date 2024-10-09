@@ -299,7 +299,7 @@ const EventCalendar: React.FC = () => {
 
   return (
     <>
-      <PageTitle title="캘린더 보기" />
+      <PageTitle title="이벤트 캘린더" />
       <Stack gap="2.5rem">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           캘린더 보기

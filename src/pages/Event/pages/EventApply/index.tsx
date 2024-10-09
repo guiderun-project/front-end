@@ -230,7 +230,7 @@ const EventApply: React.FC = () => {
   return (
     <>
       <PageTitle title="참여 신청서 작성" />
-      <TitleHeader title="참여신청서 작성" />
+      <TitleHeader title="참여 신청서 작성" />
       {renderHeader()}
       {renderForm()}
       <MatchingStandardAccordion />

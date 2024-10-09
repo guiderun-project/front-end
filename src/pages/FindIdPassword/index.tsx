@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import FindIdSection from './sections/FindIdSection';
 import FindPwSection from './sections/FindPwSection';
+import { PageTitle } from '@/components/shared';
 
 //
 //
@@ -47,6 +48,7 @@ const FindIdPassword: React.FC = () => {
       paddingTop="5rem"
       gap="3.75rem"
     >
+      <PageTitle title="아이디/비밀번호 찾기" />
       <Typography component="h1" fontSize="2rem" fontWeight="2rem">
         아이디/비밀번호 찾기
       </Typography>
