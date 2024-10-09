@@ -15,36 +15,47 @@ import {
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
-import Admin from './pages/Admin';
-import AdminEvent from './pages/Admin/pages/AdminEvent';
-import AdminMain from './pages/Admin/pages/AdminMain';
-import AdminUser from './pages/Admin/pages/AdminUser';
-import AdminWithdraw from './pages/Admin/pages/AdminWithdraw';
-import AllEvent from './pages/Event/pages/AllEvent';
-import EditEvent from './pages/Event/pages/EditEvent';
-import EditEventApply from './pages/Event/pages/EditEventApply';
-import EventApply from './pages/Event/pages/EventApply';
-import EventApplyDetail from './pages/Event/pages/EventApplyDetail';
-import EventCalendar from './pages/Event/pages/EventCalendar';
-import EventDetail from './pages/Event/pages/EventDetail';
-import EventHistory from './pages/Event/pages/EventHistory';
-import EventSearch from './pages/Event/pages/EventSearch';
-import MyEvent from './pages/Event/pages/MyEvent';
-import NewEvent from './pages/Event/pages/NewEvent';
-import FindIdPassword from './pages/FindIdPassword';
-import Info from './pages/Info';
-import Intro from './pages/Intro';
-import Loading from './pages/Loading';
-import Login from './pages/Login';
-import Main from './pages/Main';
-import MainRoot from './pages/Main/MainRoot';
-import Mypage from './pages/Mypage';
-import NotFound from './pages/NotFound';
-import Oauth from './pages/Oauth';
-import Profile from './pages/Profile';
-import Signup from './pages/Signup';
-import Withdraw from './pages/Withdraw';
 import { RootState } from './store';
+
+const Admin = React.lazy(() => import('./pages/Admin'));
+const AdminEvent = React.lazy(() => import('./pages/Admin/pages/AdminEvent'));
+const AdminMain = React.lazy(() => import('./pages/Admin/pages/AdminMain'));
+const AdminUser = React.lazy(() => import('./pages/Admin/pages/AdminUser'));
+const AdminWithdraw = React.lazy(
+  () => import('./pages/Admin/pages/AdminWithdraw'),
+);
+const AllEvent = React.lazy(() => import('./pages/Event/pages/AllEvent'));
+const EditEvent = React.lazy(() => import('./pages/Event/pages/EditEvent'));
+const EditEventApply = React.lazy(
+  () => import('./pages/Event/pages/EditEventApply'),
+);
+const EventApply = React.lazy(() => import('./pages/Event/pages/EventApply'));
+const EventApplyDetail = React.lazy(
+  () => import('./pages/Event/pages/EventApplyDetail'),
+);
+const EventCalendar = React.lazy(
+  () => import('./pages/Event/pages/EventCalendar'),
+);
+const EventDetail = React.lazy(() => import('./pages/Event/pages/EventDetail'));
+const EventHistory = React.lazy(
+  () => import('./pages/Event/pages/EventHistory'),
+);
+const EventSearch = React.lazy(() => import('./pages/Event/pages/EventSearch'));
+const MyEvent = React.lazy(() => import('./pages/Event/pages/MyEvent'));
+const NewEvent = React.lazy(() => import('./pages/Event/pages/NewEvent'));
+const FindIdPassword = React.lazy(() => import('./pages/FindIdPassword'));
+const Info = React.lazy(() => import('./pages/Info'));
+const Intro = React.lazy(() => import('./pages/Intro'));
+const Loading = React.lazy(() => import('./pages/Loading'));
+const Login = React.lazy(() => import('./pages/Login'));
+const Main = React.lazy(() => import('./pages/Main'));
+const MainRoot = React.lazy(() => import('./pages/Main/MainRoot'));
+const Mypage = React.lazy(() => import('./pages/Mypage'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const Oauth = React.lazy(() => import('./pages/Oauth'));
+const Profile = React.lazy(() => import('./pages/Profile'));
+const Signup = React.lazy(() => import('./pages/Signup'));
+const Withdraw = React.lazy(() => import('./pages/Withdraw'));
 
 const router = createBrowserRouter([
   {
