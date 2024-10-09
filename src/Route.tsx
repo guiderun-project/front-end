@@ -15,6 +15,7 @@ import {
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
+import Loading from './pages/Loading';
 import { RootState } from './store';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
@@ -46,7 +47,6 @@ const NewEvent = React.lazy(() => import('./pages/Event/pages/NewEvent'));
 const FindIdPassword = React.lazy(() => import('./pages/FindIdPassword'));
 const Info = React.lazy(() => import('./pages/Info'));
 const Intro = React.lazy(() => import('./pages/Intro'));
-const Loading = React.lazy(() => import('./pages/Loading'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Main = React.lazy(() => import('./pages/Main'));
 const MainRoot = React.lazy(() => import('./pages/Main/MainRoot'));
