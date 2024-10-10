@@ -8,13 +8,19 @@ interface ProfileImageProps {
 const ProfileImage: React.FC<ProfileImageProps> = ({ size, img }) => {
   if (img) {
     return (
-      <Avatar alt="프로필 사진" src={img} sx={{ width: size, height: size }} />
+      <Avatar
+        aria-hidden
+        alt="프로필 사진"
+        src={img}
+        sx={{ width: size, height: size }}
+      />
     );
   }
 
   return (
     <Avatar
-      alt="프로필 사진"
+      aria-hidden
+      alt="프로필 사진 설정 안됨"
       sx={{ bgcolor: '#D9D9D9', width: size, height: size }}
     ></Avatar>
   );
