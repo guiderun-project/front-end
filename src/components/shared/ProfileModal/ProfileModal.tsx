@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { ClearOutlined } from '@mui/icons-material';
 import {
   Button,
@@ -16,6 +15,7 @@ import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
 import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
+import { HidenText } from '../HidenText';
 import { LikeButton } from '../LikeButton';
 import { ProfileImage } from '../ProfileImage';
 import { TitleContentRow } from '../TitleContentRow';
@@ -27,14 +27,6 @@ interface ProfileModalProps extends DialogProps {
   userid: string;
   onClose: () => void;
 }
-
-const StyledHideText = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  margin: -1px;
-`;
 
 const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
@@ -91,7 +83,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
           >
             <LikeButton userid={userid} />
             <Typography role="text" fontSize="0.75rem" color="#666">
-              <StyledHideText>배두리님 인기도</StyledHideText>
+              <HidenText content={`${userData.name}님 인기도`} />
               {userData.like}
             </Typography>
           </Stack>
@@ -104,7 +96,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     if (userData) {
       return (
         <Stack gap="1rem" boxSizing="border-box" paddingLeft="0.5rem">
-          <StyledHideText as="h2">파트너 정보</StyledHideText>
+          <HidenText content="파트너 정보" />
           <TitleContentRow
             title="개인 기록"
             content={<Typography>{userData.detailRecord}</Typography>}
