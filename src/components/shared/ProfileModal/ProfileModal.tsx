@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { ClearOutlined } from '@mui/icons-material';
 import {
   Button,
@@ -26,6 +27,14 @@ interface ProfileModalProps extends DialogProps {
   userid: string;
   onClose: () => void;
 }
+
+const StyledHideTitle = styled.h2`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+`;
 
 const ProfileModal: React.FC<ProfileModalProps> = (props) => {
   const { userid, onClose } = props;
@@ -94,6 +103,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     if (userData) {
       return (
         <Stack gap="1rem" boxSizing="border-box" paddingLeft="0.5rem">
+          <StyledHideTitle>파트너 정보</StyledHideTitle>
           <TitleContentRow
             title="개인 기록"
             content={<Typography>{userData.detailRecord}</Typography>}
