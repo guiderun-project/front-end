@@ -123,17 +123,21 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             title="SNS"
             content={
               userData.isOpenSns ? (
-                <Typography
-                  component="a"
-                  href={`https://www.instagram.com/${userData.snsId}`}
-                  target="_blank"
-                  sx={{
-                    color: '#333',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userData.snsId}
-                </Typography>
+                userData.snsId ? (
+                  <Typography
+                    component="a"
+                    href={`https://www.instagram.com/${userData.snsId}`}
+                    target="_blank"
+                    sx={{
+                      color: '#333',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {userData.snsId}
+                  </Typography>
+                ) : (
+                  <Typography color="#808080">없음</Typography>
+                )
               ) : (
                 <Typography color="#808080">비공개</Typography>
               )
