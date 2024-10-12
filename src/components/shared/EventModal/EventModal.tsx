@@ -56,7 +56,7 @@ const EventModal: React.FC<EventModalProps> = ({
     if (eventData) {
       return (
         <DialogTitle
-          component="h1"
+          component="h2"
           display="flex"
           gap="0.5rem"
           alignItems="center"
