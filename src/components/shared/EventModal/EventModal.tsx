@@ -229,6 +229,7 @@ const EventModal: React.FC<EventModalProps> = ({
               padding="1rem"
               border="1px solid #D9D9D9"
               borderRadius="0.5rem"
+              tabIndex={0}
             >
               <Typography
                 fontSize="0.8125rem"
