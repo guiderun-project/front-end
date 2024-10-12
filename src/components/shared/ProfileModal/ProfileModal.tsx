@@ -77,7 +77,11 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
               <GenderChip type={userData.gender} />
             </Stack>
             <Stack direction="row" gap="0.5rem" alignItems="center">
-              <Typography fontWeight={700} fontSize="1.5rem">
+              <Typography
+                id="profile-modal-title"
+                fontWeight={700}
+                fontSize="1.5rem"
+              >
                 {userData.name}
               </Typography>
               <GroupChip group={userData.recordDegree} />
@@ -180,6 +184,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     <Dialog
       {...props}
       fullWidth
+      aria-labelledby="profile-modal-title"
       maxWidth="xs"
       sx={{
         '.MuiDialog-paper': {
