@@ -28,7 +28,7 @@ interface ProfileModalProps extends DialogProps {
   onClose: () => void;
 }
 
-const StyledHideTitle = styled.h2`
+const StyledHideText = styled.span`
   position: absolute;
   width: 1px;
   height: 1px;
@@ -90,7 +90,8 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             gap="0.25rem"
           >
             <LikeButton userid={userid} />
-            <Typography fontSize="0.75rem" color="#666">
+            <Typography role="text" fontSize="0.75rem" color="#666">
+              <StyledHideText>배두리님 인기도</StyledHideText>
               {userData.like}
             </Typography>
           </Stack>
@@ -103,7 +104,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     if (userData) {
       return (
         <Stack gap="1rem" boxSizing="border-box" paddingLeft="0.5rem">
-          <StyledHideTitle>파트너 정보</StyledHideTitle>
+          <StyledHideText as="h2">파트너 정보</StyledHideText>
           <TitleContentRow
             title="개인 기록"
             content={<Typography>{userData.detailRecord}</Typography>}
