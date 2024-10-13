@@ -2,7 +2,7 @@ import React from 'react';
 
 const useKakaoShare = () => {
   const { Kakao, location } = window;
-  const fullUrl = window.location.href;
+  const fullUrl = location.href;
   const baseUrl = fullUrl.split('?')[0];
 
   /**
