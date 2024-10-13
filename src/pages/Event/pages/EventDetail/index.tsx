@@ -165,7 +165,7 @@ const EventDetail: React.FC = () => {
               >
                 <IconButton
                   aria-label="이벤트 좋아요"
-                  aria-selected={eventLike?.isLiked}
+                  aria-pressed={eventLike?.isLiked}
                   onClick={handleLike}
                 >
                   {eventLike?.isLiked ? (
