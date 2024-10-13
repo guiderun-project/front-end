@@ -143,6 +143,7 @@ const EditEventApply: React.FC = () => {
         <InputBox
           required
           multiline
+          labelFor="group"
           title="훈련 희망 팀"
           subTitle="(미선택 시 본인이 속한 팀으로 배정됩니다. )"
           inputElement={
@@ -150,7 +151,7 @@ const EditEventApply: React.FC = () => {
               name="group"
               control={control}
               render={({ field }) => (
-                <Select {...field} required>
+                <Select {...field} id="group" required>
                   {GROUP_SELECT.map((group) => (
                     <MenuItem key={group.value} value={group.value}>
                       {group.label}
@@ -164,6 +165,7 @@ const EditEventApply: React.FC = () => {
         <InputBox
           multiline
           title="희망 파트너 성함"
+          labelFor="partner"
           inputElement={
             <Controller
               name="partner"
@@ -171,6 +173,7 @@ const EditEventApply: React.FC = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  id="partner"
                   fullWidth
                   placeholder="약속한 파트너가 있다면 알려주세요!"
                 />
@@ -181,6 +184,7 @@ const EditEventApply: React.FC = () => {
         <InputBox
           multiline
           title="이 외 추가 코멘트"
+          labelFor="detail"
           inputElement={
             <Controller
               name="detail"
@@ -188,6 +192,7 @@ const EditEventApply: React.FC = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
+                  id="detail"
                   fullWidth
                   multiline
                   rows={3}
