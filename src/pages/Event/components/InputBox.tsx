@@ -1,3 +1,4 @@
+import { HidenText } from '@/components/shared';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Badge, Stack, Typography } from '@mui/material';
@@ -54,8 +55,9 @@ const InputBox: React.FC<InputBoxProps> = ({
     <StyledInputBox multiline={multiline}>
       <Stack gap="0.25rem">
         <Typography fontSize="1.0625rem" fontWeight={700}>
-          <Badge color="error" variant="dot" invisible={!required}>
+          <Badge role="text" color="error" variant="dot" invisible={!required}>
             {title}
+            {required && <HidenText content="필수" />}
           </Badge>
         </Typography>
         {subTitle ? (
