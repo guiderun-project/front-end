@@ -31,7 +31,7 @@ const ProtectedRoute: React.FC = () => {
   React.useEffect(() => {
     window.localStorage.setItem(
       PREV_PATH_KEY,
-      `${location.pathname}${window.location.search}`,
+      `${location.pathname}${location.search}`,
     );
   }, [location]);
 
