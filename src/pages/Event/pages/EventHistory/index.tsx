@@ -80,20 +80,22 @@ const EventHistory: React.FC = () => {
     <>
       <PageTitle title="이벤트 히스토리" />
       <Stack gap="2.5rem">
-        <Stack
-          component="h1"
-          role="text"
-          direction="row"
-          alignItems="center"
-          gap="0.5rem"
-        >
-          <Typography component="span" fontSize="2rem">
-            {name}님의
-          </Typography>
-          <Typography component="span" fontSize="1.5rem">
-            이벤트 히스토리
-          </Typography>
-        </Stack>
+        <h1>
+          <Stack
+            component="span"
+            role="text"
+            direction="row"
+            alignItems="center"
+            gap="0.5rem"
+          >
+            <Typography component="span" fontSize="2rem">
+              {name}님의
+            </Typography>
+            <Typography component="span" fontSize="1.5rem">
+              이벤트 히스토리
+            </Typography>
+          </Stack>
+        </h1>
         {/* 이벤트 참여 횟수 */}
         <EventCount userid={userId} />
       </Stack>

@@ -28,6 +28,7 @@ import {
   EventChip,
   EventModal,
   EventStatus,
+  HidenText,
   PageTitle,
   TextLink,
   TitleHeader,
@@ -164,7 +165,7 @@ const EventDetail: React.FC = () => {
               >
                 <IconButton
                   aria-label="이벤트 좋아요"
-                  aria-selected={eventLike?.isLiked}
+                  aria-pressed={eventLike?.isLiked}
                   onClick={handleLike}
                 >
                   {eventLike?.isLiked ? (
@@ -427,11 +428,13 @@ const EventDetail: React.FC = () => {
               gap="0.5rem"
             >
               <Typography
+                role="text"
                 component="span"
                 fontSize="0.9375rem"
                 fontWeight={600}
               >
                 이벤트 공유하기
+                <HidenText content="(새 창 열림)" />
               </Typography>
               <ShareIcon />
             </Stack>

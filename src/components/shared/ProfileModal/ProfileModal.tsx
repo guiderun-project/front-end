@@ -15,6 +15,7 @@ import { DisabilityChip } from '../DisabilityChip';
 import { EventLinkBox } from '../EventLinkBox';
 import { GenderChip } from '../GenderChip';
 import { GroupChip } from '../GroupChip';
+import { HidenText } from '../HidenText';
 import { LikeButton } from '../LikeButton';
 import { ProfileImage } from '../ProfileImage';
 import { TitleContentRow } from '../TitleContentRow';
@@ -68,7 +69,11 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
               <GenderChip type={userData.gender} />
             </Stack>
             <Stack direction="row" gap="0.5rem" alignItems="center">
-              <Typography fontWeight={700} fontSize="1.5rem">
+              <Typography
+                id="profile-modal-title"
+                fontWeight={700}
+                fontSize="1.5rem"
+              >
                 {userData.name}
               </Typography>
               <GroupChip group={userData.recordDegree} />
@@ -81,7 +86,8 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             gap="0.25rem"
           >
             <LikeButton userid={userid} />
-            <Typography fontSize="0.75rem" color="#666">
+            <Typography role="text" fontSize="0.75rem" color="#666">
+              <HidenText content={`${userData.name}님 인기도`} />
               {userData.like}
             </Typography>
           </Stack>
@@ -94,6 +100,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     if (userData) {
       return (
         <Stack gap="1rem" boxSizing="border-box" paddingLeft="0.5rem">
+          <HidenText content="파트너 정보" />
           <TitleContentRow
             title="개인 기록"
             content={<Typography>{userData.detailRecord}</Typography>}
@@ -112,17 +119,21 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
             title="SNS"
             content={
               userData.isOpenSns ? (
-                <Typography
-                  component="a"
-                  href={`https://www.instagram.com/${userData.snsId}`}
-                  target="_blank"
-                  sx={{
-                    color: '#333',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {userData.snsId}
-                </Typography>
+                userData.snsId ? (
+                  <Typography
+                    component="a"
+                    href={`https://www.instagram.com/${userData.snsId}`}
+                    target="_blank"
+                    sx={{
+                      color: '#333',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {userData.snsId}
+                  </Typography>
+                ) : (
+                  <Typography color="#808080">없음</Typography>
+                )
               ) : (
                 <Typography color="#808080">비공개</Typography>
               )
@@ -165,6 +176,7 @@ const ProfileModal: React.FC<ProfileModalProps> = (props) => {
     <Dialog
       {...props}
       fullWidth
+      aria-labelledby="profile-modal-title"
       maxWidth="xs"
       sx={{
         '.MuiDialog-paper': {

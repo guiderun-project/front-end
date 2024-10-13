@@ -57,8 +57,10 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
           <StyledGroupAnchor
             id={`StyledGroupAnchor-${group}-${groupItem}`}
             href={`#${MATCHING_BOX_ID(groupItem)}`}
-            aria-label={`그룹 ${groupItem}`}
-            aria-selected={group === groupItem}
+            aria-label={`그룹 ${groupItem}${
+              group === groupItem ? '' : '으로 이동'
+            }`}
+            aria-current={group === groupItem}
           >
             <Stack
               aria-hidden

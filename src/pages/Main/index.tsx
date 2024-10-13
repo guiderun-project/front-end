@@ -17,7 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import infoApi from '@/apis/requests/info';
 import PlanedEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
-import { LinkButton, PartnerBox } from '@/components/shared';
+import { LinkButton, PageTitle, PartnerBox } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { PartnerSort } from '@/types/sort';
@@ -187,6 +187,7 @@ const Main: React.FC = () => {
 
   return (
     <Stack gap="2.5rem">
+      <PageTitle title="메인 화면" />
       {renderEvent()}
       {renderPartner()}
     </Stack>
