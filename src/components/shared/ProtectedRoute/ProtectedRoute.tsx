@@ -29,7 +29,10 @@ const ProtectedRoute: React.FC = () => {
   }, [data]);
 
   React.useEffect(() => {
-    window.localStorage.setItem(PREV_PATH_KEY, location.pathname);
+    window.localStorage.setItem(
+      PREV_PATH_KEY,
+      `${location.pathname}${window.location.search}`,
+    );
   }, [location]);
 
   if (isLoading || (accessToken && !userId)) {
