@@ -11,6 +11,7 @@ import { HidenText } from '@/components/shared';
 interface InputBoxProps {
   title: string;
   inputElement: React.ReactElement;
+  labelFor?: string;
   subTitle?: string;
   multiline?: boolean;
   required?: boolean;
@@ -49,11 +50,12 @@ const InputBox: React.FC<InputBoxProps> = ({
   title,
   inputElement,
   subTitle,
+  labelFor,
   multiline = false,
   required = false,
 }) => {
   return (
-    <StyledInputBox multiline={multiline}>
+    <StyledInputBox multiline={multiline} htmlFor={labelFor}>
       <Stack gap="0.25rem">
         <Typography fontSize="1.0625rem" fontWeight={700}>
           <Badge role="text" color="error" variant="dot" invisible={!required}>
