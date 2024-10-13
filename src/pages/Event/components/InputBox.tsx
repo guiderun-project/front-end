@@ -1,7 +1,8 @@
-import { HidenText } from '@/components/shared';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Badge, Stack, Typography } from '@mui/material';
+
+import { HidenText } from '@/components/shared';
 
 //
 //
