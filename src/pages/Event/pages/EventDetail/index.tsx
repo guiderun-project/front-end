@@ -1,5 +1,6 @@
 import React from 'react';
 
+import styled from '@emotion/styled';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -46,6 +47,18 @@ enum EventPageSectionEnum {
   Detail = 'detail',
   Status = 'status',
 }
+
+//
+//
+//
+
+const StyledHidenButton = styled.button`
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+`;
 
 //
 //
@@ -186,6 +199,42 @@ const EventDetail: React.FC = () => {
         </Stack>
       );
     }
+  };
+
+  /**
+   * 스크린 리더 사용자를 위한 상단 참가 신청 버튼
+   */
+  const renderHiddenApplyButton = () => {
+    if (!eventData) return null;
+
+    if (eventData.recruitStatus === RecruitStatus.Open) {
+      if (eventData.isApply) {
+        return (
+          <StyledHidenButton
+            className="for-screenReader"
+            tabIndex={-1}
+            onClick={() => {
+              if (window.confirm('이벤트 참여를 취소하시겠습니까??')) {
+                cancelSubmit();
+              }
+            }}
+          >
+            이벤트 참가 취소하기
+          </StyledHidenButton>
+        );
+      }
+      return (
+        <StyledHidenButton
+          className="for-screenReader"
+          tabIndex={-1}
+          onClick={() => navigate(`${BROWSER_PATH.EVENT.APPLY}/${eventId}`)}
+        >
+          이벤트 참가 신청하기
+        </StyledHidenButton>
+      );
+    }
+
+    return null;
   };
 
   /**
@@ -410,6 +459,7 @@ const EventDetail: React.FC = () => {
     <>
       <PageTitle title="이벤트 상세" />
       <TitleHeader title="이벤트 상세 페이지" />
+      {renderHiddenApplyButton()}
       {renderHeader()}
       <Stack gap="2rem">
         {renderTitle()}
