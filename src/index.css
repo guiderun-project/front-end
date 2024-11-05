@@ -146,3 +146,10 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+button {
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+}

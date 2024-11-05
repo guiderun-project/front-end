@@ -27,7 +27,7 @@ interface PartnerBoxProps {
 //
 //
 
-const StyledContainer = styled.div<{ size: 'medium' | 'small' }>`
+const StyledContainer = styled.button<{ size: 'medium' | 'small' }>`
   box-sizing: border-box;
   min-width: 7.75rem;
   display: flex;
@@ -118,12 +118,12 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
             )}
           </Stack>
         </Stack>
-        <Stack gap="0.0125rem" direction="row" alignItems="center">
+        <Stack gap="0.0125rem" direction="row" alignItems="center" role="text">
           {isLiked ? (
             <FavoriteIcon
               fontSize="small"
-              aria-label={`${name}님의 인기도`}
-              aria-selected={isLiked}
+              aria-label={`인기도 ${like}, 좋아요 누름`}
+              aria-hidden={false}
               sx={{
                 color: 'red',
               }}
@@ -131,15 +131,15 @@ const PartnerBox: React.FC<PartnerBoxProps> = ({
           ) : (
             <FavoriteBorderIcon
               fontSize="small"
-              aria-label={`${name}님의 인기도`}
-              aria-selected={isLiked}
+              aria-label={`인기도 ${like}, 좋아요 누르지 않음`}
+              aria-hidden={false}
               sx={{
                 color: '#666',
               }}
             />
           )}
 
-          <Typography fontSize="0.625rem" color="#666">
+          <Typography fontSize="0.625rem" color="#666" aria-hidden>
             {like}
           </Typography>
         </Stack>

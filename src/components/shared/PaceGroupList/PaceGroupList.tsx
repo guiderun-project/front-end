@@ -36,7 +36,7 @@ const PaceGroupList: React.FC = () => {
   return (
     <StyledContentBox>
       <Stack gap="1.5rem">
-        <Typography component="h3" fontWeight={800}>
+        <Typography component="strong" fontWeight={800}>
           <FormattedMessage id="common.vi" />
         </Typography>
         <Stack gap="1rem">
@@ -95,7 +95,7 @@ const PaceGroupList: React.FC = () => {
         </Stack>
       </Stack>
       <Stack gap="1.5rem">
-        <Typography component="h3" fontWeight={800}>
+        <Typography component="strong" fontWeight={800}>
           <FormattedMessage id="common.guide" />
         </Typography>
         <Stack gap="1rem">

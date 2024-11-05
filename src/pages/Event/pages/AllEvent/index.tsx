@@ -15,6 +15,7 @@ import AllEventClosePanel from './panels/AllEventClosePanel';
 import AllEventMyPanel from './panels/AllEventMyPanel';
 import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
 
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 //
@@ -60,6 +61,7 @@ const AllEvent: React.FC = () => {
 
   return (
     <Stack gap="2.5rem">
+      <PageTitle title="전체 이벤트" />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           전체 이벤트

@@ -19,7 +19,12 @@ import { Link, useSearchParams } from 'react-router-dom';
 import eventApi from '@/apis/requests/event';
 import allEventIcon from '@/assets/navBar/all_event_bold_icon.png';
 import MyEventIcon from '@/assets/navBar/my_event_icon.png';
-import { EventLinkBox, LinkButton, NotFound } from '@/components/shared';
+import {
+  EventLinkBox,
+  LinkButton,
+  NotFound,
+  PageTitle,
+} from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventSort } from '@/types/sort';
 
@@ -130,6 +135,7 @@ const MyEvent: React.FC = () => {
 
   return (
     <Stack gap="2.5rem">
+      <PageTitle title="나의 이벤트" />
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
           나의 이벤트

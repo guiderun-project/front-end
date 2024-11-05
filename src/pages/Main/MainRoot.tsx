@@ -27,17 +27,15 @@ const MainRoot: React.FC = () => {
           flexDirection="column"
           gap="0.75rem"
         >
-          <Typography
-            role="text"
-            component="h1"
-            fontSize="1.5rem"
-            fontWeight={400}
-          >
+          <h1>
             <Typography component="span" fontSize="2rem" fontWeight={600}>
               {userName}
             </Typography>
-            님 안녕하세요!
-          </Typography>
+            <Typography component="span" fontSize="1.5rem" fontWeight={400}>
+              님 안녕하세요!
+            </Typography>
+          </h1>
+
           <Box
             display="flex"
             flexDirection="column"

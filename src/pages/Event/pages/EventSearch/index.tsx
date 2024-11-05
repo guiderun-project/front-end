@@ -77,9 +77,11 @@ const EventSearch: React.FC = () => {
 
   const renderCountResult = () => {
     return (
-      <Typography role="text" component="h2" textAlign="center">
-        <span style={{ fontWeight: 700 }}>"{searchValue}"</span> 관련 내용이{' '}
-        <span style={{ fontWeight: 700 }}>{eventCount}건</span> 검색되었습니다
+      <Typography component="h2" textAlign="center">
+        <span role="text">
+          <span style={{ fontWeight: 700 }}>"{searchValue}"</span> 관련 내용이{' '}
+          <span style={{ fontWeight: 700 }}>{eventCount}건</span> 검색되었습니다
+        </span>
       </Typography>
     );
   };

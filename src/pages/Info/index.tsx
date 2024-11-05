@@ -5,7 +5,7 @@ import InfoSection from './sections/InfoSection';
 import SpecSection from './sections/SpecSection';
 import TermsSection from './sections/TermsSection';
 
-import { NotFound } from '@/components/shared';
+import { NotFound, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 
 const Info = () => {
@@ -47,6 +47,7 @@ const Info = () => {
 
   return (
     <>
+      <PageTitle title="제출 정보 확인" />
       <Typography component="h1" fontSize="2rem">
         제출한 정보 확인하기
       </Typography>

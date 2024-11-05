@@ -10,6 +10,7 @@ export * from './EventLinkBox';
 export * from './EventStatus';
 export * from './GenderChip';
 export * from './GroupChip';
+export * from './HidenText';
 export * from './LikeButton';
 export * from './LinkButton';
 export * from './NavBar';

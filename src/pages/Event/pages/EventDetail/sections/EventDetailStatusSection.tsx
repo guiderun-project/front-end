@@ -58,7 +58,6 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
     return (
       <Tabs
         centered
-        role="tablist"
         variant="fullWidth"
         value={selectedTab}
         onChange={(_, newValue) => setSelectedTab(newValue)}

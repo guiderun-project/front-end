@@ -2,6 +2,8 @@ import React from 'react';
 
 const useKakaoShare = () => {
   const { Kakao, location } = window;
+  const fullUrl = location.href;
+  const baseUrl = fullUrl.split('?')[0];
 
   /**
    * 카카오톡 공유하기 기능
@@ -15,7 +17,8 @@ const useKakaoShare = () => {
     title: string,
     organizer: string,
     content: string = `${organizer}님이 만든 이벤트에 참여해보세요!`,
-    url = location.href,
+    url = baseUrl,
+    statusUrl = `${baseUrl}?section=status`,
   ) => {
     Kakao.Share.sendDefault({
       objectType: 'feed',
@@ -30,17 +33,17 @@ const useKakaoShare = () => {
       },
       buttons: [
         {
-          title: '메인페이지',
-          link: {
-            mobileWebUrl: location.host,
-            webUrl: location.host,
-          },
-        },
-        {
-          title: '참가 신청',
+          title: '이벤트 상세',
           link: {
             mobileWebUrl: url,
             webUrl: url,
+          },
+        },
+        {
+          title: '신청 현황',
+          link: {
+            mobileWebUrl: statusUrl,
+            webUrl: statusUrl,
           },
         },
       ],

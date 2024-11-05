@@ -20,12 +20,15 @@ const LikeButton: React.FC<LikeButtonProps> = ({ userid }) => {
   const { handleLike } = useUserLike({ userId: userid });
   if (userData) {
     return (
-      <IconButton size="small" onClick={handleLike} aria-label="좋아요">
+      <IconButton
+        size="small"
+        onClick={handleLike}
+        aria-label={`${userData.name}님 좋아요`}
+        aria-pressed={userData.isLiked}
+      >
         {userData.isLiked ? (
           <FavoriteIcon
             fontSize="small"
-            aria-label={`${userData.name}님의 인기도`}
-            aria-selected={userData.isLiked}
             sx={{
               color: 'red',
             }}
@@ -33,8 +36,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({ userid }) => {
         ) : (
           <FavoriteBorderIcon
             fontSize="small"
-            aria-label={`${userData.name}님의 인기도`}
-            aria-selected={userData.isLiked}
             sx={{
               color: '#666',
             }}

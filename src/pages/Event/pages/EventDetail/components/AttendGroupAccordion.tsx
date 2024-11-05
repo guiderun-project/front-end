@@ -111,6 +111,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
     <StyledAccordionBox open={open} group={group}>
       <StyledAccordionButton
         role="button"
+        tabIndex={0}
         open={open}
         group={group}
         aria-expanded={open}
