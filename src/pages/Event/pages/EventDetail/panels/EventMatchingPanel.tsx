@@ -236,23 +236,6 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
         onViSelect={handleUserSelect(DisabilityEnum.VI)}
       />
     );
-    // }
-    // return (
-    //   <MatchingNonGroupContainer
-    //     matchingMode={matchingMode}
-    //     guideOfNotMatched={notMatchedList.notMatch.filter(
-    //       (user) => user.type === DisabilityEnum.GUIDE,
-    //     )}
-    //     selectedGuide={selectedGuide}
-    //     selectedVi={selectedVi}
-    //     viOfMatched={matchedList.vi}
-    //     viOfnotMatched={notMatchedList.notMatch.filter(
-    //       (user) => user.type === DisabilityEnum.VI,
-    //     )}
-    //     onGuideSelect={handleUserSelect(DisabilityEnum.GUIDE)}
-    //     onViSelect={handleUserSelect(DisabilityEnum.VI)}
-    //   />
-    // );
   };
 
   return (
