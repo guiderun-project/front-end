@@ -525,6 +525,16 @@ class EventApi {
       return res.data;
     });
   };
+
+  //임시 API
+  eventAutoMatching = async (eventId: number) => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(
+        `event/${eventId}/match/auto`,
+      );
+      return res.data;
+    });
+  };
 }
 
 const eventApi = new EventApi();

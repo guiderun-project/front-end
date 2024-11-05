@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { CircularProgress, Stack, Switch, Typography } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Stack,
+  Switch,
+  Typography,
+} from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -90,6 +96,27 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
       alert('매칭 처리 되었습니다.');
       setSelectedGuide(INITIAL_SELECTED);
       setSelectedVi(INITIAL_SELECTED);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다. ');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['eventMatchedViGet', eventId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['eventNotMatchingGet', eventId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['eventMatchedGuideGet'],
+      });
+    },
+  });
+
+  const { mutate: automatching } = useMutation({
+    mutationFn: () => eventApi.eventAutoMatching(eventId),
+    onSuccess: () => {
+      alert('매칭 처리 되었습니다.');
     },
     onError: () => {
       alert('에러가 발생했습니다. ');
@@ -245,6 +272,9 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
       role="tabpanel"
       aria-labelledby="tab-matching"
     >
+      <Button color="error" variant="outlined" onClick={() => automatching()}>
+        자동매칭
+      </Button>
       {renderMode()}
       {renderList()}
     </Stack>
