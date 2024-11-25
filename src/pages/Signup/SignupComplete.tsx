@@ -39,9 +39,8 @@ const SignupComplete: React.FC = () => {
       <Stack
         component="main"
         minHeight="100vh"
-        justifyContent="space-around"
         alignItems="center"
-        gap="2.5rem"
+        gap="3.75rem"
         paddingBottom="3.4375rem"
       >
         <Stack alignItems="center" gap="0.5rem">
