@@ -20,11 +20,11 @@ const SignupComplete: React.FC = () => {
   //
   //
   //
-  // React.useEffect(() => {
-  //   if (role !== RoleEnum.Wait) {
-  //     navigate(BROWSER_PATH.MAIN);
-  //   }
-  // }, [role]);
+  React.useEffect(() => {
+    if (role !== RoleEnum.Wait) {
+      navigate(BROWSER_PATH.MAIN);
+    }
+  }, [role]);
 
   //
   //
