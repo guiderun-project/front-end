@@ -21,7 +21,7 @@ const SignupComplete: React.FC = () => {
   //
   //
   React.useEffect(() => {
-    if (role !== RoleEnum.Wait) {
+    if (role !== RoleEnum.Wait && role !== RoleEnum.Reject) {
       navigate(BROWSER_PATH.MAIN);
     }
   }, [role]);
@@ -32,7 +32,7 @@ const SignupComplete: React.FC = () => {
 
   return (
     <>
-      <PageTitle title="회원가입 완료" />
+      <PageTitle title="승인 대기 중" />
       <Header>
         <FormattedMessage id="signup.complete.title" />
       </Header>

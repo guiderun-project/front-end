@@ -219,6 +219,7 @@ const Mypage: React.FC = () => {
    *
    */
   const renderMyEvent = () => {
+    if (!getAuthority.isUser(userData.role)) return null;
     return (
       <Stack gap="2.5rem">
         <Stack
