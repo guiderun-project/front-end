@@ -39,19 +39,23 @@ const SignupComplete: React.FC = () => {
       <Stack
         component="main"
         minHeight="100vh"
-        justifyContent="space-around"
         alignItems="center"
-        gap="2.5rem"
+        gap="3.75rem"
         paddingBottom="3.4375rem"
       >
-        <Typography
-          fontSize="2rem"
-          fontWeight={400}
-          textAlign="center"
-          whiteSpace="break-spaces"
-        >
-          <FormattedMessage id="signup.complete.matching" />
-        </Typography>
+        <Stack alignItems="center" gap="0.5rem">
+          <Typography
+            component="h1"
+            fontSize="2rem"
+            fontWeight={400}
+            textAlign="center"
+          >
+            가입이 완료되었습니다.
+          </Typography>
+          <Typography component="p" fontSize="0.9375rem" textAlign="center">
+            팀 편성이 완료되면 알림톡으로 알려드릴게요!
+          </Typography>
+        </Stack>
         <TeamingCriteria />
         <Stack gap="1rem" width="100%" alignItems="center">
           <Button
@@ -62,15 +66,6 @@ const SignupComplete: React.FC = () => {
             fullWidth
           >
             <FormattedMessage id="signup.complete.checkInfo" />
-          </Button>
-          <Button
-            component={Link}
-            to={BROWSER_PATH.MYPAGE}
-            variant="outlined"
-            size="large"
-            fullWidth
-          >
-            <FormattedMessage id="common.mypage" />
           </Button>
         </Stack>
       </Stack>
