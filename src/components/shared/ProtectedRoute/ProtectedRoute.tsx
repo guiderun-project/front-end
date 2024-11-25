@@ -13,8 +13,8 @@ import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import Loading from '@/pages/Loading';
 import { RootState } from '@/store/index';
 import { setUserInfo } from '@/store/reducer/user';
-import { RoleEnum } from '@/types/group';
 import SignupComplete from '@/pages/Signup/SignupComplete';
+import getAuthority from '@/utils/authority';
 
 interface ProtectedRouteProps {
   protectedLevel: 'APPROVED_USER' | 'WAITING_USER';
@@ -54,23 +54,24 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
   }
 
   if (protectedLevel === 'APPROVED_USER') {
-    if ([RoleEnum.Admin, RoleEnum.Coach, RoleEnum.User].includes(role)) {
+    if (getAuthority.isUser(role)) {
       return <Outlet />;
-    } else if ([RoleEnum.Wait, RoleEnum.Reject].includes(role)) {
-      return <SignupComplete />;
+    } else if (getAuthority.isWait(role)) {
+      return (
+        <PageLayout>
+          <SignupComplete />
+        </PageLayout>
+      );
     }
   }
 
-  if (
-    protectedLevel === 'WAITING_USER' &&
-    ![RoleEnum.Withdrawal, RoleEnum.New].includes(role)
-  ) {
+  if (protectedLevel === 'WAITING_USER' && getAuthority.isSignup(role)) {
     return (
       <PageLayout>
         <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
           <Outlet />
         </Stack>
-        {![RoleEnum.Wait, RoleEnum.Reject].includes(role) && <NavBar />}
+        {getAuthority.isUser(role) && <NavBar />}
       </PageLayout>
     );
   }
