@@ -11,9 +11,9 @@ import { PageLayout } from '../PageLayout';
 import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import Loading from '@/pages/Loading';
+import SignupComplete from '@/pages/Signup/SignupComplete';
 import { RootState } from '@/store/index';
 import { setUserInfo } from '@/store/reducer/user';
-import SignupComplete from '@/pages/Signup/SignupComplete';
 import getAuthority from '@/utils/authority';
 
 interface ProtectedRouteProps {
