@@ -3,8 +3,11 @@ import React from 'react';
 import {
   Button,
   CircularProgress,
+  FormControlLabel,
   InputAdornment,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
@@ -23,7 +26,9 @@ import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
+import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
 
 const EditEvent: React.FC = () => {
@@ -84,6 +89,7 @@ const EditEvent: React.FC = () => {
       date: eventData?.date,
       endTime: eventData?.endTime,
       eventType: eventData?.type,
+      eventCategory: eventData?.eventCategory,
       minNumG: eventData?.minNumG,
       minNumV: eventData?.minNumV,
       name: eventData?.name,
@@ -93,6 +99,12 @@ const EditEvent: React.FC = () => {
       startTime: eventData?.startTime,
     },
   });
+
+  const getEventCategoryLabel = () => {
+    if (eventData.eventCategory === EventCategory.GROUP) {
+      return `[GRP 프로그램] 그룹별\n(마일리지그룹/집중코칭그룹)`;
+    } else return `기본 이벤트\n(20명 이상 시 팀별로 나뉨)`;
+  };
 
   /**
    *
@@ -182,6 +194,40 @@ const EditEvent: React.FC = () => {
             </Stack>
           }
         />
+        {getAuthority.isAdmin(userData.role) && (
+          <Controller
+            name="eventCategory"
+            control={control}
+            render={({ field }) => (
+              <InputBox
+                required
+                multiline
+                title="타입 지정"
+                subTitle="(최초 생성시 선택 가능, 추후 선택 불가)"
+                inputElement={
+                  <RadioGroup
+                    {...field}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <FormControlLabel
+                      disabled
+                      value={eventData.eventCategory}
+                      label={getEventCategoryLabel()}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                  </RadioGroup>
+                }
+              />
+            )}
+          />
+        )}
         <Controller
           rules={{ required: '이벤트 제목은 필수 입력입니다.' }}
           name="name"

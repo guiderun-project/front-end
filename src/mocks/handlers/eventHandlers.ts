@@ -43,6 +43,7 @@ import {
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
+import { EventCategory } from '@/types/event';
 import {
   DisabilityEnum,
   EventStatus,
@@ -51,7 +52,6 @@ import {
   RunningGroup,
 } from '@/types/group';
 import { EventSort } from '@/types/sort';
-import { EventCategory } from '@/types/event';
 
 //You can add HTTP handler by msw DOCS
 //https://mswjs.io/docs/network-behavior/rest

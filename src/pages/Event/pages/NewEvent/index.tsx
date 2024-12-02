@@ -2,8 +2,10 @@ import React from 'react';
 
 import {
   Button,
-  InputAdornment,
+  FormControlLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
@@ -21,7 +23,9 @@ import { EventFormType, NewEventPostRequest } from '@/apis/types/event';
 import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { EventType } from '@/types/group';
+import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
 
 const NewEvent: React.FC = () => {
@@ -42,6 +46,7 @@ const NewEvent: React.FC = () => {
         minNumV: 0,
         startTime: '09:00',
         eventType: EventType.Competition,
+        eventCategory: EventCategory.GENERAL,
         name: '',
         place: '',
       },
@@ -118,6 +123,48 @@ const NewEvent: React.FC = () => {
             </Stack>
           }
         />
+        {getAuthority.isAdmin(userData.role) && (
+          <Controller
+            name="eventCategory"
+            control={control}
+            render={({ field }) => (
+              <InputBox
+                required
+                multiline
+                title="타입 지정"
+                subTitle="(최초 생성시 선택 가능, 추후 선택 불가)"
+                inputElement={
+                  <RadioGroup
+                    {...field}
+                    aria-required
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <FormControlLabel
+                      value={EventCategory.GENERAL}
+                      label={`기본 이벤트\n(20명 이상 시 팀별로 나뉨)`}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                    <FormControlLabel
+                      value={EventCategory.GROUP}
+                      label={`[GRP 프로그램] 그룹별\n(마일리지그룹/집중코칭그룹)`}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                  </RadioGroup>
+                }
+              />
+            )}
+          />
+        )}
         <Controller
           rules={{ required: '이벤트 제목은 필수 입력입니다.' }}
           name="name"
@@ -235,7 +282,7 @@ const NewEvent: React.FC = () => {
           )}
         />
 
-        <InputBox
+        {/* <InputBox
           multiline
           title="최소 모집 인원"
           inputElement={
@@ -294,7 +341,7 @@ const NewEvent: React.FC = () => {
               />
             </Stack>
           }
-        />
+        /> */}
         <Controller
           control={control}
           name="recruitStartDate"
