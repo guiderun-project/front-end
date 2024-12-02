@@ -4,7 +4,6 @@ import {
   Button,
   CircularProgress,
   FormControlLabel,
-  InputAdornment,
   MenuItem,
   Radio,
   RadioGroup,
