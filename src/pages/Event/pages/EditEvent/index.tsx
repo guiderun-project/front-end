@@ -336,63 +336,6 @@ const EditEvent: React.FC = () => {
             />
           )}
         />
-
-        <InputBox
-          multiline
-          title="최소 모집 인원"
-          inputElement={
-            <Stack
-              direction="row"
-              gap="0.9375rem"
-              justifyContent="space-between"
-            >
-              <Controller
-                control={control}
-                name="minNumV"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="시각장애러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                control={control}
-                name="minNumG"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="가이드러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </Stack>
-          }
-        />
         <Controller
           control={control}
           name="recruitStartDate"
