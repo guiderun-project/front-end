@@ -26,6 +26,7 @@ import {
   PageTitle,
   TitleHeader,
 } from '@/components/shared';
+import { GROUP_COLOR } from '@/constants/color';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventCategory } from '@/types/event';
@@ -71,9 +72,9 @@ const StyledGroupButton = styled.button<{ group: 'mile' | 'basic' }>`
 
   &[aria-selected='true'] {
     border-color: ${(props) =>
-      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+      props.group === 'mile' ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC};
     background-color: ${(props) =>
-      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+      props.group === 'mile' ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC};
 
     & p {
       color: white;
