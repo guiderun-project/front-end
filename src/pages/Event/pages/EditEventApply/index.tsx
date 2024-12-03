@@ -28,7 +28,12 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
+import { EventCategory } from '@/types/event';
+import {
+  RecruitStatus,
+  EventStatus as EventStatusType,
+  RunningGroup,
+} from '@/types/group';
 
 //
 //
@@ -38,6 +43,42 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+`;
+
+const StyledSelectBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9375rem;
+`;
+
+const StyledGroupButton = styled.button<{ group: 'mile' | 'basic' }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 0.625rem 1.5rem;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  & p {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: default;
+  }
+
+  &[aria-selected='true'] {
+    border-color: ${(props) =>
+      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+    background-color: ${(props) =>
+      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+
+    & p {
+      color: white;
+    }
+  }
 `;
 
 //
@@ -140,28 +181,64 @@ const EditEventApply: React.FC = () => {
             </Stack>
           }
         />
-        <InputBox
-          required
-          multiline
-          labelFor="group"
-          title="훈련 희망 팀"
-          subTitle="(미선택 시 본인이 속한 팀으로 배정됩니다. )"
-          inputElement={
-            <Controller
-              name="group"
-              control={control}
-              render={({ field }) => (
-                <Select {...field} id="group" required>
-                  {GROUP_SELECT.map((group) => (
-                    <MenuItem key={group.value} value={group.value}>
-                      {group.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          }
-        />
+        {eventData.eventCategory === EventCategory.GROUP ? (
+          <InputBox
+            required
+            multiline
+            title="훈련 희망 그룹"
+            subTitle={`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}
+            inputElement={
+              <Controller
+                rules={{ required: '그룹 선택은 필수입니다. ' }}
+                name="group"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <StyledSelectBox>
+                    <StyledGroupButton
+                      type="button"
+                      group="mile"
+                      aria-selected={value === RunningGroup.A}
+                      onClick={() => onChange(RunningGroup.A)}
+                    >
+                      <Typography>마일리지 그룹</Typography>
+                    </StyledGroupButton>
+                    <StyledGroupButton
+                      type="button"
+                      group="basic"
+                      aria-selected={value === RunningGroup.B}
+                      onClick={() => onChange(RunningGroup.B)}
+                    >
+                      <Typography>기초/보강 그룹</Typography>
+                    </StyledGroupButton>
+                  </StyledSelectBox>
+                )}
+              />
+            }
+          />
+        ) : (
+          <InputBox
+            required
+            multiline
+            labelFor="group"
+            title="훈련 희망 팀"
+            subTitle="(미선택 시 본인이 속한 팀으로 배정됩니다. )"
+            inputElement={
+              <Controller
+                name="group"
+                control={control}
+                render={({ field }) => (
+                  <Select id="group" {...field} required>
+                    {GROUP_SELECT.map((group) => (
+                      <MenuItem key={group.value} value={group.value}>
+                        {group.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            }
+          />
+        )}
         <InputBox
           multiline
           title="희망 파트너 성함"

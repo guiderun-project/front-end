@@ -30,15 +30,12 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import {
   RecruitStatus,
   RunningGroup,
   EventStatus as EventStatusType,
 } from '@/types/group';
-
-//
-//
-//
 
 const StyledForm = styled.form`
   display: flex;
@@ -46,9 +43,41 @@ const StyledForm = styled.form`
   gap: 2rem;
 `;
 
-//
-//
-//
+const StyledSelectBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9375rem;
+`;
+
+const StyledGroupButton = styled.button<{ group: 'mile' | 'basic' }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 0.625rem 1.5rem;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  & p {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: default;
+  }
+
+  &[aria-selected='true'] {
+    border-color: ${(props) =>
+      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+    background-color: ${(props) =>
+      props.group === 'mile' ? '#0066CA' : '#C505D7'};
+
+    & p {
+      color: white;
+    }
+  }
+`;
 
 export const GROUP_SELECT = [
   { value: RunningGroup.A, label: '시각장애러너 A (~50분)' },
@@ -58,10 +87,6 @@ export const GROUP_SELECT = [
   { value: RunningGroup.E, label: '시각장애러너 E (기록 없음)' },
 ];
 
-//
-//
-//
-
 const EventApply: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
 
@@ -69,8 +94,8 @@ const EventApply: React.FC = () => {
     (state: RootState) => state.user,
   );
 
-  const { control, handleSubmit } = useForm<EventApplyType>({
-    defaultValues: { detail: '', group: recordDegree, partner: '' },
+  const { control, handleSubmit, formState } = useForm<EventApplyType>({
+    defaultValues: { detail: '', partner: '' },
   });
 
   const { data: eventData } = useSuspenseQuery({
@@ -92,18 +117,12 @@ const EventApply: React.FC = () => {
     },
   });
 
-  /**
-   *
-   */
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
       mutate(data);
     }
   };
 
-  /**
-   *
-   */
   const renderHeader = () => {
     return (
       <Stack direction="row" gap="0.5rem" alignItems="flex-start">
@@ -123,12 +142,14 @@ const EventApply: React.FC = () => {
     );
   };
 
-  /**
-   *
-   */
   const renderForm = () => {
     return (
-      <StyledForm id="apply-form" onSubmit={handleSubmit(handleApplySubmit)}>
+      <StyledForm
+        id="apply-form"
+        onSubmit={handleSubmit(handleApplySubmit, (errors) =>
+          alert(errors.group?.message),
+        )}
+      >
         <InputBox
           required
           title="장애여부"
@@ -148,28 +169,65 @@ const EventApply: React.FC = () => {
             </Stack>
           }
         />
-        <InputBox
-          required
-          multiline
-          labelFor="group"
-          title="훈련 희망 팀"
-          subTitle="(미선택 시 본인이 속한 팀으로 배정됩니다. )"
-          inputElement={
-            <Controller
-              name="group"
-              control={control}
-              render={({ field }) => (
-                <Select id="group" {...field} required>
-                  {GROUP_SELECT.map((group) => (
-                    <MenuItem key={group.value} value={group.value}>
-                      {group.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          }
-        />
+        {eventData.eventCategory === EventCategory.GROUP ? (
+          <InputBox
+            required
+            multiline
+            title="훈련 희망 그룹"
+            subTitle={`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}
+            inputElement={
+              <Controller
+                rules={{ required: '그룹 선택은 필수입니다. ' }}
+                name="group"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <StyledSelectBox>
+                    <StyledGroupButton
+                      type="button"
+                      group="mile"
+                      aria-selected={value === RunningGroup.A}
+                      onClick={() => onChange(RunningGroup.A)}
+                    >
+                      <Typography>마일리지 그룹</Typography>
+                    </StyledGroupButton>
+                    <StyledGroupButton
+                      type="button"
+                      group="basic"
+                      aria-selected={value === RunningGroup.B}
+                      onClick={() => onChange(RunningGroup.B)}
+                    >
+                      <Typography>기초/보강 그룹</Typography>
+                    </StyledGroupButton>
+                  </StyledSelectBox>
+                )}
+              />
+            }
+          />
+        ) : (
+          <InputBox
+            required
+            multiline
+            labelFor="group"
+            title="훈련 희망 팀"
+            subTitle="(미선택 시 본인이 속한 팀으로 배정됩니다. )"
+            inputElement={
+              <Controller
+                name="group"
+                control={control}
+                defaultValue={recordDegree}
+                render={({ field }) => (
+                  <Select id="group" {...field} required>
+                    {GROUP_SELECT.map((group) => (
+                      <MenuItem key={group.value} value={group.value}>
+                        {group.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            }
+          />
+        )}
         <InputBox
           multiline
           labelFor="partner"
@@ -229,9 +287,6 @@ const EventApply: React.FC = () => {
     return <SuccessApply eventId={Number(eventId)} />;
   }
 
-  //
-  //
-  //
   return (
     <>
       <PageTitle title="참여 신청서 작성" />
