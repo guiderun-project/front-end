@@ -23,8 +23,8 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { RunningGroup } from '@/types/group';
 import { EventCategory } from '@/types/event';
+import { RunningGroup } from '@/types/group';
 
 const EventApplyDetail: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();

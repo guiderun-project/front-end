@@ -95,7 +95,7 @@ const EventApply: React.FC = () => {
     (state: RootState) => state.user,
   );
 
-  const { control, handleSubmit, formState } = useForm<EventApplyType>({
+  const { control, handleSubmit } = useForm<EventApplyType>({
     defaultValues: { detail: '', partner: '' },
   });
 
