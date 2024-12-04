@@ -9,10 +9,10 @@ import { StyledUserListBox } from '../panels/EventAttendPanel';
 
 import { ApplyUserType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
-import { GROUP_COLOR } from '@/constants/color';
+import { TEAM_COLOR } from '@/constants/color';
 import { RunningGroup } from '@/types/group';
 
-interface AttendGroupAccordionProps {
+interface AttendTeamAccordionProps {
   group: RunningGroup;
   attendedMemberOfVi: ApplyUserType[];
   attendedMemberOfGuide: ApplyUserType[];
@@ -28,9 +28,7 @@ const StyledAccordionBox = styled.div<{ open: boolean; group: RunningGroup }>`
   ${({ open, group }) => {
     if (open) {
       return css`
-        box-shadow: 0 0 0 2px
-          ${group === RunningGroup.A ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC}
-          inset;
+        box-shadow: 0 0 0 2px ${TEAM_COLOR[group]} inset;
         background-color: #e6e7ee;
       `;
     }
@@ -53,9 +51,7 @@ const StyledAccordionButton = styled.div<{
   ${({ open, group }) => {
     if (open) {
       return css`
-        color: ${group === RunningGroup.A
-          ? GROUP_COLOR.MILE
-          : GROUP_COLOR.BASIC};
+        color: ${TEAM_COLOR[group]};
         background-color: transparent;
         padding-top: 2rem;
         padding-bottom: 1.5rem;
@@ -63,9 +59,7 @@ const StyledAccordionButton = styled.div<{
     } else {
       return css`
         color: #fff;
-        background-color: ${group === RunningGroup.A
-          ? GROUP_COLOR.MILE
-          : GROUP_COLOR.BASIC};
+        background-color: ${TEAM_COLOR[group]};
       `;
     }
   }}
@@ -104,7 +98,7 @@ const StyledCloseButton = styled.button`
   color: #999;
 `;
 
-const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
+const AttendTeamAccordion: React.FC<AttendTeamAccordionProps> = ({
   group,
   attendedMemberOfGuide,
   attendedMemberOfVi,
@@ -127,11 +121,9 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
           fontWeight={700}
           color="inherit"
           fontSize="1.5rem"
-          aria-label={
-            group === RunningGroup.A ? '마일리지 그룹' : '기초 보강 그룹'
-          }
+          aria-label={`${group}그룹`}
         >
-          {group === RunningGroup.A ? '마일리지 그룹' : '기초/보강 그룹'}
+          {group}
         </Typography>
       </StyledAccordionButton>
       <StyledAccordionDetail open={open}>
@@ -183,4 +175,4 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
   );
 };
 
-export default AttendGroupAccordion;
+export default AttendTeamAccordion;
