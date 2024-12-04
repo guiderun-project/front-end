@@ -134,6 +134,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
             {attendedMemberOfVi.map((member) => (
@@ -142,6 +143,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
           </StyledUserListBox>
@@ -151,6 +153,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
             {attendedMemberOfGuide.map((member) => (
@@ -159,6 +162,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
           </StyledUserListBox>
