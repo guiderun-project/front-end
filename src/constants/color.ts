@@ -9,6 +9,11 @@ export const TEAM_COLOR: Record<RunningGroup, string> = {
   P: '#8E8E8E',
 } as const;
 
+export const GROUP_COLOR = {
+  MILE: '#0066CA',
+  BASIC: '#C505D7',
+} as const;
+
 export const DISABILITY_COLOR = {
   VI: { MAIN: '#900782', SUB: '#F2DAEF' },
   GUIDE: { MAIN: '#0C3B82', SUB: '#DDE8F1' },

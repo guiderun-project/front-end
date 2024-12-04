@@ -43,6 +43,7 @@ import {
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
+import { EventCategory } from '@/types/event';
 import {
   DisabilityEnum,
   EventStatus,
@@ -68,6 +69,7 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
+        eventCategory: EventCategory.GROUP,
         content:
           '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
         date: '2020-01-01',
@@ -408,6 +410,7 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + `/event/:eventId`,
     () => {
       return HttpResponse.json({
+        eventCategory: EventCategory.GROUP,
         checkOrganizer: true,
         created_at: '2020-02-02',
         date: '2000-12-22',
@@ -445,8 +448,8 @@ export const eventHandlers: HttpHandler[] = [
         place: '잠실 보조 경기장',
         recruitEndDate: '2024-06-12',
         recruitStartDate: '2024-06-12',
-        recruitStatus: RecruitStatus.End,
-        status: EventStatus.End,
+        recruitStatus: RecruitStatus.Open,
+        status: EventStatus.Open,
         isApply: true,
         type: EventType.Competition,
         updated_at: '2020-02-02',
@@ -570,6 +573,7 @@ export const eventHandlers: HttpHandler[] = [
     EventApplyGetResponse
   >(baseURL + '/event/:eventId/form/:userId', () => {
     return HttpResponse.json({
+      eventCategory: EventCategory.GROUP,
       detail: '심장 터지도록 뛰고 싶어요!',
       group: RunningGroup.A,
       name: '홍길동',
@@ -629,60 +633,70 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.GUIDE,
             userId: '13vbf42',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드2',
             type: DisabilityEnum.GUIDE,
             userId: '15ghtfv6',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드3',
             type: DisabilityEnum.GUIDE,
             userId: 'vbbxdv1',
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드4',
             type: DisabilityEnum.GUIDE,
             userId: 'jrgsgdfgdyr1',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드5',
             type: DisabilityEnum.GUIDE,
             userId: '1dfgdfgerervsd',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드6',
             type: DisabilityEnum.GUIDE,
             userId: '1663dfgdf4r',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드7',
             type: DisabilityEnum.GUIDE,
             userId: '1njsfdfgdfg',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드8',
             type: DisabilityEnum.GUIDE,
             userId: '16dfgdfwef',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드9',
             type: DisabilityEnum.GUIDE,
             userId: '1fbdfh5dfgdfg',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드10',
             type: DisabilityEnum.GUIDE,
             userId: '1gdfgrtadasda4',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
         ],
         vi: [
@@ -691,42 +705,49 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '1312sdfs31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI2',
             type: DisabilityEnum.VI,
             userId: '1312fsdsfsd31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI3',
             type: DisabilityEnum.VI,
             userId: '131sf2bv31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI4',
             type: DisabilityEnum.VI,
             userId: '13sdfsdfssfs1231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI5',
             type: DisabilityEnum.VI,
             userId: '1sdf31ghgfcg231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI6',
             type: DisabilityEnum.VI,
             userId: '1312sdffvbhfs31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI7',
             type: DisabilityEnum.VI,
             userId: '131sfssdfs2fdcv31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
         ],
       });
@@ -752,102 +773,119 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '1312sdfs31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI2',
             type: DisabilityEnum.VI,
             userId: '1312fsdsfsd31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI3',
             type: DisabilityEnum.VI,
             userId: '131sf2bv31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI4',
             type: DisabilityEnum.VI,
             userId: '13sdfsdfssfs1231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI5',
             type: DisabilityEnum.VI,
             userId: '1sdf31ghgfcg231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI6',
             type: DisabilityEnum.VI,
             userId: '1312sdffvbhfs31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI7',
             type: DisabilityEnum.VI,
             userId: '131sfssdfs2fdcv31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드1',
             type: DisabilityEnum.GUIDE,
             userId: '13vbf42',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드2',
             type: DisabilityEnum.GUIDE,
             userId: '15ghtfv6',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드3',
             type: DisabilityEnum.GUIDE,
             userId: 'vbbxdv1',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드4',
             type: DisabilityEnum.GUIDE,
             userId: 'jrgsgdfgdyr1',
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드5',
             type: DisabilityEnum.GUIDE,
             userId: '1dfgdfgerervsd',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드6',
             type: DisabilityEnum.GUIDE,
             userId: '1663dfgdf4r',
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드7',
             type: DisabilityEnum.GUIDE,
             userId: '1njsfdfgdfg',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드8',
             type: DisabilityEnum.GUIDE,
             userId: '16dfgdfwef',
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드9',
             type: DisabilityEnum.GUIDE,
             userId: '1fbdfh5dfgdfg',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드10',
             type: DisabilityEnum.GUIDE,
             userId: '1gdfgrtadasda4',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
         ],
         notAttend: [
@@ -856,47 +894,55 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.VI,
             userId: '131231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI2',
             type: DisabilityEnum.VI,
             userId: '1312fsd31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI3',
             type: DisabilityEnum.VI,
             userId: '131sf231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI4',
             type: DisabilityEnum.VI,
             userId: '13sdfsdfs1231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI5',
             type: DisabilityEnum.VI,
             userId: '1sdf31231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI6',
             type: DisabilityEnum.VI,
             userId: '1312sdfs31',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI7',
             type: DisabilityEnum.VI,
             userId: '131sfssdfs231',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드1',
             type: DisabilityEnum.GUIDE,
             userId: '1342',
+            recordDegree: RunningGroup.A,
             applyRecord: RunningGroup.A,
           },
           {
@@ -904,54 +950,64 @@ export const eventHandlers: HttpHandler[] = [
             type: DisabilityEnum.GUIDE,
             userId: '156',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드3',
             type: DisabilityEnum.GUIDE,
             userId: 'vdv1',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드4',
             type: DisabilityEnum.GUIDE,
             userId: 'jrgsyr1',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드5',
             type: DisabilityEnum.GUIDE,
             userId: '1erervsd',
+
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드6',
             type: DisabilityEnum.GUIDE,
             userId: '16634r',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드7',
             type: DisabilityEnum.GUIDE,
             userId: '1njsfg',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드8',
             type: DisabilityEnum.GUIDE,
             userId: '16wef',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드9',
             type: DisabilityEnum.GUIDE,
             userId: '1fbdfh5',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드10',
             type: DisabilityEnum.GUIDE,
             userId: '1gdfgrt4',
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
         ],
       });
@@ -1010,6 +1066,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312sdfs31',
             isAttended: false,
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI2',
@@ -1017,6 +1074,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312fsdsfsd31',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI3',
@@ -1024,6 +1082,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '131sf2bv31',
             isAttended: true,
             applyRecord: RunningGroup.C,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI4',
@@ -1031,6 +1090,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '13sdfsdfssfs1231',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI5',
@@ -1038,6 +1098,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1sdf31ghgfcg231',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI6',
@@ -1045,6 +1106,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312sdffvbhfs31',
             isAttended: true,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI7',
@@ -1052,6 +1114,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '131sfssdfs2fdcv31',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드1',
@@ -1059,6 +1122,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '13vbf42',
             isAttended: true,
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드2',
@@ -1066,6 +1130,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '15ghtfv6',
             isAttended: true,
             applyRecord: RunningGroup.D,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드3',
@@ -1073,6 +1138,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: 'vbbxdv1',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드4',
@@ -1081,6 +1147,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: 'jrgsgdfgdyr1',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드5',
@@ -1088,6 +1155,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1dfgdfgerervsd',
             isAttended: true,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드6',
@@ -1095,6 +1163,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1663dfgdf4r',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드7',
@@ -1102,6 +1171,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1njsfdfgdfg',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드8',
@@ -1109,6 +1179,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '16dfgdfwef',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드9',
@@ -1116,6 +1187,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1fbdfh5dfgdfg',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: '가이드10',
@@ -1123,6 +1195,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1gdfgrtadasda4',
             isAttended: true,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
         ],
       });
@@ -1149,6 +1222,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312sdfs31',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI2',
@@ -1156,6 +1230,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312fsdsfsd31',
             isAttended: true,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI3',
@@ -1163,6 +1238,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '131sf2bv31',
             isAttended: false,
             applyRecord: RunningGroup.C,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI4',
@@ -1170,6 +1246,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '13sdfsdfssfs1231',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI5',
@@ -1177,6 +1254,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1sdf31ghgfcg231',
             isAttended: true,
             applyRecord: RunningGroup.B,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI6',
@@ -1184,6 +1262,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '1312sdffvbhfs31',
             isAttended: false,
             applyRecord: RunningGroup.A,
+            recordDegree: RunningGroup.A,
           },
           {
             name: 'VI7',
@@ -1191,6 +1270,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '131sfssdfs2fdcv31',
             isAttended: true,
             applyRecord: RunningGroup.D,
+            recordDegree: RunningGroup.A,
           },
         ],
       });
@@ -1220,6 +1300,7 @@ export const eventHandlers: HttpHandler[] = [
           userId: '13vbf42',
           isAttended: true,
           applyRecord: RunningGroup.A,
+          recordDegree: RunningGroup.A,
         },
         {
           name: '가이드2',
@@ -1227,6 +1308,7 @@ export const eventHandlers: HttpHandler[] = [
           userId: '15ghtfv6',
           isAttended: false,
           applyRecord: RunningGroup.A,
+          recordDegree: RunningGroup.A,
         },
         {
           name: '가이드3',
@@ -1234,6 +1316,7 @@ export const eventHandlers: HttpHandler[] = [
           userId: 'vbbxdv1',
           isAttended: false,
           applyRecord: RunningGroup.A,
+          recordDegree: RunningGroup.A,
         },
       ],
     });

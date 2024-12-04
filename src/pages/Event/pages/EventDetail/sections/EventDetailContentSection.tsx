@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography } from '@mui/material';
+import { Divider, Stack, Typography } from '@mui/material';
 
 import { EventGetResponse } from '@/apis/types/event';
 import {
@@ -12,6 +12,7 @@ import MatchingStandardAccordion from '@/pages/Event/components/MatchingStandard
 // import RecruitCountBox from '@/pages/Event/components/RecruitCountBox';
 import { Event } from '@/types/event';
 import { EventStatus as EventStatusType } from '@/types/group';
+import EventDetailAccordian from '../components/EventDetailAccordion';
 
 interface EventDetailContentSectionProps {
   eventId: Event['eventId'];
@@ -128,16 +129,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
           }
         />
       ) : null}
-      <Stack paddingTop="0.625rem" gap="0.5rem">
-        <Typography component="h3" fontWeight={700}>
-          훈련 상세
-        </Typography>
-        <Box padding="1rem" border="1px solid #D9D9D9" borderRadius="0.5rem">
-          <Typography fontSize="0.8125rem" lineHeight="1.25rem">
-            {eventData.details}
-          </Typography>
-        </Box>
-      </Stack>
+      <EventDetailAccordian detail={eventData.details} />
       <MatchingStandardAccordion />
     </Stack>
   );

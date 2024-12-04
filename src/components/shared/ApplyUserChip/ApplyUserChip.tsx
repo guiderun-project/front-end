@@ -13,6 +13,7 @@ import { UserType } from '@/types/user';
 interface ApplyUserChipProps extends ChipProps {
   type: UserType['type'];
   name: UserType['name'];
+  group?: UserType['recordDegree'];
   selected?: boolean;
   isAttendMode?: boolean;
   isAttend?: boolean;
@@ -25,6 +26,7 @@ interface ApplyUserChipProps extends ChipProps {
 
 const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
   const {
+    group,
     type,
     name,
     selected = false,
@@ -65,11 +67,12 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
       label={
         <Typography
           fontSize="0.8125rem"
-          fontWeight={400}
+          fontWeight={600}
           color={isAttend ? '#fff' : '#42474E'}
           aria-label={isAttend ? `${name} 출석됨` : name}
         >
           {name}
+          {group ?? ''}
         </Typography>
       }
       deleteIcon={isAttendMode ? <DoneIcon aria-label="출석" /> : undefined}

@@ -64,7 +64,9 @@ const InputBox: React.FC<InputBoxProps> = ({
           </Badge>
         </Typography>
         {subTitle ? (
-          <Typography fontSize="0.9375rem">{subTitle}</Typography>
+          <Typography whiteSpace="break-spaces" fontSize="0.9375rem">
+            {subTitle}
+          </Typography>
         ) : null}
       </Stack>
       {inputElement}
