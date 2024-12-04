@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
 import styled from '@emotion/styled';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -38,19 +38,12 @@ import { BROWSER_PATH } from '@/constants/path';
 import useEventLike from '@/hooks/useEventLike';
 import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
-
-//
-//
-//
+import { EventGetResponse } from '@/apis/types/event';
 
 enum EventPageSectionEnum {
   Detail = 'detail',
   Status = 'status',
 }
-
-//
-//
-//
 
 const StyledHidenButton = styled.button`
   position: absolute;
@@ -60,9 +53,7 @@ const StyledHidenButton = styled.button`
   margin: -1px;
 `;
 
-//
-//
-//
+export const EventContext = createContext<EventGetResponse | null>(null);
 
 const EventDetail: React.FC = () => {
   const [openModal, setOpenModal] = React.useState(false);
@@ -456,7 +447,7 @@ const EventDetail: React.FC = () => {
   //
 
   return (
-    <>
+    <EventContext.Provider value={eventData ?? null}>
       <PageTitle title="이벤트 상세" />
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHiddenApplyButton()}
@@ -505,7 +496,7 @@ const EventDetail: React.FC = () => {
         isOpen={openModal}
         onModalClose={() => setOpenModal(false)}
       />
-    </>
+    </EventContext.Provider>
   );
 };
 
