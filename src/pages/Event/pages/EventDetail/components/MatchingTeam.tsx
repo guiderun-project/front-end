@@ -4,13 +4,13 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { MatchingComponentProps } from '../panels/EventMatchingPanel';
 
 import { ApplyUserChip, GroupChip } from '@/components/shared';
-import { GROUP_COLOR, TEAM_COLOR } from '@/constants/color';
+import { TEAM_COLOR } from '@/constants/color';
 import { GROUP_LIST_WITHOUT_P } from '@/constants/group';
 import { MATCHING_BOX_ID } from '@/constants/id';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
 import { DisabilityEnum, RunningGroup } from '@/types/group';
 
-interface MatchingGroupProps extends MatchingComponentProps {
+interface MatchingTeamProps extends MatchingComponentProps {
   group: RunningGroup;
 }
 
@@ -21,9 +21,7 @@ const StyledUserBox = styled.div<{ group: RunningGroup }>`
   gap: 1.5rem;
   padding: 1.5rem 1rem;
   background-color: #fff;
-  border: 2px solid
-    ${({ group }) =>
-      group === RunningGroup.A ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC};
+  border: 2px solid ${({ group }) => TEAM_COLOR[group]};
   border-radius: 1rem;
 `;
 
@@ -41,7 +39,7 @@ const StyledGroupAnchor = styled.a`
   text-decoration-line: none;
 `;
 
-const MatchingGroup: React.FC<MatchingGroupProps> = ({
+const MatchingTeam: React.FC<MatchingTeamProps> = ({
   matchingMode = false,
   group,
   viOfMatched,
@@ -55,42 +53,26 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
   return (
     <Stack id={MATCHING_BOX_ID(group)}>
       <Stack direction="row" justifyContent="space-around">
-        {GROUP_LIST_WITHOUT_P.slice(0, 2).map((groupItem) => (
+        {GROUP_LIST_WITHOUT_P.map((groupItem) => (
           <StyledGroupAnchor
             id={`StyledGroupAnchor-${group}-${groupItem}`}
             href={`#${MATCHING_BOX_ID(groupItem)}`}
-            aria-label={`${
-              groupItem === RunningGroup.A ? '마일리지 그룹' : '기초보강 그룹'
-            }${group === groupItem ? '' : '으로 이동'}`}
+            aria-label={`그룹 ${groupItem}${
+              group === groupItem ? '' : '으로 이동'
+            }`}
             aria-current={group === groupItem}
           >
             <Stack
               aria-hidden
               boxSizing="border-box"
-              padding="0.875rem 0"
+              padding="0.75rem 0"
               borderBottom={
                 group === groupItem
-                  ? `4px solid ${
-                      groupItem === RunningGroup.A
-                        ? GROUP_COLOR.MILE
-                        : GROUP_COLOR.BASIC
-                    }`
+                  ? `4px solid ${TEAM_COLOR[groupItem]}`
                   : 'none'
               }
             >
-              <Typography
-                fontSize="0.875rem"
-                fontWeight={700}
-                color={
-                  groupItem === RunningGroup.A
-                    ? GROUP_COLOR.MILE
-                    : GROUP_COLOR.BASIC
-                }
-              >
-                {groupItem === RunningGroup.A
-                  ? '마일리지 그룹'
-                  : '기초보강 그룹'}
-              </Typography>
+              <GroupChip type="avatar" group={groupItem} />
             </Stack>
           </StyledGroupAnchor>
         ))}
@@ -170,4 +152,4 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
   );
 };
 
-export default MatchingGroup;
+export default MatchingTeam;
