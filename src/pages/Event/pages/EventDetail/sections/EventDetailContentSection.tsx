@@ -1,5 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 
+import EventDetailAccordian from '../components/EventDetailAccordion';
+
 import { EventGetResponse } from '@/apis/types/event';
 import {
   DisabilityChip,
@@ -13,8 +15,6 @@ import RecruitCountBox from '@/pages/Event/components/RecruitCountBox';
 import { Event } from '@/types/event';
 import { EventStatus as EventStatusType, RecruitStatus } from '@/types/group';
 import { getFullKoreanDate, getPeriod } from '@/utils/time';
-
-import EventDetailAccordian from '../components/EventDetailAccordion';
 
 interface EventDetailContentSectionProps {
   eventId: Event['eventId'];

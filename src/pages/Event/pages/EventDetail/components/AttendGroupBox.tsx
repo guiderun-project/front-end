@@ -1,9 +1,10 @@
 import { useContext } from 'react';
+
 import { Stack } from '@mui/material';
 
-import { EventContext } from '..';
 import AttendGroupAccordion from './AttendGroupAccordion';
 import AttendTeamAccordion from './AttendTeamAccordion';
+import { EventContext } from '..';
 
 import { EventApplyStatusGetResponse } from '@/apis/types/event';
 import { GROUP_LIST_WITHOUT_P } from '@/constants/group';

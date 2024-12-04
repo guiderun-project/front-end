@@ -1,9 +1,10 @@
 import { useContext } from 'react';
+
 import { Stack } from '@mui/material';
 
-import { EventContext } from '..';
 import MatchingGroup from './MatchingGroup';
 import MatchingTeam from './MatchingTeam';
+import { EventContext } from '..';
 import { MatchingComponentProps } from '../panels/EventMatchingPanel';
 
 import { GROUP_LIST_WITHOUT_P } from '@/constants/group';

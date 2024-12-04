@@ -25,6 +25,7 @@ import EventDetailStatusSection from './sections/EventDetailStatusSection';
 import useKakaoShare from '../../hooks/useKakaoShare';
 
 import eventApi from '@/apis/requests/event';
+import { EventGetResponse } from '@/apis/types/event';
 import {
   EventChip,
   EventModal,
@@ -38,7 +39,6 @@ import { BROWSER_PATH } from '@/constants/path';
 import useEventLike from '@/hooks/useEventLike';
 import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
-import { EventGetResponse } from '@/apis/types/event';
 
 enum EventPageSectionEnum {
   Detail = 'detail',

@@ -3,8 +3,8 @@ import { Divider, Stack, Typography } from '@mui/material';
 
 import { MatchingComponentProps } from '../panels/EventMatchingPanel';
 
-import { ApplyUserChip, GroupChip } from '@/components/shared';
-import { GROUP_COLOR, TEAM_COLOR } from '@/constants/color';
+import { ApplyUserChip } from '@/components/shared';
+import { GROUP_COLOR } from '@/constants/color';
 import { GROUP_LIST_WITHOUT_P } from '@/constants/group';
 import { MATCHING_BOX_ID } from '@/constants/id';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
