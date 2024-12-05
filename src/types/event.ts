@@ -8,9 +8,9 @@ import {
 import { UserType } from './user';
 
 export enum EventCategory {
-  GENERAL = 'General',
-  GROUP = 'Group',
-  TEAM = 'Team',
+  GENERAL = 'GENERAL',
+  GROUP = 'GROUP',
+  TEAM = 'TEAM',
 }
 
 export type MachingPartnerType = {
