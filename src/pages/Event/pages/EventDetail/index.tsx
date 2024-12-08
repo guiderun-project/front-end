@@ -20,8 +20,8 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import EventCommentSection from './sections/EventCommentSection';
 import EventDetailContentSection from './sections/EventDetailContentSection';
-import useDeleteEvent from '../../hooks/useDeleteEvent';
 import EventDetailStatusSection from './sections/EventDetailStatusSection';
+import useDeleteEvent from '../../hooks/useDeleteEvent';
 import useKakaoShare from '../../hooks/useKakaoShare';
 
 import eventApi from '@/apis/requests/event';
