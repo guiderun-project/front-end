@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
+import useDeleteEvent from '../../hooks/useDeleteEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventFormType } from '@/apis/types/event';
@@ -34,6 +35,7 @@ const EditEvent: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user);
+  const { deleteEvent } = useDeleteEvent();
 
   if (!eventId) {
     return <NotFound />;
@@ -114,18 +116,6 @@ const EditEvent: React.FC = () => {
     },
   });
 
-  const { mutate: deleteEvent } = useMutation({
-    mutationKey: ['eventDelete', eventId],
-    mutationFn: () => eventApi.eventDelete({ eventId: Number(eventId) ?? 0 }),
-    onSuccess: () => {
-      alert('삭제되었습니다. 메인 페이지로 이동합니다.');
-      navigate(BROWSER_PATH.MAIN);
-    },
-    onError: () => {
-      alert('에러가 발생했습니다.');
-    },
-  });
-
   const handleEventSubmit = (data: EventFormType) => {
     if (window.confirm('이벤트를 수정하시겠습니까?')) {
       mutate(data);
@@ -145,7 +135,7 @@ const EditEvent: React.FC = () => {
 
   const handleDeleteEventClick = () => {
     if (window.confirm('이벤트를 삭제하시겠습니까?')) {
-      deleteEvent();
+      deleteEvent(Number(eventId));
     }
   };
 
