@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { CircularProgress, Stack, Switch, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { EventContext } from '..';
 import MatchingGroupContainer from '../components/MatchingGroupContainer';
 import MatchingNonGroupContainer from '../components/MatchingNonGroupContainer';
 
 import eventApi from '@/apis/requests/event';
 import { ApplyUserAttendType } from '@/apis/types/event';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { DisabilityEnum } from '@/types/group';
 import { UserType, ViType } from '@/types/user';
 import getAuthority from '@/utils/authority';
@@ -57,6 +59,8 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
     React.useState<SelectedUserType>(INITIAL_SELECTED);
   const [selectedGuide, setSelectedGuide] =
     React.useState<SelectedUserType>(INITIAL_SELECTED);
+
+  const eventData = useContext(EventContext);
 
   const { role } = useSelector((state: RootState) => state.user);
   const eventId = Number(useParams<{ eventId: string }>().eventId);
@@ -202,7 +206,10 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
 
     if (!notMatchedList || !matchedList) return <>에러 발생</>;
 
-    if ((applyCount?.count ?? 0) > 20) {
+    if (
+      (applyCount?.count ?? 0) > 20 ||
+      (eventData && eventData.eventCategory === EventCategory.GROUP)
+    ) {
       return (
         <MatchingGroupContainer
           matchingMode={matchingMode}

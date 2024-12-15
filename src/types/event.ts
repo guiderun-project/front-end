@@ -7,6 +7,12 @@ import {
 } from './group';
 import { UserType } from './user';
 
+export enum EventCategory {
+  GENERAL = 'GENERAL',
+  GROUP = 'GROUP',
+  TEAM = 'TEAM',
+}
+
 export type MachingPartnerType = {
   partnerName: string; //파트너 이름
   partnerRecord: RunningGroup; //파트너 러닝등급
@@ -42,6 +48,9 @@ export type Event = {
   partner: MachingPartnerType[];
   status: EventStatus;
   isApprove: boolean;
+
+  //이벤트 유형
+  eventCategory: EventCategory;
 };
 
 export type CommentType = {

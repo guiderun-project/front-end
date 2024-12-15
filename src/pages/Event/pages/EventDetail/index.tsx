@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
 import styled from '@emotion/styled';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -6,7 +6,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShareIcon from '@mui/icons-material/Share';
 import {
   Button,
   Chip,
@@ -22,9 +21,12 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EventCommentSection from './sections/EventCommentSection';
 import EventDetailContentSection from './sections/EventDetailContentSection';
 import EventDetailStatusSection from './sections/EventDetailStatusSection';
+import useDeleteEvent from '../../hooks/useDeleteEvent';
 import useKakaoShare from '../../hooks/useKakaoShare';
 
 import eventApi from '@/apis/requests/event';
+import { EventGetResponse } from '@/apis/types/event';
+import { ShareIcon, TrashIcon } from '@/assets/svg';
 import {
   EventChip,
   EventModal,
@@ -39,18 +41,10 @@ import useEventLike from '@/hooks/useEventLike';
 import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
 
-//
-//
-//
-
 enum EventPageSectionEnum {
   Detail = 'detail',
   Status = 'status',
 }
-
-//
-//
-//
 
 const StyledHidenButton = styled.button`
   position: absolute;
@@ -60,9 +54,7 @@ const StyledHidenButton = styled.button`
   margin: -1px;
 `;
 
-//
-//
-//
+export const EventContext = createContext<EventGetResponse | null>(null);
 
 const EventDetail: React.FC = () => {
   const [openModal, setOpenModal] = React.useState(false);
@@ -73,6 +65,7 @@ const EventDetail: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { shareLink } = useKakaoShare();
+  const { deleteEvent } = useDeleteEvent();
 
   const queryClient = useQueryClient();
 
@@ -144,9 +137,14 @@ const EventDetail: React.FC = () => {
     }
     if (eventData) {
       return (
-        <Stack direction="row" gap="0.5rem" alignItems="flex-start">
+        <Stack
+          direction="row"
+          gap="0.5rem"
+          alignItems="flex-start"
+          width="100%"
+        >
           <EventChip variant="full" type={eventData.type} />
-          <Stack gap="0.25rem">
+          <Stack gap="0.25rem" width="100%">
             <Typography
               component="span"
               id="modal-title"
@@ -163,37 +161,49 @@ const EventDetail: React.FC = () => {
                 ) : null}
               </Stack>
             </Typography>
-            <Stack direction="row" gap="0.5rem" alignItems="center">
-              {isOwner && (
-                <TextLink
-                  label="이벤트 수정하러 가기"
-                  to={`${BROWSER_PATH.EVENT.EDIT}/${eventId}`}
-                />
-              )}
-              <Stack
-                direction="row"
-                alignItems="center"
-                gap="0.125rem"
-                color="#666"
-              >
-                <IconButton
-                  aria-label="이벤트 좋아요"
-                  aria-pressed={eventLike?.isLiked}
-                  onClick={handleLike}
-                >
-                  {eventLike?.isLiked ? (
-                    <FavoriteIcon sx={{ fontSize: '1rem', color: 'red' }} />
-                  ) : (
-                    <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
-                  )}
-                </IconButton>
-                <Typography fontSize="0.625rem" role="text">
-                  좋아요 {eventLike?.likes ?? 0}
-                </Typography>
+            <Stack direction="row" justifyContent="space-between" width="100%">
+              <Stack direction="row" gap="1rem" alignItems="center">
+                {isOwner && (
+                  <TextLink
+                    label="이벤트 수정"
+                    to={`${BROWSER_PATH.EVENT.EDIT}/${eventId}`}
+                  />
+                )}
+                <Stack direction="row" gap="0.5rem" justifyContent="center">
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap="0.125rem"
+                    color="#666"
+                  >
+                    <IconButton
+                      aria-label="이벤트 좋아요"
+                      aria-pressed={eventLike?.isLiked}
+                      onClick={handleLike}
+                    >
+                      {eventLike?.isLiked ? (
+                        <FavoriteIcon sx={{ fontSize: '1rem', color: 'red' }} />
+                      ) : (
+                        <FavoriteBorderIcon sx={{ fontSize: '1rem' }} />
+                      )}
+                    </IconButton>
+                    <Typography fontSize="0.625rem" role="text">
+                      좋아요 {eventLike?.likes ?? 0}
+                    </Typography>
+                  </Stack>
+                  <IconButton aria-label="공유하기" onClick={handleShare}>
+                    <ShareIcon />
+                  </IconButton>
+                </Stack>
               </Stack>
-              <IconButton aria-label="공유하기" onClick={handleShare}>
-                <ShareIcon />
-              </IconButton>
+              {isOwner && (
+                <IconButton
+                  onClick={() => deleteEvent(eventData.eventId)}
+                  aria-lable="이벤트 삭제하기"
+                >
+                  <TrashIcon />
+                </IconButton>
+              )}
             </Stack>
           </Stack>
         </Stack>
@@ -456,7 +466,7 @@ const EventDetail: React.FC = () => {
   //
 
   return (
-    <>
+    <EventContext.Provider value={eventData ?? null}>
       <PageTitle title="이벤트 상세" />
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHiddenApplyButton()}
@@ -505,7 +515,7 @@ const EventDetail: React.FC = () => {
         isOpen={openModal}
         onModalClose={() => setOpenModal(false)}
       />
-    </>
+    </EventContext.Provider>
   );
 };
 

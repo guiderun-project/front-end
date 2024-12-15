@@ -23,6 +23,7 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { RunningGroup } from '@/types/group';
 
 const EventApplyDetail: React.FC = () => {
@@ -118,11 +119,24 @@ const EventApplyDetail: React.FC = () => {
             </Stack>
           }
         />
-        <InputBox
-          multiline
-          title="훈련 희망 팀"
-          inputElement={<Typography>{getTeam()}</Typography>}
-        />
+        {eventData.eventCategory === EventCategory.GROUP ? (
+          <InputBox
+            title="훈련 희망 그룹"
+            inputElement={
+              <Typography>
+                {applyData.group === RunningGroup.A
+                  ? '마일리지 그룹'
+                  : '기초, 보강 그룹'}
+              </Typography>
+            }
+          />
+        ) : (
+          <InputBox
+            multiline
+            title="훈련 희망 팀"
+            inputElement={<Typography>{getTeam()}</Typography>}
+          />
+        )}
         <InputBox
           multiline
           title="희망 파트너 성함"
