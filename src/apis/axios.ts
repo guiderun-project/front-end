@@ -1,6 +1,8 @@
 import axios, { isAxiosError } from 'axios';
 
 import { store } from '../store';
+import authApi from './requests/auth';
+import { setAccessToken } from '@/store/reducer/auth';
 
 export const baseURL = process.env.SERVER_URL;
 
@@ -14,12 +16,19 @@ export const axiosInstanceWithToken = axios.create({
   withCredentials: true,
 });
 
-axiosInstanceWithToken.interceptors.request.use((config) => {
+axiosInstanceWithToken.interceptors.request.use(async (config) => {
   const accessToken = store.getState().auth.accessToken;
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   } else {
-    return Promise.reject(new Error('Access Token is missing'));
+    try {
+      const reIssuedAccessToken = await authApi.accessTokenGet();
+      store.dispatch(setAccessToken(reIssuedAccessToken));
+
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
   return config;
 });
@@ -28,11 +37,25 @@ axiosInstanceWithToken.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
     if (isAxiosError(error)) {
       if (error.response?.status === 401 || error.status === 401) {
-        //TODO: 자동로그인 개발 시 이곳에서 액세스 토큰을 요청합니다.
-        window.location.reload();
+        try {
+          const accessToken = await authApi.accessTokenGet();
+          store.dispatch(setAccessToken(accessToken));
+
+          const originalConfig = {
+            ...error.config,
+            headers: {
+              ...error.config?.headers,
+              Authorization: `Bearer ${accessToken}`,
+            },
+          };
+
+          return axiosInstanceWithToken(originalConfig);
+        } catch (_) {
+          window.location.reload();
+        }
       }
     }
     return Promise.reject(error);
