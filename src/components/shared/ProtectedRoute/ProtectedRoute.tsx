@@ -19,8 +19,9 @@ const ProtectedRoute: React.FC = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['userInfoGet'],
     queryFn: () => infoApi.userInfoGet(),
-    enabled: Boolean(accessToken),
   });
+
+  console.log(isLoading);
 
   React.useEffect(() => {
     if (data) {
