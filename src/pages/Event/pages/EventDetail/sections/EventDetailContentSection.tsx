@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import EventDetailAccordian from '../components/EventDetailAccordion';
 
@@ -46,7 +46,6 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
         content={
           <Typography component="span" display="flex" gap="0.5rem">
             {eventData.date.replace(/-/g, '.')}
-            <Divider orientation="vertical" variant="middle" flexItem />
             {eventData.startTime}~{eventData.endTime}
           </Typography>
         }
