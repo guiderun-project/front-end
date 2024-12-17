@@ -87,7 +87,7 @@ const Main: React.FC = () => {
         <Typography component="h2" fontSize="1.5rem" fontWeight={700}>
           이벤트
         </Typography>
-        {getAuthority.isAdmin(role) && (
+        {getAuthority.isUser(role) && (
           <Stack direction="row" justifyContent="center">
             <Button
               fullWidth
