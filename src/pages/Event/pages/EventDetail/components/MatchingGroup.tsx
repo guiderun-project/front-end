@@ -157,6 +157,7 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
                     key={user.userId}
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
+                    group={user.recordDegree}
                     type={DisabilityEnum.GUIDE}
                     onClick={() => onGuideSelect(user.userId, user.name)}
                   />
