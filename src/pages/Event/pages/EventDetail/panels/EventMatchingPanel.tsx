@@ -1,6 +1,12 @@
 import React, { useContext } from 'react';
 
-import { CircularProgress, Stack, Switch, Typography } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Stack,
+  Switch,
+  Typography,
+} from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -16,10 +22,6 @@ import { EventCategory } from '@/types/event';
 import { DisabilityEnum } from '@/types/group';
 import { UserType, ViType } from '@/types/user';
 import getAuthority from '@/utils/authority';
-
-//
-//
-//
 
 export interface MatchingComponentProps {
   matchingMode?: boolean;
@@ -40,18 +42,10 @@ export type SelectedUserType = {
   name: UserType['name'];
 };
 
-//
-//
-//
-
 const INITIAL_SELECTED: SelectedUserType = {
   name: '',
   userId: '',
 };
-
-//
-//
-//
 
 const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   const [matchingMode, setMatchingMode] = React.useState(false);
@@ -94,6 +88,27 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
       alert('매칭 처리 되었습니다.');
       setSelectedGuide(INITIAL_SELECTED);
       setSelectedVi(INITIAL_SELECTED);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다. ');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['eventMatchedViGet', eventId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['eventNotMatchingGet', eventId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['eventMatchedGuideGet'],
+      });
+    },
+  });
+
+  const { mutate: automatching } = useMutation({
+    mutationFn: () => eventApi.eventAutoMatching(eventId),
+    onSuccess: () => {
+      alert('❤️자동 매칭 매직❤️');
     },
     onError: () => {
       alert('에러가 발생했습니다. ');
@@ -158,37 +173,52 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
   const renderMode = () => {
     if (getAuthority.isAdmin(role) || isOwner) {
       return (
-        <Stack
-          direction="row"
-          gap="2.5rem"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Typography component="h3" fontWeight={700}>
-            매칭 모드
-          </Typography>
-          <Stack
-            component="label"
-            direction="row"
-            alignItems="center"
-            gap="0.5rem"
-          >
-            <Typography fontSize="0.75rem" fontWeight={500} color="#666">
-              끄기
-            </Typography>
-            <Switch
-              value={matchingMode}
-              color="info"
-              inputProps={{ 'aria-label': '매칭 모드 활성화' }}
-              onChange={() => {
-                setMatchingMode((prev) => !prev);
-                setSelectedGuide(INITIAL_SELECTED);
-                setSelectedVi(INITIAL_SELECTED);
+        <Stack>
+          {getAuthority.isAdmin(role) && (
+            <Button
+              size="small"
+              color="error"
+              onClick={() => {
+                if (window.confirm('자동매칭 하시겠어요?')) {
+                  automatching();
+                }
               }}
-            />
-            <Typography fontSize="0.75rem" fontWeight={500} color="#666">
-              켜기
+            >
+              🔥자동매칭🔥
+            </Button>
+          )}
+          <Stack
+            direction="row"
+            gap="2.5rem"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography component="h3" fontWeight={700}>
+              매칭 모드
             </Typography>
+            <Stack
+              component="label"
+              direction="row"
+              alignItems="center"
+              gap="0.5rem"
+            >
+              <Typography fontSize="0.75rem" fontWeight={500} color="#666">
+                끄기
+              </Typography>
+              <Switch
+                value={matchingMode}
+                color="info"
+                inputProps={{ 'aria-label': '매칭 모드 활성화' }}
+                onChange={() => {
+                  setMatchingMode((prev) => !prev);
+                  setSelectedGuide(INITIAL_SELECTED);
+                  setSelectedVi(INITIAL_SELECTED);
+                }}
+              />
+              <Typography fontSize="0.75rem" fontWeight={500} color="#666">
+                켜기
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       );
