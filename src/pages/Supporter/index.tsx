@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   Accordion,
@@ -11,14 +12,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { addDoc, collection } from 'firebase/firestore';
+
+import { firebaseDB } from '../../firebase';
 
 import BlackSticker from '@/assets/certificate_sticker_black.png';
 import WhiteSticker from '@/assets/certificate_sticker_white.png';
 import Logo from '@/assets/Logo.png';
-import { PageLayout, PageTitle, TitleHeader } from '@/components/shared';
-import { addDoc, collection } from 'firebase/firestore';
-import { firebaseDB } from '../../firebase';
 import { DownloadIcon } from '@/assets/svg';
+import { PageLayout, PageTitle, TitleHeader } from '@/components/shared';
 
 const images = [
   { src: BlackSticker, name: 'certificate_sticker_black.png' },
