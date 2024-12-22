@@ -233,7 +233,7 @@ const Supporter = () => {
               size="large"
               color="guide"
               variant="contained"
-              sx={{ width: '100%' }}
+              sx={{ width: '100%', backgroundColor: '#071090' }}
               onClick={handleDownloadImage}
             >
               <Stack direction="row" gap="0.5rem" alignItems="center">
