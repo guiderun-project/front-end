@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import {
   Accordion,
   AccordionDetails,
@@ -13,15 +12,53 @@ import {
   Typography,
 } from '@mui/material';
 
+import BlackSticker from '@/assets/certificate_sticker_black.png';
+import WhiteSticker from '@/assets/certificate_sticker_white.png';
 import Logo from '@/assets/Logo.png';
 import { PageLayout, PageTitle, TitleHeader } from '@/components/shared';
+import { addDoc, collection } from 'firebase/firestore';
+import { firebaseDB } from '../../firebase';
+import { DownloadIcon } from '@/assets/svg';
+
+const images = [
+  { src: BlackSticker, name: 'certificate_sticker_black.png' },
+  { src: WhiteSticker, name: 'certificate_sticker_white.png' },
+];
 
 const Supporter = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [agree, setAgree] = useState(false);
 
   const isCorrectEmail =
     email.length === 0 || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleDownloadImage = async () => {
+    if (!isCorrectEmail && agree) {
+      alert('잘못된 이메일입니다.');
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await addDoc(collection(firebaseDB, 'emails'), {
+        agree,
+        email,
+      });
+    } catch (_) {
+      alert('이메일 주소 저장에 문제가 발생했습니다. ');
+    } finally {
+      images.forEach(({ src, name }) => {
+        const link = document.createElement('a');
+        link.href = src;
+        link.download = name; // 이미지 이름을 지정
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+      setIsLoading(false);
+    }
+  };
 
   return (
     <PageLayout>
@@ -186,12 +223,17 @@ const Supporter = () => {
         </Stack>
         <Stack alignItems="center">
           <Button
+            disabled={isLoading}
             size="large"
             color="guide"
             variant="contained"
             sx={{ width: '100%' }}
+            onClick={handleDownloadImage}
           >
-            인증 스티커 다운로드 <FileDownloadIcon />
+            <Stack direction="row" gap="0.5rem" alignItems="center">
+              <Typography fontSize="0.9375rem">인증 스티커 다운로드</Typography>
+              <DownloadIcon />
+            </Stack>
           </Button>
         </Stack>
       </Stack>
