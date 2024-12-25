@@ -66,16 +66,21 @@ const ApplyUserChip: React.FC<ApplyUserChipProps> = (props) => {
       color={type === DisabilityEnum.VI ? 'vi' : 'guide'}
       label={
         <Typography
+          role="text"
           fontSize="0.8125rem"
           fontWeight={600}
           color={isAttend ? '#fff' : '#42474E'}
-          aria-label={isAttend ? `${name} 출석됨` : name}
+          aria-label={isAttend ? `${name} 출석됨` : `${name} 출석 안됨`}
         >
           {name}
           {group ?? ''}
         </Typography>
       }
-      deleteIcon={isAttendMode ? <DoneIcon aria-label="출석" /> : undefined}
+      deleteIcon={
+        isAttendMode ? (
+          <DoneIcon aria-label={isAttend ? '출석 취소 버튼' : '출석 버튼'} />
+        ) : undefined
+      }
       onDelete={isAttendMode ? onAttend : undefined}
       aria-selected={selected}
       sx={{
