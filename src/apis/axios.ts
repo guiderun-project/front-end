@@ -1,7 +1,8 @@
 import axios, { isAxiosError } from 'axios';
 
-import { store } from '../store';
 import authApi from './requests/auth';
+import { store } from '../store';
+
 import { setAccessToken } from '@/store/reducer/auth';
 
 export const baseURL = process.env.SERVER_URL;

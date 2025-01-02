@@ -31,8 +31,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     queryFn: () => infoApi.userInfoGet(),
   });
 
-  console.log(isLoading);
-
   React.useEffect(() => {
     if (data) {
       dispatch(setUserInfo(data));
