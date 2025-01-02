@@ -76,6 +76,7 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
           isAttend={matchingMode ? false : viData.isAttended}
           type={DisabilityEnum.VI}
           name={viData.name}
+          group={viData.recordDegree}
           onClick={() => onViSelect(viData.userId, viData.name)}
         />
       </CancelMatchingButton>
@@ -96,6 +97,7 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
                 isAttend={matchingMode ? false : user.isAttended}
                 type={DisabilityEnum.GUIDE}
                 name={user.name}
+                group={user.recordDegree}
                 onClick={() => onGuideSelect(user.userId, user.name)}
               />
             </CancelMatchingButton>

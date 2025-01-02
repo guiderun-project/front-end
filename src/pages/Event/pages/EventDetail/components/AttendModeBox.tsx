@@ -68,9 +68,11 @@ const AttendModeBox: React.FC<AttendModeBoxProps> = ({ member }) => {
                 key={user.userId}
                 type={user.type}
                 name={user.name}
+                group={user.recordDegree}
                 onAttend={() => {
                   mutate(user.userId);
                 }}
+                onClick={() => mutate(user.userId)}
               />
             ))}
           </StyledUserListBox>
@@ -94,9 +96,9 @@ const AttendModeBox: React.FC<AttendModeBoxProps> = ({ member }) => {
                 key={user.userId}
                 type={user.type}
                 name={user.name}
-                onAttend={() => {
-                  mutate(user.userId);
-                }}
+                group={user.recordDegree}
+                onAttend={() => mutate(user.userId)}
+                onClick={() => mutate(user.userId)}
               />
             ))}
           </StyledUserListBox>

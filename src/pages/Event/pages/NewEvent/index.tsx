@@ -2,35 +2,37 @@ import React from 'react';
 
 import {
   Button,
-  InputAdornment,
+  FormControlLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Controller, FieldErrors, useForm } from 'react-hook-form';
+import { Controller, FieldErrors, useForm, useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
 
 import eventApi from '@/apis/requests/event';
-import { EventFormType, NewEventPostRequest } from '@/apis/types/event';
+import { NewEventPostRequest } from '@/apis/types/event';
 import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { EventType } from '@/types/group';
+import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
 
 const NewEvent: React.FC = () => {
   const userData = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
 
-  const today = `${new Date().getFullYear()}-${String(
-    new Date().getMonth() + 1,
-  ).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
+  const today = new Date().toISOString().split('T')[0];
 
   const { control, handleSubmit, watch, setValue } =
     useForm<NewEventPostRequest>({
@@ -42,6 +44,7 @@ const NewEvent: React.FC = () => {
         minNumV: 0,
         startTime: '09:00',
         eventType: EventType.Competition,
+        eventCategory: EventCategory.GENERAL,
         name: '',
         place: '',
       },
@@ -51,45 +54,46 @@ const NewEvent: React.FC = () => {
     mutationKey: ['newEventPost'],
     mutationFn: (data: NewEventPostRequest) => eventApi.newEventPost(data),
     onSuccess: (data) => {
-      alert('이벤트가 등록되었습니다. ');
+      alert('이벤트가 등록되었습니다.');
       navigate(`${BROWSER_PATH.EVENT.DETAIL}/${data.eventId}`);
     },
     onError: () => {
       alert('이벤트 등록이 실패했습니다. 다시 시도해주세요.');
     },
   });
-  /**
-   *
-   */
+
   const handleEventSubmit = (data: NewEventPostRequest) => {
     if (window.confirm('이벤트를 등록하시겠습니까?')) {
       mutate(data);
     }
   };
 
-  /**
-   *
-   */
-  const handleSubmitError = (errors: FieldErrors<EventFormType>) => {
-    Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<EventFormType>]?.message);
-    });
+  const handleSubmitError = (errors: FieldErrors<NewEventPostRequest>) => {
+    const errorMessages = Object.values(errors)
+      .map((error) => error?.message)
+      .filter(Boolean)
+      .join('\n');
+
+    if (errorMessages) {
+      alert(errorMessages);
+    }
   };
 
-  //
-  //
-  //
-  React.useEffect(() => {
-    setValue('endTime', addOneHour(watch('startTime')));
-  }, [watch('startTime')]);
+  const startTime = useWatch({ control, name: 'startTime' });
+  const date = useWatch({ control, name: 'date' });
 
   React.useEffect(() => {
-    setValue('recruitEndDate', watch('date'));
-  }, [watch('date')]);
+    if (startTime) {
+      setValue('endTime', addOneHour(startTime));
+    }
+  }, [startTime, setValue]);
 
-  //
-  //
-  //
+  React.useEffect(() => {
+    if (date) {
+      setValue('recruitEndDate', date);
+    }
+  }, [date, setValue]);
+
   return (
     <>
       <PageTitle title="이벤트 생성" />
@@ -118,6 +122,48 @@ const NewEvent: React.FC = () => {
             </Stack>
           }
         />
+        {getAuthority.isAdmin(userData.role) && (
+          <Controller
+            name="eventCategory"
+            control={control}
+            render={({ field }) => (
+              <InputBox
+                required
+                multiline
+                title="타입 지정"
+                subTitle="(최초 생성시 선택 가능, 추후 선택 불가)"
+                inputElement={
+                  <RadioGroup
+                    {...field}
+                    aria-required
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <FormControlLabel
+                      value={EventCategory.GENERAL}
+                      label={`기본 이벤트\n(20명 이상 시 팀별로 나뉨)`}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                    <FormControlLabel
+                      value={EventCategory.GROUP}
+                      label={`[GRP 프로그램] 그룹별\n(마일리지그룹/집중코칭그룹)`}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                  </RadioGroup>
+                }
+              />
+            )}
+          />
+        )}
         <Controller
           rules={{ required: '이벤트 제목은 필수 입력입니다.' }}
           name="name"
@@ -197,7 +243,7 @@ const NewEvent: React.FC = () => {
           name="endTime"
           rules={{
             min: {
-              value: watch('startTime'),
+              value: startTime,
               message: '시작 시간보다 늦어야 합니다.',
             },
           }}
@@ -208,7 +254,7 @@ const NewEvent: React.FC = () => {
                 <TextField
                   {...field}
                   type="time"
-                  inputProps={{ step: 1800, min: watch('startTime') }}
+                  inputProps={{ step: 1800, min: startTime }}
                 />
               }
             />
@@ -234,74 +280,13 @@ const NewEvent: React.FC = () => {
             />
           )}
         />
-
-        <InputBox
-          multiline
-          title="최소 모집 인원"
-          inputElement={
-            <Stack
-              direction="row"
-              gap="0.9375rem"
-              justifyContent="space-between"
-            >
-              <Controller
-                control={control}
-                name="minNumV"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="시각장애러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) =>
-                      field.onChange(parseInt(e.target.value, 10))
-                    }
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                control={control}
-                name="minNumG"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="가이드러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) =>
-                      field.onChange(parseInt(e.target.value, 10))
-                    }
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </Stack>
-          }
-        />
         <Controller
           control={control}
           name="recruitStartDate"
           rules={{
             max: {
-              value: watch('date'),
-              message: '모집 시작일은 대회 시점까지입니다. ',
+              value: date,
+              message: '모집 시작일은 대회 시점까지입니다.',
             },
           }}
           render={({ field }) => (
@@ -316,15 +301,15 @@ const NewEvent: React.FC = () => {
         <Controller
           control={control}
           name="recruitEndDate"
-          defaultValue={watch('date')}
+          defaultValue={date}
           rules={{
             min: {
               value: watch('recruitStartDate'),
-              message: '모집 마감일은 모집 시작일 이후부터 가능합니다. ',
+              message: '모집 마감일은 모집 시작일 이후부터 가능합니다.',
             },
             max: {
-              value: watch('date'),
-              message: '모집 마감일은 대회 시점까지 입니다. ',
+              value: date,
+              message: '모집 마감일은 대회 시점까지 입니다.',
             },
           }}
           render={({ field, fieldState }) => (
@@ -335,7 +320,7 @@ const NewEvent: React.FC = () => {
               inputElement={
                 <TextField
                   {...field}
-                  value={fieldState.isDirty ? field.value : watch('date')}
+                  value={fieldState.isDirty ? field.value : date}
                   type="date"
                 />
               }
@@ -345,7 +330,7 @@ const NewEvent: React.FC = () => {
         <Controller
           control={control}
           name="content"
-          rules={{ required: '이벤트 상세 내용은 필수 입력입니다. ' }}
+          rules={{ required: '이벤트 상세 내용은 필수 입력입니다.' }}
           render={({ field }) => (
             <InputBox
               required

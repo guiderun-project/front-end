@@ -11,6 +11,7 @@ import { UserType } from '@/types/user';
 export type EventPostRequest = {
   recruitStartDate: string;
   recruitEndDate: string;
+  eventCategory: Event['eventCategory'];
   name: Event['name'];
   type: Event['type'];
   startTime: Event['startTime'];
@@ -61,6 +62,7 @@ export type EventGetResponse = Pick<
   | 'isApply'
   | 'partner'
   | 'status'
+  | 'eventCategory'
 >;
 
 export type EventPopupGetRequest = Pick<Event, 'eventId'>;
@@ -80,6 +82,7 @@ export type EventPopupGetResponse = Pick<
   | 'place'
   | 'partner'
   | 'isApply'
+  | 'eventCategory'
 > & {
   organizerRecord: Event['organizerPace'];
   recruitVi: number;
@@ -246,6 +249,7 @@ export type EventFormType = {
   minNumG: Event['minNumG']; //가이드 러너 모집 희망 인원
   place: Event['place']; //이벤트 장소
   content: Event['details']; //이벤트 상세 내용
+  eventCategory: Event['eventCategory']; //이벤트 카테고리
 };
 
 export type NewEventPostRequest = EventFormType;
@@ -363,6 +367,7 @@ export type EventApplyGetResponse = {
   group: RunningGroup;
   partner: string;
   detail: string;
+  eventCategory: Event['eventCategory'];
 };
 
 export type EventApplyCountGetRequest = Pick<Event, 'eventId'>;
@@ -375,7 +380,10 @@ export type EventApplyCountGetResponse = {
 
 export type EventApplyStatusGetRequest = Pick<Event, 'eventId'>;
 
-export type ApplyUserType = Pick<UserType, 'userId' | 'type' | 'name'> & {
+export type ApplyUserType = Pick<
+  UserType,
+  'userId' | 'type' | 'name' | 'recordDegree'
+> & {
   applyRecord: RunningGroup;
 };
 

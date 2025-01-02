@@ -9,7 +9,7 @@ import { StyledUserListBox } from '../panels/EventAttendPanel';
 
 import { ApplyUserType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
-import { TEAM_COLOR } from '@/constants/color';
+import { GROUP_COLOR } from '@/constants/color';
 import { RunningGroup } from '@/types/group';
 
 interface AttendGroupAccordionProps {
@@ -28,7 +28,9 @@ const StyledAccordionBox = styled.div<{ open: boolean; group: RunningGroup }>`
   ${({ open, group }) => {
     if (open) {
       return css`
-        box-shadow: 0 0 0 2px ${TEAM_COLOR[group]} inset;
+        box-shadow: 0 0 0 2px
+          ${group === RunningGroup.A ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC}
+          inset;
         background-color: #e6e7ee;
       `;
     }
@@ -51,7 +53,9 @@ const StyledAccordionButton = styled.div<{
   ${({ open, group }) => {
     if (open) {
       return css`
-        color: ${TEAM_COLOR[group]};
+        color: ${group === RunningGroup.A
+          ? GROUP_COLOR.MILE
+          : GROUP_COLOR.BASIC};
         background-color: transparent;
         padding-top: 2rem;
         padding-bottom: 1.5rem;
@@ -59,7 +63,9 @@ const StyledAccordionButton = styled.div<{
     } else {
       return css`
         color: #fff;
-        background-color: ${TEAM_COLOR[group]};
+        background-color: ${group === RunningGroup.A
+          ? GROUP_COLOR.MILE
+          : GROUP_COLOR.BASIC};
       `;
     }
   }}
@@ -121,9 +127,11 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
           fontWeight={700}
           color="inherit"
           fontSize="1.5rem"
-          aria-label={`${group}그룹`}
+          aria-label={
+            group === RunningGroup.A ? '마일리지 그룹' : '기초 보강 그룹'
+          }
         >
-          {group}
+          {group === RunningGroup.A ? '마일리지 그룹' : '기초/보강 그룹'}
         </Typography>
       </StyledAccordionButton>
       <StyledAccordionDetail open={open}>
@@ -134,6 +142,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
             {attendedMemberOfVi.map((member) => (
@@ -142,6 +151,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
           </StyledUserListBox>
@@ -151,6 +161,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
             {attendedMemberOfGuide.map((member) => (
@@ -159,6 +170,7 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
                 key={member.userId}
                 type={member.type}
                 name={member.name}
+                group={member.recordDegree}
               />
             ))}
           </StyledUserListBox>

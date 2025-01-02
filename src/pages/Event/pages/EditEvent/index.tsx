@@ -3,19 +3,22 @@ import React from 'react';
 import {
   Button,
   CircularProgress,
-  InputAdornment,
+  FormControlLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { Controller, FieldErrors, useForm } from 'react-hook-form';
+import { Controller, FieldErrors, useForm, useWatch } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
+import useDeleteEvent from '../../hooks/useDeleteEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventFormType } from '@/apis/types/event';
@@ -23,18 +26,65 @@ import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
+import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
 
 const EditEvent: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user);
+  const { deleteEvent } = useDeleteEvent();
+
+  if (!eventId) {
+    return <NotFound />;
+  }
 
   const { data: eventData } = useSuspenseQuery({
     queryKey: ['eventGet', eventId],
     queryFn: () => eventApi.eventGet({ eventId: Number(eventId) }),
   });
+
+  const { control, handleSubmit, setValue } = useForm<EventFormType>({
+    defaultValues: {
+      content: eventData?.details ?? '',
+      date: eventData?.date,
+      endTime: eventData?.endTime,
+      eventType: eventData?.type,
+      eventCategory: eventData?.eventCategory,
+      minNumG: eventData?.minNumG,
+      minNumV: eventData?.minNumV,
+      name: eventData?.name,
+      place: eventData?.place,
+      recruitEndDate: eventData?.recruitEndDate,
+      recruitStartDate: eventData?.recruitStartDate,
+      startTime: eventData?.startTime,
+    },
+  });
+
+  const startTime = useWatch({ control, name: 'startTime' });
+  const date = useWatch({ control, name: 'date' });
+  const recruitStartDate = useWatch({ control, name: 'recruitStartDate' });
+
+  React.useEffect(() => {
+    if (startTime) {
+      setValue('endTime', addOneHour(startTime));
+    }
+  }, [startTime, setValue]);
+
+  React.useEffect(() => {
+    if (date) {
+      setValue('recruitEndDate', date);
+    }
+  }, [date, setValue]);
+
+  React.useEffect(() => {
+    if (userData.userId !== eventData.organizerId) {
+      alert('작성자만 수정이 가능합니다.');
+      navigate(-1);
+    }
+  }, [userData.userId, eventData.organizerId, navigate]);
 
   const { mutate } = useMutation({
     mutationKey: ['editEventPatch', eventData.eventId],
@@ -44,7 +94,7 @@ const EditEvent: React.FC = () => {
         EditEventPatchRequestBody: data,
       }),
     onSuccess: () => {
-      alert('이벤트가 수정되었습니다. ');
+      alert('이벤트가 수정되었습니다.');
       navigate(`${BROWSER_PATH.EVENT.DETAIL}/${eventId}`);
     },
     onError: () => {
@@ -66,93 +116,36 @@ const EditEvent: React.FC = () => {
     },
   });
 
-  const { mutate: deleteEvent } = useMutation({
-    mutationKey: ['eventDelete', eventId],
-    mutationFn: () => eventApi.eventDelete({ eventId: Number(eventId) ?? 0 }),
-    onSuccess: () => {
-      alert('삭제되었습니다. 메인 페이지로 이동합니다.');
-      navigate(BROWSER_PATH.MAIN);
-    },
-    onError: () => {
-      alert('에러가 발생했습니다.');
-    },
-  });
-
-  const { control, watch, handleSubmit, setValue } = useForm<EventFormType>({
-    defaultValues: {
-      content: eventData?.details ?? '',
-      date: eventData?.date,
-      endTime: eventData?.endTime,
-      eventType: eventData?.type,
-      minNumG: eventData?.minNumG,
-      minNumV: eventData?.minNumV,
-      name: eventData?.name,
-      place: eventData?.place,
-      recruitEndDate: eventData?.recruitEndDate,
-      recruitStartDate: eventData?.recruitStartDate,
-      startTime: eventData?.startTime,
-    },
-  });
-
-  /**
-   *
-   */
   const handleEventSubmit = (data: EventFormType) => {
-    if (window.confirm('이벤트를 수정시겠습니까?')) {
+    if (window.confirm('이벤트를 수정하시겠습니까?')) {
       mutate(data);
     }
   };
 
-  /**
-   *
-   */
   const handleSubmitError = (errors: FieldErrors<EventFormType>) => {
-    Object.keys(errors).forEach((key) => {
-      alert(errors[key as keyof FieldErrors<EventFormType>]?.message);
-    });
+    const errorMessages = Object.values(errors)
+      .map((error) => error?.message)
+      .filter(Boolean)
+      .join('\n');
+
+    if (errorMessages) {
+      alert(errorMessages);
+    }
   };
 
-  /**
-   *
-   */
   const handleDeleteEventClick = () => {
     if (window.confirm('이벤트를 삭제하시겠습니까?')) {
-      deleteEvent();
+      deleteEvent(Number(eventId));
     }
   };
 
-  //
-  //
-  //
-
-  if (!eventId) {
-    return <NotFound />;
-  }
-
-  //
-  //
-  //
-
-  React.useEffect(() => {
-    if (userData.userId !== eventData.organizerId) {
-      alert('작성자만 수정이 가능합니다.');
-      navigate(-1);
-      return;
+  const getEventCategoryLabel = () => {
+    if (eventData.eventCategory === EventCategory.GROUP) {
+      return `[GRP 프로그램] 그룹별\n(마일리지그룹/집중코칭그룹)`;
+    } else {
+      return `기본 이벤트\n(20명 이상 시 팀별로 나뉨)`;
     }
-  }, [userData.userId, eventData.organizerId]);
-
-  if (userData.userId !== eventData.organizerId) return <></>;
-
-  React.useEffect(() => {
-    setValue('endTime', addOneHour(watch('startTime')));
-  }, [watch('startTime')]);
-
-  React.useEffect(() => {
-    setValue('recruitEndDate', watch('date'));
-  }, [watch('date')]);
-  //
-  //
-  //
+  };
 
   return (
     <>
@@ -182,6 +175,40 @@ const EditEvent: React.FC = () => {
             </Stack>
           }
         />
+        {getAuthority.isAdmin(userData.role) && (
+          <Controller
+            name="eventCategory"
+            control={control}
+            render={({ field }) => (
+              <InputBox
+                required
+                multiline
+                title="타입 지정"
+                subTitle="(최초 생성시 선택 가능, 추후 선택 불가)"
+                inputElement={
+                  <RadioGroup
+                    {...field}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <FormControlLabel
+                      disabled
+                      value={eventData.eventCategory}
+                      label={getEventCategoryLabel()}
+                      control={<Radio />}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                    />
+                  </RadioGroup>
+                }
+              />
+            )}
+          />
+        )}
         <Controller
           rules={{ required: '이벤트 제목은 필수 입력입니다.' }}
           name="name"
@@ -261,7 +288,7 @@ const EditEvent: React.FC = () => {
           name="endTime"
           rules={{
             min: {
-              value: watch('startTime'),
+              value: startTime,
               message: '시작 시간보다 늦어야 합니다.',
             },
           }}
@@ -272,7 +299,7 @@ const EditEvent: React.FC = () => {
                 <TextField
                   {...field}
                   type="time"
-                  inputProps={{ step: 1800, min: watch('startTime') }}
+                  inputProps={{ step: 1800, min: startTime }}
                 />
               }
             />
@@ -298,70 +325,13 @@ const EditEvent: React.FC = () => {
             />
           )}
         />
-
-        <InputBox
-          multiline
-          title="최소 모집 인원"
-          inputElement={
-            <Stack
-              direction="row"
-              gap="0.9375rem"
-              justifyContent="space-between"
-            >
-              <Controller
-                control={control}
-                name="minNumV"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="시각장애러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                control={control}
-                name="minNumG"
-                defaultValue={0}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    fullWidth
-                    label="가이드러너"
-                    autoComplete="off"
-                    type="number"
-                    inputMode="numeric"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    inputProps={{ min: 0 }}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">명</InputAdornment>
-                      ),
-                    }}
-                  />
-                )}
-              />
-            </Stack>
-          }
-        />
         <Controller
           control={control}
           name="recruitStartDate"
           rules={{
             max: {
-              value: watch('date'),
-              message: '모집 시작일은 대회 시점까지입니다. ',
+              value: date,
+              message: '모집 시작일은 대회 시점까지입니다.',
             },
           }}
           render={({ field }) => (
@@ -376,15 +346,15 @@ const EditEvent: React.FC = () => {
         <Controller
           control={control}
           name="recruitEndDate"
-          defaultValue={watch('date')}
+          defaultValue={date}
           rules={{
             min: {
-              value: watch('recruitStartDate'),
-              message: '모집 마감일은 모집 시작일 이후부터 가능합니다. ',
+              value: recruitStartDate,
+              message: '모집 마감일은 모집 시작일 이후부터 가능합니다.',
             },
             max: {
-              value: watch('date'),
-              message: '모집 마감일은 대회 시점까지 입니다. ',
+              value: date,
+              message: '모집 마감일은 대회 시점까지 입니다.',
             },
           }}
           render={({ field }) => (
@@ -396,7 +366,7 @@ const EditEvent: React.FC = () => {
             />
           )}
         />
-        {eventData.recruitStatus === RecruitStatus.Open ? (
+        {eventData.recruitStatus === RecruitStatus.Open && (
           <Stack alignItems="center">
             <Button
               fullWidth
@@ -412,11 +382,11 @@ const EditEvent: React.FC = () => {
               )}
             </Button>
           </Stack>
-        ) : null}
+        )}
         <Controller
           control={control}
           name="content"
-          rules={{ required: '이벤트 상세 내용은 필수 입력입니다. ' }}
+          rules={{ required: '이벤트 상세 내용은 필수 입력입니다.' }}
           render={({ field }) => (
             <InputBox
               required

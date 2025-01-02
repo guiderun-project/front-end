@@ -525,6 +525,15 @@ class EventApi {
       return res.data;
     });
   };
+
+  eventAutoMatching = async (eventId: number) => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post(
+        `event/${eventId}/match/auto`,
+      );
+      return res.data;
+    });
+  };
 }
 
 const eventApi = new EventApi();

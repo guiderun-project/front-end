@@ -16,6 +16,7 @@ import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
 import Loading from './pages/Loading';
+import Supporter from './pages/Supporter';
 import { RootState } from './store';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
@@ -102,7 +103,24 @@ const router = createBrowserRouter([
         ),
       },
       {
-        element: <ProtectedRoute />,
+        element: <ProtectedRoute protectedLevel="WAITING_USER" />,
+        children: [
+          {
+            path: BROWSER_PATH.MYPAGE,
+            element: <Mypage />,
+          },
+          {
+            path: BROWSER_PATH.INFO,
+            element: <Info />,
+          },
+          {
+            path: `${BROWSER_PATH.WITHDRAW}`,
+            element: <Withdraw />,
+          },
+        ],
+      },
+      {
+        element: <ProtectedRoute protectedLevel="APPROVED_USER" />,
         children: [
           {
             element: <MainRoot />,
@@ -162,24 +180,13 @@ const router = createBrowserRouter([
             ),
             children: [
               {
-                path: BROWSER_PATH.MYPAGE,
-                element: <Mypage />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.HISTORY,
-                element: <EventHistory />,
-              },
-              {
-                path: BROWSER_PATH.INFO,
-                element: <Info />,
-              },
-              {
                 path: `${BROWSER_PATH.PROFILE}/:userId`,
                 element: <Profile />,
               },
+
               {
-                path: `${BROWSER_PATH.WITHDRAW}`,
-                element: <Withdraw />,
+                path: BROWSER_PATH.EVENT.HISTORY,
+                element: <EventHistory />,
               },
               {
                 path: BROWSER_PATH.EVENT.NEW,
@@ -214,6 +221,10 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
+  },
+  {
+    path: '/supporter',
+    element: <Supporter />,
   },
 ]);
 

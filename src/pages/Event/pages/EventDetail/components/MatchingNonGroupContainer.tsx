@@ -99,6 +99,7 @@ const MatchingNonGroupContainer: React.FC<MatchingNonGroupContainerProps> = ({
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
                     type={DisabilityEnum.VI}
+                    group={user.recordDegree}
                     onClick={() => onViSelect(user.userId, user.name)}
                   />
                 ))}
@@ -112,6 +113,7 @@ const MatchingNonGroupContainer: React.FC<MatchingNonGroupContainerProps> = ({
                     key={user.userId}
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
+                    group={user.recordDegree}
                     type={DisabilityEnum.GUIDE}
                     onClick={() => onGuideSelect(user.userId, user.name)}
                   />

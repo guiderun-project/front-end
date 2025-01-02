@@ -219,6 +219,7 @@ const Mypage: React.FC = () => {
    *
    */
   const renderMyEvent = () => {
+    if (!getAuthority.isUser(userData.role)) return null;
     return (
       <Stack gap="2.5rem">
         <Stack
@@ -255,7 +256,7 @@ const Mypage: React.FC = () => {
             ))}
           </Stack>
         )}
-        {getAuthority.isAdmin(userData.role) && (
+        {getAuthority.isUser(userData.role) && (
           <Stack direction="row" justifyContent="center">
             <Button
               fullWidth

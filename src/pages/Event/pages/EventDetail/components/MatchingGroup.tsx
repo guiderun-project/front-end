@@ -3,8 +3,8 @@ import { Divider, Stack, Typography } from '@mui/material';
 
 import { MatchingComponentProps } from '../panels/EventMatchingPanel';
 
-import { ApplyUserChip, GroupChip } from '@/components/shared';
-import { TEAM_COLOR } from '@/constants/color';
+import { ApplyUserChip } from '@/components/shared';
+import { GROUP_COLOR } from '@/constants/color';
 import { GROUP_LIST_WITHOUT_P } from '@/constants/group';
 import { MATCHING_BOX_ID } from '@/constants/id';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
@@ -21,7 +21,9 @@ const StyledUserBox = styled.div<{ group: RunningGroup }>`
   gap: 1.5rem;
   padding: 1.5rem 1rem;
   background-color: #fff;
-  border: 2px solid ${({ group }) => TEAM_COLOR[group]};
+  border: 2px solid
+    ${({ group }) =>
+      group === RunningGroup.A ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC};
   border-radius: 1rem;
 `;
 
@@ -53,26 +55,42 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
   return (
     <Stack id={MATCHING_BOX_ID(group)}>
       <Stack direction="row" justifyContent="space-around">
-        {GROUP_LIST_WITHOUT_P.map((groupItem) => (
+        {GROUP_LIST_WITHOUT_P.slice(0, 2).map((groupItem) => (
           <StyledGroupAnchor
             id={`StyledGroupAnchor-${group}-${groupItem}`}
             href={`#${MATCHING_BOX_ID(groupItem)}`}
-            aria-label={`그룹 ${groupItem}${
-              group === groupItem ? '' : '으로 이동'
-            }`}
+            aria-label={`${
+              groupItem === RunningGroup.A ? '마일리지 그룹' : '기초보강 그룹'
+            }${group === groupItem ? '' : '으로 이동'}`}
             aria-current={group === groupItem}
           >
             <Stack
               aria-hidden
               boxSizing="border-box"
-              padding="0.75rem 0"
+              padding="0.875rem 0"
               borderBottom={
                 group === groupItem
-                  ? `4px solid ${TEAM_COLOR[groupItem]}`
+                  ? `4px solid ${
+                      groupItem === RunningGroup.A
+                        ? GROUP_COLOR.MILE
+                        : GROUP_COLOR.BASIC
+                    }`
                   : 'none'
               }
             >
-              <GroupChip type="avatar" group={groupItem} />
+              <Typography
+                fontSize="0.875rem"
+                fontWeight={700}
+                color={
+                  groupItem === RunningGroup.A
+                    ? GROUP_COLOR.MILE
+                    : GROUP_COLOR.BASIC
+                }
+              >
+                {groupItem === RunningGroup.A
+                  ? '마일리지 그룹'
+                  : '기초보강 그룹'}
+              </Typography>
             </Stack>
           </StyledGroupAnchor>
         ))}
@@ -124,6 +142,7 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
                     key={user.userId}
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
+                    group={user.recordDegree}
                     type={DisabilityEnum.VI}
                     onClick={() => onViSelect(user.userId, user.name)}
                   />
@@ -138,6 +157,7 @@ const MatchingGroup: React.FC<MatchingGroupProps> = ({
                     key={user.userId}
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
+                    group={user.recordDegree}
                     type={DisabilityEnum.GUIDE}
                     onClick={() => onGuideSelect(user.userId, user.name)}
                   />
