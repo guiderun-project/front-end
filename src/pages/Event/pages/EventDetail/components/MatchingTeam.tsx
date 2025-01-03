@@ -137,6 +137,7 @@ const MatchingTeam: React.FC<MatchingTeamProps> = ({
                     selected={selectedGuide.userId === user.userId}
                     clickable={matchingMode}
                     key={user.userId}
+                    group={user.recordDegree}
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
                     type={DisabilityEnum.GUIDE}
