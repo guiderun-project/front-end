@@ -526,7 +526,6 @@ class EventApi {
     });
   };
 
-  //임시 API
   eventAutoMatching = async (eventId: number) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.post(

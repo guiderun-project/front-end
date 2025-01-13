@@ -16,6 +16,7 @@ import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
 import Loading from './pages/Loading';
+import Supporter from './pages/Supporter';
 import { RootState } from './store';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
@@ -220,6 +221,10 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
     ],
+  },
+  {
+    path: '/supporter',
+    element: <Supporter />,
   },
 ]);
 

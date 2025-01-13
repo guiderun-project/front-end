@@ -99,6 +99,7 @@ const MatchingNonGroupContainer: React.FC<MatchingNonGroupContainerProps> = ({
                     isAttend={matchingMode ? false : user.isAttended}
                     name={user.name}
                     type={DisabilityEnum.VI}
+                    group={user.recordDegree}
                     onClick={() => onViSelect(user.userId, user.name)}
                   />
                 ))}
