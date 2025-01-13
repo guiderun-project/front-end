@@ -20,34 +20,46 @@ const useKakaoShare = () => {
     url = baseUrl,
     statusUrl = `${baseUrl}?section=status`,
   ) => {
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: title,
-        description: content,
-        imageUrl: 'https://d6wueuvlxdntp.cloudfront.net/Logo.png',
-        link: {
-          mobileWebUrl: url,
-          webUrl: url,
-        },
-      },
-      buttons: [
-        {
-          title: '이벤트 상세',
+    if (organizer === '장지은') {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: title,
+          description: content,
+          imageUrl: 'https://d6wueuvlxdntp.cloudfront.net/Logo.png',
           link: {
             mobileWebUrl: url,
             webUrl: url,
           },
         },
-        {
-          title: '신청 현황',
-          link: {
-            mobileWebUrl: statusUrl,
-            webUrl: statusUrl,
+        buttons: [
+          {
+            title: '이벤트 상세',
+            link: {
+              mobileWebUrl: url,
+              webUrl: url,
+            },
           },
+          {
+            title: '신청 현황',
+            link: {
+              mobileWebUrl: statusUrl,
+              webUrl: statusUrl,
+            },
+          },
+        ],
+      });
+    } else {
+      Kakao.Share.sendCustom({
+        templateId: 116263,
+        templateArgs: {
+          title,
+          content,
+          REGI_WEB_DOMAIN: url,
+          STATUS_URL: statusUrl,
         },
-      ],
-    });
+      });
+    }
   };
 
   //
