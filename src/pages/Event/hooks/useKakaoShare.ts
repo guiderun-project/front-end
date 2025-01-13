@@ -56,6 +56,7 @@ const useKakaoShare = () => {
           title,
           content,
           REGI_WEB_DOMAIN: url,
+          EVENT_URL: url,
           STATUS_URL: statusUrl,
         },
       });
