@@ -37,7 +37,14 @@ export const Header = () => {
 
   return (
     <Container>
-      {scrollProgress !== 1 ? <SmallLogo aria-hidden /> : null}
+      {scrollProgress !== 1 ? (
+        <SmallLogo
+          aria-hidden
+          top={targetTop}
+          left={targetLeft}
+          width={targerWidth}
+        />
+      ) : null}
       <BigLogoWrapper
         style={{
           top: bigLogoTop,
@@ -53,7 +60,7 @@ export const Header = () => {
           }}
         >
           <Typography fontWeight={300}>함께 더 멀리 달려요</Typography>
-          <Line width={40} />
+          <Line aria-hidden width={40} />
           <Typography fontWeight={300}>가이드런 프로젝트</Typography>
         </TitleWrapper>
         <BigLogo aria-hidden width={bigLogoWidth} />
@@ -68,11 +75,15 @@ const Container = styled.header`
   background-color: #f2f2f2;
 `;
 
-const SmallLogo = styled(TextLogo)`
+const SmallLogo = styled(TextLogo)<{
+  top: number;
+  left: number;
+  width: number;
+}>`
   position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 111px;
+  top: ${({ top }) => top}px;
+  left: ${(left) => left}px;
+  width: ${({ width }) => width}px;
 `;
 
 const TitleWrapper = styled.h1`
