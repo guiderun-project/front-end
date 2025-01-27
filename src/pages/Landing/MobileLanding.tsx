@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 
-import { Header } from './domains/mobile';
+import { Description, Header } from './domains/mobile';
 
 export const MobileLanding = () => {
   return (
     <Layout>
       <Header />
+      <Description />
     </Layout>
   );
 };
