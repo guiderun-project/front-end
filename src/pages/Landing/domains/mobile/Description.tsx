@@ -11,6 +11,7 @@ export const Description = () => {
       <StaggerAnimation>
         <p>
           <Typography
+            component="span"
             fontWeight={400}
             fontSize="1.125rem"
             lineHeight="28px"
@@ -34,6 +35,7 @@ const Contatiner = styled.div`
   width: 100%;
   height: 526px;
   background-image: url(${Background});
+  background-position: center;
   background-size: cover;
 
   display: flex;
