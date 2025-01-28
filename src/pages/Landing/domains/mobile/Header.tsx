@@ -13,7 +13,7 @@ export const Header = () => {
 
   const initialWidth = window.innerWidth * 0.9;
   const initilaTop = 300;
-  const initialLeft = 25;
+  const initialLeft = (window.innerWidth * 0.1) / 2;
   const initialGap = 1.125;
 
   const targerWidth = 111;
