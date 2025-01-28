@@ -20,6 +20,7 @@ const PROGRAMS: Program[] = [
     description: '2024 서울 마라톤을 대비한 포인트 훈련',
     image: Winter2024,
     link: 'https://docs.google.com/document/d/1ARjoYswhYKzjTCUSSk0Z820zdMp3a7stpXxWuxFZ9Jo/edit?usp=sharing',
+    linkLabel: '리뷰 바로 가기 >',
     result: `총 참석인원 : 총 평균 51명 참가
 (VI 18명, G 33명)`,
   },
@@ -36,6 +37,7 @@ const PROGRAMS: Program[] = [
     description: '매주 일요일 아침에 다같이 모여 추계 마라톤 함께 준비',
     image: Summer2024,
     link: 'https://drive.google.com/file/d/14DsvINSPuh_2OQUq3pxFfxkC1jcDdrJp/view?usp=sharing',
+    linkLabel: '프로그램 운영 결과 바로가기 >',
     result: `총 참석인원 :
  • Part 1 : 평균 약 45명(VI:17/G:28)
  • Part 2 : 평균 34명(VI:14.5/G:19.5)

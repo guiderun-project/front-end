@@ -1,5 +1,9 @@
+import { useState } from 'react';
+
 import styled from '@emotion/styled';
 import { Stack, Typography } from '@mui/material';
+
+import { ProgramModal } from './ProgramModal';
 
 export interface Program {
   name: string;
@@ -15,26 +19,33 @@ export interface Program {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   image: any;
   link?: string;
+  linkLabel?: string;
   result?: string;
 }
 
+export const getFormattedSeason = (season: Program['season']) => {
+  switch (season) {
+    case 'spring':
+      return '춘계';
+    case 'summer':
+      return '하계';
+    case 'fall':
+      return '추계';
+    case 'winter':
+      return '동계';
+  }
+};
+
 export const ProgramItem = ({ program }: { program: Program }) => {
-  const getFormattedSeason = (season: Program['season']) => {
-    switch (season) {
-      case 'spring':
-        return '춘계';
-      case 'summer':
-        return '하계';
-      case 'fall':
-        return '추계';
-      case 'winter':
-        return '동계';
-    }
-  };
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
-      <Container image={program.image}>
+      <Container
+        image={program.image}
+        onClick={() => setOpenModal(true)}
+        aria-controls="modal"
+      >
         <Stack gap="0.5rem" alignItems="flex-start">
           <Stack direction="row" gap="0.5rem">
             <YearBox>{program.year}</YearBox>
@@ -52,6 +63,11 @@ export const ProgramItem = ({ program }: { program: Program }) => {
           >{`${program.period.start} ~ ${program.period.end}`}</Typography>
         </Stack>
       </Container>
+      <ProgramModal
+        open={openModal}
+        program={program}
+        onClose={() => setOpenModal(false)}
+      />
     </>
   );
 };
@@ -71,7 +87,7 @@ const Container = styled.button<{ image: string }>`
   cursor: pointer;
 `;
 
-const YearBox = styled.span`
+export const YearBox = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +101,7 @@ const YearBox = styled.span`
   font-family: fira-code, pretendard, sans-serif;
 `;
 
-const SeasonBox = styled.span<{ season: Program['season'] }>`
+export const SeasonBox = styled.span<{ season: Program['season'] }>`
   display: flex;
   align-items: center;
   justify-content: center;
