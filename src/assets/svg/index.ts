@@ -1,3 +1,5 @@
+export { ReactComponent as ArrowRightSmall } from './arrow-right-small.svg';
+export { ReactComponent as ArrowRightUp } from './arrow-right-up.svg';
 export { ReactComponent as ArrowRight } from './arrow-right.svg';
 export { ReactComponent as DownloadIcon } from './download.svg';
 export { ReactComponent as Line } from './line.svg';

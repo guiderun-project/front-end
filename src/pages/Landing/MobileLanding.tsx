@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
 
-import { Description, Header, ProgramList, Together } from './domains/mobile';
+import {
+  Description,
+  GuideRun,
+  Header,
+  ProgramList,
+  Together,
+} from './domains/mobile';
 
 export const MobileLanding = () => {
   return (
@@ -9,6 +15,7 @@ export const MobileLanding = () => {
       <Description />
       <ProgramList />
       <Together />
+      <GuideRun />
     </Layout>
   );
 };
