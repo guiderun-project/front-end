@@ -12,7 +12,8 @@ interface InputBoxProps {
   title: string;
   inputElement: React.ReactElement;
   labelFor?: string;
-  subTitle?: string;
+  subTitle?: React.ReactNode;
+  isDiv?: boolean;
   multiline?: boolean;
   required?: boolean;
 }
@@ -51,11 +52,16 @@ const InputBox: React.FC<InputBoxProps> = ({
   inputElement,
   subTitle,
   labelFor,
+  isDiv = false,
   multiline = false,
   required = false,
 }) => {
   return (
-    <StyledInputBox multiline={multiline} htmlFor={labelFor}>
+    <StyledInputBox
+      as={isDiv ? 'div' : undefined}
+      multiline={multiline}
+      htmlFor={labelFor}
+    >
       <Stack gap="0.25rem">
         <Typography fontSize="1.0625rem" fontWeight={700}>
           <Badge role="text" color="error" variant="dot" invisible={!required}>
