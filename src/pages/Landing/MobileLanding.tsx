@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 
 import {
+  Copyright,
   Description,
+  Final,
   GuideRun,
   Header,
   ProgramList,
@@ -16,6 +18,8 @@ export const MobileLanding = () => {
       <ProgramList />
       <Together />
       <GuideRun />
+      <Final />
+      <Copyright />
     </Layout>
   );
 };
