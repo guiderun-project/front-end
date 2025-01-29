@@ -15,6 +15,7 @@ import {
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
+import Landing from './pages/Landing';
 import Loading from './pages/Loading';
 import Supporter from './pages/Supporter';
 import { RootState } from './store';
@@ -59,6 +60,10 @@ const Signup = React.lazy(() => import('./pages/Signup'));
 const Withdraw = React.lazy(() => import('./pages/Withdraw'));
 
 const router = createBrowserRouter([
+  {
+    path: BROWSER_PATH.LANDING,
+    element: <Landing />,
+  },
   {
     element: (
       <ErrorBoundary>

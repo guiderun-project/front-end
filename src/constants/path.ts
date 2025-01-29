@@ -1,4 +1,5 @@
 export const BROWSER_PATH = {
+  LANDING: '/landing',
   MAIN: '/',
   ADMIN: {
     MAIN: '/admin',

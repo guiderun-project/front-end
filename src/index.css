@@ -20,6 +20,10 @@
   font-family: 'pretendard', Arial, Helvetica, sans-serif;
 }
 
+body {
+  background-color: #f2f2f2;
+}
+
 /* reset.css */
 
 html,
