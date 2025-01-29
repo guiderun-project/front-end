@@ -37,7 +37,7 @@ export const GuideRunInfoBox = ({
         aria-expanded={open}
         aria-controls={contentId}
       >
-        <Title>{info.title}</Title>
+        <Title open={open}>{info.title}</Title>
         <ArrowIcon open={open} />
       </TitleWrapper>
       <AnimatedContent
@@ -110,13 +110,16 @@ const TitleWrapper = styled.button`
   border: none;
   cursor: pointer;
   color: #fff;
-  font-size: 2.25rem;
+  padding-right: 0.125rem;
 `;
 
-const Title = styled.h3`
-  font-size: 2.25rem;
+const Title = styled.h3<{ open: boolean }>`
+  font-size: 2rem;
   font-weight: 100;
   color: #fff;
+  transform: ${({ open }) => (open ? 'scale(0.875)' : 'scale(1)')};
+  transform-origin: right;
+  transition: transform 0.2s ease-in-out;
 `;
 
 const Link = styled.a`
@@ -128,6 +131,7 @@ const Link = styled.a`
   padding-right: 5px;
   padding-bottom: 3px;
   border-bottom: 0.5px solid #aaa;
+  margin-bottom: 0.125rem;
 
   &:focus {
     outline: 2px solid #fff;
