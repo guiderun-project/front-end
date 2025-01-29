@@ -23,6 +23,7 @@ import {
   EventChip,
   EventStatus,
   GroupChip,
+  HidenText,
   PageTitle,
   TitleHeader,
 } from '@/components/shared';
@@ -70,7 +71,7 @@ const StyledGroupButton = styled.button<{ group: 'mile' | 'basic' }>`
     color: default;
   }
 
-  &[aria-selected='true'] {
+  &[aria-checked='true'] {
     border-color: ${(props) =>
       props.group === 'mile' ? GROUP_COLOR.MILE : GROUP_COLOR.BASIC};
     background-color: ${(props) =>
@@ -184,10 +185,15 @@ const EditEventApply: React.FC = () => {
         />
         {eventData.eventCategory === EventCategory.GROUP ? (
           <InputBox
+            isDiv
             required
             multiline
             title="훈련 희망 그룹"
-            subTitle={`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}
+            subTitle={
+              <span
+                aria-hidden
+              >{`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}</span>
+            }
             inputElement={
               <Controller
                 rules={{ required: '그룹 선택은 필수입니다. ' }}
@@ -197,19 +203,23 @@ const EditEventApply: React.FC = () => {
                   <StyledSelectBox>
                     <StyledGroupButton
                       type="button"
+                      role="radio"
                       group="mile"
-                      aria-selected={value === RunningGroup.A}
+                      aria-checked={value === RunningGroup.A}
                       onClick={() => onChange(RunningGroup.A)}
                     >
                       <Typography>마일리지 그룹</Typography>
+                      <HidenText content="풀마라톤 대비 마일리지 누적 중심" />
                     </StyledGroupButton>
                     <StyledGroupButton
                       type="button"
+                      role="radio"
                       group="basic"
-                      aria-selected={value === RunningGroup.B}
+                      aria-checked={value === RunningGroup.B}
                       onClick={() => onChange(RunningGroup.B)}
                     >
                       <Typography>기초/보강 그룹</Typography>
+                      <HidenText content="기초, 보강 중심 훈련" />
                     </StyledGroupButton>
                   </StyledSelectBox>
                 )}
