@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
@@ -8,6 +8,31 @@ import { StaggerAnimation } from '@/components/Animations';
 
 export const Header = () => {
   const [scrollY, setScrollY] = useState(0);
+  const requestRef = useRef<number | null>(null);
+  const ticking = useRef(false);
+
+  useEffect(() => {
+    const updateScroll = () => {
+      setScrollY(window.scrollY);
+      ticking.current = false; // 다시 다음 프레임에 업데이트하도록 풀어줍니다.
+    };
+
+    const handleScroll = () => {
+      // 매 프레임마다 한 번씩만 실행하도록 제한
+      if (!ticking.current) {
+        requestRef.current = requestAnimationFrame(updateScroll);
+        ticking.current = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
+  }, []);
 
   const scrollProgress = Math.min(scrollY / 400, 1);
 
@@ -27,25 +52,8 @@ export const Header = () => {
   const bigLogoLeft = initialLeft - scrollProgress * (initialLeft - targetLeft);
   const bigLogoGap = initialGap - scrollProgress * (initialGap - targetGap);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <Container>
-      {scrollProgress !== 1 ? (
-        <SmallLogo
-          aria-hidden
-          top={targetTop}
-          left={targetLeft}
-          width={targerWidth}
-        />
-      ) : null}
       <BigLogoWrapper
         style={{
           top: bigLogoTop,
@@ -76,18 +84,6 @@ const Container = styled.header`
   width: 100%;
   height: 450px;
   background-color: #f2f2f2;
-  z-index: 100;
-`;
-
-const SmallLogo = styled(TextLogo)<{
-  top: number;
-  left: number;
-  width: number;
-}>`
-  position: fixed;
-  top: ${({ top }) => top}px;
-  left: ${(left) => left}px;
-  width: ${({ width }) => width}px;
   z-index: 100;
 `;
 

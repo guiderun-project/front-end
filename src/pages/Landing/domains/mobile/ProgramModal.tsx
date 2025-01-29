@@ -43,7 +43,8 @@ export const ProgramModal = ({
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
     >
-      <Container image={program.image}>
+      <Container>
+        <ImageBackground image={program.image} />
         <IconButton
           onClick={onClose}
           size="large"
@@ -52,11 +53,12 @@ export const ProgramModal = ({
             position: 'absolute',
             top: '1rem',
             right: '1rem',
+            zIndex: 102,
           }}
         >
           <ClearOutlined fontSize="large" sx={{ color: '#fff' }} />
         </IconButton>
-        <Stack gap="1.875rem">
+        <Stack gap="1.875rem" position="relative" zIndex={102}>
           <Stack gap="1rem">
             <Stack gap="0.5rem">
               <Stack direction="row" gap="0.5rem">
@@ -139,7 +141,7 @@ const FadeIn = keyframes`
     }
 `;
 
-const Container = styled.div<{ image: string }>`
+const Container = styled.div`
   box-sizing: border-box;
   position: absolute;
   top: 50%;
@@ -150,23 +152,22 @@ const Container = styled.div<{ image: string }>`
   height: 540px;
   padding: 3.75rem 1.25rem;
   background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid transparent;
+  overflow: hidden;
+  z-index: 100;
 
   animation: ${FadeIn} 0.2s ease-in forwards;
+`;
 
-  &::before {
-    content: '';
-    border-radius: 8px;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url(${({ image }) => image});
-    background-size: cover;
-    background-position: center;
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-  }
+const ImageBackground = styled.div<{ image: string }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(${({ image }) => image});
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  z-index: 101;
 `;
