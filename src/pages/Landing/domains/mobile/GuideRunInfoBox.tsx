@@ -38,7 +38,7 @@ export const GuideRunInfoBox = ({
         aria-controls={contentId}
       >
         <Title>{info.title}</Title>
-        <ArrowRightUp />
+        <ArrowIcon open={open} />
       </TitleWrapper>
       <AnimatedContent
         id={contentId}
@@ -155,4 +155,9 @@ const StyledDivider = styled(Divider)<{ open: boolean }>`
       animation: ${FadeIn} 0.2s ease-in both;
     `;
   }}
+`;
+
+const ArrowIcon = styled(ArrowRightUp)<{ open: boolean }>`
+  transition: transform 0.3s ease-in-out;
+  transform: ${({ open }) => (open ? 'rotate(90deg)' : 'rotate(0deg)')};
 `;
