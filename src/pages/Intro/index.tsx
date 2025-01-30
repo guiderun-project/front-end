@@ -108,7 +108,7 @@ const Intro: React.FC = () => {
         <Button
           component="a"
           target="_blank"
-          href="https://guiderun.notion.site/1be51d244ec342b585e9b78f39ec4628"
+          href={BROWSER_PATH.LANDING}
           variant="contained"
           size="large"
           fullWidth
