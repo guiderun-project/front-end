@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
-import { GroupChip } from '@/components/shared';
+import { GroupChip, HidenText } from '@/components/shared';
 import { UserType } from '@/types/user';
 
 interface ApplyDetailTooltipProps {
@@ -63,7 +63,6 @@ const ApplyDetailTooltip: React.FC<
   const { data: applyDetail } = useQuery({
     queryKey: ['eventApplyGet', eventId, userId],
     queryFn: () => eventApi.eventApplyGet({ eventId, userId }),
-    enabled: open,
   });
 
   //
@@ -86,8 +85,17 @@ const ApplyDetailTooltip: React.FC<
   //
 
   return (
-    <Stack width="100%" position="relative">
+    <Stack width="100%" position="relative" role="text">
       {children}
+      {applyDetail && (
+        <HidenText
+          content={`${applyDetail.group}에서 ${
+            applyDetail.partner ? `${applyDetail.partner}와` : ''
+          } 훈련 희망,
+      추가 희망사항: ${applyDetail.detail ? applyDetail.detail : '없음.'}
+      `}
+        />
+      )}
       {open && (
         <TooltipContainer>
           {applyDetail ? (
