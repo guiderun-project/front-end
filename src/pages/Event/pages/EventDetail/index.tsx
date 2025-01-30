@@ -429,12 +429,7 @@ const EventDetail: React.FC = () => {
    *
    */
   const renderComment = () => {
-    if (
-      eventData?.status === EventStatusType.End &&
-      section !== EventPageSectionEnum.Status
-    ) {
-      return <EventCommentSection eventId={Number(eventId)} />;
-    }
+    return <EventCommentSection eventId={Number(eventId)} />;
   };
 
   //
