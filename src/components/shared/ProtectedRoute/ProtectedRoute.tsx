@@ -66,12 +66,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
 
   if (protectedLevel === 'WAITING_USER' && getAuthority.isSignup(role)) {
     return (
-      <PageLayout>
+      <>
         <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
           <Outlet />
         </Stack>
         {getAuthority.isUser(role) && <NavBar />}
-      </PageLayout>
+      </>
     );
   }
 
