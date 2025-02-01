@@ -24,6 +24,7 @@ const App: React.FC = () => {
   } = useQuery({
     queryKey: ['accessTokenGet'],
     queryFn: () => authApi.accessTokenGet(),
+    enabled: !accessToken,
   });
 
   const { data: userData, isLoading: isLoadigGetUserData } = useQuery({
