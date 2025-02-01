@@ -67,10 +67,27 @@ const router = createBrowserRouter([
   {
     path: BROWSER_PATH.INTRO,
     element: (
-      <PageLayout>
-        <Intro />
-      </PageLayout>
+      <ErrorBoundary>
+        <PageLayout>
+          <Outlet />
+        </PageLayout>
+      </ErrorBoundary>
     ),
+    children: [
+      { path: BROWSER_PATH.INTRO, element: <Intro /> },
+      {
+        path: BROWSER_PATH.OAUTH,
+        element: <Oauth />,
+      },
+      {
+        path: BROWSER_PATH.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: BROWSER_PATH.FIND_ID_PASSWORD,
+        element: <FindIdPassword />,
+      },
+    ],
   },
   {
     element: (
@@ -86,18 +103,6 @@ const router = createBrowserRouter([
           </PageLayout>
         ),
         children: [
-          {
-            path: BROWSER_PATH.OAUTH,
-            element: <Oauth />,
-          },
-          {
-            path: BROWSER_PATH.LOGIN,
-            element: <Login />,
-          },
-          {
-            path: BROWSER_PATH.FIND_ID_PASSWORD,
-            element: <FindIdPassword />,
-          },
           {
             path: BROWSER_PATH.SIGNUP,
             element: <Signup />,

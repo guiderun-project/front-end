@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import eventApi from '@/apis/requests/event';
-import { NavBar, PageLayout } from '@/components/shared';
+import { NavBar } from '@/components/shared';
 import { RootState } from '@/store/index';
 
 const MainRoot: React.FC = () => {
@@ -18,7 +18,7 @@ const MainRoot: React.FC = () => {
     throwOnError: false,
   });
   return (
-    <PageLayout>
+    <>
       {/* 인삿말 */}
       <Stack padding="5rem 0" gap="3.75rem">
         <Box
@@ -73,7 +73,7 @@ const MainRoot: React.FC = () => {
       </Stack>
       {/* NavBar/ */}
       <NavBar />
-    </PageLayout>
+    </>
   );
 };
 

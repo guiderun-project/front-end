@@ -10,20 +10,16 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import authApi from '@/apis/requests/auth';
-import infoApi from '@/apis/requests/info';
 import { LoginPostRequest } from '@/apis/types/auth';
-import { ErrorType } from '@/apis/types/error';
 import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
-import { setUserInfo } from '@/store/reducer/user';
 //
 //
 //
@@ -89,17 +85,8 @@ const Login: React.FC = () => {
     onSuccess: async (accessToken) => {
       const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
       dispatch(setAccessToken(accessToken));
-      infoApi
-        .userInfoGet()
-        .then((res) => {
-          window.localStorage.removeItem(PREV_PATH_KEY);
-          dispatch(setUserInfo(res));
-          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
-        })
-        .catch((err) => {
-          if (isAxiosError<ErrorType>(err))
-            throw Error(err.response?.data.message);
-        });
+      window.localStorage.removeItem(PREV_PATH_KEY);
+      navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
     },
     onError: (error) => {
       if (error.response) {
