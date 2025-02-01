@@ -65,20 +65,20 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
+    path: BROWSER_PATH.INTRO,
+    element: (
+      <PageLayout>
+        <Intro />
+      </PageLayout>
+    ),
+  },
+  {
     element: (
       <ErrorBoundary>
         <App />
       </ErrorBoundary>
     ),
     children: [
-      {
-        path: BROWSER_PATH.INTRO,
-        element: (
-          <PageLayout>
-            <Intro />
-          </PageLayout>
-        ),
-      },
       {
         path: BROWSER_PATH.OAUTH,
         element: <Oauth />,

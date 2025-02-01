@@ -5,6 +5,8 @@ import { store } from '../store';
 
 import { setAccessToken } from '@/store/reducer/auth';
 
+const getToken = (accessToken: string) => `Bearer ${accessToken}`;
+
 export const baseURL = process.env.SERVER_URL;
 
 export const axiosInstance = axios.create({
@@ -20,16 +22,9 @@ export const axiosInstanceWithToken = axios.create({
 axiosInstanceWithToken.interceptors.request.use(async (config) => {
   const accessToken = store.getState().auth.accessToken;
   if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+    config.headers.Authorization = getToken(accessToken);
   } else {
-    try {
-      const reIssuedAccessToken = await authApi.accessTokenGet();
-      store.dispatch(setAccessToken(reIssuedAccessToken));
-
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return Promise.reject('AccessToken is NotFound');
   }
   return config;
 });
@@ -49,7 +44,7 @@ axiosInstanceWithToken.interceptors.response.use(
             ...error.config,
             headers: {
               ...error.config?.headers,
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: getToken(accessToken),
             },
           };
 
