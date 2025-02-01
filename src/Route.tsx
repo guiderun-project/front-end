@@ -65,7 +65,6 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: BROWSER_PATH.INTRO,
     element: (
       <ErrorBoundary>
         <PageLayout>
