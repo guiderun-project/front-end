@@ -1,18 +1,14 @@
 import React from 'react';
 
 import { Stack } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { NavBar } from '../NavBar';
 
-import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
-import Loading from '@/pages/Loading';
 import SignupComplete from '@/pages/Signup/SignupComplete';
 import { RootState } from '@/store/index';
-import { setUserInfo } from '@/store/reducer/user';
 import getAuthority from '@/utils/authority';
 
 interface ProtectedRouteProps {
@@ -22,19 +18,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
   const location = useLocation();
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  const { userId, role } = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ['userInfoGet'],
-    queryFn: () => infoApi.userInfoGet(),
-  });
-
-  React.useEffect(() => {
-    if (data) {
-      dispatch(setUserInfo(data));
-    }
-  }, [data]);
+  const { role } = useSelector((state: RootState) => state.user);
 
   React.useEffect(() => {
     window.localStorage.setItem(
@@ -42,10 +26,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
       `${location.pathname}${location.search}`,
     );
   }, [location]);
-
-  if (isLoading || (accessToken && !userId)) {
-    return <Loading />;
-  }
 
   if (!accessToken) {
     return <Navigate to={BROWSER_PATH.INTRO} replace />;

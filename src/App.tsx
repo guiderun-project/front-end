@@ -11,11 +11,11 @@ import Loading from './pages/Loading';
 import { RootState } from './store';
 import { setAccessToken } from './store/reducer/auth';
 import { updateInfo } from './store/reducer/user';
-import { RoleEnum } from './types/group';
 
 const App: React.FC = () => {
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const userRole = useSelector((state: RootState) => state.user.role);
+  const userId = useSelector((state: RootState) => state.user.userId);
 
   const {
     data: newAccessToken,
@@ -24,12 +24,13 @@ const App: React.FC = () => {
   } = useQuery({
     queryKey: ['accessTokenGet'],
     queryFn: () => authApi.accessTokenGet(),
+    enabled: !accessToken,
   });
 
   const { data: userData, isLoading: isLoadigGetUserData } = useQuery({
     queryKey: ['userInfoGet', accessToken, userRole],
     queryFn: () => infoApi.userInfoGet(),
-    enabled: !!accessToken && userRole !== RoleEnum.New,
+    enabled: !!accessToken,
   });
   const dispatch = useDispatch();
 
@@ -49,7 +50,7 @@ const App: React.FC = () => {
     return <Navigate to={BROWSER_PATH.INTRO} />;
   }
 
-  return isLoadigGetUserData || isLoadingGetAccessToken ? (
+  return isLoadigGetUserData || isLoadingGetAccessToken || !userId ? (
     <Loading />
   ) : (
     <Outlet />

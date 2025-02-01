@@ -73,11 +73,12 @@ const router = createBrowserRouter([
       </ErrorBoundary>
     ),
     children: [
-      { path: BROWSER_PATH.INTRO, element: <Intro /> },
       {
         path: BROWSER_PATH.OAUTH,
         element: <Oauth />,
       },
+      { path: BROWSER_PATH.INTRO, element: <Intro /> },
+
       {
         path: BROWSER_PATH.LOGIN,
         element: <Login />,
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: BROWSER_PATH.FIND_ID_PASSWORD,
         element: <FindIdPassword />,
+      },
+      {
+        path: BROWSER_PATH.SIGNUP,
+        element: <Signup />,
       },
     ],
   },
@@ -102,10 +107,6 @@ const router = createBrowserRouter([
           </PageLayout>
         ),
         children: [
-          {
-            path: BROWSER_PATH.SIGNUP,
-            element: <Signup />,
-          },
           {
             element: <ProtectedRoute protectedLevel="WAITING_USER" />,
             children: [
@@ -240,8 +241,6 @@ const router = createBrowserRouter([
 
 const Route: React.FC = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
-
-  // useSuspenseQuery({queryKey: [], queryFn: () => authApi.accessTokenGet(), })
 
   const messages = locale === 'ko' ? koMessages : enMessages;
 
