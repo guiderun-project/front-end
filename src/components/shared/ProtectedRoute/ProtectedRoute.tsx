@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { NavBar } from '../NavBar';
-import { PageLayout } from '../PageLayout';
 
 import infoApi from '@/apis/requests/info';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
@@ -56,11 +55,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     if (getAuthority.isUser(role)) {
       return <Outlet />;
     } else if (getAuthority.isWait(role)) {
-      return (
-        <PageLayout>
-          <SignupComplete />
-        </PageLayout>
-      );
+      return <SignupComplete />;
     }
   }
 
