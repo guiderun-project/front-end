@@ -67,163 +67,165 @@ const router = createBrowserRouter([
   {
     element: (
       <ErrorBoundary>
+        <PageLayout>
+          <Outlet />
+        </PageLayout>
+      </ErrorBoundary>
+    ),
+    children: [
+      {
+        path: BROWSER_PATH.OAUTH,
+        element: <Oauth />,
+      },
+      { path: BROWSER_PATH.INTRO, element: <Intro /> },
+
+      {
+        path: BROWSER_PATH.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: BROWSER_PATH.FIND_ID_PASSWORD,
+        element: <FindIdPassword />,
+      },
+      {
+        path: BROWSER_PATH.SIGNUP,
+        element: <Signup />,
+      },
+    ],
+  },
+  {
+    element: (
+      <ErrorBoundary>
         <App />
       </ErrorBoundary>
     ),
     children: [
       {
-        path: BROWSER_PATH.INTRO,
         element: (
           <PageLayout>
-            <Intro />
+            <Outlet />
           </PageLayout>
         ),
-      },
-      {
-        path: BROWSER_PATH.OAUTH,
-        element: <Oauth />,
-      },
-      {
-        path: BROWSER_PATH.LOGIN,
-        element: (
-          <PageLayout>
-            <Login />
-          </PageLayout>
-        ),
-      },
-      {
-        path: BROWSER_PATH.FIND_ID_PASSWORD,
-        element: (
-          <PageLayout>
-            <FindIdPassword />
-          </PageLayout>
-        ),
-      },
-      {
-        path: BROWSER_PATH.SIGNUP,
-        element: (
-          <PageLayout>
-            <Signup />
-          </PageLayout>
-        ),
-      },
-      {
-        element: <ProtectedRoute protectedLevel="WAITING_USER" />,
         children: [
           {
-            path: BROWSER_PATH.MYPAGE,
-            element: <Mypage />,
+            element: <ProtectedRoute protectedLevel="WAITING_USER" />,
+            children: [
+              {
+                path: BROWSER_PATH.MYPAGE,
+                element: <Mypage />,
+              },
+              {
+                path: BROWSER_PATH.INFO,
+                element: <Info />,
+              },
+              {
+                path: `${BROWSER_PATH.WITHDRAW}`,
+                element: <Withdraw />,
+              },
+            ],
           },
           {
-            path: BROWSER_PATH.INFO,
-            element: <Info />,
-          },
-          {
-            path: `${BROWSER_PATH.WITHDRAW}`,
-            element: <Withdraw />,
+            element: <ProtectedRoute protectedLevel="APPROVED_USER" />,
+            children: [
+              {
+                element: <MainRoot />,
+                children: [
+                  {
+                    path: BROWSER_PATH.MAIN,
+                    element: <Main />,
+                  },
+                  {
+                    path: BROWSER_PATH.EVENT.ALL,
+                    element: <AllEvent />,
+                  },
+                  {
+                    path: BROWSER_PATH.EVENT.MY,
+                    element: <MyEvent />,
+                  },
+                  {
+                    path: BROWSER_PATH.EVENT.CALENDAR,
+                    element: <EventCalendar />,
+                  },
+                  {
+                    path: BROWSER_PATH.EVENT.SEARCH,
+                    element: <EventSearch />,
+                  },
+                ],
+              },
+              {
+                element: (
+                  <>
+                    <Stack
+                      padding="5rem 0"
+                      marginBottom="2.9375rem"
+                      gap="3.75rem"
+                    >
+                      <Outlet />
+                    </Stack>
+                    <NavBar />
+                  </>
+                ),
+                children: [
+                  {
+                    path: `${BROWSER_PATH.PROFILE}/:userId`,
+                    element: <Profile />,
+                  },
+
+                  {
+                    path: BROWSER_PATH.EVENT.HISTORY,
+                    element: <EventHistory />,
+                  },
+                  {
+                    path: BROWSER_PATH.EVENT.NEW,
+                    element: <NewEvent />,
+                  },
+                  {
+                    path: `${BROWSER_PATH.EVENT.EDIT}/:eventId`,
+                    element: <EditEvent />,
+                  },
+                  {
+                    path: `${BROWSER_PATH.EVENT.APPLY}/:eventId`,
+                    element: <EventApply />,
+                  },
+                  {
+                    path: `${BROWSER_PATH.EVENT.APPLY_EDIT}/:eventId`,
+                    element: <EditEventApply />,
+                  },
+                  {
+                    path: `${BROWSER_PATH.EVENT.APPLY_DETAIL}/:eventId`,
+                    element: <EventApplyDetail />,
+                  },
+                  {
+                    path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`,
+                    element: <EventDetail />,
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
       {
-        element: <ProtectedRoute protectedLevel="APPROVED_USER" />,
+        path: BROWSER_PATH.ADMIN.MAIN,
+        element: <Admin />,
         children: [
-          {
-            element: <MainRoot />,
-            children: [
-              {
-                path: BROWSER_PATH.MAIN,
-                element: <Main />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.ALL,
-                element: <AllEvent />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.MY,
-                element: <MyEvent />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.CALENDAR,
-                element: <EventCalendar />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.SEARCH,
-                element: <EventSearch />,
-              },
-            ],
-          },
           {
             path: BROWSER_PATH.ADMIN.MAIN,
-            element: <Admin />,
-            children: [
-              {
-                path: BROWSER_PATH.ADMIN.MAIN,
-                element: <AdminMain />,
-              },
-              {
-                path: BROWSER_PATH.ADMIN.USER,
-                element: <AdminUser />,
-              },
-              {
-                path: BROWSER_PATH.ADMIN.WITHDRAW,
-                element: <AdminWithdraw />,
-              },
-              {
-                path: BROWSER_PATH.ADMIN.EVENT,
-                element: <AdminEvent />,
-              },
-            ],
+            element: <AdminMain />,
           },
           {
-            element: (
-              <PageLayout>
-                <Stack padding="5rem 0" marginBottom="2.9375rem" gap="3.75rem">
-                  <Outlet />
-                </Stack>
-                <NavBar />
-              </PageLayout>
-            ),
-            children: [
-              {
-                path: `${BROWSER_PATH.PROFILE}/:userId`,
-                element: <Profile />,
-              },
-
-              {
-                path: BROWSER_PATH.EVENT.HISTORY,
-                element: <EventHistory />,
-              },
-              {
-                path: BROWSER_PATH.EVENT.NEW,
-                element: <NewEvent />,
-              },
-              {
-                path: `${BROWSER_PATH.EVENT.EDIT}/:eventId`,
-                element: <EditEvent />,
-              },
-              {
-                path: `${BROWSER_PATH.EVENT.APPLY}/:eventId`,
-                element: <EventApply />,
-              },
-              {
-                path: `${BROWSER_PATH.EVENT.APPLY_EDIT}/:eventId`,
-                element: <EditEventApply />,
-              },
-              {
-                path: `${BROWSER_PATH.EVENT.APPLY_DETAIL}/:eventId`,
-                element: <EventApplyDetail />,
-              },
-              {
-                path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`,
-                element: <EventDetail />,
-              },
-            ],
+            path: BROWSER_PATH.ADMIN.USER,
+            element: <AdminUser />,
+          },
+          {
+            path: BROWSER_PATH.ADMIN.WITHDRAW,
+            element: <AdminWithdraw />,
+          },
+          {
+            path: BROWSER_PATH.ADMIN.EVENT,
+            element: <AdminEvent />,
           },
         ],
-      },
-      {
-        path: '*',
-        element: <NotFound />,
       },
     ],
   },
@@ -231,12 +233,14 @@ const router = createBrowserRouter([
     path: '/supporter',
     element: <Supporter />,
   },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
 ]);
 
 const Route: React.FC = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
-
-  // useSuspenseQuery({queryKey: [], queryFn: () => authApi.accessTokenGet(), })
 
   const messages = locale === 'ko' ? koMessages : enMessages;
 
