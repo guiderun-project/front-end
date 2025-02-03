@@ -188,7 +188,8 @@ class InfoApi {
   }: PartnerListGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<PartnerListGetResponse>(
-        `/user/partner-list/${userId}?sort=${sort}&limit=${limit}&start=${start}`,
+        `/user/partner-list/${userId}`,
+        { params: { sort, limit, start } },
       );
       return res.data.items;
     });
@@ -216,9 +217,8 @@ class InfoApi {
   }: EventHistoryGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<EventHistoryGetResponse>(
-        `/user/event-history/${userId}?kind=${sort}&limit=${limit}&start=${start}${
-          year ? `&year=${year}` : ''
-        }`,
+        `/user/event-history/${userId}`,
+        { params: { kind: sort, limit, start, year } },
       );
       return res.data;
     });
@@ -232,9 +232,8 @@ class InfoApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<EventHistoryCountGetResponse>(
-          `/user/event-history/count/${userId}?sort=${sort}${
-            year ? `&year=${year}` : ''
-          }`,
+          `/user/event-history/count/${userId}`,
+          { params: { sort, year } },
         );
       return res.data.count;
     });

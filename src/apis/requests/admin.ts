@@ -89,13 +89,18 @@ class AdminApi {
   }: AdminUserListGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminUserListGetResponse>(
-        `/admin/user-list?limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-          typeof team === 'number' ? `&name_team=${team}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&type=${type}` : ''
-        }`,
+        `/admin/user-list`,
+        {
+          params: {
+            limit,
+            start,
+            approval,
+            gender,
+            time,
+            type,
+            name_team: team,
+          },
+        },
       );
       return res.data.items;
     });
@@ -133,13 +138,18 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminWithdrawalListGetResponse>(
-          `/admin/withdrawal-list?limit=${limit}&start=${start}${
-            typeof approval === 'number' ? `&approval=${approval}` : ''
-          }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-            typeof team === 'number' ? `&name_team=${team}` : ''
-          }${typeof time === 'number' ? `&time=${time}` : ''}${
-            typeof type === 'number' ? `&approval=${type}` : ''
-          }`,
+          `/admin/withdrawal-list`,
+          {
+            params: {
+              limit,
+              start,
+              approval,
+              gender,
+              time,
+              type,
+              name_team: team,
+            },
+          },
         );
       return res.data.items;
     });
@@ -151,7 +161,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchWithdrawalListCountGetResponse>(
-          `/admin/search/withdrawal-list/count?text=${text}`,
+          `/admin/search/withdrawal-list/count`,
+          { params: { text } },
         );
       return res.data.count;
     });
@@ -170,13 +181,19 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchWithdrawalListGetResponse>(
-          `/admin/search/withdrawal-list?text=${text}&limit=${limit}&start=${start}${
-            typeof approval === 'number' ? `&approval=${approval}` : ''
-          }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-            typeof team === 'number' ? `&name_team=${team}` : ''
-          }${typeof time === 'number' ? `&time=${time}` : ''}${
-            typeof type === 'number' ? `&approval=${type}` : ''
-          }`,
+          `/admin/search/withdrawal-list`,
+          {
+            params: {
+              text,
+              approval,
+              limit,
+              start,
+              gender,
+              time,
+              type,
+              name_team: team,
+            },
+          },
         );
       return res.data.items;
     });
@@ -194,13 +211,19 @@ class AdminApi {
   }: AdminUserSearchGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminUserSearchGetResponse>(
-        `/admin/search/user?text=${text}&limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof gender === 'number' ? `&gender=${gender}` : ''}${
-          typeof team === 'number' ? `&name_team=${team}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}${
-          typeof type === 'number' ? `&approval=${type}` : ''
-        }`,
+        `/admin/search/user`,
+        {
+          params: {
+            limit,
+            start,
+            text,
+            approval,
+            gender,
+            time,
+            type,
+            name_team: team,
+          },
+        },
       );
       return res.data.items;
     });
@@ -212,7 +235,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminUserSearchCountGetResponse>(
-          `/admin/search/user/count?text=${text}`,
+          `/admin/search/user/count`,
+          { params: { text } },
         );
       return res.data.count;
     });
@@ -264,11 +288,10 @@ class AdminApi {
   }: AdminEventListGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminEventListGetResponse>(
-        `/admin/event-list?limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof name === 'number' ? `&name=${name}` : ''}${
-          typeof organizer === 'number' ? `&organizer=${organizer}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}`,
+        `/admin/event-list`,
+        {
+          params: { limit, start, approval, name, organizer, time },
+        },
       );
       return res.data.items;
     });
@@ -295,11 +318,18 @@ class AdminApi {
   }: AdminSearchEventGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminSearchEventGetResponse>(
-        `/admin/search/event?text=${search}&limit=${limit}&start=${start}${
-          typeof approval === 'number' ? `&approval=${approval}` : ''
-        }${typeof name === 'number' ? `&name=${name}` : ''}${
-          typeof organizer === 'number' ? `&organizer=${organizer}` : ''
-        }${typeof time === 'number' ? `&time=${time}` : ''}`,
+        `/admin/search/event`,
+        {
+          params: {
+            text: search,
+            limit,
+            start,
+            approval,
+            name,
+            organizer,
+            time,
+          },
+        },
       );
       return res.data.items;
     });
@@ -311,7 +341,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchEventCountGetResponse>(
-          `/admin/search/event/count?text=${search}`,
+          `/admin/search/event/count`,
+          { params: { text: search } },
         );
       return res.data.count;
     });
@@ -325,7 +356,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminEventHistoryGetResponse>(
-          `/admin/event-list/${userId}?start=${start}&limit=${limit}`,
+          `/admin/event-list/${userId}`,
+          { params: { start, limit } },
         );
       return res.data.items;
     });
@@ -361,7 +393,8 @@ class AdminApi {
   }: AdminNewUserGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminNewUserGetResponse>(
-        `/admin/new-user?limit=${limit}&start=${start}`,
+        `/admin/new-user`,
+        { params: { limit, start } },
       );
       return res.data.items;
     });
@@ -374,7 +407,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminCurrentEventGetResponse>(
-          `/admin/current-event?limit=${limit}&start=${start}`,
+          `/admin/current-event`,
+          { params: { limit, start } },
         );
       return res.data.items;
     });
@@ -399,7 +433,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchEventHistoryCountGetResponse>(
-          `/admin/search/event-list/count/${userId}?text=${text}`,
+          `/admin/search/event-list/count/${userId}`,
+          { params: { text } },
         );
       return res.data.count;
     });
@@ -414,7 +449,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchEventHistoryGetResponse>(
-          `/admin/search/event-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+          `/admin/search/event-list/${userId}`,
+          { params: { text, limit, start } },
         );
       return res.data.items;
     });
@@ -439,7 +475,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminPartnerHistoryCountGetResponse>(
-          `/admin/partner-list/count/${userId}?kind=${kind}`,
+          `/admin/partner-list/count/${userId}`,
+          { params: { kind } },
         );
       return res.data.count;
     });
@@ -454,7 +491,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminPartnerHistoryGetResponse>(
-          `/admin/partner-list/${userId}?kind=${kind}&start=${start}&limit=${limit}`,
+          `/admin/partner-list/${userId}`,
+          { params: { kind, limit, start } },
         );
       return res.data.items;
     });
@@ -467,7 +505,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchPartnerHistoryCountGetResponse>(
-          `/admin/search/partner-list/count/${userId}?text=${text}`,
+          `/admin/search/partner-list/count/${userId}`,
+          { params: { text } },
         );
       return res.data.count;
     });
@@ -482,7 +521,8 @@ class AdminApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<AdminSearchPartnerHistoryGetResponse>(
-          `admin/search/partner-list/${userId}?text=${text}&limit=${limit}&start=${start}`,
+          `admin/search/partner-list/${userId}`,
+          { params: { text, limit, start } },
         );
       return res.data.items;
     });
@@ -520,11 +560,8 @@ class AdminApi {
   }: AdminApplyListGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AdminApplyListGetResponse>(
-        `/admin/apply-list/${eventId}?limit=${limit}&start=${start}${
-          typeof team === 'number' ? `&team=${team}` : ''
-        }${typeof typeName === 'number' ? `&type_name=${typeName}` : ''}${
-          typeof time === 'number' ? `&time=${time}` : ''
-        }`,
+        `/admin/apply-list/${eventId}`,
+        { params: { limit, start, team, time, type_name: typeName } },
       );
       return res.data.items;
     });
