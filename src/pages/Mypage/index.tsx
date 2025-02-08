@@ -125,7 +125,8 @@ const Mypage: React.FC = () => {
     mutationKey: ['logout'],
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
-      dispatch(resetAccessToken());
+      // dispatch(resetAccessToken());
+
       navigate(BROWSER_PATH.INTRO);
     },
     onError: () => {
