@@ -38,7 +38,9 @@ class AuthApi {
   kakaoAuthPost = async ({ code }: KakaoAuthPostRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstance.post<KakaoAuthPostResponse>(
-        `/oauth/login/kakao?code=${code}`,
+        `/oauth/login/kakao`,
+        {},
+        { params: { code } },
       );
       return res.data;
     });
@@ -145,6 +147,13 @@ class AuthApi {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.delete('/withdrawal', { data });
       return res.data;
+    });
+  };
+
+  logout = async () => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post('/logout');
+      return res;
     });
   };
 }
