@@ -177,10 +177,10 @@ const Mypage: React.FC = () => {
             aria-label="프로필 사진 업로드"
           />
         </StyledImageLabel>
-        <Stack gap="1rem" alignItems="flex-start">
-          <Stack component="h1" gap="0.325rem">
+        <h1>
+          <Stack gap="0.325rem" role="text">
             <Typography component="span" fontSize="2rem">
-              {userData.name} 님은
+              {userData.name} 님
             </Typography>
             <Typography
               component="span"
@@ -189,18 +189,10 @@ const Mypage: React.FC = () => {
               alignItems="center"
               gap="0.5rem"
             >
-              <Typography component="span" fontSize="1.5rem" fontWeight={700}>
-                Team
-              </Typography>
-              <GroupChip group={userData.recordDegree} type="avatar" />
-              입니다
+              안녕하세요!
             </Typography>
           </Stack>
-          <TextLink
-            to={`${BROWSER_PATH.INFO}?type=spec`}
-            label={`러닝스펙 업데이트 `}
-          />
-        </Stack>
+        </h1>
       </Box>
     );
   };
@@ -210,22 +202,47 @@ const Mypage: React.FC = () => {
    */
   const renderInfo = () => {
     return (
-      <Box display="flex" gap="1rem" paddingLeft="0.5rem">
-        <Typography component="h3" fontWeight={700}>
-          기본 정보
-        </Typography>
-        <Stack gap="0.5rem">
-          <Box display="flex" gap="0.5rem">
-            <Typography>{userData.name}</Typography>
-            <DisabilityChip component="chip" type={userData.type} />
-            <GenderChip type={userData.gender} />
+      <Stack gap="1.875rem">
+        <Stack gap="1.25rem">
+          <Box
+            display="flex"
+            gap="1rem"
+            alignItems="center"
+            paddingLeft="0.5rem"
+          >
+            <Typography component="h2" fontWeight={700} width="72px">
+              기본 정보
+            </Typography>
+            <Box role="text" display="flex" alignItems="center" gap="0.5rem">
+              <Typography>{userData.name}</Typography>
+              <DisabilityChip component="chip" type={userData.type} />
+              <GenderChip type={userData.gender} />
+            </Box>
           </Box>
+          <Box
+            display="flex"
+            gap="1rem"
+            alignItems="center"
+            paddingLeft="0.5rem"
+          >
+            <Typography component="h2" fontWeight={700} width="72px">
+              편성 팀
+            </Typography>
+            <Box role="text" display="flex" alignItems="center" gap="0.5rem">
+              <Typography fontSize="1.25" fontWeight={700}>
+                Team
+              </Typography>
+              <GroupChip group={userData.recordDegree} />
+            </Box>
+          </Box>
+        </Stack>
+        <Stack alignItems="flex-end">
           <TextLink
-            to={`${BROWSER_PATH.INFO}?type=info`}
-            label={`개인 인적사항 더보기 `}
+            to={BROWSER_PATH.INFO}
+            label="개인정보 | 러닝스펙 업데이트"
           />
         </Stack>
-      </Box>
+      </Stack>
     );
   };
 
@@ -242,7 +259,7 @@ const Mypage: React.FC = () => {
           alignItems="center"
         >
           <Typography component="h2" paddingLeft="0.5rem" fontWeight={700}>
-            내가 참여한 이벤트
+            최근 참여한 이벤트
           </Typography>
           <TextLink
             to={BROWSER_PATH.EVENT.HISTORY}
