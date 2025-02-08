@@ -111,7 +111,8 @@ class EventApi {
   allEventCountGet = async ({ kind, sort, type }: AllEventCountGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AllEventCountGetResponse>(
-        `/event/all/count?sort=${sort}&type=${type}&kind=${kind}`,
+        `/event/all/count`,
+        { params: { sort, type, kind } },
       );
       return res.data.count;
     });
@@ -126,7 +127,8 @@ class EventApi {
   }: AllEventGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AllEventGetResponse>(
-        `/event/all?start=${start}&limit=${limit}&kind=${kind}&sort=${sort}&type=${type}`,
+        `/event/all`,
+        { params: { start, limit, kind, sort, type } },
       );
       return res.data.items;
     });
@@ -154,7 +156,8 @@ class EventApi {
   myEventGet = async ({ year, sort }: MyEventGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<MyEventGetResponse>(
-        `/event/my?sort=${sort}&year=${year}`,
+        `/event/my`,
+        { params: { sort, year } },
       );
       return res.data.items;
     });
@@ -163,7 +166,8 @@ class EventApi {
   searchEventCountGet = async ({ title }: SearchEventCountGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<SearchEventCountGetResponse>(
-        `/event/search/count?title=${title}`,
+        `/event/search/count`,
+        { params: { title } },
       );
       return res.data.count;
     });
@@ -172,7 +176,8 @@ class EventApi {
   searchEventGet = async ({ title, limit, start }: SearchEventGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<SearchEventGetResponse>(
-        `/event/search?title=${title}&limit=${limit}&start=${start}`,
+        `/event/search`,
+        { params: { title, limit, start } },
       );
       return res.data.items;
     });
@@ -181,7 +186,8 @@ class EventApi {
   eventCalendarGet = async ({ month, year }: EventCalendarGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<EventCalendarGetResponse>(
-        `/event/calendar?year=${year}&month=${month}`,
+        `/event/calendar`,
+        { params: { year, month } },
       );
       return res.data.result;
     });
@@ -195,7 +201,8 @@ class EventApi {
     return this.handleRequest(async () => {
       const res =
         await axiosInstanceWithToken.get<EventCalendarDetailGetResponse>(
-          `/event/calendar/detail?year=${year}&month=${month}&day=${day}`,
+          `/event/calendar/detail`,
+          { params: { year, month, day } },
         );
       return res.data.items;
     });
@@ -275,7 +282,8 @@ class EventApi {
   }: EventCommentGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<EventCommentGetResponse>(
-        `/event/${eventId}/comments?limit=${limit}&start=${start}`,
+        `/event/${eventId}/comments`,
+        { params: { limit, start } },
       );
       return res.data.comments;
     });

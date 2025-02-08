@@ -38,7 +38,9 @@ class AuthApi {
   kakaoAuthPost = async ({ code }: KakaoAuthPostRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstance.post<KakaoAuthPostResponse>(
-        `/oauth/login/kakao?code=${code}`,
+        `/oauth/login/kakao`,
+        {},
+        { params: { code } },
       );
       return res.data;
     });
