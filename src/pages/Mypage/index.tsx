@@ -16,6 +16,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import authApi from '@/apis/requests/auth';
 import infoApi from '@/apis/requests/info';
 import {
   DisabilityChip,
@@ -27,6 +28,7 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
+import { resetAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import getAuthority from '@/utils/authority';
 
@@ -116,6 +118,18 @@ const Mypage: React.FC = () => {
       } else {
         alert('에러가 발생했습니다.');
       }
+    },
+  });
+
+  const { mutate: logout } = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: () => authApi.logout(),
+    onSuccess: () => {
+      dispatch(resetAccessToken());
+      navigate(BROWSER_PATH.INTRO);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다. 개발팀한테 뭐라고 좀 해주세요..');
     },
   });
 
@@ -316,7 +330,7 @@ const Mypage: React.FC = () => {
         buttonLabel="탈퇴하러 가기"
         to={BROWSER_PATH.WITHDRAW}
       />
-      <Stack alignItems="center">
+      <Stack alignItems="center" gap="0.5rem">
         <Button
           fullWidth
           size="large"
@@ -326,6 +340,14 @@ const Mypage: React.FC = () => {
           }}
         >
           되돌아가기
+        </Button>
+        <Button
+          fullWidth
+          size="large"
+          variant="contained"
+          onClick={() => logout()}
+        >
+          로그아웃
         </Button>
       </Stack>
     </>
