@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 
 import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -12,17 +12,15 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import authApi from '@/apis/requests/auth';
 import { LoginPostRequest } from '@/apis/types/auth';
 import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
+import { RootState } from '@/store/index';
 import { setAccessToken } from '@/store/reducer/auth';
-//
-//
-//
 
 const StyledSubmitButton = styled.button`
   color: #000;
@@ -39,7 +37,6 @@ const StyledSubmitButton = styled.button`
   font-weight: 600;
   background-color: inherit;
   cursor: pointer;
-
   transition: 0.1s all ease-in;
 
   &:hover {
@@ -63,68 +60,67 @@ const StyledLoginForm = styled.form`
   max-width: 19.6875rem;
 `;
 
-//
-//
-//
-
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const defaultValues = useMemo(
+    () => ({
+      accountId: '',
+      password: '',
+    }),
+    [],
+  );
 
   const { control, formState, handleSubmit, setError } =
     useForm<LoginPostRequest>({
-      defaultValues: {
-        accountId: '',
-        password: '',
-      },
+      defaultValues,
     });
-  const { isPending, isSuccess, mutate } = useMutation({
+
+  const { isPending, mutate } = useMutation({
     mutationKey: ['loginPost'],
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
-    onSuccess: async (accessToken) => {
+    onSuccess: async (token) => {
+      await dispatch(setAccessToken(token)); // 액세스 토큰 설정이 완료될 때까지 대기
       const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
-      dispatch(setAccessToken(accessToken));
       window.localStorage.removeItem(PREV_PATH_KEY);
-      navigate(prevPath ? prevPath : BROWSER_PATH.MAIN);
+      navigate(prevPath || BROWSER_PATH.MAIN, { replace: true });
     },
     onError: (error) => {
       if (error.response) {
         const errorCode = error.response.data.errorCode;
-        if (errorCode === '0001' || errorCode === '0002') {
-          setError('root', {
-            message: '아이디 혹은 비밀번호가 일치하지 않습니다.',
-          });
-        } else {
-          alert('에러가 발생했습니다. 다시 시도해주세요.');
-        }
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
+        setError('root', {
+          message:
+            errorCode === '0001' || errorCode === '0002'
+              ? '아이디 혹은 비밀번호가 일치하지 않습니다.'
+              : '에러가 발생했습니다. 다시 시도해주세요.',
+        });
+
+        inputRef.current?.focus();
       }
     },
   });
 
-  /**
-   *
-   */
   const handleLoginSubmit: SubmitHandler<LoginPostRequest> = (loginData) => {
     mutate(loginData);
   };
 
-  //
-  //
-  //
+  useEffect(() => {
+    if (accessToken) {
+      const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
+      window.localStorage.removeItem(PREV_PATH_KEY);
+      navigate(prevPath || BROWSER_PATH.MAIN, { replace: true });
+    }
+  }, [accessToken, navigate]);
 
   return (
     <>
       <PageTitle title="로그인" />
       <Stack
-        boxSizing="border-box"
         minHeight="100vh"
-        height="100%"
-        paddingTop="10.375rem"
-        paddingBottom="5.125rem"
+        paddingY="10.375rem"
         alignItems="center"
         justifyContent="space-between"
         gap="7.875rem"
@@ -134,82 +130,67 @@ const Login: React.FC = () => {
             아이디로 로그인
           </Typography>
           <Stack gap="2.5rem">
-            <Stack gap="0.25rem">
-              {formState.errors.root ? (
-                <Typography role="alert" color="error" fontSize="0.875rem">
-                  {formState.errors.root.message}
-                </Typography>
-              ) : null}
-              <StyledLoginForm onSubmit={handleSubmit(handleLoginSubmit)}>
-                <Controller
-                  name="accountId"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      autoFocus
-                      required
-                      fullWidth
-                      inputRef={inputRef}
-                      color={formState.errors.root ? 'error' : 'primary'}
-                      autoComplete="off"
-                      placeholder="아이디"
-                      sx={{
-                        height: '3.5rem',
-                      }}
-                    />
-                  )}
-                />
-                <Controller
-                  name="password"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      required
-                      fullWidth
-                      color={formState.errors.root ? 'error' : 'primary'}
-                      type="password"
-                      placeholder="비밀번호"
-                      sx={{
-                        height: '3.5rem',
-                      }}
-                    />
-                  )}
-                />
-                <StyledSubmitButton
-                  disabled={isPending || isSuccess}
-                  type="submit"
-                >
-                  {isPending || isSuccess ? (
-                    <CircularProgress size={14} />
-                  ) : (
-                    '로그인'
-                  )}
-                </StyledSubmitButton>
-              </StyledLoginForm>
-            </Stack>
-            <Stack
-              component={Link}
-              to={BROWSER_PATH.FIND_ID_PASSWORD}
-              direction="row"
-              gap="0.25rem"
-              alignItems="center"
-              justifyContent="center"
-              color="#111"
-            >
-              <Typography
-                fontSize="0.875rem"
-                fontWeight={500}
-                sx={{
-                  textDecoration: 'underline',
-                  textUnderlinePosition: 'under',
-                }}
-              >
-                아이디/비밀번호를 잊으셨나요?
+            {formState.errors.root && (
+              <Typography role="alert" color="error" fontSize="0.875rem">
+                {formState.errors.root.message}
               </Typography>
-              <ChevronRightIcon aria-hidden fontSize="small" />
-            </Stack>
+            )}
+            <StyledLoginForm onSubmit={handleSubmit(handleLoginSubmit)}>
+              <Controller
+                name="accountId"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    autoFocus
+                    required
+                    fullWidth
+                    inputRef={inputRef}
+                    color={formState.errors.root ? 'error' : 'primary'}
+                    autoComplete="off"
+                    placeholder="아이디"
+                    sx={{ height: '3.5rem' }}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    required
+                    fullWidth
+                    type="password"
+                    placeholder="비밀번호"
+                    sx={{ height: '3.5rem' }}
+                  />
+                )}
+              />
+              <StyledSubmitButton disabled={isPending} type="submit">
+                {isPending ? <CircularProgress size={14} /> : '로그인'}
+              </StyledSubmitButton>
+            </StyledLoginForm>
+          </Stack>
+          <Stack
+            component={Link}
+            to={BROWSER_PATH.FIND_ID_PASSWORD}
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            color="#111"
+          >
+            <Typography
+              fontSize="0.875rem"
+              fontWeight={500}
+              sx={{
+                textDecoration: 'underline',
+                textUnderlinePosition: 'under',
+              }}
+            >
+              아이디/비밀번호를 잊으셨나요?
+            </Typography>
+            <ChevronRightIcon aria-hidden fontSize="small" />
           </Stack>
         </Stack>
         <Button
