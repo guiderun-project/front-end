@@ -149,6 +149,13 @@ class AuthApi {
       return res.data;
     });
   };
+
+  logout = async () => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post('/logout');
+      return res;
+    });
+  };
 }
 
 const authApi = new AuthApi();

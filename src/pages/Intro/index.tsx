@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
+
 import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Button, Stack, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import kakaoLogo from '@/assets/kakao-login-logo.png';
 import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, KAKAO_REDIRECT_URL } from '@/constants/path';
+import { resetAccessToken } from '@/store/reducer/auth';
 import { getKakaoOauthUrl } from '@/utils/login';
 
 const StyledLoginButton = styled(Link)`
@@ -23,6 +27,11 @@ const StyledLoginButton = styled(Link)`
 const Intro: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetAccessToken());
+  }, []);
 
   //
   //
