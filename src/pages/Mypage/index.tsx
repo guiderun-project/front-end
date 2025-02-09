@@ -120,7 +120,7 @@ const Mypage: React.FC = () => {
     },
   });
 
-  const { mutate: logout } = useMutation({
+  const { mutate: handleLogout } = useMutation({
     mutationKey: ['logout'],
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
@@ -128,7 +128,6 @@ const Mypage: React.FC = () => {
     },
     onError: () => {
       alert('에러가 발생했습니다. 개발팀한테 뭐라고 좀 해주세요..');
-      window.location.reload();
     },
   });
 
@@ -361,7 +360,7 @@ const Mypage: React.FC = () => {
           fullWidth
           size="large"
           variant="contained"
-          onClick={() => logout()}
+          onClick={() => handleLogout()}
         >
           로그아웃
         </Button>
