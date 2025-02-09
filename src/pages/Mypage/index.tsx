@@ -28,7 +28,6 @@ import {
 } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { resetAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
 import getAuthority from '@/utils/authority';
 
@@ -125,12 +124,11 @@ const Mypage: React.FC = () => {
     mutationKey: ['logout'],
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
-      // dispatch(resetAccessToken());
-
       navigate(BROWSER_PATH.INTRO);
     },
     onError: () => {
       alert('에러가 발생했습니다. 개발팀한테 뭐라고 좀 해주세요..');
+      window.location.reload();
     },
   });
 
