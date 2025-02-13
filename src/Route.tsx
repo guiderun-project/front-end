@@ -66,26 +66,34 @@ const waitingUserRoutes = [
   { path: BROWSER_PATH.WITHDRAW, element: <Withdraw /> },
 ];
 
-const approvedUserRoutes = [
-  { path: BROWSER_PATH.MAIN, element: <Main /> },
-  { path: BROWSER_PATH.EVENT.ALL, element: <AllEvent /> },
-  { path: BROWSER_PATH.EVENT.MY, element: <MyEvent /> },
-  { path: BROWSER_PATH.EVENT.CALENDAR, element: <EventCalendar /> },
-  { path: BROWSER_PATH.EVENT.SEARCH, element: <EventSearch /> },
-  { path: BROWSER_PATH.EVENT.HISTORY, element: <EventHistory /> },
-  { path: BROWSER_PATH.EVENT.NEW, element: <NewEvent /> },
-  { path: `${BROWSER_PATH.EVENT.EDIT}/:eventId`, element: <EditEvent /> },
-  { path: `${BROWSER_PATH.EVENT.APPLY}/:eventId`, element: <EventApply /> },
-  {
-    path: `${BROWSER_PATH.EVENT.APPLY_EDIT}/:eventId`,
-    element: <EditEventApply />,
-  },
-  {
-    path: `${BROWSER_PATH.EVENT.APPLY_DETAIL}/:eventId`,
-    element: <EventApplyDetail />,
-  },
-  { path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`, element: <EventDetail /> },
-];
+const approvedUserRoutes = {
+  main: [
+    { path: BROWSER_PATH.MAIN, element: <Main /> },
+    { path: BROWSER_PATH.EVENT.ALL, element: <AllEvent /> },
+    { path: BROWSER_PATH.EVENT.MY, element: <MyEvent /> },
+    { path: BROWSER_PATH.EVENT.CALENDAR, element: <EventCalendar /> },
+    { path: BROWSER_PATH.EVENT.SEARCH, element: <EventSearch /> },
+  ],
+  other: [
+    {
+      path: `${BROWSER_PATH.PROFILE}/:userId`,
+      element: <Profile />,
+    },
+    { path: BROWSER_PATH.EVENT.HISTORY, element: <EventHistory /> },
+    { path: BROWSER_PATH.EVENT.NEW, element: <NewEvent /> },
+    { path: `${BROWSER_PATH.EVENT.EDIT}/:eventId`, element: <EditEvent /> },
+    { path: `${BROWSER_PATH.EVENT.APPLY}/:eventId`, element: <EventApply /> },
+    {
+      path: `${BROWSER_PATH.EVENT.APPLY_EDIT}/:eventId`,
+      element: <EditEventApply />,
+    },
+    {
+      path: `${BROWSER_PATH.EVENT.APPLY_DETAIL}/:eventId`,
+      element: <EventApplyDetail />,
+    },
+    { path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`, element: <EventDetail /> },
+  ],
+};
 
 // Router
 const router = createBrowserRouter([
@@ -127,7 +135,7 @@ const router = createBrowserRouter([
           {
             element: <ProtectedRoute protectedLevel="APPROVED_USER" />,
             children: [
-              { element: <MainRoot />, children: approvedUserRoutes },
+              { element: <MainRoot />, children: approvedUserRoutes.main },
               {
                 element: (
                   <>
@@ -141,12 +149,7 @@ const router = createBrowserRouter([
                     <NavBar />
                   </>
                 ),
-                children: [
-                  {
-                    path: `${BROWSER_PATH.PROFILE}/:userId`,
-                    element: <Profile />,
-                  },
-                ],
+                children: approvedUserRoutes.other,
               },
             ],
           },
