@@ -91,6 +91,7 @@ export const infoHandlers: HttpHandler[] = [
         role: RoleEnum.Admin,
         snsId: 'test',
         type: DisabilityEnum.GUIDE,
+        id1365: 'test123',
       });
     },
   ),

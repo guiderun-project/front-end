@@ -133,6 +133,15 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
           <Typography fontWeight={500}>{data.snsId}</Typography>
         </a>
       </StyledSection>
+      {/* 1365아이디 */}
+      <StyledSection>
+        <Box display="flex" alignItems="center" gap="0.5rem">
+          <Typography component="h3" fontWeight={700}>
+            1365 아이디
+          </Typography>
+        </Box>
+        <Typography fontWeight={500}>{data.id1365}</Typography>
+      </StyledSection>
     </Stack>
   );
 };
