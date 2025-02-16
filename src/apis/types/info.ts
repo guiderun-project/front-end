@@ -252,4 +252,4 @@ export type UserInfoAllGetResponse = {
   >[];
 };
 
-export type UserPersonal1365IdPost = Pick<UserType, 'id1365'>;
+export type UserPersonal1365IdPostRequest = Pick<UserType, 'id1365'>;

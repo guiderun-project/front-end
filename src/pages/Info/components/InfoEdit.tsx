@@ -72,6 +72,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
     name,
     phoneNumber,
     snsId,
+    id1365,
   },
 }) => {
   const intl = useIntl();
@@ -86,6 +87,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         name,
         phoneNumber,
         snsId,
+        id1365,
       },
     },
   );

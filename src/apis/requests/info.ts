@@ -35,6 +35,7 @@ import type {
   RunningSpecViPatchResponse,
   UserInfoGetResponse,
   UserInfoAllGetResponse,
+  UserPersonal1365IdPostRequest,
 } from '../types/info';
 
 import { RecruitStatus } from '@/types/group';
@@ -266,9 +267,12 @@ class InfoApi {
     });
   };
 
-  userPersonal1365IdPost = async () => {
+  userPersonal1365IdPost = async (data: UserPersonal1365IdPostRequest) => {
     return this.handleRequest(async () => {
-      const res = await axiosInstanceWithToken.post('/user/personal/1365id');
+      const res = await axiosInstanceWithToken.post(
+        '/user/personal/1365id',
+        data,
+      );
 
       return res;
     });
