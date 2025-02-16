@@ -27,6 +27,7 @@ export type UserInfoGetResponse = Pick<
   | 'age'
   | 'snsId'
   | 'img'
+  | 'id1365'
 >;
 
 export type PersonalInfoGetRequest = Pick<UserType, 'userId'>;
@@ -42,6 +43,7 @@ export type PersonalInfoGetResponse = Pick<
   | 'snsId'
   | 'isOpenNumber'
   | 'isOpenSns'
+  | 'id1365'
 >;
 
 export type PersonalInfoPatchRequest = Omit<
@@ -123,6 +125,7 @@ export type UserProfileGetResponse = Pick<
   | 'img'
   | 'isLiked'
   | 'like'
+  | 'id1365'
 >;
 
 export type PartnerListGetRequest = {
@@ -248,3 +251,5 @@ export type UserInfoAllGetResponse = {
     | 'portraitRights'
   >[];
 };
+
+export type UserPersonal1365IdPost = Pick<UserType, 'id1365'>;

@@ -265,6 +265,14 @@ class InfoApi {
       return res.data;
     });
   };
+
+  userPersonal1365IdPost = async () => {
+    return this.handleRequest(async () => {
+      const res = await axiosInstanceWithToken.post('/user/personal/1365id');
+
+      return res;
+    });
+  };
 }
 
 const infoApi = new InfoApi();

@@ -431,3 +431,13 @@ export type AdminApplyListCountGetRequest = {
 export type AdminApplyListCountGetResponse = {
   count: number;
 };
+
+export type AdminEventGuide1365IdGetRequest = {
+  eventId: Event['eventId'];
+};
+
+export type AdminEventGuide1365IdGetResponse = {
+  name: UserType['name'];
+  phone: UserType['phoneNumber'];
+  id1365: UserType['id1365'];
+}[];
