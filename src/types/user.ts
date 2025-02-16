@@ -28,6 +28,8 @@ export interface UserType {
 
   trainingCnt?: number;
   contestCnt?: number;
+
+  id1365?: string;
 }
 
 export interface ViType extends UserType {

@@ -35,6 +35,7 @@ export type ViSignupPostRequest = Pick<
   | 'hopePrefs'
   | 'privacy'
   | 'portraitRights'
+  | 'id1365'
 > &
   AccountType;
 
@@ -60,6 +61,7 @@ export type GuideSignupPostRequest = Pick<
   | 'hopePrefs'
   | 'privacy'
   | 'portraitRights'
+  | 'id1365'
 > &
   AccountType;
 

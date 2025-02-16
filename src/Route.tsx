@@ -18,6 +18,7 @@ import koMessages from './i18n/messages/ko.json';
 import Landing from './pages/Landing';
 import Loading from './pages/Loading';
 import Supporter from './pages/Supporter';
+import Volunteer from './pages/Volunteer';
 import { RootState } from './store';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
@@ -92,6 +93,7 @@ const approvedUserRoutes = {
       element: <EventApplyDetail />,
     },
     { path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`, element: <EventDetail /> },
+    { path: '/voluteer', element: <Volunteer /> },
   ],
 };
 

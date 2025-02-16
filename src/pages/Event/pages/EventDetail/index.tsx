@@ -3,6 +3,7 @@ import React, { createContext } from 'react';
 import styled from '@emotion/styled';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DownloadIcon from '@mui/icons-material/Download';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -40,6 +41,8 @@ import { BROWSER_PATH } from '@/constants/path';
 import useEventLike from '@/hooks/useEventLike';
 import { RootState } from '@/store/index';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
+import getAuthority from '@/utils/authority';
+import { downloadAttendGuideDataByExcel } from '@/utils/info';
 
 enum EventPageSectionEnum {
   Detail = 'detail',
@@ -58,7 +61,9 @@ export const EventContext = createContext<EventGetResponse | null>(null);
 
 const EventDetail: React.FC = () => {
   const [openModal, setOpenModal] = React.useState(false);
-  const { userId } = useSelector((state: RootState) => state.user);
+  const { userId, role: userRole } = useSelector(
+    (state: RootState) => state.user,
+  );
   const { eventId } = useParams<{ eventId: string }>();
   const { handleLike } = useEventLike({ eventId: Number(eventId) });
   const navigate = useNavigate();
@@ -196,14 +201,35 @@ const EventDetail: React.FC = () => {
                   </IconButton>
                 </Stack>
               </Stack>
-              {isOwner && (
-                <IconButton
-                  onClick={() => deleteEvent(eventData.eventId)}
-                  aria-lable="이벤트 삭제하기"
-                >
-                  <TrashIcon />
-                </IconButton>
-              )}
+              <Stack direction="row" gap="0.5rem">
+                {isOwner && (
+                  <IconButton
+                    onClick={() => deleteEvent(eventData.eventId)}
+                    aria-lable="이벤트 삭제하기"
+                  >
+                    <TrashIcon />
+                  </IconButton>
+                )}
+                {getAuthority.isAdmin(userRole) &&
+                eventData.status === EventStatusType.End ? (
+                  <IconButton
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          '출석한 가이드러너의 1365 정보를 저장하시겠습니까?',
+                        )
+                      ) {
+                        downloadAttendGuideDataByExcel(
+                          eventData.name,
+                          eventData.eventId,
+                        );
+                      }
+                    }}
+                  >
+                    <DownloadIcon fontSize="small" />
+                  </IconButton>
+                ) : null}
+              </Stack>
             </Stack>
           </Stack>
         </Stack>

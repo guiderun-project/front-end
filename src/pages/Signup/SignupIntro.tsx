@@ -38,40 +38,42 @@ const SignupIntro: React.FC = () => {
   //
 
   return (
-    <Stack
-      minHeight="100vh"
-      justifyContent="center"
-      alignItems="center"
-      gap="2.5rem"
-    >
+    <>
       <PageTitle title="장애여부 선택" />
       <Header>
         <FormattedMessage id="signup.intro.title" />
       </Header>
-      <Typography variant="h2">
-        <FormattedMessage id="signup.intro.introduce" />
-      </Typography>
-      <Stack gap="1rem" width="100%" alignItems="center">
-        <Button
-          variant="contained"
-          size="large"
-          color="vi"
-          fullWidth
-          onClick={handleTypeSelect('vi')}
-        >
-          <FormattedMessage id="signup.intro.vi" />
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          color="guide"
-          fullWidth
-          onClick={handleTypeSelect('guide')}
-        >
-          <FormattedMessage id="signup.intro.guide" />
-        </Button>
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        minHeight="100vh"
+        gap="5rem"
+      >
+        <Typography variant="h2">
+          <FormattedMessage id="signup.intro.introduce" />
+        </Typography>
+        <Stack gap="1rem" width="100%" alignItems="center">
+          <Button
+            variant="contained"
+            size="large"
+            color="vi"
+            fullWidth
+            onClick={handleTypeSelect('vi')}
+          >
+            <FormattedMessage id="signup.intro.vi" />
+          </Button>
+          <Button
+            variant="contained"
+            size="large"
+            color="guide"
+            fullWidth
+            onClick={handleTypeSelect('guide')}
+          >
+            <FormattedMessage id="signup.intro.guide" />
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };
 

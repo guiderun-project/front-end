@@ -29,7 +29,7 @@ import SignupTerms from './components/SignupTerms';
 
 import authApi from '@/apis/requests/auth';
 import { GuideSignupPostRequest } from '@/apis/types/auth';
-import { PageTitle } from '@/components/shared';
+import { PageTitle, TextLink } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { setAccessToken } from '@/store/reducer/auth';
 import { updateInfo } from '@/store/reducer/user';
@@ -467,6 +467,31 @@ const SignupGuide: React.FC = () => {
                     </Box>
                   )}
                 />
+              }
+            />
+            <SignupFormBox
+              multiLine
+              name="id1365"
+              title="1365 아이디"
+              label="1365아이디를 적어주세요"
+              formType={FormType.Input}
+              openBox={
+                <Stack
+                  component="div"
+                  width="100%"
+                  alignItems="flex-end"
+                  paddingRight="1.125rem"
+                  gap="0.25rem"
+                >
+                  <Typography fontSize="0.875rem" fontWeight={500} color="#666">
+                    아이디가 기억이 나지 않다면?
+                  </Typography>
+                  <TextLink
+                    newTabs
+                    label="1365 아이디 찾으러 가기"
+                    to="https://www.1365.go.kr/vols/main.do"
+                  />
+                </Stack>
               }
             />
           </Stack>

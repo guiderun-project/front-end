@@ -11,6 +11,8 @@ import {
   AdminApproveUserPostResponse,
   AdminCurrentEventGetRequest,
   AdminCurrentEventGetResponse,
+  AdminEventGuide1365IdGetRequest,
+  AdminEventGuide1365IdGetResponse,
   AdminEventHistoryCountGetRequest,
   AdminEventHistoryCountGetResponse,
   AdminEventHistoryGetRequest,
@@ -576,6 +578,18 @@ class AdminApi {
           `/admin/apply-list/count/${eventId}`,
         );
       return res.data.count;
+    });
+  };
+
+  adminEventGuide1365IdGet = async ({
+    eventId,
+  }: AdminEventGuide1365IdGetRequest) => {
+    return this.handleRequest(async () => {
+      const res =
+        await axiosInstanceWithToken.get<AdminEventGuide1365IdGetResponse>(
+          `/admin/event/${eventId}/guide/1365id`,
+        );
+      return res.data;
     });
   };
 }
