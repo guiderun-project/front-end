@@ -6,7 +6,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import authApi from './apis/requests/auth';
 import infoApi from './apis/requests/info';
-import { BROWSER_PATH } from './constants/path';
+import { BROWSER_PATH, PREV_PATH_KEY } from './constants/path';
 import Loading from './pages/Loading';
 import { RootState } from './store';
 import { setAccessToken } from './store/reducer/auth';
@@ -38,15 +38,19 @@ const App: React.FC = () => {
     if (userData) {
       dispatch(updateInfo(userData));
     }
-  }, [userData]);
+  }, [userData, dispatch]);
 
   useEffect(() => {
-    if (newAccessToken) {
+    if (newAccessToken && newAccessToken !== accessToken) {
       dispatch(setAccessToken(newAccessToken));
     }
-  }, [newAccessToken]);
+  }, [newAccessToken, accessToken, dispatch]);
 
   if (isError) {
+    window.localStorage.setItem(
+      PREV_PATH_KEY,
+      `${location.pathname}${location.search}`,
+    );
     return <Navigate to={BROWSER_PATH.INTRO} />;
   }
 

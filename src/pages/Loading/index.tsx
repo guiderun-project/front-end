@@ -11,9 +11,10 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.725rem;
+  background-color: #f8f9ff;
 `;
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{ text?: string }> = ({ text }) => {
   return (
     <StyledContainer>
       <PageTitle title="로딩중" />
@@ -25,7 +26,7 @@ const Loading: React.FC = () => {
         whiteSpace="wrap"
         textAlign="center"
       >
-        로딩중입니다.
+        {text ? text : '로딩중입니다.'}
         <br />
         잠시만 기다려주세요
       </Typography>

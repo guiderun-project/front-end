@@ -124,7 +124,7 @@ const Mypage: React.FC = () => {
     mutationKey: ['logout'],
     mutationFn: () => authApi.logout(),
     onSuccess: () => {
-      navigate(BROWSER_PATH.INTRO);
+      navigate(BROWSER_PATH.INTRO, { replace: true });
     },
     onError: () => {
       alert('에러가 발생했습니다. 개발팀한테 뭐라고 좀 해주세요..');
