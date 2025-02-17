@@ -90,7 +90,7 @@ const Volunteer = () => {
           />
         </Stack>
         <Button fullWidth type="submit" size="large" variant="contained">
-          로그아웃
+          아이디 저장하기
         </Button>
       </Stack>
     </>
