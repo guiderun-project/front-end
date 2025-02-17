@@ -93,7 +93,7 @@ const approvedUserRoutes = {
       element: <EventApplyDetail />,
     },
     { path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`, element: <EventDetail /> },
-    { path: '/voluteer', element: <Volunteer /> },
+    { path: '/volunteer', element: <Volunteer /> },
   ],
 };
 
