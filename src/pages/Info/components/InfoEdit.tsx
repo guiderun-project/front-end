@@ -24,7 +24,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import infoApi from '@/apis/requests/info';
 import { PersonalInfoPatchRequest } from '@/apis/types/info';
-import { PageTitle } from '@/components/shared';
+import { PageTitle, TextLink } from '@/components/shared';
 import { GenderEnum } from '@/types/group';
 
 //
@@ -72,6 +72,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
     name,
     phoneNumber,
     snsId,
+    id1365,
   },
 }) => {
   const intl = useIntl();
@@ -86,6 +87,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         name,
         phoneNumber,
         snsId,
+        id1365,
       },
     },
   );
@@ -350,6 +352,37 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                   </Box>
                 )}
               />
+            </Stack>
+          )}
+        />
+        <Controller
+          name="id1365"
+          control={control}
+          render={({ field }) => (
+            <Stack gap="0.5rem">
+              <StyledInputLabel multiline>
+                <Typography component="h3" fontWeight={700}>
+                  1365 아이디
+                </Typography>
+                <TextField
+                  {...field}
+                  placeholder="1365 아이디를 입력해주세요"
+                  fullWidth
+                />
+              </StyledInputLabel>
+              <Stack
+                component="div"
+                width="100%"
+                alignItems="flex-end"
+                paddingRight="1.125rem"
+                gap="0.25rem"
+              >
+                <TextLink
+                  newTabs
+                  label="1365 아이디 찾으러 가기"
+                  to="https://www.1365.go.kr/vols/main.do"
+                />
+              </Stack>
             </Stack>
           )}
         />

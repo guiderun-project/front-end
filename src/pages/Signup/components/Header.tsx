@@ -11,6 +11,10 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
       display="flex"
       justifyContent="center"
       padding="1.875rem"
+      position="absolute"
+      top="0"
+      right="0"
+      left="0"
     >
       <Typography component="h1">{children}</Typography>
     </Box>

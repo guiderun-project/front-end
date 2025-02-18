@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ClearOutlined } from '@mui/icons-material';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import DownloadIcon from '@mui/icons-material/Download';
 import {
   Box,
   Button,
@@ -17,8 +17,10 @@ import {
   DialogActions,
   Tabs,
   Stack,
+  Tooltip,
 } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import EventStatusText from './EventStatusText';
 import AdminEventApplyPanel from '../panels/AdminEventApplyPanel';
@@ -33,8 +35,10 @@ import {
   GroupChip,
   TitleContentRow,
 } from '@/components/shared';
+import { BROWSER_PATH } from '@/constants/path';
 import { Event } from '@/types/event';
 import { DisabilityEnum } from '@/types/group';
+import { downloadAttendGuideDataByExcel } from '@/utils/info';
 
 //
 //
@@ -59,6 +63,8 @@ const AdminEventDialog: React.FC<AdminEventDialogProps> = ({
   ...props
 }) => {
   const [tab, setTab] = React.useState<TabType>('status');
+
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
 
@@ -142,22 +148,33 @@ const AdminEventDialog: React.FC<AdminEventDialogProps> = ({
           >
             {eventData.name}
           </Typography>
+          <IconButton
+            onClick={() =>
+              downloadAttendGuideDataByExcel(eventData.name, eventData.eventId)
+            }
+          >
+            <Tooltip title="1365 다운로드">
+              <DownloadIcon />
+            </Tooltip>
+          </IconButton>
         </Stack>
         <Stack
           boxSizing="border-box"
           direction="row"
           paddingLeft="2.75rem"
           alignItems="center"
+          justifyContent="space-between"
           gap="1rem"
         >
+          <EventStatusText status={approval} />
           <Chip
             clickable
             component="button"
             variant="outlined"
-            label={approval ? '이벤트 승인 거부' : '이벤트 승인'}
-            deleteIcon={<HighlightOffIcon />}
-            onDelete={handleUserApprove}
-            onClick={handleUserApprove}
+            label="이벤트 상세 페이지"
+            onClick={() =>
+              navigate(`${BROWSER_PATH.EVENT.MAIN}/${eventData.eventId}`)
+            }
             sx={{
               height: '2.5rem',
               borderRadius: '10000rem',
@@ -166,7 +183,6 @@ const AdminEventDialog: React.FC<AdminEventDialogProps> = ({
               fontWeight: 600,
             }}
           />
-          <EventStatusText status={approval} />
         </Stack>
       </Stack>
     );
@@ -369,10 +385,20 @@ const AdminEventDialog: React.FC<AdminEventDialogProps> = ({
       </DialogContent>
       <DialogActions
         sx={{
+          flexDirection: 'column',
+          gap: '1rem',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
+        <Button
+          fullWidth
+          size="large"
+          variant="contained"
+          onClick={() => handleUserApprove()}
+        >
+          이벤트 승인 거부
+        </Button>
         <Button
           fullWidth
           size="large"
