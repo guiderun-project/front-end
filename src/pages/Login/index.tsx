@@ -79,14 +79,11 @@ const Login: React.FC = () => {
       defaultValues,
     });
 
-  const { isPending, mutate } = useMutation({
+  const { isPending, isSuccess, mutate } = useMutation({
     mutationKey: ['loginPost'],
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
     onSuccess: async (token) => {
-      await dispatch(setAccessToken(token)); // 액세스 토큰 설정이 완료될 때까지 대기
-      const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
-      window.localStorage.removeItem(PREV_PATH_KEY);
-      navigate(prevPath || BROWSER_PATH.MAIN, { replace: true });
+      dispatch(setAccessToken(token)); 
     },
     onError: (error) => {
       if (error.response) {
@@ -108,12 +105,12 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && isSuccess) {
       const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
       window.localStorage.removeItem(PREV_PATH_KEY);
       navigate(prevPath || BROWSER_PATH.MAIN, { replace: true });
     }
-  }, [accessToken, navigate]);
+  }, [accessToken, isSuccess, navigate]);
 
   return (
     <>
