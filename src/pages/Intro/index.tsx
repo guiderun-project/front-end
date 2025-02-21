@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Button, Stack, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,9 +29,11 @@ const Intro: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     dispatch(resetAccessToken());
+    queryClient.resetQueries({ queryKey: ['accessTokenGet'] });
   }, []);
 
   //
