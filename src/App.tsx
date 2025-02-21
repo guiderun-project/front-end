@@ -54,6 +54,11 @@ const App: React.FC = () => {
     return <Navigate to={BROWSER_PATH.INTRO} />;
   }
 
+  console.log('App isError', isError);
+  console.log(
+    'App isLoadigGetUserData || isLoadingGetAccessToken || !userId',
+    isLoadigGetUserData || isLoadingGetAccessToken || !userId,
+  );
   return isLoadigGetUserData || isLoadingGetAccessToken || !userId ? (
     <Loading />
   ) : (

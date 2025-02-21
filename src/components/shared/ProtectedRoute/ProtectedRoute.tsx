@@ -32,6 +32,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
   }
 
   if (protectedLevel === 'APPROVED_USER') {
+    console.log('ProtectedRoute role', role);
     if (getAuthority.isUser(role)) {
       return <Outlet />;
     } else if (getAuthority.isWait(role)) {
