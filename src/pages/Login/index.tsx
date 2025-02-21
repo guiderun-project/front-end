@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useRef, useMemo } from 'react';
 
 import styled from '@emotion/styled';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -12,15 +12,16 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import authApi from '@/apis/requests/auth';
+import infoApi from '@/apis/requests/info';
 import { LoginPostRequest } from '@/apis/types/auth';
 import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH, PREV_PATH_KEY } from '@/constants/path';
-import { RootState } from '@/store/index';
 import { setAccessToken } from '@/store/reducer/auth';
+import { updateInfo } from '@/store/reducer/user';
 
 const StyledSubmitButton = styled.button`
   color: #000;
@@ -63,7 +64,6 @@ const StyledLoginForm = styled.form`
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const defaultValues = useMemo(
@@ -79,11 +79,21 @@ const Login: React.FC = () => {
       defaultValues,
     });
 
-  const { isPending, isSuccess, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ['loginPost'],
     mutationFn: (loginData: LoginPostRequest) => authApi.loginPost(loginData),
-    onSuccess: async (token) => {
-      dispatch(setAccessToken(token)); 
+    onSuccess: (data) => {
+      dispatch(setAccessToken(data.accessToken));
+      if (data.isExist) {
+        infoApi.userInfoGet().then((res) => {
+          dispatch(updateInfo(res));
+          const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
+          window.localStorage.removeItem(PREV_PATH_KEY);
+          navigate(prevPath ? prevPath : BROWSER_PATH.MAIN, { replace: true });
+        });
+      } else {
+        navigate(BROWSER_PATH.SIGNUP);
+      }
     },
     onError: (error) => {
       if (error.response) {
@@ -103,14 +113,6 @@ const Login: React.FC = () => {
   const handleLoginSubmit: SubmitHandler<LoginPostRequest> = (loginData) => {
     mutate(loginData);
   };
-
-  useEffect(() => {
-    if (accessToken && isSuccess) {
-      const prevPath = window.localStorage.getItem(PREV_PATH_KEY);
-      window.localStorage.removeItem(PREV_PATH_KEY);
-      navigate(prevPath || BROWSER_PATH.MAIN, { replace: true });
-    }
-  }, [accessToken, isSuccess, navigate]);
 
   return (
     <>

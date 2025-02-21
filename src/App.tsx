@@ -30,7 +30,7 @@ const App: React.FC = () => {
   const { data: userData, isLoading: isLoadigGetUserData } = useQuery({
     queryKey: ['userInfoGet', accessToken, userRole],
     queryFn: () => infoApi.userInfoGet(),
-    enabled: !!accessToken,
+    enabled: !!accessToken && !userId,
   });
   const dispatch = useDispatch();
 
