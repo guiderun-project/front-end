@@ -27,6 +27,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     );
   }, [location]);
 
+  console.log('ProtectedRoute accessToken', !accessToken);
   if (!accessToken) {
     return <Navigate to={BROWSER_PATH.INTRO} replace />;
   }
@@ -51,6 +52,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     );
   }
 
+  console.log('Proteced 마지막');
   return <Navigate to={BROWSER_PATH.INTRO} replace />;
 };
 
