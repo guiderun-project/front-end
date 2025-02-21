@@ -27,13 +27,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     );
   }, [location]);
 
-  console.log('ProtectedRoute accessToken', !accessToken);
   if (!accessToken) {
     return <Navigate to={BROWSER_PATH.INTRO} replace />;
   }
 
   if (protectedLevel === 'APPROVED_USER') {
-    console.log('ProtectedRoute role', role);
     if (getAuthority.isUser(role)) {
       return <Outlet />;
     } else if (getAuthority.isWait(role)) {
@@ -52,7 +50,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ protectedLevel }) => {
     );
   }
 
-  console.log('Proteced 마지막');
   return <Navigate to={BROWSER_PATH.INTRO} replace />;
 };
 

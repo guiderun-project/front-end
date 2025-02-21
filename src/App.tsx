@@ -51,14 +51,9 @@ const App: React.FC = () => {
       PREV_PATH_KEY,
       `${location.pathname}${location.search}`,
     );
-    console.log('App isError', isError);
     return <Navigate to={BROWSER_PATH.INTRO} />;
   }
 
-  console.log(
-    'App isLoadigGetUserData || isLoadingGetAccessToken || !userId',
-    isLoadigGetUserData || isLoadingGetAccessToken || !userId,
-  );
   return isLoadigGetUserData || isLoadingGetAccessToken || !userId ? (
     <Loading />
   ) : (
