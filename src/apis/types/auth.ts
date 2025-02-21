@@ -88,6 +88,7 @@ export type LoginPostRequest = AccountType;
 
 export type LoginPostResponse = {
   accessToken: string;
+  isExist: boolean;
 };
 
 export type GetCertificationTokenPasswordPostRequest = {

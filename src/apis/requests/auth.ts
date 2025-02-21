@@ -92,7 +92,7 @@ class AuthApi {
         '/login',
         loginData,
       );
-      return res.data.accessToken;
+      return res.data;
     });
   };
 

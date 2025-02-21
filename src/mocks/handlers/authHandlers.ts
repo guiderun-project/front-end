@@ -75,7 +75,7 @@ export const authHandlers: HttpHandler[] = [
   http.post<NoneType, LoginPostRequest, LoginPostResponse>(
     baseURL + '/login',
     () => {
-      return HttpResponse.json({ accessToken: '123' });
+      return HttpResponse.json({ accessToken: '123', isExist: true });
       // return HttpResponse.json({}, { status: 500 });
     },
   ),
