@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useContext, useEffect } from 'react';
 
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -6,8 +6,12 @@ import { CircularProgress, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
+import { EventContext } from '..';
+
 import eventApi from '@/apis/requests/event';
 import { GroupChip, HidenText } from '@/components/shared';
+import { COMPETITION_GROUP } from '@/constants/group';
+import { EventType } from '@/types/group';
 import { UserType } from '@/types/user';
 
 interface ApplyDetailTooltipProps {
@@ -59,11 +63,14 @@ const ApplyDetailTooltip: React.FC<
   PropsWithChildren<ApplyDetailTooltipProps>
 > = ({ open, userId, children, onClose }) => {
   const eventId = Number(useParams<{ eventId: string }>().eventId);
+  const eventData = useContext(EventContext);
 
   const { data: applyDetail } = useQuery({
     queryKey: ['eventApplyGet', eventId, userId],
     queryFn: () => eventApi.eventApplyGet({ eventId, userId }),
   });
+
+  const isCompetition = eventData?.type === EventType.Competition;
 
   //
   //
@@ -89,7 +96,11 @@ const ApplyDetailTooltip: React.FC<
       {children}
       {applyDetail && (
         <HidenText
-          content={`${applyDetail.group}에서 ${
+          content={`${
+            isCompetition
+              ? applyDetail.group
+              : COMPETITION_GROUP[applyDetail.group]
+          }에서 ${
             applyDetail.partner ? `${applyDetail.partner}와` : ''
           } 훈련 희망,
       추가 희망사항: ${applyDetail.detail ? applyDetail.detail : '없음.'}
@@ -100,7 +111,7 @@ const ApplyDetailTooltip: React.FC<
         <TooltipContainer>
           {applyDetail ? (
             <>
-              <Stack direction="row" gap="0.75rem" alignItems="center">
+              <Stack direction="row" gap="0.5rem" alignItems="center">
                 <Typography
                   display="flex"
                   alignItems="center"
@@ -109,7 +120,11 @@ const ApplyDetailTooltip: React.FC<
                   fontWeight={600}
                   color="#D9D9D9"
                 >
-                  <GroupChip group={applyDetail.group} />
+                  {isCompetition ? (
+                    COMPETITION_GROUP[applyDetail.group]
+                  ) : (
+                    <GroupChip group={applyDetail.group} />
+                  )}
                   에서
                 </Typography>
 
