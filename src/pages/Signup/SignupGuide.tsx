@@ -497,6 +497,10 @@ const SignupGuide: React.FC = () => {
                         placeholder="생년월일도 함께 적어주세요"
                         type="text"
                         inputMode="decimal"
+                        inputProps={{
+                          inputMode: 'decimal',
+                          pattern: '[0-9]*',
+                        }}
                       />
                     )}
                   />
