@@ -84,6 +84,7 @@ const MatchingBox: React.FC<MatchingBoxProps> = ({
         <StyledGuideList>
           {guideList.guide.map((user) => (
             <CancelMatchingButton
+              key={user.userId}
               visible={selectedGuide === user.userId}
               userId={user.userId}
               userName={user.name}
