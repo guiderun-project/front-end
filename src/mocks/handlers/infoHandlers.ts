@@ -92,6 +92,7 @@ export const infoHandlers: HttpHandler[] = [
         snsId: 'test',
         type: DisabilityEnum.GUIDE,
         id1365: 'test123',
+        birth: '000000',
       });
     },
   ),
