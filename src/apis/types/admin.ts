@@ -440,4 +440,5 @@ export type AdminEventGuide1365IdGetResponse = {
   name: UserType['name'];
   phone: UserType['phoneNumber'];
   id1365: UserType['id1365'];
+  birth: UserType['birth'];
 }[];
