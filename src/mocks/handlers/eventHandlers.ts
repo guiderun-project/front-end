@@ -410,7 +410,7 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + `/event/:eventId`,
     () => {
       return HttpResponse.json({
-        eventCategory: EventCategory.GROUP,
+        eventCategory: EventCategory.GENERAL,
         checkOrganizer: true,
         created_at: '2020-02-02',
         date: '2000-12-22',

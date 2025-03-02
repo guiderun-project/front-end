@@ -58,6 +58,7 @@ const MatchingGroupContainer: React.FC<MatchingGroupContainerProps> = ({
       {GROUP_LIST_WITHOUT_P.map((group) => (
         <MatchingTeam
           key={`EventMatchingPanel-MatchingGroup-${group}`}
+          type={eventData.type}
           matchingMode={matchingMode}
           group={group}
           selectedGuide={selectedGuide}

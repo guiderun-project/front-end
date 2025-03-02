@@ -37,6 +37,7 @@ import {
   RecruitStatus,
   RunningGroup,
   EventStatus as EventStatusType,
+  EventType,
 } from '@/types/group';
 
 const StyledForm = styled.form`
@@ -87,6 +88,14 @@ export const GROUP_SELECT = [
   { value: RunningGroup.C, label: '시각장애러너 C (57~65분)' },
   { value: RunningGroup.D, label: '시각장애러너 D (66분)' },
   { value: RunningGroup.E, label: '시각장애러너 E (기록 없음)' },
+];
+
+export const COMPETITION_SELECT = [
+  { value: RunningGroup.A, label: '풀코스' },
+  { value: RunningGroup.B, label: '30km 코스' },
+  { value: RunningGroup.C, label: '하프 코스' },
+  { value: RunningGroup.D, label: '10km 코스' },
+  { value: RunningGroup.E, label: '5km 코스' },
 ];
 
 const EventApply: React.FC = () => {
@@ -224,7 +233,10 @@ const EventApply: React.FC = () => {
                 defaultValue={recordDegree}
                 render={({ field }) => (
                   <Select id="group" {...field} required>
-                    {GROUP_SELECT.map((group) => (
+                    {(eventData.type === EventType.Competition
+                      ? COMPETITION_SELECT
+                      : GROUP_SELECT
+                    ).map((group) => (
                       <MenuItem key={group.value} value={group.value}>
                         {group.label}
                       </MenuItem>

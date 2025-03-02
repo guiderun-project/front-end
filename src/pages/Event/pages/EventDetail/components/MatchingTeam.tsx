@@ -5,13 +5,14 @@ import { MatchingComponentProps } from '../panels/EventMatchingPanel';
 
 import { ApplyUserChip, GroupChip } from '@/components/shared';
 import { TEAM_COLOR } from '@/constants/color';
-import { GROUP_LIST_WITHOUT_P } from '@/constants/group';
+import { COMPETITION_GROUP, GROUP_LIST_WITHOUT_P } from '@/constants/group';
 import { MATCHING_BOX_ID } from '@/constants/id';
 import MatchingBox from '@/pages/Event/components/MatchingBox';
-import { DisabilityEnum, RunningGroup } from '@/types/group';
+import { DisabilityEnum, EventType, RunningGroup } from '@/types/group';
 
 interface MatchingTeamProps extends MatchingComponentProps {
   group: RunningGroup;
+  type: EventType;
 }
 
 const StyledUserBox = styled.div<{ group: RunningGroup }>`
@@ -40,6 +41,7 @@ const StyledGroupAnchor = styled.a`
 `;
 
 const MatchingTeam: React.FC<MatchingTeamProps> = ({
+  type,
   matchingMode = false,
   group,
   viOfMatched,
@@ -50,32 +52,49 @@ const MatchingTeam: React.FC<MatchingTeamProps> = ({
   onGuideSelect,
   onViSelect,
 }) => {
+  const isCompetition = type === EventType.Competition;
+
   return (
     <Stack id={MATCHING_BOX_ID(group)}>
       <Stack direction="row" justifyContent="space-around">
-        {GROUP_LIST_WITHOUT_P.map((groupItem) => (
-          <StyledGroupAnchor
-            id={`StyledGroupAnchor-${group}-${groupItem}`}
-            href={`#${MATCHING_BOX_ID(groupItem)}`}
-            aria-label={`그룹 ${groupItem}${
-              group === groupItem ? '' : '으로 이동'
-            }`}
-            aria-current={group === groupItem}
-          >
-            <Stack
-              aria-hidden
-              boxSizing="border-box"
-              padding="0.75rem 0"
-              borderBottom={
-                group === groupItem
-                  ? `4px solid ${TEAM_COLOR[groupItem]}`
-                  : 'none'
-              }
+        {GROUP_LIST_WITHOUT_P.map((groupItem) => {
+          const label = isCompetition
+            ? COMPETITION_GROUP[groupItem]
+            : `그룹 ${groupItem}`;
+          return (
+            <StyledGroupAnchor
+              key={`StyledGroupAnchor-${group}-${groupItem}`}
+              id={`StyledGroupAnchor-${group}-${groupItem}`}
+              href={`#${MATCHING_BOX_ID(groupItem)}`}
+              aria-label={`${label}${group === groupItem ? '' : '으로 이동'}`}
+              aria-current={group === groupItem}
             >
-              <GroupChip type="avatar" group={groupItem} />
-            </Stack>
-          </StyledGroupAnchor>
-        ))}
+              <Stack
+                aria-hidden
+                boxSizing="border-box"
+                padding="0.75rem 0"
+                borderBottom={
+                  group === groupItem
+                    ? `4px solid ${TEAM_COLOR[groupItem]}`
+                    : 'none'
+                }
+              >
+                {isCompetition ? (
+                  <Typography
+                    fontSize="0.875rem"
+                    fontWeight={700}
+                    color={TEAM_COLOR[groupItem]}
+                    whiteSpace="nowrap"
+                  >
+                    {COMPETITION_GROUP[groupItem]}
+                  </Typography>
+                ) : (
+                  <GroupChip type="avatar" group={groupItem} />
+                )}
+              </Stack>
+            </StyledGroupAnchor>
+          );
+        })}
       </Stack>
       <StyledUserBox group={group}>
         <Stack gap="1.5rem" alignItems="center">

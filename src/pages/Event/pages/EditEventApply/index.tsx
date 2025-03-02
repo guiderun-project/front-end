@@ -14,7 +14,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
 import MatchingStandardAccordion from '../../components/MatchingStandardAccordion';
-import { GROUP_SELECT } from '../EventApply';
+import { COMPETITION_SELECT, GROUP_SELECT } from '../EventApply';
 
 import eventApi from '@/apis/requests/event';
 import { EventApplyType } from '@/apis/types/event';
@@ -35,6 +35,7 @@ import {
   RecruitStatus,
   EventStatus as EventStatusType,
   RunningGroup,
+  EventType,
 } from '@/types/group';
 
 //
@@ -239,7 +240,10 @@ const EditEventApply: React.FC = () => {
                 control={control}
                 render={({ field }) => (
                   <Select id="group" {...field} required>
-                    {GROUP_SELECT.map((group) => (
+                    {(eventData.type === EventType.Competition
+                      ? COMPETITION_SELECT
+                      : GROUP_SELECT
+                    ).map((group) => (
                       <MenuItem key={group.value} value={group.value}>
                         {group.label}
                       </MenuItem>
