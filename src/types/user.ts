@@ -30,6 +30,7 @@ export interface UserType {
   contestCnt?: number;
 
   id1365?: string;
+  birth?: string;
 }
 
 export interface ViType extends UserType {

@@ -44,6 +44,7 @@ export type PersonalInfoGetResponse = Pick<
   | 'isOpenNumber'
   | 'isOpenSns'
   | 'id1365'
+  | 'birth'
 >;
 
 export type PersonalInfoPatchRequest = Omit<

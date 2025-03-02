@@ -134,14 +134,18 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
         </a>
       </StyledSection>
       {/* 1365아이디 */}
-      <StyledSection>
-        <Box display="flex" alignItems="center" gap="0.5rem">
-          <Typography component="h3" fontWeight={700}>
-            1365 아이디
-          </Typography>
-        </Box>
-        <Typography fontWeight={500}>{data.id1365}</Typography>
-      </StyledSection>
+      {data.id1365 && (
+        <StyledSection multiLine>
+          <Box display="flex" alignItems="center" gap="0.5rem">
+            <Typography component="h3" fontWeight={700}>
+              1365 아이디 | 생년월일
+            </Typography>
+          </Box>
+          <Typography
+            fontWeight={500}
+          >{`@ ${data.id1365} | ${data.birth}`}</Typography>
+        </StyledSection>
+      )}
     </Stack>
   );
 };
