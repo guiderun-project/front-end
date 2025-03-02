@@ -213,6 +213,10 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                   {...field}
                   placeholder="전화번호를 입력해주세요."
                   fullWidth
+                  inputProps={{
+                    inputMode: 'decimal',
+                    pattern: '[0-9]*',
+                  }}
                 />
               </StyledInputLabel>
               <Controller

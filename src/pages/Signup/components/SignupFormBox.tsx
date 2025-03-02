@@ -134,11 +134,20 @@ const SignupFormBox: React.FC<SignupFormBoxProps> = ({
   const renderForm = () => {
     switch (formType) {
       case FormType.Input:
+      case FormType.Number:
         return (
           <TextField
             fullWidth
             size="small"
             error={error ? true : false}
+            inputProps={
+              formType === FormType.Number
+                ? {
+                    inputMode: 'decimal',
+                    pattern: '[0-9]*',
+                  }
+                : undefined
+            }
             helperText={
               error
                 ? intl.formatMessage(

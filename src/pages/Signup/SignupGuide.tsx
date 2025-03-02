@@ -341,7 +341,7 @@ const SignupGuide: React.FC = () => {
               name="phoneNumber"
               title={intl.formatMessage({ id: 'signup.form.info.tel' })}
               label={intl.formatMessage({ id: 'signup.form.info.tel.label' })}
-              formType={FormType.Input}
+              formType={FormType.Number}
               openBox={
                 <Controller
                   name="isOpenNumber"
