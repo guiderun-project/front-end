@@ -469,6 +469,7 @@ const SignupGuide: React.FC = () => {
                 />
               }
             />
+            {/* 1365 */}
             <SignupFormBox
               multiLine
               name="id1365"
@@ -476,21 +477,49 @@ const SignupGuide: React.FC = () => {
               label="1365아이디를 적어주세요"
               formType={FormType.Input}
               openBox={
-                <Stack
-                  component="div"
-                  width="100%"
-                  alignItems="flex-end"
-                  paddingRight="1.125rem"
-                  gap="0.25rem"
-                >
-                  <Typography fontSize="0.875rem" fontWeight={500} color="#666">
-                    아이디가 기억이 나지 않다면?
-                  </Typography>
-                  <TextLink
-                    newTabs
-                    label="1365 아이디 찾으러 가기"
-                    to="https://www.1365.go.kr/vols/main.do"
+                <Stack padding="0 0.325rem" gap="0.5rem">
+                  <Controller
+                    name="birth"
+                    control={methods.control}
+                    rules={{
+                      required: methods.watch('id1365')
+                        ? '생년월일을 입력해주세요!'
+                        : false,
+                    }}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        size="small"
+                        color={fieldState.error && 'error'}
+                        helperText={
+                          fieldState.error && fieldState.error.message
+                        }
+                        placeholder="생년월일도 함께 적어주세요"
+                        type="text"
+                        inputMode="decimal"
+                      />
+                    )}
                   />
+                  <Stack
+                    component="div"
+                    width="100%"
+                    alignItems="flex-end"
+                    paddingRight="1.125rem"
+                    gap="0.25rem"
+                  >
+                    <Typography
+                      fontSize="0.875rem"
+                      fontWeight={500}
+                      color="#666"
+                    >
+                      아이디가 기억이 나지 않다면?
+                    </Typography>
+                    <TextLink
+                      newTabs
+                      label="1365 아이디 찾으러 가기"
+                      to="https://www.1365.go.kr/vols/main.do"
+                    />
+                  </Stack>
                 </Stack>
               }
             />
