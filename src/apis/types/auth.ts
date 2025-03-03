@@ -62,6 +62,7 @@ export type GuideSignupPostRequest = Pick<
   | 'privacy'
   | 'portraitRights'
   | 'id1365'
+  | 'birth'
 > &
   AccountType;
 

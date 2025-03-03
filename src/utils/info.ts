@@ -38,6 +38,7 @@ const downloadAttendGuideDataByExcel = async (
         .map((guide) => ({
           이름: guide.name,
           전화번호: guide.phone,
+          생년월일: guide.birth,
           '1365': guide.id1365,
         })),
     );

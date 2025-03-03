@@ -73,12 +73,13 @@ const InfoEdit: React.FC<InfoEditProps> = ({
     phoneNumber,
     snsId,
     id1365,
+    birth,
   },
 }) => {
   const intl = useIntl();
   const queryClient = useQueryClient();
-  const { handleSubmit, control, setFocus } = useForm<PersonalInfoPatchRequest>(
-    {
+  const { handleSubmit, control, setFocus, watch } =
+    useForm<PersonalInfoPatchRequest>({
       defaultValues: {
         age,
         gender,
@@ -88,9 +89,9 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         phoneNumber,
         snsId,
         id1365,
+        birth,
       },
-    },
-  );
+    });
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -212,6 +213,10 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                   {...field}
                   placeholder="전화번호를 입력해주세요."
                   fullWidth
+                  inputProps={{
+                    inputMode: 'decimal',
+                    pattern: '[0-9]*',
+                  }}
                 />
               </StyledInputLabel>
               <Controller
@@ -370,18 +375,43 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                   fullWidth
                 />
               </StyledInputLabel>
-              <Stack
-                component="div"
-                width="100%"
-                alignItems="flex-end"
-                paddingRight="1.125rem"
-                gap="0.25rem"
-              >
-                <TextLink
-                  newTabs
-                  label="1365 아이디 찾으러 가기"
-                  to="https://www.1365.go.kr/vols/main.do"
+              <Stack padding="0 0.325rem" gap="0.5rem">
+                <Controller
+                  name="birth"
+                  control={control}
+                  rules={{
+                    required: watch('id1365')
+                      ? '생년월일을 입력해주세요!'
+                      : false,
+                  }}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      color={fieldState.error && 'error'}
+                      helperText={fieldState.error && fieldState.error.message}
+                      placeholder="생년월일도 함께 적어주세요"
+                      type="text"
+                      inputMode="decimal"
+                      inputProps={{
+                        inputMode: 'decimal',
+                        pattern: '[0-9]*',
+                      }}
+                    />
+                  )}
                 />
+                <Stack
+                  component="div"
+                  width="100%"
+                  alignItems="flex-end"
+                  paddingRight="1.125rem"
+                  gap="0.25rem"
+                >
+                  <TextLink
+                    newTabs
+                    label="1365 아이디 찾으러 가기"
+                    to="https://www.1365.go.kr/vols/main.do"
+                  />
+                </Stack>
               </Stack>
             </Stack>
           )}
