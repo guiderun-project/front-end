@@ -34,6 +34,7 @@ const Intro: React.FC = () => {
   useEffect(() => {
     dispatch(resetAccessToken());
     queryClient.resetQueries({ queryKey: ['accessTokenGet'] });
+    queryClient.resetQueries({ queryKey: ['userInfoGet'] });
   }, []);
 
   //

@@ -27,7 +27,11 @@ const App: React.FC = () => {
     enabled: !accessToken,
   });
 
-  const { data: userData, isLoading: isLoadigGetUserData } = useQuery({
+  const {
+    data: userData,
+    isLoading: isLoadigGetUserData,
+    isError: isErrorGetUserInfo,
+  } = useQuery({
     queryKey: ['userInfoGet', accessToken, userRole],
     queryFn: () => infoApi.userInfoGet(),
     enabled: !!accessToken && !userId,
@@ -46,7 +50,7 @@ const App: React.FC = () => {
     }
   }, [newAccessToken, accessToken, dispatch]);
 
-  if (isError) {
+  if (isError || isErrorGetUserInfo) {
     window.localStorage.setItem(
       PREV_PATH_KEY,
       `${location.pathname}${location.search}`,
