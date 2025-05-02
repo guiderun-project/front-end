@@ -19,7 +19,13 @@ const useDeleteEvent = () => {
     },
   });
 
-  return { ...mutation, deleteEvent: mutation.mutate };
+  const hanleDeleteEvent = (eventId: number) => {
+    if (window.confirm('이벤트를 삭제하시겠습니까?')) {
+      mutation.mutate(eventId);
+    }
+  };
+
+  return { ...mutation, deleteEvent: hanleDeleteEvent };
 };
 
 export default useDeleteEvent;
