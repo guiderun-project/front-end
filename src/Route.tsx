@@ -15,10 +15,7 @@ import {
 import { BROWSER_PATH } from './constants/path';
 import enMessages from './i18n/messages/en.json';
 import koMessages from './i18n/messages/ko.json';
-import Landing from './pages/Landing';
 import Loading from './pages/Loading';
-import Supporter from './pages/Supporter';
-import Volunteer from './pages/Volunteer';
 import { RootState } from './store';
 
 const Admin = React.lazy(() => import('./pages/Admin'));
@@ -93,13 +90,11 @@ const approvedUserRoutes = {
       element: <EventApplyDetail />,
     },
     { path: `${BROWSER_PATH.EVENT.DETAIL}/:eventId`, element: <EventDetail /> },
-    { path: '/volunteer', element: <Volunteer /> },
   ],
 };
 
 // Router
 const router = createBrowserRouter([
-  { path: BROWSER_PATH.LANDING, element: <Landing /> },
   {
     element: (
       <ErrorBoundary>
@@ -169,7 +164,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: '/supporter', element: <Supporter /> },
   { path: '*', element: <NotFound /> },
 ]);
 
