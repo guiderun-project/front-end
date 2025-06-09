@@ -69,6 +69,9 @@ const EventDetailStatusSection: React.FC<EventDetailStatusSectionProps> = ({
           label="참가 희망인원"
           aria-selected={EventTabEnum.Attend === selectedTab}
           aria-controls="tabpanel-attend"
+          sx={{
+            whiteSpace: 'nowrap',
+          }}
         />
         <Tab
           role="tab"

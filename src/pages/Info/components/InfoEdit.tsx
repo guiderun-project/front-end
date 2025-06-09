@@ -73,6 +73,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
     phoneNumber,
     snsId,
     id1365,
+    birth,
   },
 }) => {
   const intl = useIntl();
@@ -88,6 +89,7 @@ const InfoEdit: React.FC<InfoEditProps> = ({
         phoneNumber,
         snsId,
         id1365,
+        birth,
       },
     });
 
@@ -211,6 +213,10 @@ const InfoEdit: React.FC<InfoEditProps> = ({
                   {...field}
                   placeholder="전화번호를 입력해주세요."
                   fullWidth
+                  inputProps={{
+                    inputMode: 'decimal',
+                    pattern: '[0-9]*',
+                  }}
                 />
               </StyledInputLabel>
               <Controller

@@ -56,6 +56,7 @@ const AttendGroupBox: React.FC<AttendGroupBoxProps> = ({ member }) => {
     <Stack gap="1.25rem">
       {GROUP_LIST_WITHOUT_P.map((group) => (
         <AttendTeamAccordion
+          type={eventData.type}
           key={`AttendGroupBox-${group}`}
           group={RunningGroup[group]}
           attendedMemberOfGuide={member.attend.filter(

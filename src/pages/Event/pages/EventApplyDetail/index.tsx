@@ -9,7 +9,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import InputBox from '../../components/InputBox';
 import MatchingStandardAccordion from '../../components/MatchingStandardAccordion';
-import { GROUP_SELECT } from '../EventApply';
+import { COMPETITION_SELECT, GROUP_SELECT } from '../EventApply';
 
 import eventApi from '@/apis/requests/event';
 import {
@@ -24,7 +24,7 @@ import {
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
 import { EventCategory } from '@/types/event';
-import { RunningGroup } from '@/types/group';
+import { EventType, RunningGroup } from '@/types/group';
 
 const EventApplyDetail: React.FC = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -60,17 +60,22 @@ const EventApplyDetail: React.FC = () => {
   });
 
   const getTeam = () => {
+    const team =
+      eventData.type === EventType.Competition
+        ? COMPETITION_SELECT
+        : GROUP_SELECT;
+
     switch (applyData.group) {
       case RunningGroup.A:
-        return GROUP_SELECT[0].label;
+        return team[0].label;
       case RunningGroup.B:
-        return GROUP_SELECT[1].label;
+        return team[1].label;
       case RunningGroup.C:
-        return GROUP_SELECT[2].label;
+        return team[2].label;
       case RunningGroup.D:
-        return GROUP_SELECT[3].label;
+        return team[3].label;
       case RunningGroup.E:
-        return GROUP_SELECT[4].label;
+        return team[4].label;
     }
   };
 
@@ -90,6 +95,7 @@ const EventApplyDetail: React.FC = () => {
           >
             {eventData.name}
           </Typography>
+          T
           <EventStatus status={eventData.recruitStatus} />
         </Stack>
       </Stack>

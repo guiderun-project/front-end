@@ -10,9 +10,11 @@ import { StyledUserListBox } from '../panels/EventAttendPanel';
 import { ApplyUserType } from '@/apis/types/event';
 import { ApplyUserChip } from '@/components/shared';
 import { TEAM_COLOR } from '@/constants/color';
-import { RunningGroup } from '@/types/group';
+import { COMPETITION_GROUP } from '@/constants/group';
+import { EventType, RunningGroup } from '@/types/group';
 
 interface AttendTeamAccordionProps {
+  type: EventType;
   group: RunningGroup;
   attendedMemberOfVi: ApplyUserType[];
   attendedMemberOfGuide: ApplyUserType[];
@@ -99,6 +101,7 @@ const StyledCloseButton = styled.button`
 `;
 
 const AttendTeamAccordion: React.FC<AttendTeamAccordionProps> = ({
+  type,
   group,
   attendedMemberOfGuide,
   attendedMemberOfVi,
@@ -106,6 +109,10 @@ const AttendTeamAccordion: React.FC<AttendTeamAccordionProps> = ({
   notAttendedMemberOfVi,
 }) => {
   const [open, setOpen] = React.useState(true);
+
+  const isCompetition = type === EventType.Competition;
+
+  const accordionTitle = isCompetition ? COMPETITION_GROUP[group] : group;
 
   return (
     <StyledAccordionBox open={open} group={group}>
@@ -121,9 +128,9 @@ const AttendTeamAccordion: React.FC<AttendTeamAccordionProps> = ({
           fontWeight={700}
           color="inherit"
           fontSize="1.5rem"
-          aria-label={`${group}그룹`}
+          aria-label={`${accordionTitle}그룹`}
         >
-          {group}
+          {accordionTitle}
         </Typography>
       </StyledAccordionButton>
       <StyledAccordionDetail open={open}>

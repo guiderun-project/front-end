@@ -141,9 +141,9 @@ const InfoDetail: React.FC<InfoDetailProps> = ({ data }) => {
               1365 아이디 | 생년월일
             </Typography>
           </Box>
-          <Typography
-            fontWeight={500}
-          >{`@ ${data.id1365} | ${data.birth}`}</Typography>
+          <Typography fontWeight={500}>{`@ ${data.id1365} | ${
+            data.birth ?? ''
+          }`}</Typography>
         </StyledSection>
       )}
     </Stack>
