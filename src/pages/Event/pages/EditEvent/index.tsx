@@ -272,14 +272,8 @@ const EditEvent: React.FC = () => {
             <InputBox
               required
               title="시작 시간"
-              inputElement={
-                <TextField
-                  {...field}
-                  required
-                  type="time"
-                  inputProps={{ step: 1800 }}
-                />
-              }
+              subTitle="10분 단위로 설정해주세요."
+              inputElement={<TextField {...field} required type="time" />}
             />
           )}
         />
@@ -294,12 +288,13 @@ const EditEvent: React.FC = () => {
           }}
           render={({ field }) => (
             <InputBox
+              multiline
               title="종료 시간"
               inputElement={
                 <TextField
                   {...field}
                   type="time"
-                  inputProps={{ step: 1800, min: startTime }}
+                  inputProps={{ min: startTime }}
                 />
               }
             />

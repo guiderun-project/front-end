@@ -227,14 +227,7 @@ const NewEvent: React.FC = () => {
             <InputBox
               required
               title="시작 시간"
-              inputElement={
-                <TextField
-                  {...field}
-                  required
-                  type="time"
-                  inputProps={{ step: 1800 }}
-                />
-              }
+              inputElement={<TextField {...field} required type="time" />}
             />
           )}
         />
@@ -254,7 +247,7 @@ const NewEvent: React.FC = () => {
                 <TextField
                   {...field}
                   type="time"
-                  inputProps={{ step: 1800, min: startTime }}
+                  inputProps={{ min: startTime }}
                 />
               }
             />
