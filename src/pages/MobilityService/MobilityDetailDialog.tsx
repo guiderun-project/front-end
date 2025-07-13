@@ -37,7 +37,7 @@ const MobilityDetailDialog = ({
                     href={`tel:${contact.number}`}
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >
-                    {`${contact.desc ? `${contact.desc}-` : ''}${
+                    {`${contact.desc ? `${contact.desc} ` : ''}${
                       contact.number
                     }`}
                   </Typography>

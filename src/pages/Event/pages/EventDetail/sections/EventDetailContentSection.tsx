@@ -63,14 +63,17 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
       <Stack>
         <TitleContentRow
           title="장소"
-          content={<Typography>{eventData.place}</Typography>}
+          alignItems="flex-start"
+          content={
+            <Stack gap="0.5rem">
+              <Typography>{eventData.place}</Typography>
+              <TextLink
+                label="지역 별 이동 지원 서비스 확인하기"
+                to={BROWSER_PATH.MOBILITY_SERVICE}
+              />
+            </Stack>
+          }
         />
-        <Stack alignItems="end">
-          <TextLink
-            label="지역 별 이동 지원 서비스 확인하기"
-            to={BROWSER_PATH.MOBILITY_SERVICE}
-          />
-        </Stack>
       </Stack>
       {isEndEvent && (
         <RecruitCountBox
