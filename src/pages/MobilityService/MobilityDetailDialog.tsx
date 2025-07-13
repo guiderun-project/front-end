@@ -35,6 +35,9 @@ const MobilityDetailDialog = ({
                     key={index}
                     component="a"
                     href={`tel:${contact.number}`}
+                    aria-label={`${transportService.mobilityCenter.name}: ${
+                      contact.desc ? `${contact.desc} ` : ''
+                    }${contact.number}으로 전화 걸기`}
                     style={{ textDecoration: 'none', color: 'inherit' }}
                   >
                     {`${contact.desc ? `${contact.desc} ` : ''}${
@@ -55,6 +58,7 @@ const MobilityDetailDialog = ({
                   key={index}
                   component="a"
                   href={`tel:${ktx.number}`}
+                  aria-label={`${ktx.name} - ${ktx.number}으로 전화 걸기`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                   {ktx.name} - {ktx.number}

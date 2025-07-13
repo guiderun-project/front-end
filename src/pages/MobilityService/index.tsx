@@ -213,7 +213,7 @@ const MobilityService = () => {
   return (
     <>
       <PageTitle title="지역별 이동지원 연락처" />
-      <TitleHeader title="지역별 KTX 및 이동지원센터 연락처" />
+      <TitleHeader showBackButton title="지역별 KTX 및 이동지원센터 연락처" />
       <Grid container spacing={1} paddingTop="10rem">
         {TRANSPORT_SUPPORT_DATA.map((region) => (
           <Grid item key={region.id} xs={4}>

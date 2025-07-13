@@ -68,7 +68,7 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
             <Stack gap="0.5rem">
               <Typography>{eventData.place}</Typography>
               <TextLink
-                label="지역 별 이동 지원 서비스 확인하기"
+                label="지역 별 이동 지원 연락처 확인하기"
                 to={BROWSER_PATH.MOBILITY_SERVICE}
               />
             </Stack>
