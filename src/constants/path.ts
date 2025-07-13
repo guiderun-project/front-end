@@ -32,6 +32,7 @@ export const BROWSER_PATH = {
   FIND_ID_PASSWORD: '/find-id-password',
   PROFILE: '/profile',
   WITHDRAW: '/withdraw',
+  MOBILITY_SERVICE: '/mobility-service',
 };
 
 // const API_PATH = {
