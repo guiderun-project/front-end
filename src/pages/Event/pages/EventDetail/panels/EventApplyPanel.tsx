@@ -43,6 +43,8 @@ const EventApplyPanel: React.FC = () => {
                 key={`UserListBox-${user.userId}`}
                 open={userId === user.userId}
                 userId={user.userId}
+                userName={user.name}
+                phone={user.phone}
                 onClose={() => setUserId('')}
               >
                 <ApplyUserChip
