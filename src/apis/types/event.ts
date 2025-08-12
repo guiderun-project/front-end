@@ -400,6 +400,7 @@ export type ApplyUserType = Pick<
   UserType,
   'userId' | 'type' | 'name' | 'recordDegree'
 > & {
+  phone?: UserType['phoneNumber'];
   applyRecord: RunningGroup;
 };
 

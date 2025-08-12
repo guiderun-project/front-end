@@ -56,6 +56,7 @@ const Oauth = React.lazy(() => import('./pages/Oauth'));
 const Profile = React.lazy(() => import('./pages/Profile'));
 const Signup = React.lazy(() => import('./pages/Signup'));
 const Withdraw = React.lazy(() => import('./pages/Withdraw'));
+const MobilityService = React.lazy(() => import('./pages/MobilityService'));
 
 // Protected Routes Config
 const waitingUserRoutes = [
@@ -109,6 +110,7 @@ const router = createBrowserRouter([
       { path: BROWSER_PATH.LOGIN, element: <Login /> },
       { path: BROWSER_PATH.SIGNUP, element: <Signup /> },
       { path: BROWSER_PATH.FIND_ID_PASSWORD, element: <FindIdPassword /> },
+      { path: BROWSER_PATH.MOBILITY_SERVICE, element: <MobilityService /> },
     ],
   },
   {

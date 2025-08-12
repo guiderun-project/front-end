@@ -121,7 +121,7 @@ const Intro: React.FC = () => {
         <Button
           component="a"
           target="_blank"
-          href={BROWSER_PATH.LANDING}
+          href="https://about.guidrun.org"
           variant="contained"
           size="large"
           fullWidth

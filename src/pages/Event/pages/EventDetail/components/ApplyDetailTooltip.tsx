@@ -4,6 +4,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { CircularProgress, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { EventContext } from '..';
@@ -11,57 +12,23 @@ import { EventContext } from '..';
 import eventApi from '@/apis/requests/event';
 import { GroupChip, HidenText } from '@/components/shared';
 import { COMPETITION_GROUP } from '@/constants/group';
+import { RootState } from '@/store/index';
 import { EventType } from '@/types/group';
 import { UserType } from '@/types/user';
+import getAuthority from '@/utils/authority';
 
 interface ApplyDetailTooltipProps {
   open: boolean;
   userId: UserType['userId'];
+  userName: UserType['name'];
+  phone?: UserType['phoneNumber'];
   onClose: VoidFunction;
 }
 
-const tooltipOpenKeyframes = keyframes`
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-`;
-
-const TooltipContainer = styled.div`
-  position: absolute;
-  width: 15rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #222222d4;
-  padding: 0.625rem 0.5rem 0.75rem 0.5rem;
-  z-index: 111;
-  top: calc(100% + 5px);
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  animation: ${tooltipOpenKeyframes} 0.2s ease-in forwards;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-  }
-`;
-
 const ApplyDetailTooltip: React.FC<
   PropsWithChildren<ApplyDetailTooltipProps>
-> = ({ open, userId, children, onClose }) => {
+> = ({ open, userId, children, userName, phone, onClose }) => {
+  const { role } = useSelector((state: RootState) => state.user);
   const eventId = Number(useParams<{ eventId: string }>().eventId);
   const eventData = useContext(EventContext);
 
@@ -72,9 +39,6 @@ const ApplyDetailTooltip: React.FC<
 
   const isCompetition = eventData?.type === EventType.Competition;
 
-  //
-  //
-  //
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     if (open) {
@@ -86,10 +50,6 @@ const ApplyDetailTooltip: React.FC<
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [open]);
-
-  //
-  //
-  //
 
   return (
     <Stack width="100%" position="relative" role="text">
@@ -162,6 +122,23 @@ const ApplyDetailTooltip: React.FC<
                   {applyDetail.detail}
                 </Typography>
               )}
+              {phone && getAuthority.isAdmin(role) && (
+                <Typography
+                  component="a"
+                  href={`tel:${phone}`}
+                  fontSize="0.825"
+                  fontWeight={600}
+                  color="white"
+                  sx={{
+                    textDecoration: 'none',
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  {userName}에게 전화 걸기
+                </Typography>
+              )}
             </>
           ) : (
             <CircularProgress color="info" />
@@ -173,3 +150,42 @@ const ApplyDetailTooltip: React.FC<
 };
 
 export default ApplyDetailTooltip;
+
+const tooltipOpenKeyframes = keyframes`
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+`;
+
+const TooltipContainer = styled.div`
+  position: absolute;
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #222222d4;
+  padding: 0.625rem 0.5rem 0.75rem 0.5rem;
+  z-index: 111;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: ${tooltipOpenKeyframes} 0.2s ease-in forwards;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
+`;

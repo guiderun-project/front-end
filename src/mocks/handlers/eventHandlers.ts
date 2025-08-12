@@ -634,6 +634,7 @@ export const eventHandlers: HttpHandler[] = [
             userId: '13vbf42',
             applyRecord: RunningGroup.A,
             recordDegree: RunningGroup.A,
+            phone: '01012345678',
           },
           {
             name: '가이드2',
