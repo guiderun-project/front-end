@@ -16,6 +16,7 @@ import AllEventMyPanel from './panels/AllEventMyPanel';
 import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
 
 import { HidenText, PageTitle } from '@/components/shared';
+import { EVENT_CITY_NAME_LIST } from '@/constants/event';
 import { BROWSER_PATH } from '@/constants/path';
 import { EventCityName } from '@/types/event';
 
@@ -24,17 +25,6 @@ enum EventTypeEnum {
   Close = 'close',
   My = 'my',
 }
-
-const EVENT_CITY_NAME_LIST = [
-  {
-    value: EventCityName.SEOUL,
-    label: '서울',
-  },
-  {
-    value: EventCityName.BUSAN,
-    label: '부산',
-  },
-];
 
 const AllEvent: React.FC = () => {
   const navigate = useNavigate();
