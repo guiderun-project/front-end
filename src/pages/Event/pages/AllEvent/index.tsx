@@ -15,12 +15,9 @@ import AllEventClosePanel from './panels/AllEventClosePanel';
 import AllEventMyPanel from './panels/AllEventMyPanel';
 import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
 
-import { PageTitle } from '@/components/shared';
+import { HidenText, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-
-//
-//
-//
+import { EventCityName } from '@/types/event';
 
 enum EventTypeEnum {
   Upcoming = 'upcoming',
@@ -28,27 +25,46 @@ enum EventTypeEnum {
   My = 'my',
 }
 
-//
-//
-//
+const EVENT_CITY_NAME_LIST = [
+  {
+    value: EventCityName.SEOUL,
+    label: '서울',
+  },
+  {
+    value: EventCityName.BUSAN,
+    label: '부산',
+  },
+];
 
 const AllEvent: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const type = searchParams.get('type') ?? EventTypeEnum.Upcoming;
+  const cityName = searchParams.get('cityName') as EventCityName | undefined;
 
-  /**
-   *
-   */
+  const handleCityChange = (city: EventCityName) => {
+    if (cityName === city) {
+      setSearchParams({ type }, { replace: true });
+      return;
+    }
+    setSearchParams(
+      {
+        type,
+        cityName: city,
+      },
+      { replace: true },
+    );
+  };
+
   const renderPanel = () => {
     switch (type) {
       case EventTypeEnum.Upcoming:
-        return <AllEventUpcomingPanel />;
+        return <AllEventUpcomingPanel cityName={cityName} />;
       case EventTypeEnum.Close:
-        return <AllEventClosePanel />;
+        return <AllEventClosePanel cityName={cityName} />;
       case EventTypeEnum.My:
-        return <AllEventMyPanel />;
+        return <AllEventMyPanel cityName={cityName} />;
       default:
         return (
           <Stack alignItems="center" gap="1.25rem" padding="2rem 0">
@@ -60,40 +76,72 @@ const AllEvent: React.FC = () => {
   };
 
   return (
-    <Stack gap="2.5rem">
+    <Stack gap="2rem">
       <PageTitle title="전체 이벤트" />
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
-          전체 이벤트
-        </Typography>
+      <Stack gap="1rem">
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="flex-end"
-          gap="0.75rem"
+          justifyContent="space-between"
         >
-          <Tooltip title="캘린더">
-            <IconButton
-              role="link"
-              color="primary"
-              size="small"
-              aria-label="캘린더 페이지 이동"
-              onClick={() => navigate(BROWSER_PATH.EVENT.CALENDAR)}
-            >
-              <TodayIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="검색">
-            <IconButton
-              role="link"
-              color="primary"
-              size="small"
-              aria-label="검색 페이지 이동"
-              onClick={() => navigate(BROWSER_PATH.EVENT.SEARCH)}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Tooltip>
+          <Typography component="h1" fontSize="1.5rem" fontWeight={700}>
+            전체 이벤트
+          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            gap="0.75rem"
+          >
+            <Tooltip title="캘린더">
+              <IconButton
+                role="link"
+                color="primary"
+                size="small"
+                aria-label="캘린더 페이지 이동"
+                onClick={() => navigate(BROWSER_PATH.EVENT.CALENDAR)}
+              >
+                <TodayIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="검색">
+              <IconButton
+                role="link"
+                color="primary"
+                size="small"
+                aria-label="검색 페이지 이동"
+                onClick={() => navigate(BROWSER_PATH.EVENT.SEARCH)}
+              >
+                <SearchIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+        </Stack>
+        <Stack component="ul" direction="row">
+          {EVENT_CITY_NAME_LIST.map((city) => (
+            <li>
+              <button
+                aria-selected={cityName === city.value}
+                onClick={() => handleCityChange(city.value)}
+              >
+                <Typography
+                  fontWeight={600}
+                  color={
+                    cityName === city.value
+                      ? '#3586FF'
+                      : cityName
+                        ? '#999'
+                        : '#333'
+                  }
+                  borderBottom={
+                    cityName === city.value ? '1.4px solid #3586FF' : 'none'
+                  }
+                >
+                  #{city.label} <HidenText content="지역 이벤트만 보기" />
+                </Typography>
+              </button>
+            </li>
+          ))}
         </Stack>
       </Stack>
       <Stack>
@@ -103,6 +151,7 @@ const AllEvent: React.FC = () => {
           onChange={(_, newValue) =>
             setSearchParams(
               {
+                ...(cityName ? ({ cityName } as Record<string, string>) : {}),
                 type: newValue,
               },
               { replace: true },
