@@ -358,6 +358,7 @@ const EventDetail: React.FC = () => {
     }
     if (eventData && eventId) {
       switch (section) {
+        // 이벤트 출석 및 상태
         case EventPageSectionEnum.Status:
           return (
             <EventDetailStatusSection
@@ -366,6 +367,7 @@ const EventDetail: React.FC = () => {
               eventData={eventData}
             />
           );
+        // 이벤트 상세 내용
         case EventPageSectionEnum.Detail:
         default:
           return (

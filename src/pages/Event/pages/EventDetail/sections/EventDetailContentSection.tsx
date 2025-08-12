@@ -9,6 +9,7 @@ import {
   TextLink,
   TitleContentRow,
 } from '@/components/shared';
+import { EVENT_CITY_NAME_LIST } from '@/constants/event';
 import { BROWSER_PATH } from '@/constants/path';
 import MatchingStandardAccordion from '@/pages/Event/components/MatchingStandardAccordion';
 // import RecruitCountBox from '@/pages/Event/components/RecruitCountBox';
@@ -25,9 +26,10 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
   eventData,
   eventId,
 }) => {
-  //
-  //
-  //
+  const formatCityName = (cityName: string) => {
+    const city = EVENT_CITY_NAME_LIST.find((city) => city.value === cityName);
+    return city ? city.label : cityName;
+  };
 
   return (
     <Stack gap="1rem">
@@ -56,7 +58,22 @@ const EventDetailContentSection: React.FC<EventDetailContentSectionProps> = ({
           alignItems="flex-start"
           content={
             <Stack gap="0.5rem">
-              <Typography>{eventData.place}</Typography>
+              <Stack
+                role="text"
+                direction="row"
+                gap="0.625rem"
+                alignItems="center"
+              >
+                <Typography>{eventData.place}</Typography>
+                <Typography
+                  fontSize="0.8125rem"
+                  color="#3586FF"
+                  fontWeight={600}
+                  whiteSpace="nowrap"
+                >
+                  #{formatCityName(eventData.cityName)}
+                </Typography>
+              </Stack>
               <TextLink
                 label="지역 별 이동 지원 연락처 확인하기"
                 to={BROWSER_PATH.MOBILITY_SERVICE}

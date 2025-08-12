@@ -23,6 +23,7 @@ import useDeleteEvent from '../../hooks/useDeleteEvent';
 import eventApi from '@/apis/requests/event';
 import { EventFormType } from '@/apis/types/event';
 import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
+import { EVENT_CITY_NAME_LIST } from '@/constants/event';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
@@ -56,6 +57,7 @@ const EditEvent: React.FC = () => {
       minNumG: eventData?.minNumG,
       minNumV: eventData?.minNumV,
       name: eventData?.name,
+      cityName: eventData?.cityName,
       place: eventData?.place,
       recruitEndDate: eventData?.recruitEndDate,
       recruitStartDate: eventData?.recruitStartDate,
@@ -296,6 +298,39 @@ const EditEvent: React.FC = () => {
                   type="time"
                   inputProps={{ min: startTime }}
                 />
+              }
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="cityName"
+          render={({ field }) => (
+            <InputBox
+              required
+              title="지역"
+              inputElement={
+                <RadioGroup
+                  row
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  sx={{
+                    width: '100%',
+                    padding: '1rem',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    alignItems: 'space-between',
+                  }}
+                >
+                  {EVENT_CITY_NAME_LIST.map((city) => (
+                    <FormControlLabel
+                      key={city.label}
+                      value={city.value}
+                      control={<Radio />}
+                      label={`#${city.label}`}
+                    />
+                  ))}
+                </RadioGroup>
               }
             />
           )}

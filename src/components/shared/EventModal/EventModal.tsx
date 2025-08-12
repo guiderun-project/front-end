@@ -22,6 +22,7 @@ import { TextLink } from '../TextLink';
 import { TitleContentRow } from '../TitleContentRow';
 
 import eventApi from '@/apis/requests/event';
+import { EVENT_CITY_NAME_LIST } from '@/constants/event';
 import { BROWSER_PATH } from '@/constants/path';
 import { Event } from '@/types/event';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
@@ -49,9 +50,11 @@ const EventModal: React.FC<EventModalProps> = ({
     (eventData.status === EventStatusType.End ||
       eventData.recruitStatus === RecruitStatus.End);
 
-  /**
-   *
-   */
+  const formatCityName = (cityName: string) => {
+    const city = EVENT_CITY_NAME_LIST.find((city) => city.value === cityName);
+    return city ? city.label : cityName;
+  };
+
   const renderTitle = () => {
     if (eventData) {
       return (
@@ -83,9 +86,6 @@ const EventModal: React.FC<EventModalProps> = ({
     }
   };
 
-  /**
-   *
-   */
   const renderContent = () => {
     if (eventData) {
       return (
@@ -130,7 +130,24 @@ const EventModal: React.FC<EventModalProps> = ({
           />
           <TitleContentRow
             title="장소"
-            content={<Typography>{eventData.place}</Typography>}
+            content={
+              <Stack
+                role="text"
+                direction="row"
+                gap="0.625rem"
+                alignItems="center"
+              >
+                <Typography>{eventData.place}</Typography>
+                <Typography
+                  fontSize="0.8125rem"
+                  color="#3586FF"
+                  fontWeight={600}
+                  whiteSpace="nowrap"
+                >
+                  #{formatCityName(eventData.cityName)}
+                </Typography>
+              </Stack>
+            }
           />
           {isEndEvent && (
             <TitleContentRow
