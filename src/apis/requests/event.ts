@@ -108,11 +108,16 @@ class EventApi {
     });
   };
 
-  allEventCountGet = async ({ kind, sort, type }: AllEventCountGetRequest) => {
+  allEventCountGet = async ({
+    kind,
+    sort,
+    type,
+    cityName,
+  }: AllEventCountGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AllEventCountGetResponse>(
         `/event/all/count`,
-        { params: { sort, type, kind } },
+        { params: { sort, type, kind, cityName } },
       );
       return res.data.count;
     });
@@ -124,11 +129,12 @@ class EventApi {
     kind,
     sort,
     type,
+    cityName,
   }: AllEventGetRequest) => {
     return this.handleRequest(async () => {
       const res = await axiosInstanceWithToken.get<AllEventGetResponse>(
         `/event/all`,
-        { params: { start, limit, kind, sort, type } },
+        { params: { start, limit, kind, sort, type, cityName } },
       );
       return res.data.items;
     });
