@@ -16,29 +16,24 @@ import EmptyEvent from '../components/EmptyEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventLinkBox } from '@/components/shared';
+import { EventCityName } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 import { EventKind } from '@/types/sort';
 
-//
-//
-//
-
 export const MAX_EVENT_LENGTH = 6;
-
-//
-//
-//
 
 export const StyledMenuItem = styled(MenuItem)`
   font-size: 0.75rem;
   font-weight: 700;
 `;
 
-//
-//
-//
+interface AllEventUpcomingPanelProps {
+  cityName?: EventCityName;
+}
 
-const AllEventUpcomingPanel: React.FC = () => {
+const AllEventUpcomingPanel: React.FC<AllEventUpcomingPanelProps> = ({
+  cityName,
+}) => {
   const [page, setPage] = React.useState(1);
   const [selectedEventType, setSelectedEventType] =
     React.useState<EventType | null>(null);
@@ -55,12 +50,14 @@ const AllEventUpcomingPanel: React.FC = () => {
       EventKind.Upcoming,
       selectedEventStatus,
       selectedEventType,
+      cityName,
     ],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.Upcoming,
         kind: selectedEventStatus ?? RecruitStatus.All,
         type: selectedEventType ?? EventType.TOTAL,
+        cityName,
       }),
   });
 
@@ -71,6 +68,7 @@ const AllEventUpcomingPanel: React.FC = () => {
       selectedEventStatus,
       selectedEventType,
       page,
+      cityName,
     ],
     queryFn: () =>
       eventApi.allEventGet({
@@ -79,12 +77,10 @@ const AllEventUpcomingPanel: React.FC = () => {
         type: selectedEventType ?? EventType.TOTAL,
         limit: MAX_EVENT_LENGTH,
         start: (page - 1) * MAX_EVENT_LENGTH,
+        cityName,
       }),
     enabled: isSuccess,
   });
-  //
-  //
-  //
 
   return (
     <Stack

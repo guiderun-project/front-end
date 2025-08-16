@@ -63,6 +63,7 @@ export type EventGetResponse = Pick<
   | 'partner'
   | 'status'
   | 'eventCategory'
+  | 'cityName'
 >;
 
 export type EventPopupGetRequest = Pick<Event, 'eventId'>;
@@ -83,6 +84,7 @@ export type EventPopupGetResponse = Pick<
   | 'partner'
   | 'isApply'
   | 'eventCategory'
+  | 'cityName'
 > & {
   organizerRecord: Event['organizerPace'];
   recruitVi: number;
@@ -135,6 +137,7 @@ export type AllEventGetRequest = {
   sort: EventKind;
   type: EventType;
   kind: RecruitStatus;
+  cityName?: Event['cityName'];
 };
 
 export type AllEventItemType = {
@@ -153,6 +156,7 @@ export type AllEventCountGetRequest = {
   sort: EventKind;
   type: EventType;
   kind: RecruitStatus;
+  cityName?: Event['cityName'];
 };
 
 export type AllEventCountGetResponse = {
@@ -250,6 +254,7 @@ export type EventFormType = {
   place: Event['place']; //이벤트 장소
   content: Event['details']; //이벤트 상세 내용
   eventCategory: Event['eventCategory']; //이벤트 카테고리
+  cityName: Event['cityName']; //이벤트 지역 이름
 };
 
 export type NewEventPostRequest = EventFormType;
