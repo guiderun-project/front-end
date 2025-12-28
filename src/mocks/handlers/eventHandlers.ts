@@ -43,7 +43,7 @@ import {
   SearchEventGetResponse,
   UpcomingEventDdayGetResponse,
 } from '@/apis/types/event';
-import { EventCategory, EventCityName } from '@/types/event';
+import { EventCategory } from '@/types/event';
 import {
   DisabilityEnum,
   EventStatus,
@@ -69,7 +69,6 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + '/event/pop/:eventId',
     ({ params }) => {
       return HttpResponse.json({
-        cityName: EventCityName.SEOUL,
         eventCategory: EventCategory.GROUP,
         content:
           '프로그램 내용\nA조, B조\n1. 준비체조 및 훈련공지 (10분)\n2.워밍업 (10분)\n3. 코어운동 트레이닝 10가지 트레이닝\n4. 인터벌 트레이닝 100M+100M(2000M) 10set\n5.마무리 스트레칭 및 질의응답(15분)',
@@ -411,7 +410,6 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + `/event/:eventId`,
     () => {
       return HttpResponse.json({
-        cityName: EventCityName.SEOUL,
         eventCategory: EventCategory.GENERAL,
         checkOrganizer: true,
         created_at: '2020-02-02',

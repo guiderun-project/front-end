@@ -22,7 +22,6 @@ import { TextLink } from '../TextLink';
 import { TitleContentRow } from '../TitleContentRow';
 
 import eventApi from '@/apis/requests/event';
-import { EVENT_CITY_NAME_LIST } from '@/constants/event';
 import { BROWSER_PATH } from '@/constants/path';
 import { Event } from '@/types/event';
 import { RecruitStatus, EventStatus as EventStatusType } from '@/types/group';
@@ -49,11 +48,6 @@ const EventModal: React.FC<EventModalProps> = ({
     eventData &&
     (eventData.status === EventStatusType.End ||
       eventData.recruitStatus === RecruitStatus.End);
-
-  const formatCityName = (cityName: string) => {
-    const city = EVENT_CITY_NAME_LIST.find((city) => city.value === cityName);
-    return city ? city.label : cityName;
-  };
 
   const renderTitle = () => {
     if (eventData) {
@@ -138,14 +132,6 @@ const EventModal: React.FC<EventModalProps> = ({
                 alignItems="center"
               >
                 <Typography>{eventData.place}</Typography>
-                <Typography
-                  fontSize="0.8125rem"
-                  color="#3586FF"
-                  fontWeight={600}
-                  whiteSpace="nowrap"
-                >
-                  #{formatCityName(eventData.cityName)}
-                </Typography>
               </Stack>
             }
           />
