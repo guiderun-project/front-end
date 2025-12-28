@@ -15,10 +15,8 @@ import AllEventClosePanel from './panels/AllEventClosePanel';
 import AllEventMyPanel from './panels/AllEventMyPanel';
 import AllEventUpcomingPanel from './panels/AllEventUpcomingPanel';
 
-import { HidenText, PageTitle } from '@/components/shared';
-import { EVENT_CITY_NAME_LIST } from '@/constants/event';
+import { PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
-import { EventCityName } from '@/types/event';
 
 enum EventTypeEnum {
   Upcoming = 'upcoming',
@@ -31,30 +29,15 @@ const AllEvent: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const type = searchParams.get('type') ?? EventTypeEnum.Upcoming;
-  const cityName = searchParams.get('cityName') as EventCityName | undefined;
-
-  const handleCityChange = (city: EventCityName) => {
-    if (cityName === city) {
-      setSearchParams({ type }, { replace: true });
-      return;
-    }
-    setSearchParams(
-      {
-        type,
-        cityName: city,
-      },
-      { replace: true },
-    );
-  };
 
   const renderPanel = () => {
     switch (type) {
       case EventTypeEnum.Upcoming:
-        return <AllEventUpcomingPanel cityName={cityName} />;
+        return <AllEventUpcomingPanel />;
       case EventTypeEnum.Close:
-        return <AllEventClosePanel cityName={cityName} />;
+        return <AllEventClosePanel />;
       case EventTypeEnum.My:
-        return <AllEventMyPanel cityName={cityName} />;
+        return <AllEventMyPanel />;
       default:
         return (
           <Stack alignItems="center" gap="1.25rem" padding="2rem 0">
@@ -107,32 +90,6 @@ const AllEvent: React.FC = () => {
             </Tooltip>
           </Stack>
         </Stack>
-        <Stack component="ul" direction="row">
-          {EVENT_CITY_NAME_LIST.map((city) => (
-            <li>
-              <button
-                aria-selected={cityName === city.value}
-                onClick={() => handleCityChange(city.value)}
-              >
-                <Typography
-                  fontWeight={600}
-                  color={
-                    cityName === city.value
-                      ? '#3586FF'
-                      : cityName
-                        ? '#999'
-                        : '#333'
-                  }
-                  borderBottom={
-                    cityName === city.value ? '1.4px solid #3586FF' : 'none'
-                  }
-                >
-                  #{city.label} <HidenText content="지역 이벤트만 보기" />
-                </Typography>
-              </button>
-            </li>
-          ))}
-        </Stack>
       </Stack>
       <Stack>
         <Tabs
@@ -141,7 +98,6 @@ const AllEvent: React.FC = () => {
           onChange={(_, newValue) =>
             setSearchParams(
               {
-                ...(cityName ? ({ cityName } as Record<string, string>) : {}),
                 type: newValue,
               },
               { replace: true },

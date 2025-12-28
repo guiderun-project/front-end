@@ -15,15 +15,10 @@ import EmptyEvent from '../components/EmptyEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventLinkBox } from '@/components/shared';
-import { EventCityName } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 import { EventKind } from '@/types/sort';
 
-interface AllEventMyPanelProps {
-  cityName?: EventCityName;
-}
-
-const AllEventMyPanel: React.FC<AllEventMyPanelProps> = ({ cityName }) => {
+const AllEventMyPanel: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const [selectedEventType, setSelectedEventType] =
     React.useState<EventType | null>(null);
@@ -40,14 +35,12 @@ const AllEventMyPanel: React.FC<AllEventMyPanelProps> = ({ cityName }) => {
       EventKind.My,
       selectedEventStatus,
       selectedEventType,
-      cityName,
     ],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.My,
         kind: selectedEventStatus ?? RecruitStatus.All,
         type: selectedEventType ?? EventType.TOTAL,
-        cityName,
       }),
   });
 
@@ -58,7 +51,6 @@ const AllEventMyPanel: React.FC<AllEventMyPanelProps> = ({ cityName }) => {
       selectedEventStatus,
       selectedEventType,
       page,
-      cityName,
     ],
     queryFn: () =>
       eventApi.allEventGet({
@@ -67,7 +59,6 @@ const AllEventMyPanel: React.FC<AllEventMyPanelProps> = ({ cityName }) => {
         type: selectedEventType ?? EventType.TOTAL,
         limit: MAX_EVENT_LENGTH,
         start: (page - 1) * MAX_EVENT_LENGTH,
-        cityName,
       }),
     enabled: isSuccess,
   });

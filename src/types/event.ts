@@ -13,11 +13,6 @@ export enum EventCategory {
   TEAM = 'TEAM',
 }
 
-export enum EventCityName {
-  SEOUL = 'SEOUL',
-  BUSAN = 'BUSAN',
-}
-
 export type MachingPartnerType = {
   partnerName: string; //파트너 이름
   partnerRecord: RunningGroup; //파트너 러닝등급
@@ -46,8 +41,6 @@ export type Event = {
   numV: number; //참여 vi 인원
   numG: number; //참여 guide 인원
   details: string; //상세사항
-  cityName: EventCityName; //이벤트 지역 이름
-  //여기까지 이벤트 기본 정보
 
   checkOrganizer: boolean; // 이벤트 개설자인지 아닌
   isApply: boolean; //신청 여부

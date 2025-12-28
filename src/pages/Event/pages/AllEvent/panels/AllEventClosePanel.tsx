@@ -15,17 +15,10 @@ import EmptyEvent from '../components/EmptyEvent';
 
 import eventApi from '@/apis/requests/event';
 import { EventLinkBox } from '@/components/shared';
-import { EventCityName } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 import { EventKind } from '@/types/sort';
 
-interface AllEventClosePanelProps {
-  cityName?: EventCityName;
-}
-
-const AllEventClosePanel: React.FC<AllEventClosePanelProps> = ({
-  cityName,
-}) => {
+const AllEventClosePanel: React.FC = () => {
   const [page, setPage] = React.useState(1);
   const [selectedEventType, setSelectedEventType] =
     React.useState<EventType | null>(null);
@@ -35,18 +28,17 @@ const AllEventClosePanel: React.FC<AllEventClosePanelProps> = ({
     isLoading: isCountGetLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['allEventCountGet', EventKind.End, selectedEventType, cityName],
+    queryKey: ['allEventCountGet', EventKind.End, selectedEventType],
     queryFn: () =>
       eventApi.allEventCountGet({
         sort: EventKind.End,
         kind: RecruitStatus.All,
         type: selectedEventType ?? EventType.TOTAL,
-        cityName,
       }),
   });
 
   const { data: eventListData, isLoading } = useQuery({
-    queryKey: ['allEventGet', EventKind.End, selectedEventType, page, cityName],
+    queryKey: ['allEventGet', EventKind.End, selectedEventType, page],
     queryFn: () =>
       eventApi.allEventGet({
         sort: EventKind.End,
@@ -54,7 +46,6 @@ const AllEventClosePanel: React.FC<AllEventClosePanelProps> = ({
         type: selectedEventType ?? EventType.TOTAL,
         limit: MAX_EVENT_LENGTH,
         start: (page - 1) * MAX_EVENT_LENGTH,
-        cityName,
       }),
     enabled: isSuccess,
   });
