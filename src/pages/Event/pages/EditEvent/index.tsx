@@ -26,7 +26,7 @@ import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import NotFound from '@/pages/NotFound';
 import { RootState } from '@/store/index';
-import { EventCategory } from '@/types/event';
+import { EventCategory, EventCityName } from '@/types/event';
 import { EventType, RecruitStatus } from '@/types/group';
 import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
@@ -60,6 +60,7 @@ const EditEvent: React.FC = () => {
       recruitEndDate: eventData?.recruitEndDate,
       recruitStartDate: eventData?.recruitStartDate,
       startTime: eventData?.startTime,
+      cityName: EventCityName.SEOUL,
     },
   });
 

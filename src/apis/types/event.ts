@@ -250,6 +250,7 @@ export type EventFormType = {
   place: Event['place']; //이벤트 장소
   content: Event['details']; //이벤트 상세 내용
   eventCategory: Event['eventCategory']; //이벤트 카테고리
+  cityName?: Event['cityName'];
 };
 
 export type NewEventPostRequest = EventFormType;

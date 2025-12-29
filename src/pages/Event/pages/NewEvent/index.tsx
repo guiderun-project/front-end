@@ -23,7 +23,7 @@ import { NewEventPostRequest } from '@/apis/types/event';
 import { DisabilityChip, GroupChip, PageTitle } from '@/components/shared';
 import { BROWSER_PATH } from '@/constants/path';
 import { RootState } from '@/store/index';
-import { EventCategory } from '@/types/event';
+import { EventCategory, EventCityName } from '@/types/event';
 import { EventType } from '@/types/group';
 import getAuthority from '@/utils/authority';
 import { addOneHour } from '@/utils/time';
@@ -47,6 +47,7 @@ const NewEvent: React.FC = () => {
         eventCategory: EventCategory.GENERAL,
         name: '',
         place: '',
+        cityName: EventCityName.SEOUL,
       },
     });
 
