@@ -105,9 +105,11 @@ const EventApply: React.FC = () => {
     (state: RootState) => state.user,
   );
 
-  const { control, handleSubmit } = useForm<EventApplyType>({
-    defaultValues: { detail: '', partner: '' },
-  });
+  const { control, handleSubmit } = useForm<EventApplyType & { pace?: string }>(
+    {
+      defaultValues: { detail: '', partner: '', pace: '' },
+    },
+  );
 
   const { data: eventData } = useSuspenseQuery({
     queryKey: ['eventGet', eventId],
@@ -128,9 +130,13 @@ const EventApply: React.FC = () => {
     },
   });
 
-  const handleApplySubmit = (data: EventApplyType) => {
+  const handleApplySubmit = (data: EventApplyType & { pace?: string }) => {
+    const { pace, ...rest } = data;
     if (window.confirm('참여 신청하시겠습니까?')) {
-      mutate(data);
+      mutate({
+        ...rest,
+        detail: `${pace ? `희망 페이스: ${pace}\n\n` : ''}${rest.detail}`,
+      });
     }
   };
 
@@ -242,6 +248,28 @@ const EventApply: React.FC = () => {
                       </MenuItem>
                     ))}
                   </Select>
+                )}
+              />
+            }
+          />
+        )}
+        {eventData.eventCategory === EventCategory.GROUP && (
+          <InputBox
+            multiline
+            labelFor="pace"
+            title="희망 페이스"
+            subTitle="달리기를 희망하는 페이스가 있는 경우 입력해주세요."
+            inputElement={
+              <Controller
+                name="pace"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="pace"
+                    fullWidth
+                    placeholder="예: 6분 30초 페이스"
+                  />
                 )}
               />
             }
