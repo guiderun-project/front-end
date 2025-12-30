@@ -410,7 +410,7 @@ export const eventHandlers: HttpHandler[] = [
     baseURL + `/event/:eventId`,
     () => {
       return HttpResponse.json({
-        eventCategory: EventCategory.GENERAL,
+        eventCategory: EventCategory.GROUP,
         checkOrganizer: true,
         created_at: '2020-02-02',
         date: '2000-12-22',
@@ -426,7 +426,7 @@ export const eventHandlers: HttpHandler[] = [
         numV: 12,
         organizerType: DisabilityEnum.GUIDE,
         organizer: '홍길동',
-        organizerId: '123',
+        organizerId: '13',
         organizerPace: RunningGroup.A,
         partner: [
           {
@@ -450,7 +450,7 @@ export const eventHandlers: HttpHandler[] = [
         recruitStartDate: '2024-06-12',
         recruitStatus: RecruitStatus.Open,
         status: EventStatus.Open,
-        isApply: true,
+        isApply: false,
         type: EventType.Competition,
         updated_at: '2020-02-02',
       });

@@ -43,7 +43,7 @@ const NewEvent: React.FC = () => {
         minNumG: 0,
         minNumV: 0,
         startTime: '09:00',
-        eventType: EventType.Competition,
+        eventType: EventType.Training,
         eventCategory: EventCategory.GENERAL,
         name: '',
         place: '',
@@ -123,7 +123,7 @@ const NewEvent: React.FC = () => {
             </Stack>
           }
         />
-        {getAuthority.isAdmin(userData.role) && (
+        {getAuthority.isEditor(userData.role) && (
           <Controller
             name="eventCategory"
             control={control}
@@ -153,7 +153,7 @@ const NewEvent: React.FC = () => {
                     />
                     <FormControlLabel
                       value={EventCategory.GROUP}
-                      label={`[GRP 프로그램] 그룹별\n(마일리지그룹/집중코칭그룹)`}
+                      label={`[GRP 프로그램] 그룹별\n(대회준비그룹/기초보강그룹)`}
                       control={<Radio />}
                       sx={{
                         whiteSpace: 'break-spaces',

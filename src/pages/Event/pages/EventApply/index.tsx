@@ -186,7 +186,7 @@ const EventApply: React.FC = () => {
             required
             multiline
             title="훈련 희망 그룹"
-            subTitle={`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}
+            subTitle={`대회준비반: 풀마라톤 대비 마일리지 누적 중심\n성실러너반: 기초, 보강 중심 훈련`}
             inputElement={
               <Controller
                 rules={{ required: '그룹 선택은 필수입니다. ' }}
@@ -201,7 +201,7 @@ const EventApply: React.FC = () => {
                       aria-checked={value === RunningGroup.A}
                       onClick={() => onChange(RunningGroup.A)}
                     >
-                      <Typography>마일리지 그룹</Typography>
+                      <Typography>대회준비반</Typography>
                       <HidenText content="풀마라톤 대비 마일리지 누적 중심" />
                     </StyledGroupButton>
                     <StyledGroupButton
@@ -211,7 +211,7 @@ const EventApply: React.FC = () => {
                       aria-checked={value === RunningGroup.B}
                       onClick={() => onChange(RunningGroup.B)}
                     >
-                      <Typography>기초/보강 그룹</Typography>
+                      <Typography>성실러너반</Typography>
                       <HidenText content="기초 및 보강 중심 훈련" />
                     </StyledGroupButton>
                   </StyledSelectBox>
@@ -247,6 +247,29 @@ const EventApply: React.FC = () => {
             }
           />
         )}
+        {/* TODO: 이후 장거리반 개설 시 추가 고려
+        {eventData.eventCategory === EventCategory.GROUP && (
+          <InputBox
+            multiline
+            labelFor="pace"
+            title="희망 페이스"
+            subTitle="달리기를 희망하는 페이스가 있는 경우 입력해주세요."
+            inputElement={
+              <Controller
+                name="pace"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="pace"
+                    fullWidth
+                    placeholder="예: 6분 30초 페이스"
+                  />
+                )}
+              />
+            }
+          />
+        )} */}
         <InputBox
           multiline
           labelFor="partner"

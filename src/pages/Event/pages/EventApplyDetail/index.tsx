@@ -131,8 +131,8 @@ const EventApplyDetail: React.FC = () => {
             inputElement={
               <Typography>
                 {applyData.group === RunningGroup.A
-                  ? '마일리지 그룹'
-                  : '기초, 보강 그룹'}
+                  ? '대회준비반'
+                  : '성실러너반'}
               </Typography>
             }
           />

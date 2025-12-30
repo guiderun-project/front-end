@@ -127,11 +127,9 @@ const AttendGroupAccordion: React.FC<AttendGroupAccordionProps> = ({
           fontWeight={700}
           color="inherit"
           fontSize="1.5rem"
-          aria-label={
-            group === RunningGroup.A ? '마일리지 그룹' : '기초 보강 그룹'
-          }
+          aria-label={group === RunningGroup.A ? '대회준비반' : '성실러너반'}
         >
-          {group === RunningGroup.A ? '마일리지 그룹' : '기초/보강 그룹'}
+          {group === RunningGroup.A ? '대회준비반' : '성실러너반'}
         </Typography>
       </StyledAccordionButton>
       <StyledAccordionDetail open={open}>

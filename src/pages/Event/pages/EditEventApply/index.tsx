@@ -193,7 +193,7 @@ const EditEventApply: React.FC = () => {
             subTitle={
               <span
                 aria-hidden
-              >{`마일리지 그룹: 풀마라톤 대비 마일리지 누적 중심\n기초/보강 그룹: 기초, 보강 중심 훈련`}</span>
+              >{`대회준비반: 풀마라톤 대비 마일리지 누적 중심\n성실러너반: 기초, 보강 중심 훈련`}</span>
             }
             inputElement={
               <Controller
@@ -209,7 +209,7 @@ const EditEventApply: React.FC = () => {
                       aria-checked={value === RunningGroup.A}
                       onClick={() => onChange(RunningGroup.A)}
                     >
-                      <Typography>마일리지 그룹</Typography>
+                      <Typography>대회준비반</Typography>
                       <HidenText content="풀마라톤 대비 마일리지 누적 중심" />
                     </StyledGroupButton>
                     <StyledGroupButton
@@ -219,7 +219,7 @@ const EditEventApply: React.FC = () => {
                       aria-checked={value === RunningGroup.B}
                       onClick={() => onChange(RunningGroup.B)}
                     >
-                      <Typography>기초/보강 그룹</Typography>
+                      <Typography>성실러너반</Typography>
                       <HidenText content="기초, 보강 중심 훈련" />
                     </StyledGroupButton>
                   </StyledSelectBox>
