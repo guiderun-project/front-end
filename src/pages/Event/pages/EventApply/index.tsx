@@ -130,9 +130,7 @@ const EventApply: React.FC = () => {
 
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
-      mutate({
-        ...data,
-      });
+      mutate(data);
     }
   };
 
