@@ -105,11 +105,9 @@ const EventApply: React.FC = () => {
     (state: RootState) => state.user,
   );
 
-  const { control, handleSubmit } = useForm<EventApplyType & { pace?: string }>(
-    {
-      defaultValues: { detail: '', partner: '', pace: '' },
-    },
-  );
+  const { control, handleSubmit } = useForm<EventApplyType>({
+    defaultValues: { detail: '', partner: '' },
+  });
 
   const { data: eventData } = useSuspenseQuery({
     queryKey: ['eventGet', eventId],
@@ -130,12 +128,10 @@ const EventApply: React.FC = () => {
     },
   });
 
-  const handleApplySubmit = (data: EventApplyType & { pace?: string }) => {
-    const { pace, ...rest } = data;
+  const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
       mutate({
-        ...rest,
-        detail: `${pace ? `희망 페이스: ${pace}\n\n` : ''}${rest.detail}`,
+        ...data,
       });
     }
   };
@@ -253,6 +249,7 @@ const EventApply: React.FC = () => {
             }
           />
         )}
+        {/* TODO: 이후 장거리반 개설 시 추가 고려
         {eventData.eventCategory === EventCategory.GROUP && (
           <InputBox
             multiline
@@ -274,7 +271,7 @@ const EventApply: React.FC = () => {
               />
             }
           />
-        )}
+        )} */}
         <InputBox
           multiline
           labelFor="partner"
