@@ -122,6 +122,30 @@ const ApplyDetailTooltip: React.FC<
                   {applyDetail.detail}
                 </Typography>
               )}
+              <button
+                onClick={() => {
+                  navigator.clipboard
+                    .writeText(applyDetail.detail)
+                    .then(() => alert('요청사항이 복사되었습니다'))
+                    .catch((error) =>
+                      alert('요청사항 복사에 실패했습니다-' + error.message),
+                    );
+                }}
+              >
+                <Typography
+                  fontSize="0.75rem"
+                  fontWeight={600}
+                  color="white"
+                  sx={{
+                    textDecoration: 'none',
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  요청사항 복사
+                </Typography>
+              </button>
               {phone && getAuthority.isAdmin(role) && (
                 <Typography
                   component="a"
