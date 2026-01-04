@@ -13,10 +13,10 @@ import eventApi from '@/apis/requests/event';
 import { GroupChip, HidenText } from '@/components/shared';
 import { COMPETITION_GROUP } from '@/constants/group';
 import { RootState } from '@/store/index';
+import { EventCategory } from '@/types/event';
 import { EventType, RunningGroup } from '@/types/group';
 import { UserType } from '@/types/user';
 import getAuthority from '@/utils/authority';
-import { EventCategory } from '@/types/event';
 
 interface ApplyDetailTooltipProps {
   open: boolean;
