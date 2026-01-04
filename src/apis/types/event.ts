@@ -332,6 +332,10 @@ export type EventApplyType = {
   group: RunningGroup; //원하는 페이스 그룹
   partner: string; //원하는 파트너
   detail: string; //상세 설명
+  // 실제 body에 포함되지 않음
+  birthDate?: string; //생년월일 (대회용)
+  contact?: string; //연락처 (대회용)
+  tshirtSize?: string; //티셔츠 사이즈 (대회용)
 };
 
 export type EventApplyPostRequest = {

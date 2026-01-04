@@ -106,7 +106,13 @@ const EventApply: React.FC = () => {
   );
 
   const { control, handleSubmit } = useForm<EventApplyType>({
-    defaultValues: { detail: '', partner: '' },
+    defaultValues: {
+      detail: '',
+      partner: '',
+      birthDate: '',
+      contact: '',
+      tshirtSize: '',
+    },
   });
 
   const { data: eventData } = useSuspenseQuery({
@@ -130,7 +136,19 @@ const EventApply: React.FC = () => {
 
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
-      mutate(data);
+      // 대회인 경우 detail에 추가 정보 포함
+      if (eventData.type === EventType.Competition) {
+        const additionalInfo = `이름: ${name}\n생년월일: ${data.birthDate}\n연락처: ${data.contact}\n티셔츠 사이즈: ${data.tshirtSize}`;
+        const updatedData = {
+          ...data,
+          detail: data.detail
+            ? `${additionalInfo}\n\n${data.detail}`
+            : additionalInfo,
+        };
+        mutate(updatedData);
+      } else {
+        mutate(data);
+      }
     }
   };
 
@@ -289,6 +307,77 @@ const EventApply: React.FC = () => {
             />
           }
         />
+        {eventData.type === EventType.Competition && (
+          <>
+            <InputBox
+              required
+              multiline
+              labelFor="birthDate"
+              title="생년월일"
+              inputElement={
+                <Controller
+                  name="birthDate"
+                  control={control}
+                  rules={{ required: '생년월일을 입력해주세요.' }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="birthDate"
+                      fullWidth
+                      required
+                      placeholder="예: 1990-01-01"
+                    />
+                  )}
+                />
+              }
+            />
+            <InputBox
+              required
+              multiline
+              labelFor="contact"
+              title="연락처"
+              inputElement={
+                <Controller
+                  name="contact"
+                  control={control}
+                  rules={{ required: '연락처를 입력해주세요.' }}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="contact"
+                      fullWidth
+                      required
+                      placeholder="예: 010-1234-5678"
+                    />
+                  )}
+                />
+              }
+            />
+            <InputBox
+              required
+              multiline
+              labelFor="tshirtSize"
+              title="티셔츠 사이즈"
+              inputElement={
+                <Controller
+                  name="tshirtSize"
+                  control={control}
+                  rules={{ required: '티셔츠 사이즈를 선택해주세요.' }}
+                  render={({ field }) => (
+                    <Select id="tshirtSize" {...field} fullWidth required>
+                      <MenuItem value="xs(85)">XS (85)</MenuItem>
+                      <MenuItem value="s(90)">S (90)</MenuItem>
+                      <MenuItem value="m(95)">M (95)</MenuItem>
+                      <MenuItem value="l(100)">L (100)</MenuItem>
+                      <MenuItem value="xl(105)">XL (105)</MenuItem>
+                      <MenuItem value="2xl(110)">2XL (110)</MenuItem>
+                    </Select>
+                  )}
+                />
+              }
+            />
+          </>
+        )}
         <InputBox
           multiline
           labelFor="detail"
