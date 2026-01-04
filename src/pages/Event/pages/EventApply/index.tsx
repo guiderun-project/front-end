@@ -198,7 +198,8 @@ const EventApply: React.FC = () => {
             </Stack>
           }
         />
-        {eventData.eventCategory === EventCategory.GROUP ? (
+        {eventData.type === EventType.Training &&
+        eventData.eventCategory === EventCategory.GROUP ? (
           <InputBox
             isDiv
             required
