@@ -109,6 +109,7 @@ const EventApply: React.FC = () => {
     defaultValues: {
       detail: '',
       partner: '',
+      paceGroup: '',
       birthDate: '',
       contact: '',
       tshirtSize: '',
@@ -136,6 +137,21 @@ const EventApply: React.FC = () => {
 
   const handleApplySubmit = (data: EventApplyType) => {
     if (window.confirm('참여 신청하시겠습니까?')) {
+      if (
+        eventData.type === EventType.Training &&
+        eventData.eventCategory === EventCategory.GROUP &&
+        data.paceGroup
+      ) {
+        const additionalInfo = `${data.paceGroup}에서 희망`;
+        const updatedData = {
+          ...data,
+          detail: data.detail
+            ? `${additionalInfo}\n\n${data.detail}`
+            : additionalInfo,
+        };
+        mutate(updatedData);
+        return;
+      }
       // 대회인 경우 detail에 추가 정보 포함
       if (eventData.type === EventType.Competition) {
         const additionalInfo = `이름: ${name}\n생년월일: ${data.birthDate}\n연락처: ${data.contact}\n티셔츠 사이즈: ${data.tshirtSize}`;
@@ -146,9 +162,9 @@ const EventApply: React.FC = () => {
             : additionalInfo,
         };
         mutate(updatedData);
-      } else {
-        mutate(data);
+        return;
       }
+      mutate(data);
     }
   };
 
@@ -200,44 +216,67 @@ const EventApply: React.FC = () => {
         />
         {eventData.type === EventType.Training &&
         eventData.eventCategory === EventCategory.GROUP ? (
-          <InputBox
-            isDiv
-            required
-            multiline
-            title="훈련 희망 그룹"
-            subTitle={`대회준비반: 풀마라톤 대비 마일리지 누적 중심\n성실러너반: 기초, 보강 중심 훈련`}
-            inputElement={
-              <Controller
-                rules={{ required: '그룹 선택은 필수입니다. ' }}
-                name="group"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <StyledSelectBox>
-                    <StyledGroupButton
-                      type="button"
-                      role="radio"
-                      group="mile"
-                      aria-checked={value === RunningGroup.A}
-                      onClick={() => onChange(RunningGroup.A)}
-                    >
-                      <Typography>대회준비반</Typography>
-                      <HidenText content="풀마라톤 대비 마일리지 누적 중심" />
-                    </StyledGroupButton>
-                    <StyledGroupButton
-                      type="button"
-                      role="radio"
-                      group="basic"
-                      aria-checked={value === RunningGroup.B}
-                      onClick={() => onChange(RunningGroup.B)}
-                    >
-                      <Typography>성실러너반</Typography>
-                      <HidenText content="기초 및 보강 중심 훈련" />
-                    </StyledGroupButton>
-                  </StyledSelectBox>
-                )}
-              />
-            }
-          />
+          <>
+            <InputBox
+              isDiv
+              required
+              multiline
+              title="훈련 희망 그룹"
+              subTitle={`대회준비반: 풀마라톤 대비 마일리지 누적 중심\n성실러너반: 기초, 보강 중심 훈련`}
+              inputElement={
+                <Controller
+                  rules={{ required: '그룹 선택은 필수입니다. ' }}
+                  name="group"
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <StyledSelectBox>
+                      <StyledGroupButton
+                        type="button"
+                        role="radio"
+                        group="mile"
+                        aria-checked={value === RunningGroup.A}
+                        onClick={() => onChange(RunningGroup.A)}
+                      >
+                        <Typography>대회준비반</Typography>
+                        <HidenText content="풀마라톤 대비 마일리지 누적 중심" />
+                      </StyledGroupButton>
+                      <StyledGroupButton
+                        type="button"
+                        role="radio"
+                        group="basic"
+                        aria-checked={value === RunningGroup.B}
+                        onClick={() => onChange(RunningGroup.B)}
+                      >
+                        <Typography>성실러너반</Typography>
+                        <HidenText content="기초 및 보강 중심 훈련" />
+                      </StyledGroupButton>
+                    </StyledSelectBox>
+                  )}
+                />
+              }
+            />
+            <InputBox
+              multiline
+              labelFor="paceGroup"
+              title="희망 페이스(달리기속도)"
+              inputElement={
+                <Controller
+                  name="paceGroup"
+                  control={control}
+                  render={({ field }) => (
+                    <Select id="paceGroup" {...field} fullWidth displayEmpty>
+                      <MenuItem value="">기존에 속한 그룹</MenuItem>
+                      <MenuItem value="A:5:00 내외">A:5:00 내외</MenuItem>
+                      <MenuItem value="B:5:30 내외">B:5:30 내외</MenuItem>
+                      <MenuItem value="C:6:00 내외">C:6:00 내외</MenuItem>
+                      <MenuItem value="D:6:30 내외">D:6:30 내외</MenuItem>
+                      <MenuItem value="E:7:00 이상">E:7:00 이상</MenuItem>
+                    </Select>
+                  )}
+                />
+              }
+            />
+          </>
         ) : (
           <InputBox
             required
