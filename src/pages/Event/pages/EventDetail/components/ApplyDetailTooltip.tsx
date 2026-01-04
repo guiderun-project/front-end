@@ -13,7 +13,8 @@ import eventApi from '@/apis/requests/event';
 import { GroupChip, HidenText } from '@/components/shared';
 import { COMPETITION_GROUP } from '@/constants/group';
 import { RootState } from '@/store/index';
-import { EventType } from '@/types/group';
+import { EventCategory } from '@/types/event';
+import { EventType, RunningGroup } from '@/types/group';
 import { UserType } from '@/types/user';
 import getAuthority from '@/utils/authority';
 
@@ -39,6 +40,29 @@ const ApplyDetailTooltip: React.FC<
 
   const isCompetition = eventData?.type === EventType.Competition;
 
+  const getApplyGroup = () => {
+    if (!applyDetail || !eventData) {
+      return '';
+    }
+
+    if (eventData.eventCategory === EventCategory.GROUP) {
+      switch (applyDetail?.group) {
+        case RunningGroup.A:
+          return '대회준비반';
+        case RunningGroup.B:
+          return '성실러너반';
+        default:
+          return '';
+      }
+    }
+
+    if (isCompetition) {
+      return COMPETITION_GROUP[applyDetail.group];
+    }
+
+    return <GroupChip group={applyDetail.group} />;
+  };
+
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     if (open) {
@@ -56,11 +80,7 @@ const ApplyDetailTooltip: React.FC<
       {children}
       {applyDetail && (
         <HidenText
-          content={`${
-            isCompetition
-              ? applyDetail.group
-              : COMPETITION_GROUP[applyDetail.group]
-          }에서 ${
+          content={`${getApplyGroup()}에서 ${
             applyDetail.partner ? `${applyDetail.partner}와` : ''
           } 훈련 희망,
       추가 희망사항: ${applyDetail.detail ? applyDetail.detail : '없음.'}
@@ -80,11 +100,7 @@ const ApplyDetailTooltip: React.FC<
                   fontWeight={600}
                   color="#D9D9D9"
                 >
-                  {isCompetition ? (
-                    COMPETITION_GROUP[applyDetail.group]
-                  ) : (
-                    <GroupChip group={applyDetail.group} />
-                  )}
+                  {getApplyGroup()}
                   에서
                 </Typography>
 
