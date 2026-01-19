@@ -171,7 +171,7 @@ const EventMatchingPanel: React.FC<EventMatchingPanelProps> = ({ isOwner }) => {
    *
    */
   const renderMode = () => {
-    if (getAuthority.isAdmin(role) || isOwner) {
+    if (getAuthority.isEditor(role) || isOwner) {
       return (
         <Stack>
           {getAuthority.isAdmin(role) && (
