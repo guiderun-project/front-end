@@ -41,7 +41,11 @@ const UserIdInfo: React.FC = () => {
       <StyledIdInfoBox>
         {userInfo ? (
           <>
-            <Typography>아이디: {userInfo.accountId}</Typography>
+            <Typography
+              aria-label={`아이디 ${userInfo.accountId.split('').join(' ')}`}
+            >
+              아이디: {userInfo.accountId}
+            </Typography>
             <Typography>가입일: {userInfo.createdAt}</Typography>
           </>
         ) : null}

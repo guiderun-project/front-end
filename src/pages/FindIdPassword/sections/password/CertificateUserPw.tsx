@@ -99,6 +99,10 @@ const CertificateUserPw: React.FC = () => {
             label="휴대전화번호"
             placeholder={`휴대 전화번호 입력 ('-'제외)`}
             submitButtonLabel="인증번호 전송"
+            inputProps={{
+              inputMode: 'decimal',
+              pattern: '[0-9]*',
+            }}
           />
         </Stack>
       </FormProvider>
@@ -111,6 +115,10 @@ const CertificateUserPw: React.FC = () => {
               label="인증번호"
               placeholder="인증번호 입력"
               submitButtonLabel="확인"
+              inputProps={{
+                inputMode: 'decimal',
+                pattern: '[0-9]*',
+              }}
             />
           </form>
         </FormProvider>

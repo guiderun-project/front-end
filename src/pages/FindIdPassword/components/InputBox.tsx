@@ -10,6 +10,7 @@ interface InputBoxProps {
   submitButtonLabel?: string;
   singleline?: boolean;
   isHidenSubmitButton?: boolean;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
 const InputBox: React.FC<InputBoxProps> = ({
@@ -20,6 +21,7 @@ const InputBox: React.FC<InputBoxProps> = ({
   submitButtonLabel = '제출',
   singleline = false,
   isHidenSubmitButton = false,
+  inputProps,
 }) => {
   const { control, formState } = useFormContext();
 
@@ -48,6 +50,7 @@ const InputBox: React.FC<InputBoxProps> = ({
           render={({ field }) => (
             <TextField
               {...field}
+              inputProps={inputProps}
               fullWidth
               required
               disabled={formState.isSubmitting || formState.isSubmitSuccessful}
