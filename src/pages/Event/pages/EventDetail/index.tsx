@@ -490,7 +490,7 @@ const EventDetail: React.FC = () => {
 
   return (
     <EventContext.Provider value={eventData ?? null}>
-      <PageTitle title="이벤트 상세" />
+      <PageTitle title={`${eventData?.name} | 이벤트 상세`} />
       <TitleHeader title="이벤트 상세 페이지" />
       {renderHiddenApplyButton()}
       {renderHeader()}
