@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 import authApi from './requests/auth';
 import { store } from '../store';
