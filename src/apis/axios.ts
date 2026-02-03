@@ -5,11 +5,6 @@ import { store } from '../store';
 
 import { setAccessToken } from '@/store/reducer/auth';
 
-// 재시도 플래그를 위한 타입 확장
-interface RetryConfig extends AxiosRequestConfig {
-  _retry?: boolean;
-}
-
 const getToken = (accessToken: string) => `Bearer ${accessToken}`;
 
 export const baseURL = process.env.SERVER_URL;
