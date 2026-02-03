@@ -1,9 +1,14 @@
-import axios, { isAxiosError } from 'axios';
+import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
 
 import authApi from './requests/auth';
 import { store } from '../store';
 
 import { setAccessToken } from '@/store/reducer/auth';
+
+// 재시도 플래그를 위한 타입 확장
+interface RetryConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
 
 const getToken = (accessToken: string) => `Bearer ${accessToken}`;
 
@@ -34,23 +39,38 @@ axiosInstanceWithToken.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const originalRequest = error.config;
+
     if (isAxiosError(error)) {
       if (error.response?.status === 401 || error.status === 401) {
+        // 이미 재시도한 요청이면 무한 루프 방지
+        if (originalRequest._retry) {
+          // 페이지 리로드
+          window.location.reload();
+          return Promise.reject(error);
+        }
+
+        // 재시도 플래그 설정
+        originalRequest._retry = true;
+
         try {
           const accessToken = await authApi.accessTokenGet();
           store.dispatch(setAccessToken(accessToken));
 
           const originalConfig = {
-            ...error.config,
+            ...originalRequest,
             headers: {
-              ...error.config?.headers,
+              ...originalRequest?.headers,
               Authorization: getToken(accessToken),
             },
           };
 
           return axiosInstanceWithToken(originalConfig);
-        } catch (_) {
+        } catch (refreshError) {
+          // 토큰 갱신 실패 시 페이지 리로드
+          console.error('Token refresh failed:', refreshError);
           window.location.reload();
+          return Promise.reject(refreshError);
         }
       }
     }
